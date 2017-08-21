@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.EquipmentTypeMapper">
+    <select id="selectAllEquipmentType" resultType="cn.ejie.pocustom.EquipmentTypeCustom">
+        SELECT * FROM eq_type
+    </select>
+    <insert id="insertSingleEquipmentType">
+        <selectKey keyProperty="equipmentTypeId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO eq_type(eq_type_id,eq_type_name) VALUES(#{equipmentTypeId},#{equipmentTypeName})
+    </insert>
+</mapper>
