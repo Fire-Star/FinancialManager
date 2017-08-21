@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Learn-SpringSecurity
 _学习SpringSecurity时，写的小案例。_
 
@@ -238,3 +239,7 @@ always-use-default-target:只要登录成功就响应该属性指定的页面。
 authentication-failure-url:登录失败的响应页面。
 authentication-success-handler-ref:指向AuthenticationSuccessHandler Bean 。作用为登录成功后，SpringSecurity将调用AuthenticationSuccessHandler Bean 的 onAuthenticationSuccess方法，此时将忽略 default-target-url 和 always-use-default-target
 authentication-failure-handler-ref:类似上面这个。
+=======
+# FinancialManager
+资产管理系统
+>>>>>>> 661295f0946d1dfd040063c21ccc8c46af65d3cd
