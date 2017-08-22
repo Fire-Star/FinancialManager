@@ -29,6 +29,13 @@
     <springMVC.json.version>2.8.9</springMVC.json.version>
   </properties>
   <dependencies>
+
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.9.3</version>
+    </dependency>
+
     <!-- 配置SpringMVC Json转换 -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>

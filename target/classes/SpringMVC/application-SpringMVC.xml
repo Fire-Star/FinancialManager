@@ -33,6 +33,15 @@
         </property>
     </bean>
 
+    <mvc:annotation-driven >
+        <!-- 消息转换器 -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
 
     <!-- 开启 SpringSecurity 注解，注意：因为要扫描SpringMVC的注解，所以我要在这里配置打开SpringSecurity扫描 -->
     <security:global-method-security
