@@ -22,6 +22,8 @@ cn\ejie\pocustom\EquipmentTypeCustom.class
 cn\ejie\dao\EquipmentMapper.class
 cn\ejie\dao\UserMapper.class
 cn\ejie\web\filter\EncordingFilter.class
+cn\ejie\exception\AllCustomExceptionResolver.class
+cn\ejie\exception\GetAllCustomException.class
 cn\ejie\pocustom\UserCustom.class
 cn\ejie\pocustom\EquipmentNameCustom.class
 cn\ejie\po\Res.class

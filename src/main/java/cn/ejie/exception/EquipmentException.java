@@ -9,16 +9,6 @@ package cn.ejie.exception;
  */
 public class EquipmentException extends SimpleException{
 
-    private String view;//目标跳转页面
-
-    public String getView() {
-        return view;
-    }
-
-    public void setView(String view) {
-        this.view = view;
-    }
-
     public EquipmentException(String errorType, String errorMessage) {
         super(errorType, errorMessage);
     }

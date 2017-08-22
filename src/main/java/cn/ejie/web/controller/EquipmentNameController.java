@@ -1,8 +1,10 @@
 package cn.ejie.web.controller;
 
 import cn.ejie.dao.EquipmentNameMapper;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.service.EquipmentNameService;
+import cn.ejie.service.EquipmentTypeService;
 import cn.ejie.utils.SimpleBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/8/22.
@@ -20,6 +24,9 @@ public class EquipmentNameController {
 
     @Autowired
     private EquipmentNameService equipmentNameService;
+
+    @Autowired
+    private EquipmentTypeService equipmentTypeService;
 
     @RequestMapping("/showAllEquipmentName")
     public @ResponseBody List<EquipmentNameCustom> showAllEquipmentName(){
@@ -33,14 +40,33 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/addSingleEquipmentName")
-    public void insertSingleEquipmentName(HttpServletRequest request){
+    public @ResponseBody Map<String,String> insertSingleEquipmentName(HttpServletRequest request){
+        Map<String,String> responseJsonMessage = new HashMap<>();
 
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
         try {
             equipmentNameService.insertSingleEquipmentName(equipmentNameCustom);
         } catch (Exception e) {
+           return SimpleException.getMapMessage(responseJsonMessage,e);
+        }
+        //如果没有抛出异常，那么这里就是成功返回了！
+        responseJsonMessage.put("status","成功插入！！");
+        return responseJsonMessage;
+    }
+
+    @RequestMapping("/findAllEquipmentNameByEqTypeName")
+    public @ResponseBody List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(HttpServletRequest request){
+        EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
+        String eqTypeName = equipmentNameCustom.getEqTypeId();
+        List<EquipmentNameCustom> equipmentNameCustoms = null;
+        try {
+            String eqTypeId = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
+            System.out.println(eqTypeId);
+            equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeID(eqTypeId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return equipmentNameCustoms;
     }
 }

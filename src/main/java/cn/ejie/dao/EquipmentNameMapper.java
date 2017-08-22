@@ -21,4 +21,14 @@ public interface EquipmentNameMapper {
      * @throws Exception
      */
     public List<EquipmentNameCustom> showAllEquipmentName() throws Exception;
+
+    /**
+     * 查找相同设备名称和设备类型的UUID的数量
+     * @param equipmentNameCustom
+     * @return
+     * @throws Exception
+     */
+    public Integer findEquipmentNameCountByEquipmentNameAndType(EquipmentNameCustom equipmentNameCustom) throws Exception;
+
+    public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeID(String eqTypeId) throws Exception;
 }

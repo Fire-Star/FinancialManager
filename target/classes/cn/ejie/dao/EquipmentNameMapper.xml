@@ -12,4 +12,10 @@
     <select id="showAllEquipmentName" resultType="cn.ejie.pocustom.EquipmentNameCustom">
         SELECT * FROM eq_name
     </select>
+    <select id="findEquipmentNameCountByEquipmentNameAndType" resultType="java.lang.Integer">
+        SELECT count(eq_name_id) FROM eq_name WHERE eq_name = #{eqName} and eq_type_id=#{eqTypeId}
+    </select>
+    <select id="findAllEquipmentNameByEqTypeID" resultType="cn.ejie.pocustom.EquipmentNameCustom">
+        SELECT eq_name FROM eq_name WHERE eq_type_id = #{eqTypeId}
+    </select>
 </mapper>

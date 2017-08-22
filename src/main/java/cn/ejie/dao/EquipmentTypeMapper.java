@@ -1,5 +1,6 @@
 package cn.ejie.dao;
 
+import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.pocustom.EquipmentTypeCustom;
 
 import java.util.List;
