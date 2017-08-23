@@ -51,5 +51,8 @@
     />
 
     <!-- 配置全站异常解析器 -->
-    <bean id="allCustomExceptionResolver" class="cn.ejie.exception.AllCustomExceptionResolver" />
+    <bean id="allCustomExceptionResolver" class="cn.ejie.exception.AllCustomExceptionResolver">
+        <property name="defaultErrorPage" value="/WEB-INF/pages/error/normalError.jsp"/>
+    </bean>
+
 </beans>

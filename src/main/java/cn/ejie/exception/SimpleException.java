@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -97,5 +98,11 @@ public class SimpleException extends GetAllCustomException{
         if(e instanceof SimpleException){
             ((SimpleException) e).setView(view);
         }
+    }
+
+    public static void sendSuccessMessage(HttpServletResponse response,ObjectMapper objectMapper){
+        Map<String,String> message = new HashMap<>();
+        message.put("success","添加成功！");
+        SimpleException.sendMessage(response,message,objectMapper);
     }
 }

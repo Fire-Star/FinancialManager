@@ -10,7 +10,7 @@
         INSERT INTO eq_name(eq_name_id,eq_name,eq_type_id) VALUES(#{eqNameId},#{eqName},#{eqTypeId})
     </insert>
     <select id="showAllEquipmentName" resultType="cn.ejie.pocustom.EquipmentNameCustom">
-        SELECT eq_name_id eqNameId,eq_name eqName,eq_type_id eqTypeId FROM eq_name
+        SELECT eq_name eqName FROM eq_name
     </select>
     <select id="findEquipmentNameCountByEquipmentNameAndType" resultType="java.lang.Integer">
         SELECT count(eq_name_id) FROM eq_name WHERE eq_name = #{eqName} and eq_type_id=#{eqTypeId}

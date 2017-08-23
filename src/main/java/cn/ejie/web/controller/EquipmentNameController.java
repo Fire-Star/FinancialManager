@@ -1,14 +1,11 @@
 package cn.ejie.web.controller;
 
-import cn.ejie.dao.EquipmentNameMapper;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.service.EquipmentNameService;
 import cn.ejie.service.EquipmentTypeService;
 import cn.ejie.utils.SimpleBeanUtils;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,12 +65,10 @@ public class EquipmentNameController {
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
         List<EquipmentNameCustom> equipmentNameCustoms = null;
-        try {
-            equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeName(equipmentNameCustom.getEqTypeId());
-        } catch (Exception e) {
-            SimpleException.setView("/WEB-INF/pages/error/normalError.jsp",e);
-            throw e;
-        }
+
+        //这里面出了问题，由全局异常处理器处理！
+        equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeName(equipmentNameCustom.getEqTypeId());
+
         return equipmentNameCustoms;
     }
 }
