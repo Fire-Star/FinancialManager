@@ -4,6 +4,10 @@ package cn.ejie.exception;
  * Created by Administrator on 2017/8/22.
  */
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -57,6 +61,12 @@ public class SimpleException extends GetAllCustomException{
         super(cause);
     }
 
+    /**
+     * 返回 提取 自定义exception 里面的错误数据！然后以 Map 形式返回。
+     * @param responseJsonMessage
+     * @param e
+     * @return
+     */
     public static Map<String,String> getMapMessage(Map<String,String> responseJsonMessage,Exception e){
         if(e instanceof SimpleException) {
             SimpleException ex = (SimpleException) e;
@@ -65,5 +75,27 @@ public class SimpleException extends GetAllCustomException{
             e.printStackTrace();
         }
         return responseJsonMessage;
+    }
+
+    /**
+     * 把信息通过Json的方式响应
+     * @param response
+     * @param message
+     * @param objectMapper
+     */
+    public static void sendMessage(HttpServletResponse response, Map<String,String> message, ObjectMapper objectMapper){
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().println(objectMapper.writeValueAsString(message));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public static void setView(String view,Exception e){
+        if(e instanceof SimpleException){
+            ((SimpleException) e).setView(view);
+        }
     }
 }

@@ -6,12 +6,17 @@ import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.service.EquipmentNameService;
 import cn.ejie.service.EquipmentTypeService;
 import cn.ejie.utils.SimpleBeanUtils;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +32,10 @@ public class EquipmentNameController {
 
     @Autowired
     private EquipmentTypeService equipmentTypeService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
 
     @RequestMapping("/showAllEquipmentName")
     public @ResponseBody List<EquipmentNameCustom> showAllEquipmentName(){
@@ -56,16 +65,15 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/findAllEquipmentNameByEqTypeName")
-    public @ResponseBody List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(HttpServletRequest request){
+    public @ResponseBody List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(HttpServletRequest request, HttpServletResponse response) throws Exception{
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
-        String eqTypeName = equipmentNameCustom.getEqTypeId();
+
         List<EquipmentNameCustom> equipmentNameCustoms = null;
         try {
-            String eqTypeId = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
-            System.out.println(eqTypeId);
-            equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeID(eqTypeId);
+            equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeName(equipmentNameCustom.getEqTypeId());
         } catch (Exception e) {
-            e.printStackTrace();
+            SimpleException.setView("/WEB-INF/pages/error/normalError.jsp",e);
+            throw e;
         }
         return equipmentNameCustoms;
     }

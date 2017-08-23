@@ -48,6 +48,13 @@ public class EquipmentTypeService {
     }
 
     public String findEquipmentTypeIDByTypeName(String equipmentTypeName) throws Exception{
-        return equipmentTypeMapper.findEquipmentTypeIDByTypeName(equipmentTypeName);
+        if(equipmentTypeName==null || equipmentTypeName.equals("")){
+            throw new EquipmentException(errorType,"设备类型名称不能为空！");
+        }
+        String result = equipmentTypeMapper.findEquipmentTypeIDByTypeName(equipmentTypeName);
+        if(result == null){
+            throw new EquipmentException(errorType,"对不起，你输入的设备类型不存在！");
+        }
+        return result;
     }
 }

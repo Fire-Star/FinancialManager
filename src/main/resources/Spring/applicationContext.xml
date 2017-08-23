@@ -25,4 +25,8 @@
             jsr250-annotations="enabled"
             secured-annotations="enabled"
     />
+
+    <!-- jackson 的 Json 转换器 -->
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+
 </beans>

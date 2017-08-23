@@ -49,4 +49,7 @@
             jsr250-annotations="enabled"
             secured-annotations="enabled"
     />
+
+    <!-- 配置全站异常解析器 -->
+    <bean id="allCustomExceptionResolver" class="cn.ejie.exception.AllCustomExceptionResolver" />
 </beans>

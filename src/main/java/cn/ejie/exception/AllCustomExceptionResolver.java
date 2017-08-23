@@ -16,6 +16,10 @@ public class AllCustomExceptionResolver implements HandlerExceptionResolver {
         //处理用户的所有异常，包括登录注册等。
         if(ex instanceof SimpleException){
             SimpleException simpleException = (SimpleException)ex;
+
+            request.setAttribute("errorType",simpleException.getErrorType());
+            request.setAttribute("errorMessage",simpleException.getErrorMessage());
+
             mv.setViewName(simpleException.getView());
             return  mv;
         }

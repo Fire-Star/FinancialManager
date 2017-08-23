@@ -10,7 +10,7 @@
         INSERT INTO eq_type(eq_type_id,eq_type_name) VALUES(#{equipmentTypeId},#{equipmentTypeName})
     </insert>
     <select id="showAllEquipmentType" resultType="cn.ejie.pocustom.EquipmentTypeCustom">
-        SELECT * FROM eq_type
+        SELECT eq_type_name equipmentTypeName FROM eq_type
     </select>
     <select id="findEquipmentTypeCountByTypeName" resultType="java.lang.Integer">
         SELECT COUNT(eq_type_name) FROM eq_type WHERE eq_type_name = #{equipmentTypeName}

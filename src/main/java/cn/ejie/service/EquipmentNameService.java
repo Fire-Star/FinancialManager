@@ -76,7 +76,8 @@ public class EquipmentNameService {
         return equipmentNameMapper.findEquipmentNameCountByEquipmentNameAndType(equipmentNameCustom);
     }
 
-    public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeID(String eqTypeId) throws Exception{
+    public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(String eqTypeName) throws Exception{
+        String eqTypeId = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
         if(eqTypeId==null || eqTypeId.equals("")){
             throw new EquipmentException(errorType,"设备类型不能为空！");
         }

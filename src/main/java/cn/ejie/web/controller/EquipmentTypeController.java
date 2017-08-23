@@ -1,6 +1,7 @@
 package cn.ejie.web.controller;
 
 import cn.ejie.dao.EquipmentTypeMapper;
+import cn.ejie.exception.EquipmentException;
 import cn.ejie.po.EquipmentType;
 import cn.ejie.pocustom.EquipmentTypeCustom;
 import cn.ejie.service.EquipmentTypeService;
@@ -26,17 +27,18 @@ import java.util.List;
  */
 @Controller
 public class EquipmentTypeController {
+    private String errorType="EquipmentTypeError";
+
     @Autowired
     private EquipmentTypeService equipmentTypeService;
 
     @RequestMapping("/showAllEquipmentType")
-    public @ResponseBody List<EquipmentTypeCustom> showAllEquipmentType(){
+    public @ResponseBody List<EquipmentTypeCustom> showAllEquipmentType() throws Exception{
         try {
             return equipmentTypeService.showAllEquipmentType();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new EquipmentException(errorType,"数据库出错，请稍后重试！");
         }
-        return  null;
     }
     @RequestMapping("/addEquipmentType")
     public void addEquipmentType(HttpServletResponse response, HttpServletRequest request) throws IntrospectionException {
