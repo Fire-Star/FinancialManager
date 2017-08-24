@@ -90,3 +90,4 @@
 0:0:0:0:0:0:0:1 - - [23/Aug/2017:16:41:28 +0800] "GET /FinancialManager/department/findDepartment?city=%E4%B8%8A%E6%B5%B7 HTTP/1.1" 200 116 http-bio-8080-exec-9 6
 0:0:0:0:0:0:0:1 - - [23/Aug/2017:16:41:36 +0800] "GET /FinancialManager/department/findDepartment?city=%E9%87%8D%E5%BA%86 HTTP/1.1" 200 168 http-bio-8080-exec-10 6
 0:0:0:0:0:0:0:1 - - [23/Aug/2017:16:43:06 +0800] "GET /FinancialManager/department/findDepartment?city=%E9%87%8D%E5%BA%86 HTTP/1.1" 200 168 http-bio-8080-exec-2 5
+0:0:0:0:0:0:0:1 - - [23/Aug/2017:18:23:53 +0800] "GET /springsecurity/ HTTP/1.1" 404 - http-bio-8080-exec-4 0
