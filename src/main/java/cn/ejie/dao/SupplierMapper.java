@@ -22,4 +22,6 @@ public interface SupplierMapper {
      * @throws Exception
      */
     public void addSingleSupplier(SupplierCustom supplierCustom) throws Exception;
+
+    public Integer hasSupplierByName(String name) throws Exception;
 }

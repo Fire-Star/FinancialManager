@@ -17,4 +17,5 @@ public @interface BeanPropertyErrorType {
      * 的value属性，向页面输出内容，这里面的value属性值保存的是错误类型。
      */
     String value();//出错类型
+    String propertyName();//属性名称，当出错时，我们将会提示该 属性值 的属性名称不能为空！
 }

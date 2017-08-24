@@ -5,6 +5,7 @@ import cn.ejie.dao.SupplierMapper;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.exception.SupplierException;
 import cn.ejie.pocustom.SupplierCustom;
+import cn.ejie.utils.BeanPropertyValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,6 @@ public class SupplierService {
     @Autowired
     private SupplierMapper supplierMapper;
 
-    @RequestMapping("/supplier/showAll")
     public List<SupplierCustom> findAllSupplier() throws Exception{
         List<SupplierCustom> supplierCustoms = null;
         try {
@@ -36,6 +36,15 @@ public class SupplierService {
 
 
     public void addSingleSupplier(SupplierCustom supplierCustom) throws Exception{
+        //验证当前对象的属性是否满足 插入到数据库需求，比如字段是否为 null 或者 空字符串！
+        BeanPropertyValidateUtils.validateIsEmptyProperty(supplierCustom);
 
+        String supplierName = supplierCustom.getName();
+        Integer count = supplierMapper.hasSupplierByName(supplierName);
+        if(count>0){
+            throw new SupplierException("supplierNameError","当前提供商已经存在！");
+        }
+        supplierMapper.addSingleSupplier(supplierCustom);
     }
+
 }

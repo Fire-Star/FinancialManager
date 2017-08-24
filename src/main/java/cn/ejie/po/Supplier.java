@@ -8,21 +8,20 @@ import cn.ejie.annotations.BeanPropertyErrorType;
 public class Supplier {
 
     private String id;//提供商ID
-    @BeanPropertyErrorType("supplierNameError")
+    @BeanPropertyErrorType(value = "supplierNameError",propertyName = "提供商名称")
     private String name;//提供商名称
-    @BeanPropertyErrorType("supplierAdtitudeError")
+    @BeanPropertyErrorType(value = "supplierAdtitudeError",propertyName = "提供商资质")
     private String adtitude;//资质
-    @BeanPropertyErrorType("supplierAddressError")
+    @BeanPropertyErrorType(value = "supplierAddressError",propertyName = "提供商地址")
     private String address;//提供商地址
-    @BeanPropertyErrorType("supplierContactNameError")
+    @BeanPropertyErrorType(value = "supplierContactNameError",propertyName = "提供商联系人")
     private String contactName;//联系人
-    @BeanPropertyErrorType("supplierTelError")
+    @BeanPropertyErrorType(value = "supplierTelError",propertyName = "提供商联系电话")
     private String tel;//联系电话
-    @BeanPropertyErrorType("supplierBusinessError")
+    @BeanPropertyErrorType(value = "supplierBusinessError",propertyName = "提供商主营业务")
     private String business;//主营业务
-    @BeanPropertyErrorType("supplierContractTimeError")
+    @BeanPropertyErrorType(value = "supplierContractTimeError",propertyName = "提供商签约时间")
     private String contractTime;//签约时间
-    @BeanPropertyErrorType("supplierCustomMessageError")
     private String customMessage;//自定义信息
 
     public Supplier() {
