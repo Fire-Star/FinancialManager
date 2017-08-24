@@ -7,7 +7,7 @@
         SELECT `name`, adtitude, address, contact_name contactName,
          tel, business, contract_time contractTime, custom_message customMessage FROM supplier
     </select>
-    <select id="hasSupplierByName">
+    <select id="hasSupplierByName" resultType="java.lang.Integer">
         SELECT count(id) FROM supplier WHERE `name`=#{name}
     </select>
     <insert id="addSingleSupplier">
