@@ -21,25 +21,17 @@ public class Equipment {
     private String eqStateId;//设备状态
     private double dPurchasPrice;//采购价格
     private String customMessage;//自定义信息，该自定义信息满足以下格式：key:value,key:value
+    private String eqOtherId;//设备别名ID
 
-    public Equipment() {
+    public String getEqOtherId() {
+        return eqOtherId;
     }
 
-    public Equipment(String eqId, String eqType, String eqName,
-                     String brandName, String purchasDepart, String belongDepart,
-                     Date purchasDate, String supplier, String eqStateId,
-                     double dPurchasPrice, String customMessage) {
-        this.eqId = eqId;
-        this.eqType = eqType;
-        this.eqName = eqName;
-        this.brandName = brandName;
-        this.purchasDepart = purchasDepart;
-        this.belongDepart = belongDepart;
-        this.purchasDate = purchasDate;
-        this.supplier = supplier;
-        this.eqStateId = eqStateId;
-        this.dPurchasPrice = dPurchasPrice;
-        this.customMessage = customMessage;
+    public void setEqOtherId(String eqOtherId) {
+        this.eqOtherId = eqOtherId;
+    }
+
+    public Equipment() {
     }
 
     @Override
@@ -56,6 +48,7 @@ public class Equipment {
                 ", eqStateId='" + eqStateId + '\'' +
                 ", dPurchasPrice=" + dPurchasPrice +
                 ", customMessage='" + customMessage + '\'' +
+                ", eqOtherId='" + eqOtherId + '\'' +
                 '}';
     }
 

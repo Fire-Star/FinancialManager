@@ -3,6 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <!-- 配置访问静态资源 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.txt</url-pattern>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.ico</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.htm</url-pattern>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.map</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.woff</url-pattern>
+        <url-pattern>*.woff2</url-pattern>
+        <url-pattern>*.ttf</url-pattern>
+        <url-pattern>*.zip</url-pattern>
+        <url-pattern>*.rar</url-pattern>
+    </servlet-mapping>
 
     <!-- 解决GET POST乱码 -->
     <!-- 但是 参数绑定依然乱码！！！ -->

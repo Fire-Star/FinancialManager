@@ -1,3 +1,4 @@
+F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\service\VertifyCodeService.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\web\filter\EncordingFilter.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\pocustom\CityCustom.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\dao\EquipmentMapper.java
@@ -26,6 +27,7 @@ F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\web\controller\Departm
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\pocustom\EquipmentNameCustom.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\po\Department.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\po\Role.java
+F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\po\VerifyMessage.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\dao\ResRoleMapper.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\utils\BeanPropertyValidateUtils.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\po\RequestWrapper.java
@@ -44,9 +46,12 @@ F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\exception\EquipmentExc
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\service\SupplierService.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\web\controller\EquipmentTypeController.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\springsecurity\model\CustomUserService.java
+F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\model\verifycodemodel\VerifyCode.java
+F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\web\controller\UserController.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\dao\UserRoleMapper.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\exception\GetAllCustomException.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\dao\RoleMapper.java
+F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\model\verifycodemodel\impl\VerifyCodeImpl.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\service\EquipmentNameService.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\web\controller\EquipmentController.java
 F:\IDEAForJavaCode\FinancialManager\src\main\java\cn\ejie\springsecurity\model\URLFilterInvocationSecurityMetadataSource.java

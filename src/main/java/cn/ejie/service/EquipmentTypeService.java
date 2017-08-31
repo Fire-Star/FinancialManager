@@ -3,6 +3,8 @@ package cn.ejie.service;
 import cn.ejie.dao.EquipmentTypeMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.pocustom.EquipmentTypeCustom;
+import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +36,18 @@ public class EquipmentTypeService {
      */
     public void insertSingleEquipmentType(EquipmentTypeCustom equipmentTypeCustom) throws Exception{
         int count = findEquipmentTypeCountByTypeName(equipmentTypeCustom.getEquipmentTypeName());
-        if(equipmentTypeCustom.getEquipmentTypeName().equals("")){
-            throw new EquipmentException(errorType,"设备类型字段不能为空！");
-        }
+        BeanPropertyValidateUtils.validateIsEmptyProperty(equipmentTypeCustom);//对数据进行是否为空或空字符串校验。
+
         if(count>0){
             throw new EquipmentException(errorType,"该设备类型已经存在！");
         }
+
+        Integer nowCount = equipmentTypeMapper.findEquipmentTypeCount();
+        String eqTypeOherId = StringUtils.fillPreString(nowCount.toString(),'0',2);
+
+        System.out.println(eqTypeOherId);
+
+        equipmentTypeCustom.setEqTypeOtherId(eqTypeOherId);
         equipmentTypeMapper.insertSingleEquipmentType(equipmentTypeCustom);
     }
 

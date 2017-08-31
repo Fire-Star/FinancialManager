@@ -38,4 +38,11 @@ public interface EquipmentTypeMapper {
      * @throws Exception
      */
     public String findEquipmentTypeIDByTypeName(String equipmentTypeName) throws Exception;
+
+    /**
+     * 查询出所有设备的数量
+     * @return
+     * @throws Exception
+     */
+    public Integer findEquipmentTypeCount() throws Exception;
 }

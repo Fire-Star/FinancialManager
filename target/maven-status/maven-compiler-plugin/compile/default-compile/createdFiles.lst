@@ -1,7 +1,9 @@
 cn\ejie\po\EquipmentType.class
 cn\ejie\service\CityService.class
+cn\ejie\model\verifycodemodel\VerifyCode.class
 cn\ejie\dao\EquipmentNameMapper.class
 cn\ejie\po\Department.class
+cn\ejie\po\VerifyMessage.class
 cn\ejie\po\Role.class
 cn\ejie\po\RequestWrapper.class
 cn\ejie\pocustom\EquipmentCustom.class
@@ -19,6 +21,8 @@ cn\ejie\utils\SimpleBeanUtils.class
 cn\ejie\pocustom\ResCustom.class
 cn\ejie\po\Equipment.class
 cn\ejie\service\EquipmentService.class
+cn\ejie\service\VertifyCodeService.class
+cn\ejie\model\verifycodemodel\impl\VerifyCodeImpl.class
 cn\ejie\service\EquipmentNameService.class
 cn\ejie\po\Supplier.class
 cn\ejie\po\User.class
@@ -31,6 +35,7 @@ cn\ejie\dao\EquipmentMapper.class
 cn\ejie\dao\UserMapper.class
 cn\ejie\service\SupplierService.class
 cn\ejie\web\filter\EncordingFilter.class
+cn\ejie\web\controller\UserController.class
 cn\ejie\exception\AllCustomExceptionResolver.class
 cn\ejie\exception\GetAllCustomException.class
 cn\ejie\pocustom\UserCustom.class
@@ -51,5 +56,6 @@ cn\ejie\po\City.class
 cn\ejie\springsecurity\model\URLFilterInvocationSecurityMetadataSource.class
 cn\ejie\exception\SupplierException.class
 cn\ejie\web\controller\EquipmentController.class
+cn\ejie\utils\StringUtils.class
 cn\ejie\pocustom\CityCustom.class
 cn\ejie\utils\BeanPropertyValidateUtils.class
