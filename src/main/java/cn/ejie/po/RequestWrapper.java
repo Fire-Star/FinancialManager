@@ -24,22 +24,27 @@ public class RequestWrapper extends HttpServletRequestWrapper {
         String method=request.getMethod();
         String value=null;
 
+        //当设置了Tomcat编码以后，只能解决get乱码，POST乱码，还需要通过request设置才行。
         if(method.equalsIgnoreCase("post")){
             try {
                 request.setCharacterEncoding(charset);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }else if(method.equalsIgnoreCase("get")){
-            value=request.getParameter(name);
-            if(value==null)return null;
-            try {
-                value=new String(value.getBytes("ISO-8859-1"),charset);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            return value;
         }
+        /**
+         * 不配置Tomcat时的处理方式。
+         else if(method.equalsIgnoreCase("get")){
+         value=request.getParameter(name);
+         if(value==null)return null;
+         try {
+         value=new String(value.getBytes("ISO-8859-1"),charset);
+         } catch (UnsupportedEncodingException e) {
+         e.printStackTrace();
+         }
+         return value;
+         }
+         */
         return request.getParameter(name);
     }
     @Override

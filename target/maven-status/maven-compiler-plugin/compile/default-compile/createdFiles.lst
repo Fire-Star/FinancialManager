@@ -21,6 +21,7 @@ cn\ejie\utils\SimpleBeanUtils.class
 cn\ejie\pocustom\ResCustom.class
 cn\ejie\po\Equipment.class
 cn\ejie\service\EquipmentService.class
+cn\ejie\web\interceptor\OptionsInterceptor.class
 cn\ejie\service\VertifyCodeService.class
 cn\ejie\model\verifycodemodel\impl\VerifyCodeImpl.class
 cn\ejie\service\EquipmentNameService.class

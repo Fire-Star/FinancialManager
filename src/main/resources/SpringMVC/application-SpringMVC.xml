@@ -55,4 +55,12 @@
         <property name="defaultErrorPage" value="/WEB-INF/pages/error/normalError.jsp"/>
     </bean>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**" />
+            <bean class="cn.ejie.web.interceptor.OptionsInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
 </beans>
