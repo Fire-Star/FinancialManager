@@ -13,4 +13,7 @@
         #{brandName},#{purchasDepart},#{belongDepart},#{purchasDate},#{supplier},
         #{eqStateId},#{dPurchasPrice},#{customMessage})
     </insert>
+    <select id="countEquipment" resultType="java.lang.Integer">
+        SELECT count(eq_id) FROM equipment
+    </select>
 </mapper>

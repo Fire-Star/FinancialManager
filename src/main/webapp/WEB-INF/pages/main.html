@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../../res/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../../res/js/vue.min.js"></script>
+    <style>
+        .width-100per{
+            width: 100%;  padding-left: 0;padding-right: 0;
+        }
+        .border-radius-0{
+            border-radius: 0;
+        }
+        .brand{
+            padding: 0 15px;
+        }
+        .navbar{
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+<div class="app container-fluid width-100per">
+    <nav class="navbar navbar-default border-radius-0">
+        <div class="container">
+            <a class="navbar-brand brand"><img src="../../res/img/brand.png"></a>
+        </div>
+    </nav>
+</div>
+</body>
+<script>
+    let data = {
+    };
+    let vm = new Vue({
+        el:'.app',
+        data:data
+    });
+</script>
+</html>

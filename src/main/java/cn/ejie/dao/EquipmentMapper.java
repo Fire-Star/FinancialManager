@@ -7,4 +7,6 @@ import cn.ejie.pocustom.EquipmentCustom;
  */
 public interface EquipmentMapper {
     public void insertSingleEquipment (EquipmentCustom equipmentCustom) throws Exception;
+
+    public Integer countEquipment() throws Exception;
 }
