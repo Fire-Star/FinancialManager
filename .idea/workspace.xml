@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1ac4616-a505-49a0-bfdc-267bb73550bc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.html" afterPath="$PROJECT_DIR$/src/main/webapp/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/TestUserController.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/TestUserController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/TestUserController.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/TestUserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-04" afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-04" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -15,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="main.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="27" selection-end-column="15" />
+            <state relative-caret-position="175">
+              <caret line="34" column="85" lean-forward="false" selection-start-line="34" selection-start-column="85" selection-end-line="34" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -29,123 +33,41 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="400">
-              <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+              <caret line="16" column="40" lean-forward="false" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestUserController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/TestUserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="775">
+              <caret line="144" column="9" lean-forward="true" selection-start-line="144" selection-start-column="9" selection-end-line="144" selection-end-column="9" />
+              <folding>
+                <element signature="e#4535#4536#0" expanded="true" />
+                <element signature="e#4584#4585#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="54" column="87" lean-forward="false" selection-start-line="54" selection-start-column="87" selection-end-line="54" selection-end-column="87" />
+            <state relative-caret-position="1675">
+              <caret line="67" column="22" lean-forward="true" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="applicationContext.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/Spring/applicationContext.xml">
+      <file leaf-file-name="application-SpringMVC.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/SpringMVC/application-SpringMVC.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="8" />
+              <caret line="6" column="58" lean-forward="true" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="58" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/admin.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="16" lean-forward="true" selection-start-line="0" selection-start-column="16" selection-end-line="0" selection-end-column="16" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workspace (2).xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace (2).xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="681" column="39" lean-forward="true" selection-start-line="681" selection-start-column="39" selection-end-line="681" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1597">
-              <caret line="197" column="39" lean-forward="true" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
-              <folding>
-                <marker date="1504495168371" expanded="true" signature="72894:72936" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="72894:72954" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="72894:72967" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="72894:72982" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73017:75561" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73030:75546" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73084:73379" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73103:73364" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73166:73344" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73206:73310" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73227:73288" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73429:73738" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73448:73723" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73525:73703" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73565:73669" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73586:73647" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73789:74054" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73808:74039" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73841:74019" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73881:73985" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="73902:73963" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74097:74403" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74116:74388" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74190:74368" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74230:74334" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74251:74312" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74454:74802" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74473:74787" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74550:74767" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74590:74733" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74611:74711" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74837:75143" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74856:75128" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74930:75108" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74970:75074" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="74991:75052" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="75195:75532" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="75214:75517" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="75319:75497" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="75359:75463" ph="..." />
-                <marker date="1504495168371" expanded="true" signature="75380:75441" ph="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -185,9 +107,11 @@
         <option value="$PROJECT_DIR$/src/main/java/cn/domarvel/springsecurity/model/SecurityConfig.java" />
         <option value="$PROJECT_DIR$/src/main/resources/Spring/applicationContext.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/main/webapp/login.html" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/TestUserController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html" />
       </list>
     </option>
   </component>
@@ -206,8 +130,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="212" />
-    <option name="y" value="-7" />
+    <option name="x" value="179" />
+    <option name="y" value="-16" />
     <option name="width" value="1418" />
     <option name="height" value="822" />
   </component>
@@ -238,11 +162,6 @@
             <path>
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
               <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
-              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -250,6 +169,162 @@
               <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="verifycodemodel" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="po" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="pocustom" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="filter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="interceptor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="MyBatis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="Spring" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringMVC" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="SpringSecurity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
@@ -265,6 +340,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
               <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -740,7 +824,7 @@
       <workItem from="1502168177846" duration="3089000" />
       <workItem from="1502242326897" duration="5995000" />
       <workItem from="1502249005015" duration="3410000" />
-      <workItem from="1504492684061" duration="2428000" />
+      <workItem from="1504492684061" duration="18237000" />
     </task>
     <task id="LOCAL-00001" summary="SpringSecurity 通过命名空间配置成功，现在尝试把资源+权限和用户+角色配置到数据库里面去。">
       <created>1502247577601</created>
@@ -760,35 +844,36 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14922000" />
+    <option name="totallyTimeSpent" value="30731000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32329988" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24665178" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924107" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11727079" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24665178" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924107" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17537314" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -796,7 +881,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1076,50 +1160,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1597">
-          <caret line="197" column="39" lean-forward="true" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
+        <state relative-caret-position="1547">
+          <caret line="195" column="39" lean-forward="true" selection-start-line="195" selection-start-column="39" selection-end-line="195" selection-end-column="39" />
           <folding>
-            <marker date="1504495168371" expanded="true" signature="72894:72936" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="72894:72954" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="72894:72967" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="72894:72982" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73017:75561" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73030:75546" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73084:73379" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73103:73364" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73166:73344" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73206:73310" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73227:73288" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73429:73738" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73448:73723" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73525:73703" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73565:73669" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73586:73647" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73789:74054" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73808:74039" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73841:74019" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73881:73985" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="73902:73963" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74097:74403" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74116:74388" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74190:74368" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74230:74334" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74251:74312" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74454:74802" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74473:74787" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74550:74767" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74590:74733" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74611:74711" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74837:75143" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74856:75128" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74930:75108" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74970:75074" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="74991:75052" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="75195:75532" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="75214:75517" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="75319:75497" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="75359:75463" ph="..." />
-            <marker date="1504495168371" expanded="true" signature="75380:75441" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79045:79062" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79045:79080" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79045:79093" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79045:79108" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79143:81687" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79156:81672" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79210:79505" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79229:79490" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79292:79470" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79332:79436" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79353:79414" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79555:79864" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79574:79849" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79651:79829" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79691:79795" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79712:79773" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79915:80180" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79934:80165" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="79967:80145" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80007:80111" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80028:80089" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80223:80529" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80242:80514" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80316:80494" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80356:80460" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80377:80438" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80580:80928" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80599:80913" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80676:80893" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80716:80859" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80737:80837" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80963:81269" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="80982:81254" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81056:81234" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81096:81200" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81117:81178" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81321:81658" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81340:81643" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81445:81623" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81485:81589" ph="..." />
+            <marker date="1504519184649" expanded="true" signature="81506:81567" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1143,15 +1227,42 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
-          <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <caret line="16" column="40" lean-forward="false" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="54" column="87" lean-forward="false" selection-start-line="54" selection-start-column="87" selection-end-line="54" selection-end-column="87" />
+        <state relative-caret-position="1675">
+          <caret line="67" column="22" lean-forward="true" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/SpringMVC/application-SpringMVC.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="6" column="58" lean-forward="true" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/TestUserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="144" column="9" lean-forward="true" selection-start-line="144" selection-start-column="9" selection-end-line="144" selection-end-column="9" />
+          <folding>
+            <element signature="e#4535#4536#0" expanded="true" />
+            <element signature="e#4584#4585#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="34" column="85" lean-forward="false" selection-start-line="34" selection-start-column="85" selection-end-line="34" selection-end-column="85" />
           <folding />
         </state>
       </provider>

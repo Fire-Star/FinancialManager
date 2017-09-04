@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.View;
 import java.io.IOException;
 import java.util.List;
 
@@ -142,5 +143,9 @@ public class TestUserController {
                 e.printStackTrace();
             }
         }
+    }
+    @RequestMapping("/user/index")
+    public String showMainPage(){
+        return "/WEB-INF/pages/main.html";
     }
 }
