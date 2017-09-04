@@ -2,55 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1ac4616-a505-49a0-bfdc-267bb73550bc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/res/img/brand.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__aopalliance_aopalliance_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_9.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_9.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_9.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_9.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_9.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_9.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_c3p0_0_9_5_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_c3p0_0_9_5_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_mchange_commons_java_0_2_11.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_mchange_mchange_commons_java_0_2_11.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_3_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_3_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jsp_jsp_api_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jsp_jsp_api_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jstl_jstl_1_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jstl_jstl_1_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_13.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_13.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_10.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_10.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_4_1_Final.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_4_1_Final.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_0_Final.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_0_Final.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_22.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_22.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_22.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_22.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_acl_4_2_3_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_acl_4_2_3_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_3_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_4_2_3_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_3_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_4_2_3_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_taglibs_4_2_3_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_taglibs_4_2_3_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_3_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_4_2_3_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_9_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_9_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_9_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_9_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_10_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_10_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_springsecurity4_3_0_2_RELEASE.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_extras_thymeleaf_extras_springsecurity4_3_0_2_RELEASE.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.xml" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/service/EquipmentService.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/service/EquipmentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/login.html" afterPath="$PROJECT_DIR$/src/main/webapp/login.html" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -76,8 +28,18 @@
       <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="14" selection-end-column="15" />
+            <state relative-caret-position="400">
+              <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="54" column="87" lean-forward="false" selection-start-line="54" selection-start-column="87" selection-end-line="54" selection-end-column="87" />
               <folding />
             </state>
           </provider>
@@ -126,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="workspace (2).xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="workspace (2).xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace (2).xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="572">
-              <caret line="689" column="22" lean-forward="true" selection-start-line="689" selection-start-column="22" selection-end-line="689" selection-end-column="22" />
+            <state relative-caret-position="372">
+              <caret line="681" column="39" lean-forward="true" selection-start-line="681" selection-start-column="39" selection-end-line="681" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -139,9 +101,51 @@
       <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="140" column="39" lean-forward="true" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-              <folding />
+            <state relative-caret-position="1597">
+              <caret line="197" column="39" lean-forward="true" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
+              <folding>
+                <marker date="1504495168371" expanded="true" signature="72894:72936" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="72894:72954" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="72894:72967" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="72894:72982" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73017:75561" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73030:75546" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73084:73379" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73103:73364" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73166:73344" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73206:73310" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73227:73288" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73429:73738" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73448:73723" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73525:73703" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73565:73669" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73586:73647" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73789:74054" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73808:74039" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73841:74019" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73881:73985" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="73902:73963" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74097:74403" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74116:74388" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74190:74368" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74230:74334" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74251:74312" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74454:74802" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74473:74787" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74550:74767" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74590:74733" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74611:74711" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74837:75143" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74856:75128" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74930:75108" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74970:75074" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="74991:75052" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="75195:75532" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="75214:75517" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="75319:75497" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="75359:75463" ph="..." />
+                <marker date="1504495168371" expanded="true" signature="75380:75441" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,6 +187,7 @@
         <option value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/main/webapp/login.html" />
       </list>
     </option>
   </component>
@@ -234,6 +239,32 @@
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
               <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
               <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -709,7 +740,7 @@
       <workItem from="1502168177846" duration="3089000" />
       <workItem from="1502242326897" duration="5995000" />
       <workItem from="1502249005015" duration="3410000" />
-      <workItem from="1504492684061" duration="484000" />
+      <workItem from="1504492684061" duration="2428000" />
     </task>
     <task id="LOCAL-00001" summary="SpringSecurity 通过命名空间配置成功，现在尝试把资源+权限和用户+角色配置到数据库里面去。">
       <created>1502247577601</created>
@@ -729,7 +760,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12978000" />
+    <option name="totallyTimeSpent" value="14922000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -743,7 +774,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32329988" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24749164" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24665178" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924107" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1024,26 +1055,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="14" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/Spring/applicationContext.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="30" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="27" selection-end-column="15" />
           <folding />
         </state>
       </provider>
@@ -1061,16 +1076,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="140" column="39" lean-forward="true" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
-          <folding />
+        <state relative-caret-position="1597">
+          <caret line="197" column="39" lean-forward="true" selection-start-line="197" selection-start-column="39" selection-end-line="197" selection-end-column="39" />
+          <folding>
+            <marker date="1504495168371" expanded="true" signature="72894:72936" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="72894:72954" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="72894:72967" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="72894:72982" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73017:75561" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73030:75546" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73084:73379" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73103:73364" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73166:73344" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73206:73310" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73227:73288" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73429:73738" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73448:73723" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73525:73703" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73565:73669" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73586:73647" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73789:74054" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73808:74039" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73841:74019" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73881:73985" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="73902:73963" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74097:74403" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74116:74388" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74190:74368" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74230:74334" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74251:74312" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74454:74802" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74473:74787" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74550:74767" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74590:74733" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74611:74711" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74837:75143" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74856:75128" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74930:75108" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74970:75074" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="74991:75052" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="75195:75532" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="75214:75517" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="75319:75497" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="75359:75463" ph="..." />
+            <marker date="1504495168371" expanded="true" signature="75380:75441" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace (2).xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="572">
-          <caret line="689" column="22" lean-forward="true" selection-start-line="689" selection-start-column="22" selection-end-line="689" selection-end-column="22" />
+        <state relative-caret-position="372">
+          <caret line="681" column="39" lean-forward="true" selection-start-line="681" selection-start-column="39" selection-end-line="681" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="9" column="2" lean-forward="false" selection-start-line="9" selection-start-column="2" selection-end-line="27" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="16" column="40" lean-forward="true" selection-start-line="16" selection-start-column="40" selection-end-line="16" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="54" column="87" lean-forward="false" selection-start-line="54" selection-start-column="87" selection-end-line="54" selection-end-column="87" />
           <folding />
         </state>
       </provider>
