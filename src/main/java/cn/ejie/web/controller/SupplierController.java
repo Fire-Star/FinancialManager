@@ -33,7 +33,7 @@ public class SupplierController {
     @RequestMapping("/supplier/add")
     public void addSingleSupplier(HttpServletRequest request, HttpServletResponse response){
         SupplierCustom supplierCustom = SimpleBeanUtils.setMapPropertyToBean(SupplierCustom.class,request.getParameterMap());
-
+        System.out.println(supplierCustom);
         try {
             supplierService.addSingleSupplier(supplierCustom);
         } catch (Exception e) {
@@ -42,5 +42,10 @@ public class SupplierController {
             return;
         }
         SimpleException.sendSuccessMessage(response,objectMapper);
+    }
+
+    @RequestMapping("/supplier/addPage")
+    public String addSupplier(){
+        return "/WEB-INF/pages/supplier/supplierAdd.html";
     }
 }
