@@ -94,6 +94,22 @@ public class SimpleException extends GetAllCustomException{
         }
     }
 
+    /**
+     * 直接发送指定消息
+     * @param response
+     * @param message
+     * @param objectMapper
+     */
+    public static void sendMessage(HttpServletResponse response, String message, ObjectMapper objectMapper){
+        try {
+            response.setContentType("text/html;charset=utf-8");
+            response.setCharacterEncoding("utf-8");
+            response.getWriter().println(message);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
     public static void setView(String view,Exception e){
         if(e instanceof SimpleException){
             ((SimpleException) e).setView(view);

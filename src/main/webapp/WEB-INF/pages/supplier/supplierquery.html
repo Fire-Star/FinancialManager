@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../res/js/bootstrap.min.js"></script>
+    <script src="../res/js/bootstrap-table.js"></script>
+    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../res/css/bootstrap-table.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../res/js/vue.min.js"></script>
+    <style>
+        body,html{
+            height: 100%;background-color: #f1f1f1;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+        .app{
+            height: 100%;
+        }
+        .supplier-head{
+            height: 10%;
+        }
+        .panel-body{
+            padding:0px;
+        }
+        .tablecontent{
+            height: 65%;
+        }
+        .bootstrap-table{
+            height: 100%;
+        }
+        .bootstrap-table.fixed-table-container{
+            height: 85%;
+        }
+        .btn-group{
+            height:5%;
+        }
+    </style>
+</head>
+<body>
+    <div class="app container">
+        <div class="supplier-head">
+            供应商管理 > 供应商查询
+        </div>
+        <div class="panel-body" style="padding-bottom:0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong><p class="lead">供应商查询</p></strong>
+                </div>
+                <div class="panel-body">
+                    <form id="formSearch" class="form-horizontal">
+                        <div class="form-group" style="margin-top:15px">
+                            <label class="control-label col-sm-1" for="suppliername">供应商：</label>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" id="suppliername" placeholder="供应商...">
+                            </div>
+                            <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人...">
+                            </div>
+                            <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" id="contacttel" placeholder="电话...">
+                            </div>
+                            <label class="control-label col-sm-1" for="time">签约时间:</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="time" placeholder="签约时间...">
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="toolbar" class="btn-group">
+            <button id="btn_result" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>导出结果
+            </button>
+            <button id="btn_print" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>打印
+            </button>
+        </div>
+        <div class="tablecontent">
+            <table class="bootstrap-table fixed-table-container" id="tb_departments"></table>
+        </div>
+    </div>
+</body>
+<script>
+    var data = {
+        verifyImageLink:"user/virifyImage"
+    };
+    var vm = new Vue({
+        el:'.app',
+        data:data
+    });
+    $(function () {
+        //1.初始化Table
+        var oTable = new TableInit();
+        oTable.Init();
+        //2.初始化Button的点击事件
+        var oButtonInit = new ButtonInit();
+        oButtonInit.Init();
+    });
+    var TableInit = function () {
+        var oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $('#tb_departments').bootstrapTable({
+                url: 'search',         //请求后台的URL（*）
+                method: 'post',                      //请求方式（*）
+                contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
+                toolbar: '#toolbar',                //工具按钮用哪个容器
+                striped: true,                      //是否显示行间隔色
+               // cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+               // sortable: false,                     //是否启用排序
+               // sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+               // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+             //   height: 400,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+                showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                   //是否显示父子表
+                columns: [{
+                    checkbox: true
+                }, {
+                    field: 'index',
+                    title: '序列号'
+                }, {
+                    field: 'name',
+                    title: '名称'
+                }, {
+                    field: 'contactName',
+                    title: '联系人'
+                }, {
+                    field: 'tel',
+                    title: '联系人电话'
+                }, {
+                    field: 'business',
+                    title: '主营业务'
+                }, {
+                    field: 'count',
+                    title: '累计采购数量'
+                }, {
+                    field: 'money',
+                    title: '累计采购金额'
+                }, ]
+            });
+        };
+        //得到查询的参数
+        oTableInit.queryParams = function (params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                suppliername: $("#suppliername").val(),
+                suppliercontactname: $("#suppliercontactname").val(),
+                contacttel: $("#contacttel").val(),
+                time: $("#time").val()
+            };
+            alert(params.limit);
+            return temp;
+        };
+        return oTableInit;
+    };
+    var ButtonInit = function () {
+        var oInit = new Object();
+        var postdata = {};
+        oInit.Init = function () {
+            //初始化页面上面的按钮事件
+
+        };
+        return oInit;
+    };
+    function datasearch() {
+        $('#tb_departments').bootstrapTable('refresh');
+    };
+</script>
+</html>
