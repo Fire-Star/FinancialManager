@@ -23,6 +23,7 @@ public class Equipment {
     private String customMessage;//自定义信息，该自定义信息满足以下格式：key:value,key:value
     private String eqOtherId;//设备别名ID
 
+
     public String getEqOtherId() {
         return eqOtherId;
     }

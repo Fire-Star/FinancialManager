@@ -21,11 +21,21 @@
         .form-group > input{
             width: 225px;
         }
-        .form-group > label{
-            margin-left: 20px;
-        }
+
+
         .btn-submit{
             width: 200px;
+        }
+        @media (min-width: 768px) {
+            .from-line{
+                margin-bottom: 40px;
+            }
+            .line-sp{
+                margin-left: 50px;
+            }
+            .item{
+                position: relative;
+            }
         }
     </style>
 </head>
@@ -40,17 +50,54 @@
         <form role="form">
             <span class="h4 text-primary">供应商基本信息添加</span>
             <hr class="hr">
-            <div class="form-group form-inline">
-                <label for="supplierName">名称：</label><input type="text" class="form-control" id="supplierName" v-model="supplierName" placeholder="请输入供应商名称...">
-                <label for="adtitude">资质：</label><input type="text" class="form-control" id="adtitude" v-model="adtitude" placeholder="请输入供应商资质...">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row item">
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line has-error">
+                                <label for="supplierName">名称：</label><input type="text" class="form-control " id="supplierName" v-model="supplierName" placeholder="请输入供应商名称...">
+                            </div>
+                        </div>
+                        <span class="width"></span>
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line">
+                                <label for="adtitude" class="">资质：</label><input type="text" class="form-control" id="adtitude" v-model="adtitude" placeholder="请输入供应商资质...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-inline">
-                <label for="address">地址：</label><input type="text" class="form-control" v-model="address" id="address" placeholder="请输入供应商地址...">
-                <label for="contactPerson">联系人：</label><input type="text" v-model="contact" class="form-control" id="contactPerson" placeholder="请输入供应商联系人...">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line">
+                                <label for="address">地址：</label><input type="text" class="form-control" v-model="address" id="address" placeholder="请输入供应商地址...">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line">
+                                <label for="contactPerson" class="">联系人：</label><input type="text" v-model="contact" class="form-control" id="contactPerson" placeholder="请输入供应商联系人...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group form-inline">
-                <label for="tel">联系电话：</label><input type="text" class="form-control" v-model="tel" id="tel" placeholder="请输入供应商联系电话...">
-                <label for="business">主营业务：</label><input type="text" class="form-control" v-model="business" id="business" placeholder="请输入供应商主营业务...">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line">
+                                <label for="tel">联系电话：</label><input type="text" class="form-control" v-model="tel" id="tel" placeholder="请输入供应商联系电话...">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group form-inline from-line">
+                                <label for="business" class="">主营业务：</label><input type="text" class="form-control" v-model="business" id="business" placeholder="请输入供应商主营业务...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <span class="h4 text-primary">员工自定义信息添加</span>
             <hr class="hr">
@@ -74,7 +121,8 @@
         address:"",
         contact:"",
         tel:"",
-        business:""
+        business:"",
+        errorType:{}
     };
     var vm = new Vue({
         el:'.app',
@@ -119,5 +167,6 @@
             }
         }
     });
+    $('.form-control').popover();
 </script>
 </html>
