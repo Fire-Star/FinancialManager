@@ -7,6 +7,8 @@
     <!-- 引入 BootStrap 全家桶 -->
     <script src="../res/js/jquery-3.2.1.min.js"></script>
     <script src="../res/js/bootstrap.min.js"></script>
+    <script src="../res/js/bootstrap-datepicker.js"></script>
+    <script src="../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
 
     <!-- 引入Vue.js -->
@@ -21,17 +23,15 @@
         .form-group > input{
             width: 225px;
         }
-
-
         .btn-submit{
             width: 200px;
+        }
+        .datepicker:hover{
+            cursor: pointer;
         }
         @media (min-width: 768px) {
             .from-line{
                 margin-bottom: 40px;
-            }
-            .line-sp{
-                margin-left: 50px;
             }
             .item-left{
                 float: left;
@@ -47,6 +47,9 @@
             }
             .item-name{
 
+            }
+            .customTitle{
+                clear: both;
             }
         }
     </style>
@@ -68,8 +71,8 @@
                     <div class="item-left item-name">
                         <label for="supplierName">名称：</label>
                     </div>
-                    <div class="form-group form-inline from-line has-error item-right ">
-                        <input type="text" class="form-control " id="supplierName" v-model="supplierName" placeholder="请输入供应商名称...">
+                    <div class="form-group form-inline from-line item-right">
+                        <input type="text" class="form-control " propName="提供商名称" id="supplierName" data-toggle="tooltip" data-placement="top"  v-model="supplierName" placeholder="请输入供应商名称...">
                     </div>
                 </div>
                 <div class="item-right content-item">
@@ -77,7 +80,7 @@
                         <label for="adtitude" class="">资质：</label>
                     </div>
                     <div class="form-group form-inline from-line item-right">
-                        <input type="text" class="form-control" id="adtitude" v-model="adtitude" placeholder="请输入供应商资质...">
+                        <input type="text" class="form-control" id="adtitude" propName="提供商资质" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAdtitudeError" v-model="adtitude" placeholder="请输入供应商资质...">
                     </div>
                 </div>
             </div>
@@ -86,8 +89,8 @@
                     <div class="item-left item-name">
                         <label for="address">地址：</label>
                     </div>
-                    <div class="form-group form-inline from-line item-right">
-                        <input type="text" class="form-control" v-model="address" id="address" placeholder="请输入供应商地址...">
+                    <div class="form-group form-inline from-line item-right" >
+                        <input type="text" class="form-control" v-model="address" id="address" propName="提供商地址" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAddressError" placeholder="请输入供应商地址...">
                     </div>
                 </div>
                 <div class="item-right content-item">
@@ -95,7 +98,7 @@
                         <label for="contactPerson" class="">联系人：</label>
                     </div>
                     <div class="form-group form-inline from-line item-right">
-                        <input type="text" v-model="contact" class="form-control" id="contactPerson" placeholder="请输入供应商联系人...">
+                        <input type="text" v-model="contact" class="form-control" id="contactPerson" propName="提供商联系人" data-toggle="tooltip" data-placement="top" :title="errorType.supplierContactNameError" placeholder="请输入供应商联系人...">
                     </div>
                 </div>
             </div>
@@ -104,8 +107,8 @@
                     <div class="item-left item-name">
                         <label for="tel">联系电话：</label>
                     </div>
-                    <div class="form-group form-inline from-line item-right">
-                        <input type="text" class="form-control" v-model="tel" id="tel" placeholder="请输入供应商联系电话...">
+                    <div class="form-group form-inline from-line item-right" >
+                        <input type="number" checked class="form-control" v-model="tel" id="tel" propName="提供商联系电话" data-toggle="tooltip" data-placement="top" :title="errorType.supplierTelError" placeholder="请输入供应商联系电话...">
                     </div>
                 </div>
                 <div class="item-right content-item">
@@ -113,11 +116,21 @@
                         <label for="business" class="">主营业务：</label>
                     </div>
                     <div class="form-group form-inline from-line item-right">
-                        <input type="text" class="form-control" v-model="business" id="business" placeholder="请输入供应商主营业务...">
+                        <input type="text" class="form-control" v-model="business" id="business" propName="提供商主营业务" data-toggle="tooltip" data-placement="top" :title="errorType.supplierBusinessError" placeholder="请输入供应商主营业务...">
+                    </div>
+                </div>
+            </div>
+            <div class="content-line">
+                <div class="item-left content-item">
+                    <div class="item-left item-name">
+                        <label for="tel">签约时间:</label>
+                    </div>
+                    <div class="form-group form-inline from-line item-right" >
+                        <input class="form-control" disabled propName="提供商签约时间" id="calender" name="contractTime" v-model="contractTime" placeholder="签约时间" type="text">
                     </div>
                 </div>
             </div><br><br>
-            <p class="h4 text-primary text-left">员工自定义信息添加</p>
+            <p class="h4 text-primary customTitle">员工自定义信息添加</p>
             <hr class="hr">
             <input type="hidden" name="customKey">
             <input type="hidden" name="customValue">
@@ -127,8 +140,23 @@
                 <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
                 <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
             </div>
-            <input type="button" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+            <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
         </form>
+        <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{modalStatus}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <script>
@@ -140,7 +168,13 @@
         contact:"",
         tel:"",
         business:"",
-        errorType:{}
+        contractTime:"",
+        errorType:{
+            supplierNameError:"",supplierAdtitudeError:"",supplierAddressError:"",
+            supplierContactNameError:"",supplierTelError:"",supplierBusinessError:""
+        },
+        isError:[],
+        modalStatus:""
     };
     var vm = new Vue({
         el:'.app',
@@ -158,33 +192,83 @@
                 this.customFields.splice(index,1);
             },
             submitData(){
+                if(tableCheck()){
+                    return;
+                }
+                var $btn = $('#submitBtn').button('loading');
                 var _customFields ="";
                 var index;
                 for(index in this.customFields){
-                    _customFields+=(this.customFields[index].key+"="+this.customFields[index].value+";");
+                    if(this.customFields[index].key==""||this.customFields[index].key==undefined){
+                        continue;
+                    }
+                    _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
                 }
-                var _business=encodeURIComponent(this.business);
-                var _contact=encodeURIComponent(this.contact);
-                var _address=encodeURIComponent(this.address);
-                var _adtitude=encodeURIComponent(this.adtitude);
-                var _supplierName=encodeURIComponent(this.supplierName);
-                _customFields=encodeURIComponent(_customFields);
+                _customFields=_customFields;
                 $.post("add",
                     {
-                        "business":_business,
+                        "business":this.business,
                         "tel":this.tel,
-                        "contactName":_contact,
-                        "address":_address,
-                        "adtitude":_adtitude,
-                        "name":_supplierName,
+                        "contactName":this.contact,
+                        "address":this.address,
+                        "adtitude":this.adtitude,
+                        "name":this.supplierName,
+                        "contractTime":this.contractTime,
                         "customMessage":_customFields
                     },
                     function(data,status){
-                        alert(data);
+                        if(status){
+                            if(data!=""){
+                                var _data = eval({data});
+                                vm.modalStatus="数据添加失败！";
+                                $('#modalButton').click();
+                            }else{
+                                alert('添加数据成功！');
+                                vm.modalStatus="数据添加成功！";
+                                $('#modalButton').click();
+                            }
+                        }
                     });
+                $btn.button('reset');
             }
         }
     });
-    $('.form-control').popover();
+    function tableCheck(){
+        var inputObj = $('.form-control');
+        var i;
+        var len = 7;
+        var flag = false;
+        for(i=0 ;i < len; i++){
+
+            if(inputObj[i].value==""){
+                vm.isError[i]=true;
+                flag = true;
+               var propName = inputObj[i].getAttribute('propName');
+               var id = inputObj[i].getAttribute('id');
+               $(inputObj[i]).parent().addClass('has-error');
+               var errorMessage = propName+"不能为空！";
+                $('#'+id).tooltip({
+                    title:errorMessage
+                });
+            }else{
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().removeClass('has-error');
+                $('#'+id).tooltip('destroy');
+            }
+        }
+        if(vm.tel.length<11){
+            $('#tel').parent().addClass('has-error');
+            $('#tel').tooltip({
+                title:"电话号码长度为11位！"
+            });
+            return true;
+        }
+        return flag;
+    }
+    $('#calender').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    })
 </script>
 </html>
