@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:09:46:08 +0800] "GET /FinancialManager HTTP/1.1" 302 - http-bio-80-exec-1 0
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:09:46:08 +0800] "GET /FinancialManager/ HTTP/1.1" 200 255 http-bio-80-exec-7 579
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:09:46:09 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-80-exec-8 0
@@ -1135,3 +1136,14 @@
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:18:49:45 +0800] "GET /FinancialManager/res/js/vue.min.js HTTP/1.1" 304 - http-bio-80-exec-7 1
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:18:49:45 +0800] "GET /FinancialManager/res/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028 http-bio-80-exec-6 2
 0:0:0:0:0:0:0:1 - - [06/Sep/2017:18:50:15 +0800] "POST /FinancialManager/supplier/add HTTP/1.1" 200 4 http-bio-80-exec-6 48
+=======
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:27 +0800] "GET /FinancialManager HTTP/1.1" 302 - http-bio-80-exec-1 0
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:27 +0800] "GET /FinancialManager/ HTTP/1.1" 200 255 http-bio-80-exec-7 839
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:34 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-80-exec-8 0
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:35 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-80-exec-10 0
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:37 +0800] "GET /FinancialManager/supplier/query HTTP/1.1" 200 9144 http-bio-80-exec-9 790
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:37 +0800] "GET /FinancialManager/res/fonts/glyphicons-halflings-regular.woff2 HTTP/1.1" 200 18028 http-bio-80-exec-9 1
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:17:39 +0800] "POST /FinancialManager/supplier/search HTTP/1.1" 200 6353 http-bio-80-exec-9 90
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:27:41 +0800] "GET /FinancialManager HTTP/1.1" 302 - http-bio-80-exec-1 0
+0:0:0:0:0:0:0:1 - - [06/Sep/2017:14:27:41 +0800] "GET /FinancialManager/ HTTP/1.1" 200 255 http-bio-80-exec-7 83
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
