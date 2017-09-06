@@ -126,7 +126,7 @@
                         <label for="tel">签约时间:</label>
                     </div>
                     <div class="form-group form-inline from-line item-right" >
-                        <input class="form-control" disabled propName="提供商签约时间" id="calender" name="contractTime" v-model="contractTime" placeholder="签约时间" type="text">
+                        <input class="form-control" @key="this.blur()" propName="提供商签约时间" id="calender" name="contractTime" v-model="contractTime" placeholder="签约时间" type="text">
                     </div>
                 </div>
             </div><br><br>
@@ -205,6 +205,7 @@
                     _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
                 }
                 _customFields=_customFields;
+                alert(this.contractTime);
                 $.post("add",
                     {
                         "business":this.business,
