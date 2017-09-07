@@ -52,6 +52,9 @@
                 clear: both;
             }
         }
+        #calender{
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -84,7 +87,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-line">
+            <div class="content-line customTitle">
                 <div class="item-left content-item">
                     <div class="item-left item-name">
                         <label for="address">地址：</label>
@@ -102,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <div class="content-line">
+            <div class="content-line customTitle">
                 <div class="item-left content-item">
                     <div class="item-left item-name">
                         <label for="tel">联系电话：</label>
@@ -126,7 +129,7 @@
                         <label for="tel">签约时间:</label>
                     </div>
                     <div class="form-group form-inline from-line item-right" >
-                        <input class="form-control" @key="this.blur()" propName="提供商签约时间" id="calender" name="contractTime" v-model="contractTime" placeholder="签约时间" type="text">
+                        <input class="form-control" propName="提供商签约时间" id="calender" name="contractTime" placeholder="签约时间" type="text">
                     </div>
                 </div>
             </div><br><br>
@@ -205,7 +208,6 @@
                     _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
                 }
                 _customFields=_customFields;
-                alert(this.contractTime);
                 $.post("add",
                     {
                         "business":this.business,
@@ -219,12 +221,13 @@
                     },
                     function(data,status){
                         if(status){
-                            if(data!=""){
+                            console.log(data);
+                            var _data = eval('('+data+')');
+                            if(_data.success===undefined){
                                 var _data = eval({data});
                                 vm.modalStatus="数据添加失败！";
                                 $('#modalButton').click();
                             }else{
-                                alert('添加数据成功！');
                                 vm.modalStatus="数据添加成功！";
                                 $('#modalButton').click();
                             }
@@ -235,19 +238,19 @@
         }
     });
     function tableCheck(){
+        vm.contractTime=$('#calender')[0].value;
         var inputObj = $('.form-control');
         var i;
         var len = 7;
         var flag = false;
         for(i=0 ;i < len; i++){
-
             if(inputObj[i].value==""){
                 vm.isError[i]=true;
                 flag = true;
                var propName = inputObj[i].getAttribute('propName');
                var id = inputObj[i].getAttribute('id');
                $(inputObj[i]).parent().addClass('has-error');
-               var errorMessage = propName+"不能为空！";
+               var errorMessage = propName+"不能有特殊字符也不能为空！";
                 $('#'+id).tooltip({
                     title:errorMessage
                 });
@@ -270,6 +273,6 @@
         language: 'zh-CN',
         autoclose: true,
         todayHighlight: true
-    })
+    });
 </script>
 </html>

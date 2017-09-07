@@ -11,12 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class SupplierController {
@@ -27,6 +26,12 @@ public class SupplierController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Resource(name="zhDateFormate")
+    private SimpleDateFormat zhDateFormate;
+
+    @Resource(name = "enDateFormate")
+    private SimpleDateFormat enDateFormate;
+
     @RequestMapping("/supplier/showAll")
     public @ResponseBody List<SupplierCustom> showAllSupplier() throws Exception {
         return  supplierService.findAllSupplier();
@@ -35,8 +40,9 @@ public class SupplierController {
     @RequestMapping("/supplier/add")
     public void addSingleSupplier(HttpServletRequest request, HttpServletResponse response){
         SupplierCustom supplierCustom = SimpleBeanUtils.setMapPropertyToBean(SupplierCustom.class,request.getParameterMap());
-        System.out.println(supplierCustom);
         try {
+            Date contractDate = zhDateFormate.parse(supplierCustom.getContractTime());
+            supplierCustom.setContractTime(enDateFormate.format(contractDate));
             supplierService.addSingleSupplier(supplierCustom);
         } catch (Exception e) {
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
