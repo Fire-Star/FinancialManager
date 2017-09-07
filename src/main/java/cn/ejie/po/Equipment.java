@@ -22,14 +22,7 @@ public class Equipment {
     private double dPurchasPrice;//采购价格
     private String customMessage;//自定义信息，该自定义信息满足以下格式：key:value,key:value
     private String eqOtherId;//设备别名ID
-
-    public String getEqOtherId() {
-        return eqOtherId;
-    }
-
-    public void setEqOtherId(String eqOtherId) {
-        this.eqOtherId = eqOtherId;
-    }
+    private String city;//
 
     public Equipment() {
     }
@@ -49,6 +42,7 @@ public class Equipment {
                 ", dPurchasPrice=" + dPurchasPrice +
                 ", customMessage='" + customMessage + '\'' +
                 ", eqOtherId='" + eqOtherId + '\'' +
+                ", city='" + city + '\'' +
                 '}';
     }
 
@@ -138,5 +132,21 @@ public class Equipment {
 
     public void setCustomMessage(String customMessage) {
         this.customMessage = customMessage;
+    }
+
+    public String getEqOtherId() {
+        return eqOtherId;
+    }
+
+    public void setEqOtherId(String eqOtherId) {
+        this.eqOtherId = eqOtherId;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

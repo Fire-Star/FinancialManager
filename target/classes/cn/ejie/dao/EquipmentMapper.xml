@@ -16,4 +16,10 @@
     <select id="countEquipment" resultType="java.lang.Integer">
         SELECT count(eq_id) FROM equipment
     </select>
+    <select id="findAllBySql" resultType="cn.ejie.pocustom.EquipmentCustom" parameterType="String">
+        ${value}
+    </select>
+    <select id="findAll" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT eq_id,eq_type,eq_name,brand_name,purchas_depart,belong_depart,purchas_date,supplier,eq_state,purchas_price,custom_message,eq_other_id,city FROM equipment
+    </select>
 </mapper>

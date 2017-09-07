@@ -17,6 +17,14 @@ public interface SupplierMapper {
     public List<SupplierCustom> findAllSupplier() throws Exception;
 
     /**
+     * 根据sql查询供应商信息
+     * @param sql
+     * @return
+     * @throws Exception
+     */
+    public List<SupplierCustom> findSupplierBySql(String sql) throws Exception;
+
+    /**
      * 添加单个提供商
      * @param supplierCustom
      * @throws Exception
