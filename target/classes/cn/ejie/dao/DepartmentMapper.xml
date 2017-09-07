@@ -15,4 +15,10 @@
     <select id="hasDepartment" resultType="java.lang.Integer">
         SELECT count(id) FROM department WHERE city = #{city} and department = #{department}
     </select>
+    <select id="findDepartmentIDByDepName" resultType="String">
+        SELECT id FROM department WHERE department = #{dep}
+    </select>
+    <select id="findCityIdByDepartmentId" resultType="String">
+        SELECT city FROM department WHERE id = #{id}
+    </select>
 </mapper>

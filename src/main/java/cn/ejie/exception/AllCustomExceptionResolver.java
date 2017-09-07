@@ -17,23 +17,24 @@ public class AllCustomExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
         ModelAndView mv = new ModelAndView();
+        String view = null;
         //处理用户的所有异常，包括登录注册等。
         if(ex instanceof SimpleException){
             SimpleException simpleException = (SimpleException)ex;
 
             request.setAttribute("errorType",simpleException.getErrorType());
             request.setAttribute("errorMessage",simpleException.getErrorMessage());
+            // TODO: 2017/9/7 这里还要写异常页面发送处理 
 
-            //如果我们没有主动在抛异常哪里主动设置错误页面，那么这里默认就是 xml 中配置的错误页面。
-            String view = simpleException.getView();
-            if(view == null){
-                view = defaultErrorPage;
-            }
-            mv.setViewName(view);
-
-            return  mv;
+            return  null;
         }
-        return null;
+
+        if(view == null){
+            view = defaultErrorPage;
+        }
+        mv.setViewName(view);
+
+        return mv;
     }
 
     public String getDefaultErrorPage() {

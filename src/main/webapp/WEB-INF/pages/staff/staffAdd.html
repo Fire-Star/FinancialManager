@@ -116,10 +116,10 @@
             </div>
             <div class="item-right content-item">
                 <div class="item-left item-name">
-                    <label for="addTime">入职时间:</label>
+                    <label for="calender">入职时间:</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <input class="form-control" propName="员工入职时间" id="addTime" name="addTime" placeholder="选择员工入职时间..." type="text">
+                    <input class="form-control" propName="员工入职时间" id="calender" name="addTime" placeholder="选择员工入职时间..." type="text">
                 </div>
             </div>
         </div>
@@ -210,9 +210,9 @@
                         if(status){
                             console.log(data);
                             var _data = eval('('+data+')');
-                            if(_data.success===undefined){
+                            if(_data.success===undefined&&_data.staffError!=undefined){
                                 var _data = eval({data});
-                                vm.modalStatus="数据添加失败！";
+                                vm.modalStatus=_data.staffError;
                                 $('#modalButton').click();
                             }else{
                                 vm.modalStatus="数据添加成功！";

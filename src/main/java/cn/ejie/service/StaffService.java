@@ -18,26 +18,37 @@ public class StaffService {
     @Autowired
     private DepartmentMapper departmentMapper;
 
-    public void staffAddSingle(StaffCustom staffCustom) throws Exception{
+    private String errorType="staffError";
+
+    /**
+     * 添加员工
+     * @param staffCustom
+     * @throws Exception
+     */
+    public void addSingleStaff(StaffCustom staffCustom) throws Exception{
         BeanPropertyValidateUtils.validateIsEmptyProperty(staffCustom);//验证前台传输过来的关键字段属性是否为空。
         String tel = staffCustom.getTel();
         if(tel.length()!=11){
-            throw new StaffException("staffTelError","电话号码必须为11位！");
+            throw new StaffException(errorType,"电话号码必须为11位！");
         }
         String depId = departmentMapper.findDepartmentIDByDepName(staffCustom.getDep());
         if(depId==null){
-            throw new StaffException("staffTelError",staffCustom.getDep()+" 部门不错在！");
+            throw new StaffException(errorType,staffCustom.getDep()+" 部门不存在！");
         }
 
         Integer staffCount = staffMapper.findStaffCountByDepAndNameAndTel(staffCustom.getTel(),staffCustom.getName(),staffCustom.getDep());
         if(staffCount>0){
-            throw new StaffException("staffTelError","该员工已经存在，你可以通过 员工所属部门、姓名、电话号码 判断该员工是否存在！");
+            throw new StaffException(errorType,"该员工已经存在，你可以通过 员工所属部门、姓名、电话号码 判断该员工是否存在！");
         }
+
+        String cityId = departmentMapper.findCityIdByDepartmentId(depId);
+        staffCustom.setCity(cityId);
+
         staffCustom.setEntryTime(StringUtils.zhDateStrToENDateStr(staffCustom.getEntryTime()));
         try {
             staffMapper.insert(staffCustom);
         }catch (Exception e){
-            throw new SimpleException("staffDateBaseError","数据库发生错误！");
+            throw new SimpleException(errorType,"数据库发生错误！");
         }
 
     }
