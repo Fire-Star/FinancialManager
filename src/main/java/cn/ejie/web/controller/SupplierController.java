@@ -48,7 +48,7 @@ public class SupplierController {
     public String addSupplier(){
         return "/WEB-INF/pages/supplier/supplierAdd.html";
     }
-	 @RequestMapping("/supplier/query")
+    @RequestMapping("/supplier/query")
     public String testSupplierquery(){
         return "/WEB-INF/pages/supplier/supplierquery.html";
     }
@@ -79,7 +79,56 @@ public class SupplierController {
             time = request.getParameter("time");
         }
         System.out.println("limit:"+limit+"   "+"offset:"+offset+"   "+"suppliername:"+suppliername+"   "+"suppliercontactname:"+suppliercontactname+"   "+"contacttel:"+contacttel+"   "+"time:"+time+"   ");
+        String sql = "";
+        String sqltemp = "";
+        //sql = "SELECT `name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE tel = 13822221111";
+        if(!suppliername.equals("")||!suppliercontactname.equals("")||!contacttel.equals("")||!time.equals("")){
+            sqltemp = "SELECT `name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE ";
+        }
+        if(!suppliername.equals("")){
+            sqltemp = sqltemp + "name= " + suppliername +" ";
+        }
+        if(!suppliercontactname.equals("")){
+            sqltemp = sqltemp + "and contact_name=" + suppliercontactname +" ";
+        }
+        if(!contacttel.equals("")){
+            sqltemp = sqltemp + "and tel=" + contacttel +" ";
+        }
+        if(!time.equals("")){
+            sqltemp = sqltemp + "and contract_time=" + time +" ";
+        }
+        if(sqltemp.contains("WHERE and")){
+            sql = sqltemp.replaceAll("WHERE and","WHERE");
+        }else {
+            sql = sqltemp;
+        }
+        System.out.println(sql);
+        List<SupplierCustom> listSupplier = null;
+        try {
+            if(!sql.equals("")&&sql!=null){
+                listSupplier = supplierService.findSupplierBySql(sql);
+            }else{
+                listSupplier = supplierService.findAllSupplier();
+            }
+        } catch (Exception e) {
+            Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+       // SimpleException.sendSuccessMessage(response,objectMapper);
         List<Object> list = new ArrayList<Object>();
+        for(int i=0;i<listSupplier.size();i++){
+            Map<String, Object> mapp = new HashMap<String, Object>();
+            mapp.put("index", i+"");
+            mapp.put("name",listSupplier.get(i).getName());
+            mapp.put("contactName",listSupplier.get(i).getContactName());
+            mapp.put("tel",listSupplier.get(i).getTel());
+            mapp.put("business",listSupplier.get(i).getBusiness());
+            mapp.put("count","151545");
+            mapp.put("money","21321");
+            list.add(mapp);
+        }
+        /*List<Object> list = new ArrayList<Object>();
         for(int i=0;i<50;i++){
             Map<String, Object> mapp = new HashMap<String, Object>();
             mapp.put("index", i+"");
@@ -90,15 +139,7 @@ public class SupplierController {
             mapp.put("count","151545");
             mapp.put("money","21321");
             list.add(mapp);
-        }
-        int total = 10;
-        Map<String,Object> map = new HashMap<String,Object>();
-        //map.put("total",total);
-        //map.put("rows",list);
-        //JSONObject supplierJSON = new JSONObject();
-        //supplierJSON = JSONObject.fromObject(map);
-        //System.out.println(supplierJSON.toString());
-        //SimpleException.sendMessage(response,supplierJSON.toString(),objectMapper);
+        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());

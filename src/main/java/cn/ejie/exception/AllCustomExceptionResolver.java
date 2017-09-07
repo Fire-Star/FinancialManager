@@ -24,7 +24,7 @@ public class AllCustomExceptionResolver implements HandlerExceptionResolver {
 
             request.setAttribute("errorType",simpleException.getErrorType());
             request.setAttribute("errorMessage",simpleException.getErrorMessage());
-            // TODO: 2017/9/7 这里还要写异常页面发送处理 
+            // TODO: 2017/9/7 这里还要写异常页面发送处理
 
             return  null;
         }
