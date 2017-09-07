@@ -4,6 +4,7 @@ import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.service.SupplierService;
 import cn.ejie.utils.SimpleBeanUtils;
+import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -26,12 +25,6 @@ public class SupplierController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Resource(name="zhDateFormate")
-    private SimpleDateFormat zhDateFormate;
-
-    @Resource(name = "enDateFormate")
-    private SimpleDateFormat enDateFormate;
-
     @RequestMapping("/supplier/showAll")
     public @ResponseBody List<SupplierCustom> showAllSupplier() throws Exception {
         return  supplierService.findAllSupplier();
@@ -41,8 +34,7 @@ public class SupplierController {
     public void addSingleSupplier(HttpServletRequest request, HttpServletResponse response){
         SupplierCustom supplierCustom = SimpleBeanUtils.setMapPropertyToBean(SupplierCustom.class,request.getParameterMap());
         try {
-            Date contractDate = zhDateFormate.parse(supplierCustom.getContractTime());
-            supplierCustom.setContractTime(enDateFormate.format(contractDate));
+            supplierCustom.setContractTime(StringUtils.zhDateStrToENDateStr(supplierCustom.getContractTime()));
             supplierService.addSingleSupplier(supplierCustom);
         } catch (Exception e) {
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);

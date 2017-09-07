@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>员工添加</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../res/js/bootstrap.min.js"></script>
+    <script src="../res/js/bootstrap-datepicker.js"></script>
+    <script src="../res/js/bootstrap-datepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../res/js/vue.min.js"></script>
+    <style>
+        html,body{
+            height: 100%;width: 100%;padding: 0px;
+        }
+        .hr{
+            border: none;border-bottom: 1px solid #9d9d9d;
+        }
+        .form-group > input{
+            width: 225px;
+        }
+        .btn-submit{
+            width: 200px;
+        }
+        .datepicker:hover{
+            cursor: pointer;
+        }
+        @media (min-width: 768px) {
+            .from-line{
+                margin-bottom: 40px;
+            }
+            .item-left{
+                float: left;
+            }
+            .item-right{
+                float: right;
+            }
+            .content-line{
+                width: 700px;height: 30px;position: relative;
+            }
+            .content-item{
+                display: inline-block;width: 280px;position: relative;
+            }
+            .item-name{
+
+            }
+            .customTitle{
+                clear: both;
+            }
+        }
+        #calender{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="app container-fluid width-100per top-content">
+    <ul class="breadcrumb">
+        <li>
+            员工管理<span class="divider">></span>
+        </li>
+        <li class="active">员工添加</li>
+    </ul><br>
+    <form role="form">
+        <span class="h4 text-primary">员工基本信息添加</span>
+        <hr class="hr">
+
+        <div class="content-line">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="staffName">姓名：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input type="text" class="form-control " propName="员工姓名" id="staffName" data-toggle="tooltip" data-placement="top"  v-model="name" placeholder="请输入员工姓名...">
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="city" class="">城市：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input type="text" class="form-control" id="city" propName="城市" data-toggle="tooltip" data-placement="top" v-model="city" placeholder="请输入员工城市...">
+                </div>
+            </div>
+        </div>
+        <div class="content-line customTitle">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="dep">部门：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right" >
+                    <input type="text" class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" placeholder="请输入员工归属部门...">
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="position" class="">岗位：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input type="text" v-model="position" class="form-control" id="position" propName="岗位" data-toggle="tooltip" data-placement="top" placeholder="请输入员工岗位...">
+                </div>
+            </div>
+        </div>
+        <div class="content-line customTitle">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="tel">联系电话：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right" >
+                    <input type="number" checked class="form-control" v-model="tel" id="tel" propName="员工联系电话" data-toggle="tooltip" data-placement="top" placeholder="请输入员工联系电话...">
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="addTime">入职时间:</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input class="form-control" propName="员工入职时间" id="addTime" name="addTime" placeholder="选择员工入职时间..." type="text">
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <p class="h4 text-primary customTitle">员工自定义信息添加</p>
+        <hr class="hr">
+        <input type="hidden" name="customKey">
+        <input type="hidden" name="customValue">
+        <div class="form-group form-inline" v-for="(item,index) in customFields">
+            <input type="text" class="form-control" v-model="customFields[index].key" placeholder="自定义属性">
+            <input type="text" class="form-control" v-model="customFields[index].value" placeholder="属性值">
+            <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
+            <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
+        </div>
+        <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+    </form>
+    <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    {{modalStatus}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var data = {
+        customFields:[{}],
+        name:"",
+        city:"",
+        dep:"",
+        position:"",
+        tel:"",
+        addTime:"",
+        errorType:{
+            supplierNameError:"",supplierAdtitudeError:"",supplierAddressError:"",
+            supplierContactNameError:"",supplierTelError:"",supplierBusinessError:""
+        },
+        isError:[],
+        modalStatus:""
+    };
+    var vm = new Vue({
+        el:'.app',
+        data:data,
+        methods:{
+            addField(index,item){
+                this.customFields.push({});
+            },
+            delField(index){
+                if(this.customFields.length==1){
+                    return;
+                }
+                this.customFields.splice(index,1);
+            },
+            submitData(){
+                if(tableCheck()){
+                    return;
+                }
+                var $btn = $('#submitBtn').button('loading');
+                var _customFields ="";
+                var index;
+                for(index in this.customFields){
+                    if(this.customFields[index].key==""||this.customFields[index].key==undefined){
+                        continue;
+                    }
+                    _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
+                }
+                _customFields=_customFields;
+                $.post("add",
+                    {
+                        "name":this.name,
+                        "city":this.city,
+                        "dep":this.dep,
+                        "position":this.position,
+                        "tel":this.tel,
+                        "addTime":this.addTime,
+                        "customMessage":_customFields
+                    },
+                    function(data,status){
+                        if(status){
+                            console.log(data);
+                            var _data = eval('('+data+')');
+                            if(_data.success===undefined){
+                                var _data = eval({data});
+                                vm.modalStatus="数据添加失败！";
+                                $('#modalButton').click();
+                            }else{
+                                vm.modalStatus="数据添加成功！";
+                                $('#modalButton').click();
+                            }
+                        }
+                    });
+                $btn.button('reset');
+            }
+        }
+    });
+    function tableCheck(){
+        vm.addTime=$('#calender')[0].value;
+        var inputObj = $('.form-control');
+        var i;
+        var len = 6;
+        var flag = false;
+        for(i=0 ;i < len; i++){
+            if(inputObj[i].value==""){
+                vm.isError[i]=true;
+                flag = true;
+                var propName = inputObj[i].getAttribute('propName');
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().addClass('has-error');
+                var errorMessage = propName+"不能有特殊字符也不能为空！";
+                $('#'+id).tooltip({
+                    title:errorMessage
+                });
+            }else{
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().removeClass('has-error');
+                $('#'+id).tooltip('destroy');
+            }
+        }
+        if(vm.tel.length<11){
+            $('#tel').parent().addClass('has-error');
+            $('#tel').tooltip({
+                title:"电话号码长度为11位！"
+            });
+            return true;
+        }
+        return flag;
+    }
+    $('#calender').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
+</html>

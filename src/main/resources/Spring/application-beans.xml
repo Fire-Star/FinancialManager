@@ -15,14 +15,4 @@
             <bean class="java.util.Random"></bean>
         </property>
     </bean>
-    <bean id="zhDateFormate" class="java.text.SimpleDateFormat">
-        <constructor-arg>
-            <value>yyyy年MM月dd日</value>
-        </constructor-arg>
-    </bean>
-    <bean id="enDateFormate" class="java.text.SimpleDateFormat">
-        <constructor-arg>
-            <value>yyyy-MM-dd</value>
-        </constructor-arg>
-    </bean>
 </beans>

@@ -1,6 +1,13 @@
 package cn.ejie.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StringUtils {
+    private static SimpleDateFormat enDateFormate = new SimpleDateFormat("yyyy-MM-dd");
+    private static SimpleDateFormat zhDateFormate = new SimpleDateFormat("yyyy年MM月dd日");
+
     /**
      * 对字符串通过指定字符串填充到指定长度！
      * @param origin
@@ -20,5 +27,22 @@ public class StringUtils {
             resultString.insert(0,fillCharacter);
         }
         return resultString.toString();
+    }
+
+    /**
+     * 中文时间字符串到 英文规则时间字符串。如 1997年11月5日 字符串 调用该方法后，就会变成 1997-11-5
+     * @param zhDateStr
+     * @return
+     */
+    public static String zhDateStrToENDateStr(String zhDateStr){
+        Date date = null;
+        String targetDateStr = null;
+        try {
+            date = zhDateFormate.parse(zhDateStr);
+            targetDateStr = enDateFormate.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return targetDateStr;
     }
 }
