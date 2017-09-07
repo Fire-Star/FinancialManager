@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1ac4616-a505-49a0-bfdc-267bb73550bc" name="Default" comment="">
+<<<<<<< HEAD
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/equipment/equipquery.html" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-07" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/dao/EquipmentMapper.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/dao/EquipmentMapper.class" />
@@ -10,9 +11,17 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/service/EquipmentService.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/service/EquipmentService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/service/SupplierService.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/service/SupplierService.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/EquipmentController.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/EquipmentController.class" />
+=======
+<<<<<<< HEAD
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/supplier/supplierAdd.html" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/supplier/supplierAdd.html" />
+=======
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-06" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/exception/SimpleException.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/exception/SimpleException.class" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/SupplierController.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/SupplierController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/UserController.class" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/web/controller/UserController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.xml" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/EquipmentMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/SupplierMapper.java" afterPath="$PROJECT_DIR$/src/main/java/cn/ejie/dao/SupplierMapper.java" />
@@ -27,6 +36,11 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/dao/EquipmentMapper.xml" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/dao/EquipmentMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/cn/ejie/dao/SupplierMapper.xml" afterPath="$PROJECT_DIR$/target/classes/cn/ejie/dao/SupplierMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-06" afterPath="$PROJECT_DIR$/target/tomcat/logs/access_log.2017-09-06" />
+=======
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FinancialManager.iml" afterPath="$PROJECT_DIR$/FinancialManager.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -39,6 +53,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
+      <file leaf-file-name="main.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SupplierController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/SupplierController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="200">
+              <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+              <folding>
+                <element signature="e#1811#1812#0" expanded="true" />
+                <element signature="e#1876#1877#0" expanded="true" />
+                <element signature="e#1952#1953#0" expanded="true" />
+                <element signature="e#2019#2020#0" expanded="true" />
+                <element signature="e#3342#3350#0" expanded="true" />
+                <element signature="e#3435#3451#0" expanded="true" />
+                <element signature="e#3849#3864#0" expanded="true" />
+=======
       <file leaf-file-name="SupplierController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/SupplierController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -46,15 +85,45 @@
               <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
+<<<<<<< HEAD
                 <element signature="e#1954#1955#0" expanded="true" />
                 <element signature="e#2021#2022#0" expanded="true" />
                 <element signature="e#5027#5035#0" expanded="true" />
                 <element signature="e#5137#5153#0" expanded="true" />
+=======
+                <element signature="e#1952#1953#0" expanded="true" />
+                <element signature="e#2019#2020#0" expanded="true" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="SupplierService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="supplierAdd.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/supplier/supplierAdd.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="128" column="59" lean-forward="false" selection-start-line="128" selection-start-column="59" selection-end-line="128" selection-end-column="59" />
+              <folding>
+                <element signature="e#7385#7392#1" expanded="true" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
       <file leaf-file-name="UserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/UserController.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -109,6 +178,31 @@
                 <marker date="1504685639827" expanded="true" signature="299:453" ph="SELECT `name... supplier" />
                 <marker date="1504685639827" expanded="true" signature="543:594" ph="SELECT count... supplier" />
               </folding>
+=======
+      <file leaf-file-name="bootstrap.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/res/js/bootstrap.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2088">
+              <caret line="1294" column="9" lean-forward="false" selection-start-line="1294" selection-start-column="4" selection-end-line="1294" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Supplier.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/Supplier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+=======
+      <file leaf-file-name="supplierquery.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/supplier/supplierquery.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+              <folding />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
             </state>
           </provider>
         </entry>
@@ -120,21 +214,36 @@
       <list>
         <option value="spring-beans.schema" />
         <option value="HTML File" />
+<<<<<<< HEAD
         <option value="Tag Library Descriptor" />
         <option value="Class" />
+=======
+        <option value="JavaScript File" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>showEqManage</find>
+<<<<<<< HEAD
+      <find>blog</find>
+      <find>tooltip</find>
+      <find>tooltip()</find>
+      <find>title</find>
+      <find>Tooltip.de</find>
+=======
       <find>json</find>
+<<<<<<< HEAD
       <find>tb_departments</find>
       <find>contactName</find>
       <find>Equipment</find>
       <find>eqState</find>
       <find>title</find>
       <find>myAuthenticationManager</find>
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,7 +263,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="E:/Maven/MavenLocalRepository/org/springframework/security/spring-security-config/4.2.3.RELEASE/spring-security-config-4.2.3.RELEASE.jar!/org/springframework/security/config/annotation/web/configuration/WebSecurityConfigurerAdapter.class" />
         <option value="E:/Maven/MavenLocalRepository/org/springframework/security/spring-security-config/4.2.3.RELEASE/spring-security-config-4.2.3.RELEASE.jar!/org/springframework/security/config/annotation/web/WebSecurityConfigurer.class" />
         <option value="E:/Maven/MavenLocalRepository/org/springframework/security/spring-security-config/4.2.3.RELEASE/spring-security-config-4.2.3.RELEASE.jar!/org/springframework/security/config/annotation/SecurityConfigurer.class" />
@@ -168,6 +276,16 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html" />
         <option value="$PROJECT_DIR$/src/main/java/cn/ejie/pocustom/SupplierCustom.java" />
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/SupplierController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/CityController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/ejie/po/Equipment.java" />
+        <option value="$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/res/bootstrap-datepicker.zh-CN.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/res/js/bootstrap-datepicker.js" />
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/supplier/supplierAdd.html" />
         <option value="$PROJECT_DIR$/src/main/java/cn/ejie/dao/SupplierMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java" />
@@ -204,6 +322,11 @@
         <option name="importAutomatically" value="true" />
       </MavenImportingSettings>
     </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
@@ -212,8 +335,13 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+<<<<<<< HEAD
     <option name="x" value="594" />
     <option name="y" value="71" />
+=======
+    <option name="x" value="370" />
+    <option name="y" value="-8" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
     <option name="width" value="1418" />
     <option name="height" value="822" />
   </component>
@@ -233,6 +361,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+<<<<<<< HEAD
+      <pane id="PackagesPane" />
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -273,7 +405,12 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ejie" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="dao" type="462c0819:PsiDirectoryNode" />
+=======
+<<<<<<< HEAD
+              <item name="exception" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
             </path>
             <path>
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
@@ -282,7 +419,11 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ejie" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="exception" type="462c0819:PsiDirectoryNode" />
+=======
+              <item name="verifycodemodel" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
             </path>
             <path>
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
@@ -318,6 +459,39 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="ejie" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+=======
+              <item name="service" type="462c0819:PsiDirectoryNode" />
+              <item name="DepartmentService" type="1a9f42e2:ClassTreeNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="ejie" type="462c0819:PsiDirectoryNode" />
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -336,6 +510,23 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FinancialManager" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="FinancialManager" type="b2602c69:ProjectViewProjectNode" />
@@ -392,6 +583,10 @@
       <pane id="AndroidView" />
       <pane id="Scope" />
       <pane id="Scratches" />
+<<<<<<< HEAD
+      <pane id="AndroidView" />
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -406,8 +601,15 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+<<<<<<< HEAD
       <recent name="E:\gitproject\FinancialManager\src\main\webapp\WEB-INF\pages\staff" />
+=======
+<<<<<<< HEAD
+      <recent name="F:\IDEAForJavaCode\FinancialManager\src\main\webapp\res\js" />
+=======
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <recent name="E:\gitproject\FinancialManager\src\main\webapp\WEB-INF\pages\supplier" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="F:\IDEAForJavaCode\test03\src\main\webapp\WEB-INF" />
@@ -865,8 +1067,17 @@
       <workItem from="1502242326897" duration="5995000" />
       <workItem from="1502249005015" duration="3410000" />
       <workItem from="1504492684061" duration="18307000" />
+<<<<<<< HEAD
+      <workItem from="1504579601705" duration="21210000" />
+      <workItem from="1504660393436" duration="28981000" />
+=======
       <workItem from="1504579601705" duration="20949000" />
+<<<<<<< HEAD
       <workItem from="1504677950874" duration="36832000" />
+=======
+      <workItem from="1504677950874" duration="1411000" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
     </task>
     <task id="LOCAL-00001" summary="SpringSecurity 通过命名空间配置成功，现在尝试把资源+权限和用户+角色配置到数据库里面去。">
       <created>1502247577601</created>
@@ -886,14 +1097,30 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="88582000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="80992000" />
+=======
+    <option name="totallyTimeSpent" value="53161000" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32329988" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45581737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+<<<<<<< HEAD
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -902,18 +1129,34 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3336945" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+=======
+<<<<<<< HEAD
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33370537" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3336945" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924107" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2185501" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
+<<<<<<< HEAD
+=======
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -922,7 +1165,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -993,7 +1235,13 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
+=======
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/login.html">
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
@@ -1113,6 +1361,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/dao/UserMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -1120,6 +1369,16 @@
           <folding>
             <marker date="1504677859982" expanded="true" signature="282:347" ph="SELECT usern... user" />
           </folding>
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          </first_editor>
+          <second_editor />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
         </state>
       </provider>
     </entry>
@@ -1304,21 +1563,126 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/staff/staffquery.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="230">
           <caret line="153" column="43" lean-forward="false" selection-start-line="153" selection-start-column="43" selection-end-line="153" selection-end-column="43" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="1675">
+=======
+        <state relative-caret-position="1273">
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+          <caret line="67" column="22" lean-forward="false" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/dao/SupplierMapper.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="323">
           <caret line="19" column="19" lean-forward="false" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="3275">
+=======
+        <state relative-caret-position="2489">
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+          <caret line="144" column="9" lean-forward="false" selection-start-line="144" selection-start-column="9" selection-end-line="144" selection-end-column="9" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/dao/StaffMapper.tld">
+=======
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3923">
+          <caret line="238" column="18" lean-forward="true" selection-start-line="238" selection-start-column="18" selection-end-line="238" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/CityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="33" column="113" lean-forward="false" selection-start-line="33" selection-start-column="113" selection-end-line="33" selection-end-column="113" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/Department.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/City.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/RequestWrapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/exception/GetAllCustomException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="347">
+          <caret line="26" column="69" lean-forward="false" selection-start-line="26" selection-start-column="69" selection-end-line="26" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/exception/AllCustomExceptionResolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="23" column="77" lean-forward="false" selection-start-line="23" selection-start-column="77" selection-end-line="23" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/utils/BeanPropertyValidateUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="575">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/Equipment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="39" lean-forward="false" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/utils/SimpleBeanUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+=======
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/pocustom/SupplierCustom.java">
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1326,6 +1690,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/dao/SupplierMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -1349,6 +1714,84 @@
             <element signature="e#1367#1368#0" expanded="true" />
             <element signature="e#1395#1396#0" expanded="true" />
           </folding>
+=======
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="162">
+          <caret line="79" column="40" lean-forward="false" selection-start-line="79" selection-start-column="40" selection-end-line="79" selection-end-column="40" />
+=======
+        <state relative-caret-position="456">
+          <caret line="24" column="32" lean-forward="false" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="32" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/res/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2088">
+          <caret line="1294" column="9" lean-forward="false" selection-start-line="1294" selection-start-column="4" selection-end-line="1294" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/res/js/jquery-3.2.1.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="190">
+          <caret line="2" column="11564" lean-forward="false" selection-start-line="2" selection-start-column="11564" selection-end-line="2" selection-end-column="11564" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/res/js/bootstrap-datepicker.zh-CN.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="17" column="11" lean-forward="false" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/res/js/bootstrap-datepicker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="2047" column="4" lean-forward="false" selection-start-line="2047" selection-start-column="4" selection-end-line="2047" selection-end-column="4" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <marker date="1504693227311" expanded="true" signature="30080:30086" ph="&amp;##160;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/service/SupplierService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/po/Supplier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
+=======
+        <state relative-caret-position="152">
+          <caret line="22" column="13" lean-forward="false" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+          <folding />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
         </state>
       </provider>
     </entry>
@@ -1391,6 +1834,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/web/controller/SupplierController.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="358">
           <caret line="27" column="37" lean-forward="false" selection-start-line="27" selection-start-column="25" selection-end-line="27" selection-end-column="37" />
           <folding>
@@ -1399,12 +1843,34 @@
             <element signature="e#2021#2022#0" expanded="true" />
             <element signature="e#5027#5035#0" expanded="true" />
             <element signature="e#5137#5153#0" expanded="true" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="200">
+          <caret line="39" column="38" lean-forward="true" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+          <folding>
+            <element signature="e#1811#1812#0" expanded="true" />
+            <element signature="e#1876#1877#0" expanded="true" />
+            <element signature="e#1952#1953#0" expanded="true" />
+            <element signature="e#2019#2020#0" expanded="true" />
+            <element signature="e#3342#3350#0" expanded="true" />
+            <element signature="e#3435#3451#0" expanded="true" />
+            <element signature="e#3849#3864#0" expanded="true" />
+=======
+        <state relative-caret-position="196">
+          <caret line="54" column="40" lean-forward="false" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1952#1953#0" expanded="true" />
+            <element signature="e#2019#2020#0" expanded="true" />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/cn/ejie/service/StaffService.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="353">
           <caret line="32" column="70" lean-forward="true" selection-start-line="32" selection-start-column="70" selection-end-line="32" selection-end-column="70" />
           <folding />
@@ -1415,7 +1881,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="15" column="38" lean-forward="true" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="275">
+          <caret line="128" column="59" lean-forward="false" selection-start-line="128" selection-start-column="59" selection-end-line="128" selection-end-column="59" />
+          <folding>
+            <element signature="e#7385#7392#1" expanded="true" />
+          </folding>
+=======
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+>>>>>>> 465dd3b7e46c1a6517ca027d1d4b0fc753e827c8
           <folding />
+>>>>>>> 839693e400ca36b99ddce0ae1697f52ca566df18
         </state>
       </provider>
     </entry>

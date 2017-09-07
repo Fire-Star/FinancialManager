@@ -36,6 +36,7 @@ cn\ejie\dao\EquipmentMapper.class
 cn\ejie\dao\UserMapper.class
 cn\ejie\service\SupplierService.class
 cn\ejie\web\filter\EncordingFilter.class
+cn\ejie\web\controller\StaffController.class
 cn\ejie\web\controller\UserController.class
 cn\ejie\exception\AllCustomExceptionResolver.class
 cn\ejie\exception\GetAllCustomException.class

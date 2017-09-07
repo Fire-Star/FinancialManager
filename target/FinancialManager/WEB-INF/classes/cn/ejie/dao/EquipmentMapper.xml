@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.EquipmentMapper">
+    <insert id="insertSingleEquipment">
+        <selectKey keyProperty="eqId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO equipment(eq_id,eq_type,eq_name,brand_name,
+        purchas_depart,belong_depart,purchas_date,supplier,eq_state_id,
+        purchas_price,custom_message) VALUES(#{eqId},#{eqType},#{eqName},
+        #{brandName},#{purchasDepart},#{belongDepart},#{purchasDate},#{supplier},
+        #{eqStateId},#{dPurchasPrice},#{customMessage})
+    </insert>
+    <select id="countEquipment" resultType="java.lang.Integer">
+        SELECT count(eq_id) FROM equipment
+    </select>
+</mapper>

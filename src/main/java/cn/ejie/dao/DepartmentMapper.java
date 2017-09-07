@@ -30,4 +30,12 @@ public interface DepartmentMapper {
      * @throws Exception
      */
     public Integer hasDepartment(DepartmentCustom departmentCustom) throws Exception;
+
+    /**
+     * 通过部门名称查询部门ID
+     * @param dep
+     * @return
+     * @throws Exception
+     */
+    public String findDepartmentIDByDepName(String dep) throws Exception;
 }

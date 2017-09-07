@@ -3,6 +3,7 @@ package cn.ejie.web.controller;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.CityCustom;
 import cn.ejie.service.CityService;
+import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,6 +4,7 @@ import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.service.SupplierService;
 import cn.ejie.utils.SimpleBeanUtils;
+import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class SupplierController {
@@ -35,8 +33,8 @@ public class SupplierController {
     @RequestMapping("/supplier/add")
     public void addSingleSupplier(HttpServletRequest request, HttpServletResponse response){
         SupplierCustom supplierCustom = SimpleBeanUtils.setMapPropertyToBean(SupplierCustom.class,request.getParameterMap());
-        System.out.println(supplierCustom);
         try {
+            supplierCustom.setContractTime(StringUtils.zhDateStrToENDateStr(supplierCustom.getContractTime()));
             supplierService.addSingleSupplier(supplierCustom);
         } catch (Exception e) {
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
