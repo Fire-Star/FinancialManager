@@ -109,7 +109,7 @@
         </button>
     </div>
     <div class="tablecontent">
-        <table class="bootstrap-table fixed-table-container" id="tb_departments"></table>
+        <table class="bootstrap-table fixed-table-container" id="tb_staff"></table>
     </div>
 </div>
 </body>
@@ -132,8 +132,8 @@
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
-            $('#tb_departments').bootstrapTable({
-               // url: 'search',         //请求后台的URL（*）
+            $('#tb_staff').bootstrapTable({
+                url: 'search',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -192,10 +192,11 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                suppliername: $("#suppliername").val(),
-                suppliercontactname: $("#suppliercontactname").val(),
-                contacttel: $("#contacttel").val(),
-                time: $("#time").val()
+                name: $("#name").val(),
+                department: $("#department").val(),
+                position: $("#position").val(),
+                tel: $("#tel").val(),
+                entrytime: $("entrytime").val()
             };
             alert(params.limit);
             return temp;
@@ -212,13 +213,14 @@
         return oInit;
     };
     function datasearch() {
-        $('#tb_departments').bootstrapTable('refresh');
+        $('#tb_staff').bootstrapTable('refresh');
     };
     function datareset() {
-        $('#suppliername').val("");
-        $('#suppliercontactname').val("");
-        $('#contacttel').val("");
-        $('#time').val("");
+        $('#name').val("");
+        $('#department').val("");
+        $('#position').val("");
+        $('#tel').val("");
+        $('#entrytime').val("");
     };
 </script>
 </html>
