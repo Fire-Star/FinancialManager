@@ -22,8 +22,12 @@ public class Equipment {
     private double dPurchasPrice;//采购价格
     private String customMessage;//自定义信息，该自定义信息满足以下格式：key:value,key:value
     private String eqOtherId;//设备别名ID
+<<<<<<< HEAD
     private String city;//城市ID
 
+=======
+    private String city;//
+>>>>>>> cd999a140ade538b495353a9f4335e0a449e0597
 
     public Equipment() {
     }

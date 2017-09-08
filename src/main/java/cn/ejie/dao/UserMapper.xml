@@ -6,4 +6,10 @@
     <select id="findUserByUsername" resultType="cn.ejie.po.User">
         SELECT username,password FROM `user` WHERE username = #{username}
     </select>
+    <select id="findAll" resultType="cn.ejie.pocustom.UserCustom">
+        SELECT username,password,city FROM user
+    </select>
+    <select id="findBySql" resultType="cn.ejie.pocustom.UserCustom" parameterType="String">
+        ${value}
+    </select>
 </mapper>

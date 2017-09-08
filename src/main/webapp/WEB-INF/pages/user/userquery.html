@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>员工查询</title>
+    <title>账号权限</title>
     <!-- 引入 BootStrap 全家桶 -->
     <script src="../res/js/jquery-3.2.1.min.js"></script>
     <script src="../res/js/bootstrap.min.js"></script>
@@ -35,12 +35,6 @@
         .bootstrap-table{
             height: 100%;
         }
-        .col-sm-1{
-            margin-top: 10px;
-        }
-        .col-sm-2{
-            margin-top: 10px;
-        }
         .bootstrap-table.fixed-table-container{
             height: 85%;
         }
@@ -51,50 +45,33 @@
 </head>
 <body>
 <div class="app container">
-    <div class="supplier-head">
-        员工管理 > 员工查询
-    </div>
+    <ul class="breadcrumb">
+        <li>
+            账号权限<span class="divider">></span>
+        </li>
+        <li class="active">账号管理</li>
+    </ul><br>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong><p class="lead">员工查询</p></strong>
+                <strong><p class="lead">账号管理</p></strong>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="name">姓名：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="name" placeholder="姓名...">
+                        <label class="control-label col-sm-1" for="username">用户名：</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="username" placeholder="用户名...">
                         </div>
-                        <label class="control-label col-sm-1" for="department">部门：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="department" placeholder="部门...">
-                        </div>
-                        <label class="control-label col-sm-1" for="position">岗位:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="position" placeholder="岗位...">
-                        </div>
-                        <label class="control-label col-sm-1" for="tel">联系电话:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="tel" placeholder="联系电话...">
-                        </div>
-                        <label class="control-label col-sm-1" for="entrytime">入职时间:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="entrytime" placeholder="入职时间...">
-                        </div>
-                        <label class="control-label col-sm-1"></label>
-                        <div class="col-sm-2">
-
-                        </div>
-                        <label class="control-label col-sm-1"></label>
-                        <div class="col-sm-2">
-
+                        <label class="control-label col-sm-1" for="city">城市：</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" id="city" placeholder="城市...">
                         </div>
                         <div class="col-sm-1" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
                         </div><div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
-                        </div>
+                        <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -109,7 +86,7 @@
         </button>
     </div>
     <div class="tablecontent">
-        <table class="bootstrap-table fixed-table-container" id="tb_staff"></table>
+        <table class="bootstrap-table fixed-table-container" id="tb_user"></table>
     </div>
 </div>
 </body>
@@ -132,8 +109,8 @@
         var oTableInit = new Object();
         //初始化Table
         oTableInit.Init = function () {
-            $('#tb_staff').bootstrapTable({
-                url: 'search',         //请求后台的URL（*）
+            $('#tb_user').bootstrapTable({
+                url: 'query',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -165,25 +142,15 @@
                     title: '序列号'
                 }, {
                     field: 'name',
-                    title: '姓名'
+                    title: '账号'
                 }, {
                     field: 'city',
                     title: '城市'
                 }, {
-                    field: 'department',
-                    title: '部门'
-                }, {
-                    field: 'position',
-                    title: '岗位'
-                }, {
-                    field: 'tel',
-                    title: '联系电话'
-                }, {
-                    field: 'entrytime',
-                    title: '入职时间'
-                }, {
-                    field: 'equipnum',
-                    title: '借调设备'
+                    field: 'option',
+                    title: '操作',
+                    events: operateEvents,
+                    formatter: operateFormatter
                 }]
             });
         };
@@ -192,13 +159,9 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                name: $("#name").val(),
-                department: $("#department").val(),
-                position: $("#position").val(),
-                tel: $("#tel").val(),
-                entrytime: $("entrytime").val()
+                username: $("#username").val(),
+                city: $("#city").val(),
             };
-            alert(params.limit);
             return temp;
         };
         return oTableInit;
@@ -208,19 +171,31 @@
         var postdata = {};
         oInit.Init = function () {
             //初始化页面上面的按钮事件
-
         };
         return oInit;
     };
     function datasearch() {
-        $('#tb_staff').bootstrapTable('refresh');
+        $('#tb_user').bootstrapTable('refresh');
     };
     function datareset() {
         $('#name').val("");
-        $('#department').val("");
-        $('#position').val("");
-        $('#tel').val("");
-        $('#entrytime').val("");
+        $('#city').val("");
     };
+    function operateFormatter(value, row, index) {
+        return [
+            '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">密码重置</button>',
+            '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">删除</button>'
+        ].join('');
+    };
+
+        window.operateEvents = {
+            'click .RoleOfA': function (e, value, row, index) {
+                alert(row.name);
+            },
+            'click .RoleOfB': function (e, value, row, index) {
+                alert(index);
+            }
+        }
+
 </script>
 </html>
