@@ -20,13 +20,13 @@
         .hr{
             border: none;border-bottom: 1px solid #9d9d9d;
         }
-        .form-group > input{
-            width: 225px;
+        .form-control{
+            width: 186px !important;
         }
         .btn-submit{
             width: 200px;
         }
-        .datepicker:hover{
+        .datepicker:hover , #dep ,#city{
             cursor: pointer;
         }
         @media (min-width: 768px) {
@@ -65,7 +65,7 @@
         </li>
         <li class="active">员工添加</li>
     </ul><br>
-    <form role="form">
+    <form role="form" name="satff-add-form">
         <span class="h4 text-primary">员工基本信息添加</span>
         <hr class="hr">
 
@@ -83,7 +83,10 @@
                     <label for="city" class="">城市：</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <input type="text" class="form-control" id="city" propName="城市" data-toggle="tooltip" data-placement="top" v-model="city" placeholder="请输入员工城市...">
+                    <select class="form-control" id="city" propName="城市" data-toggle="tooltip" data-placement="top" v-model="city" >
+                        <option selected value="">---请选择城市---</option>
+                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -93,7 +96,10 @@
                     <label for="dep">部门：</label>
                 </div>
                 <div class="form-group form-inline from-line item-right" >
-                    <input type="text" class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" placeholder="请输入员工归属部门...">
+                    <select class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" >
+                        <option selected value="">--请选择员工部门--</option>
+                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                    </select>
                 </div>
             </div>
             <div class="item-right content-item">
@@ -119,7 +125,7 @@
                     <label for="calender">入职时间:</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <input class="form-control" propName="员工入职时间" id="calender" name="addTime" placeholder="选择员工入职时间..." type="text">
+                    <input class="form-control" propName="员工入职时间" id="calender" name="entryTime" placeholder="选择员工入职时间..." type="text">
                 </div>
             </div>
         </div>
@@ -154,6 +160,11 @@
 </div>
 </body>
 <script>
+
+    $("#city").change(function () {
+        loadDep();
+    })
+
     var data = {
         customFields:[{}],
         name:"",
@@ -162,13 +173,12 @@
         position:"",
         tel:"",
         addTime:"",
-        errorType:{
-            supplierNameError:"",supplierAdtitudeError:"",supplierAddressError:"",
-            supplierContactNameError:"",supplierTelError:"",supplierBusinessError:""
-        },
         isError:[],
-        modalStatus:""
+        modalStatus:"",
+        citys:[],
+        departments:[]
     };
+
     var vm = new Vue({
         el:'.app',
         data:data,
@@ -203,20 +213,23 @@
                         "dep":this.dep,
                         "position":this.position,
                         "tel":this.tel,
-                        "addTime":this.addTime,
-                        "customMessage":_customFields
+                        "entryTime":this.addTime,
+                        "customMessages":_customFields
                     },
                     function(data,status){
                         if(status){
                             console.log(data);
-                            var _data = eval('('+data+')');
-                            if(_data.success===undefined&&_data.staffError!=undefined){
-                                var _data = eval({data});
+                            var _data = eval(data);
+                            if(_data.defaultError!=undefined){
+                                vm.modalStatus=_data.defaultError;
+                                $('#modalButton').click();
+                            }else if(_data.success===undefined&&_data.staffError!=undefined){
                                 vm.modalStatus=_data.staffError;
                                 $('#modalButton').click();
-                            }else{
+                            }else if(_data.success!=undefined){
                                 vm.modalStatus="数据添加成功！";
                                 $('#modalButton').click();
+                                satff-add-form.reset();
                             }
                         }
                     });
@@ -224,6 +237,33 @@
             }
         }
     });
+    /**
+     * 加载城市选项
+     */
+    $.get("../city/findAllCity",function(data,status){
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    });
+    /**
+     * 加载部门选项
+     */
+    function loadDep() {
+        $.get("../department/showAllByCity?city="+vm.city,function(data,status){
+            if(status=="success"){
+                var _departmentData = eval(data);
+                console.log(_departmentData);
+                if(_departmentData.departmentErrorType!=undefined){
+                    vm.modalStatus=_departmentData.departmentErrorType;
+                    $('#modalButton').click();
+                }else{
+                    vm.departments=_departmentData;
+                }
+            }
+        });
+    }
+
     function tableCheck(){
         vm.addTime=$('#calender')[0].value;
         var inputObj = $('.form-control');

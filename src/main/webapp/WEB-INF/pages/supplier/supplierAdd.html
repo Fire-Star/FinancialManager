@@ -222,7 +222,7 @@
                     function(data,status){
                         if(status){
                             console.log(data);
-                            var _data = eval('('+data+')');
+                            var _data = eval(data);
                             if(_data.success===undefined){
                                 var _data = eval({data});
                                 vm.modalStatus="数据添加失败！";
