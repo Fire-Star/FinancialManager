@@ -7,15 +7,15 @@ import cn.ejie.annotations.BeanPropertyErrorType;
  */
 public class Staff {
     private String staffId;//员工ID
-    @BeanPropertyErrorType(propertyName = "staffNameError",value = "员工姓名")
+    @BeanPropertyErrorType(propertyName = "员工姓名",value = "staffError")
     private String name;//员工姓名
-    @BeanPropertyErrorType(propertyName = "staffDepError",value = "员工部门")
+    @BeanPropertyErrorType(propertyName = "员工部门",value = "staffError")
     private String dep;//员工部门
-    @BeanPropertyErrorType(propertyName = "staffPositionError",value = "员工职位")
+    @BeanPropertyErrorType(propertyName = "员工职位",value = "staffError")
     private String position;//员工职位
-    @BeanPropertyErrorType(propertyName = "staffTelError",value = "员工电话号码")
+    @BeanPropertyErrorType(propertyName = "员工电话号码",value = "staffError")
     private String tel;//员工电话号码
-    @BeanPropertyErrorType(propertyName = "staffEntryTimeError",value = "员工入职时间")
+    @BeanPropertyErrorType(propertyName = "员工入职时间",value = "staffError")
     private String entryTime;//入职时间
     private String customMessages;//自定义字段
     private String city;//城市ID

@@ -5,6 +5,7 @@ import cn.ejie.pocustom.DepartmentCustom;
 import cn.ejie.service.DepartmentService;
 import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,22 @@ public class DepartmentController {
     @RequestMapping("/department/findDepartment")
     public @ResponseBody List<DepartmentCustom> findDepartmentByCity(HttpServletRequest request) throws Exception{
         DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
-
         return departmentService.findDepartmentByCity(departmentCustom.getCity());
+    }
+
+    /**
+     * 查找出所有的 Department
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/department/showAll")
+    public @ResponseBody List<DepartmentCustom> findAllDepartment() throws Exception{
+        return departmentService.findAllDepartment();
+    }
+
+    @RequestMapping("/department/showAllByCity")
+    public @ResponseBody List<DepartmentCustom> findAllDepartmentByCity(HttpServletRequest request) throws Exception{
+        DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
+        return  departmentService.findDepartmentByCity(departmentCustom.getCity());
     }
 }

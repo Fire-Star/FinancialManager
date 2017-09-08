@@ -88,7 +88,7 @@ public class SimpleException extends GetAllCustomException{
         try {
             response.setContentType("text/html;charset=utf-8");
             response.setCharacterEncoding("utf-8");
-            response.getWriter().println(objectMapper.writeValueAsString(message));
+            response.getWriter().println('('+objectMapper.writeValueAsString(message)+')');
         } catch (IOException e1) {
             e1.printStackTrace();
         }

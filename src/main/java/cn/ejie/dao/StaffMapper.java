@@ -47,11 +47,9 @@ public interface StaffMapper {
 
     /**
      * 通过 员工所在部门 电话号码 姓名 查询员工数量
-     * @param tel
-     * @param name
-     * @param dep
+     * @param staffCustom
      * @return
      * @throws Exception
      */
-    public Integer findStaffCountByDepAndNameAndTel(String tel,String name,String dep) throws Exception;
+    public Integer findStaffCountByDepAndNameAndTel(StaffCustom staffCustom) throws Exception;
 }

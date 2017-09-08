@@ -2,6 +2,7 @@ package cn.ejie.service;
 
 import cn.ejie.dao.DepartmentMapper;
 import cn.ejie.exception.DepartmentException;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.CityCustom;
 import cn.ejie.pocustom.DepartmentCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,21 @@ public class DepartmentService {
             throw new DepartmentException(errorType,"当前部门已经存在！"+city+"--->"+department);
         }
         departmentMapper.addDepartment(departmentCustom);
+    }
+
+    /**
+     * 查询出所有的部门
+     * @return
+     * @throws Exception
+     */
+    public List<DepartmentCustom> findAllDepartment() throws Exception{
+        List<DepartmentCustom> result = null;
+
+        try {
+            result = departmentMapper.findAllDepartment();
+        }catch (Exception e){
+            throw new SimpleException(errorType,"查询所有部门时，数据库发生错误，请报告给维修人员！");
+        }
+        return result;
     }
 }
