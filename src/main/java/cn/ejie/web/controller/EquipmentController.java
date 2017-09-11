@@ -90,7 +90,7 @@ public class EquipmentController {
         }
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
         String sql = "";
-        String sqltemp = "SELECT eq_id,eq_type,eq_name,brand_name,purchas_depart,belong_depart,purchas_date,supplier,eq_state,purchas_price,custom_message,eq_other_id,city FROM equipment";
+        String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,purchas_depart as purchasDepart,belong_depart as belongDepart,purchas_date as purchasDate,supplier as supplier,eq_state as eqStateId,purchas_price as dPurchasPrice,custom_message as customMessage,eq_other_id as eqOtherId,city as city FROM equipment";
         if(!eqID.equals("")||!eqType.equals("")||!eqName.equals("")||!supplier.equals("")||!belongDepart.equals("")||!eqState.equals("")||!time.equals("")){
             sqltemp = sqltemp + " WHERE";
             if(!eqID.equals("")){
