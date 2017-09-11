@@ -48,11 +48,17 @@ public class SupplierController {
     public String addSupplier(){
         return "/WEB-INF/pages/supplier/supplierAdd.html";
     }
-    @RequestMapping("/supplier/query")
+    @RequestMapping("/user/supplier/query")
     public String testSupplierquery(){
         return "/WEB-INF/pages/supplier/supplierquery.html";
     }
-    @RequestMapping("/supplier/search")
+    @RequestMapping("/user/supplier/detail")
+    public String searchSupplierDetail(HttpServletRequest request){
+        String val = request.getParameter("val");
+        System.out.println("val="+val);
+        return "/WEB-INF/pages/supplier/supplierdetail.html?val="+val;
+    }
+    @RequestMapping("/user/supplier/search")
     public void searchSupplier(HttpServletResponse response,HttpServletRequest request){
         String limit = "";
         String offset = "";

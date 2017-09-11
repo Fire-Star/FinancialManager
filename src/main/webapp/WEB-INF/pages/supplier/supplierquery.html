@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>运营商查询</title>
     <!-- 引入 BootStrap 全家桶 -->
-    <script src="../res/js/jquery-3.2.1.min.js"></script>
-    <script src="../res/js/bootstrap.min.js"></script>
-    <script src="../res/js/bootstrap-table.js"></script>
-    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../res/css/bootstrap-table.css"/>
+    <script src="../../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../../res/js/bootstrap.min.js"></script>
+    <script src="../../res/js/bootstrap-table.js"></script>
+    <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
     <!-- 引入Vue.js -->
-    <script src="../res/js/vue.min.js"></script>
+    <script src="../../res/js/vue.min.js"></script>
     <style>
         body,html{
             height: 100%;background-color: #f1f1f1;
@@ -148,7 +148,12 @@
                     title: '序列号'
                 }, {
                     field: 'name',
-                    title: '名称'
+                    title: '名称',
+                    formatter:function(value,row,index){
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\''+ row.name + '\')">'+value+'</a> ';
+                        //return '<a class="easyui-linkbutton" onclick="check(\''+rowData.uuid+'\',\''+rowData.title+'\')" href="javascript:void(0)">'+value+'</a>';
+                        return e ;
+                    }
                 }, {
                     field: 'contactName',
                     title: '联系人'
@@ -191,6 +196,10 @@
         };
         return oInit;
     };
+    function checkDetail(val) {
+        window.parent.document.getElementById('iframeContent').src="supplier/detail?val="+val;
+        alert(val);
+    }
     function datasearch() {
         $('#tb_departments').bootstrapTable('refresh');
     };

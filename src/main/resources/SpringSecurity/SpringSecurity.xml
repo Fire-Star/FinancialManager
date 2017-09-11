@@ -28,7 +28,7 @@
     <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 
     <!-- 配置资源权限信息 -->
-    <security:http auto-config="true" use-expressions="false">
+    <security:http auto-config="true" use-expressions="true">
         <!-- 定义记住我功能，通过user-service-ref指定将要使用的UserDetailsService-->
         <!--<security:remember-me key="elim" user-service-ref="customUserService"/>-->
         <security:form-login login-page="/login.html" authentication-failure-url="/login.html" default-target-url="/index.jsp"/>
