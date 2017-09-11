@@ -52,4 +52,19 @@ public interface StaffMapper {
      * @throws Exception
      */
     public Integer findStaffCountByDepAndNameAndTel(StaffCustom staffCustom) throws Exception;
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<StaffCustom> findAll() throws Exception;
+
+    /**
+     *
+     * @param sql
+     * @return
+     * @throws Exception
+     */
+    public List<StaffCustom> findBySql(String sql) throws Exception;
 }

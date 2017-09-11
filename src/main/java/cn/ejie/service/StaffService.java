@@ -11,7 +11,9 @@ import cn.ejie.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -69,5 +71,27 @@ public class StaffService {
             throw new SimpleException(errorType,"数据库发生错误！");
         }
 
+    }
+
+    public List<StaffCustom> findAll() throws Exception{
+        List<StaffCustom> staffList = new ArrayList<StaffCustom>();
+        try {
+            staffList = staffMapper.findAll();
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException(errorType,"数据库发生错误！");
+        }
+        return staffList;
+    }
+
+    public List<StaffCustom> findBySql(String sql) throws Exception{
+        List<StaffCustom> staffList = new ArrayList<StaffCustom>();
+        try {
+            staffList = staffMapper.findBySql(sql);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException(errorType,"数据库发生错误！");
+        }
+        return staffList;
     }
 }
