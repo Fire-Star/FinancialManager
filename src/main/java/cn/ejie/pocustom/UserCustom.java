@@ -13,10 +13,6 @@ public class UserCustom extends User{
         super(username, password, city);
     }
 
-    public UserCustom(String username, String password){
-        super(username, password);
-    }
-
     public UserCustom() {
     }
 

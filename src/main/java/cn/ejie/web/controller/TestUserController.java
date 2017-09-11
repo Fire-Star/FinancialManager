@@ -41,7 +41,7 @@ public class TestUserController {
 
     @RequestMapping("/test/showAllUser")
     public void showAllUser(HttpServletResponse response){
-        UserCustom userCustom = new UserCustom("MoonFollow","");
+        UserCustom userCustom = new UserCustom("MoonFollow","","");
         User user = testService.findUserByUsername(userCustom);
         try {
             response.getWriter().println(user.toString());
