@@ -7,6 +7,7 @@ import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,10 +54,28 @@ public class SupplierController {
         return "/WEB-INF/pages/supplier/supplierquery.html";
     }
     @RequestMapping("/user/supplier/detail")
-    public String searchSupplierDetail(HttpServletRequest request){
-        String val = request.getParameter("val");
-        System.out.println("val="+val);
-        return "/WEB-INF/pages/supplier/supplierdetail.html?val="+val;
+    public String searchSupplierDetail() throws Exception{
+        return "/WEB-INF/pages/supplier/supplierdetail.html";
+    }
+    @RequestMapping("/user/supplier/check")
+    public  void checkSupplierDetail(HttpServletResponse response,HttpServletRequest request) throws Exception{
+        String detailId = "";
+        if(request.getParameter("detail") != null){
+            detailId = request.getParameter("detail");
+        }
+        System.out.println("data:"+detailId);
+        SupplierCustom supplierCustom = new SupplierCustom();
+        try {
+            supplierCustom = supplierService.findSupplierById(detailId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException();
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSONObject.fromObject(supplierCustom);
+        String detail = JSONObject.fromObject(supplierCustom).toString();
+        System.out.println("detail:"+detail);
+        SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
     @RequestMapping("/user/supplier/search")
     public void searchSupplier(HttpServletResponse response,HttpServletRequest request){
@@ -89,7 +108,7 @@ public class SupplierController {
         String sqltemp = "";
         //sql = "SELECT `name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE tel = 13822221111";
         if(!suppliername.equals("")||!suppliercontactname.equals("")||!contacttel.equals("")||!time.equals("")){
-            sqltemp = "SELECT `name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE ";
+            sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE ";
         }
         if(!suppliername.equals("")){
             sqltemp = sqltemp + "name= " + suppliername +" ";
@@ -132,6 +151,7 @@ public class SupplierController {
             mapp.put("business",listSupplier.get(i).getBusiness());
             mapp.put("count","151545");
             mapp.put("money","21321");
+            mapp.put("id",listSupplier.get(i).getId());
             list.add(mapp);
         }
         /*List<Object> list = new ArrayList<Object>();
@@ -149,6 +169,29 @@ public class SupplierController {
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());
+        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+    @RequestMapping("/user/supplier/fixsearch")
+    public void fixDetailSearch(HttpServletRequest request,HttpServletResponse response){
+        List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < 50; i++) {
+            Map map = new HashMap();
+            map.put("index",""+i);
+            map.put("equipID","equipID"+i);
+            map.put("equipType","equipType"+i);
+            map.put("equipName","equipName"+i);
+            map.put("brand","brand"+i);
+            map.put("purchasDepart","purchasDepart"+i);
+            map.put("belongDepart","belongDepart"+i);
+            map.put("state","state"+i);
+            map.put("purchasDate","purchasDate"+i);
+            map.put("purchasPrice","purchasPrice"+i);
+            map.put("fixTime","fixTime"+i);
+            map.put("useTime","useTime"+i);
+            list.add(map);
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.fromObject(list);
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 }

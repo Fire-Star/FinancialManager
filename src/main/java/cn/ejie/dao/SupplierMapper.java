@@ -31,5 +31,19 @@ public interface SupplierMapper {
      */
     public void addSingleSupplier(SupplierCustom supplierCustom) throws Exception;
 
+    /**
+     *
+     * @param name
+     * @return
+     * @throws Exception
+     */
     public Integer hasSupplierByName(String name) throws Exception;
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public SupplierCustom findSupplierById(String id) throws Exception;
 }

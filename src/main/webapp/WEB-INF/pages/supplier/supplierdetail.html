@@ -24,7 +24,7 @@
             height: 100%;
         }
         .supplier-head{
-            height: 10%;
+            height: 7%;
         }
         .panel-body{
             padding:0px;
@@ -46,42 +46,44 @@
 <body>
 <div class="app container">
     <div class="supplier-head">
-        供应商管理 > 供应商查询
+        供应商管理 > 供应商信息
     </div>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong><p class="lead">供应商查询</p></strong>
+                <strong><p class="lead">供应商信息</p></strong>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
                         <label class="control-label col-sm-1" for="suppliername">供应商：</label>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="suppliername" placeholder="供应商..." readonly="enable">
                         </div>
                         <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
                         <div class="col-sm-1">
-                            <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人...">
+                            <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人..." readonly="enable">
                         </div>
                         <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
                         <div class="col-sm-1">
-                            <input type="text" class="form-control" id="contacttel" placeholder="电话...">
+                            <input type="text" class="form-control" id="contacttel" placeholder="电话..." readonly="enable">
                         </div>
                         <label class="control-label col-sm-1" for="time">签约时间:</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="time" placeholder="签约时间...">
+                            <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                         </div>
                         <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="dataEdit()">编辑</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+    </div>
+    <div style="height: 3%">
+        <p>
+            <h4>设备采购记录</h4>
+        </p>
     </div>
     <div id="toolbar" class="btn-group">
         <button id="btn_result" type="button" class="btn btn-default">
@@ -116,7 +118,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_departments').bootstrapTable({
-                //url: 'search',         //请求后台的URL（*）
+                url: 'fixsearch',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -147,23 +149,38 @@
                     field: 'index',
                     title: '序列号'
                 }, {
-                    field: 'name',
-                    title: '名称'
+                    field: 'equipID',
+                    title: '设备ID'
                 }, {
-                    field: 'contactName',
-                    title: '联系人'
+                    field: 'equipType',
+                    title: '设备类型'
                 }, {
-                    field: 'tel',
-                    title: '联系人电话'
+                    field: 'equipName',
+                    title: '设备名称'
                 }, {
-                    field: 'business',
-                    title: '主营业务'
+                    field: 'brand',
+                    title: '品牌'
                 }, {
-                    field: 'count',
-                    title: '累计采购数量'
+                    field: 'purchasDepart',
+                    title: '采购部门'
                 }, {
-                    field: 'money',
-                    title: '累计采购金额'
+                    field: 'belongDepart',
+                    title: '归属部门'
+                }, {
+                    field: 'state',
+                    title: '状态'
+                }, {
+                    field: 'purchasDate',
+                    title: '采购时间'
+                }, {
+                    field: 'purchasPrice',
+                    title: '采购价格'
+                }, {
+                    field: 'fixTime',
+                    title: '维修次数'
+                }, {
+                    field: 'useTime',
+                    title: '使用年限'
                 }]
             });
         };
@@ -177,7 +194,6 @@
                 contacttel: $("#contacttel").val(),
                 time: $("#time").val()
             };
-            alert(params.limit);
             return temp;
         };
         return oTableInit;
@@ -191,18 +207,29 @@
         };
         return oInit;
     };
-    function datasearch() {
-        $('#tb_departments').bootstrapTable('refresh');
-    };
-    function datareset() {
-        $('#suppliername').val("");
-        $('#suppliercontactname').val("");
-        $('#contacttel').val("");
-        $('#time').val("");
-    };
+    function dataEdit() {
+        alert("123");
+    }
     $(document).ready(function(){
-        var val = $.getUrlParam('val');
-        alert(val);
+        var detail = $.getUrlParam('val');
+        var param = {"detail":detail};
+        alert(detail);
+        $.ajax({
+            url: "check",
+            type: 'post',
+            dataType: 'json',
+            timeout: 1000,
+            data:param,
+            success: function (data, status) {
+                $('#suppliername').val(data.name);
+                $('#suppliercontactname').val(data.contactName);
+                $('#contacttel').val(data.tel);
+                $('#time').val(data.contractTime);
+            },
+            fail: function (err, status) {
+                alert("741147");
+            }
+        });
     });
     (function($){
         $.getUrlParam = function(name){
