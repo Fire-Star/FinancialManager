@@ -43,12 +43,12 @@ public class StaffController {
         return "/WEB-INF/pages/staff/staffAdd.html";
     }
 
-    @RequestMapping("/staff/query")
+    @RequestMapping("/user/staff/query")
     public String search(){
         return "/WEB-INF/pages/staff/staffquery.html";
     }
 
-    @RequestMapping("/staff/search")
+    @RequestMapping("/user/staff/search")
     public void queryStaff(HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         String sql = "";

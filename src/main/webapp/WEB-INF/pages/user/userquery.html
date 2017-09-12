@@ -5,12 +5,12 @@
     <title>账号权限</title>
     <!-- 引入 BootStrap 全家桶 -->
     <!-- 引入Vue.js -->
-    <script src="../res/js/vue.min.js"></script>
-    <script src="../res/js/jquery-3.2.1.min.js"></script>
-    <script src="../res/js/bootstrap.min.js"></script>
-    <script src="../res/js/bootstrap-table.js"></script>
-    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../res/css/bootstrap-table.css"/>
+    <script src="../../res/js/vue.min.js"></script>
+    <script src="../../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../../res/js/bootstrap.min.js"></script>
+    <script src="../../res/js/bootstrap-table.js"></script>
+    <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
 
     <style>
@@ -111,7 +111,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_user').bootstrapTable({
-                url: 'query',         //请求后台的URL（*）
+                url: 'search',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器

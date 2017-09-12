@@ -50,11 +50,11 @@ public class EquipmentController {
         }
 
     }
-    @RequestMapping("/equipment/equipquery")
+    @RequestMapping("/user/equipment/query")
     public String queryEquip(){
         return "/WEB-INF/pages/equipment/equipquery.html";
     }
-    @RequestMapping("equipment/search")
+    @RequestMapping("/user/equipment/search")
     public void searchEquipment(HttpServletResponse respose, HttpServletRequest request){
         System.out.println("equipment/search");
         Object object = (Object)SecurityContextHolder.getContext().getAuthentication().getPrincipal();

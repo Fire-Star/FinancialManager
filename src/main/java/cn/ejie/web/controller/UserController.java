@@ -105,12 +105,12 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/user/check")
+    @RequestMapping("/user/user/query")
     public String userCkeck(){
         return "/WEB-INF/pages/user/userquery.html";
     }
 
-    @RequestMapping("/user/query")
+    @RequestMapping("/user/user/search")
     public void userQuery(HttpServletResponse response,HttpServletRequest request){
         System.out.println("user query");
         List<UserCustom> userList = new ArrayList<UserCustom>();
@@ -171,5 +171,10 @@ public class UserController {
         JSONArray jsonObject = new JSONArray();
         jsonObject = JSONArray.fromObject(list);
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
+    }
+
+    @RequestMapping("/user/testmain")
+    public String testMain(){
+        return "/WEB-INF/pages/maintest.html";
     }
 }
