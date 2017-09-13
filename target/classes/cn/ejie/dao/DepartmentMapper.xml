@@ -9,10 +9,21 @@
         </selectKey>
         INSERT INTO department VALUES(#{id},#{city},#{department})
     </insert>
+    <!-- 查找每个城市的Department -->
     <select id="findDepartmentByCity" resultType="cn.ejie.pocustom.DepartmentCustom">
         SELECT department FROM department WHERE city = #{city}
     </select>
     <select id="hasDepartment" resultType="java.lang.Integer">
         SELECT count(id) FROM department WHERE city = #{city} and department = #{department}
+    </select>
+    <select id="findDepartmentIDByDepNameAndCity" resultType="String">
+        SELECT id FROM department WHERE department = #{dep} AND city = #{city}
+    </select>
+    <select id="findCityIdByDepartmentId" resultType="String">
+        SELECT city FROM department WHERE id = #{id}
+    </select>
+
+    <select id="findAllDepartment" resultType="cn.ejie.pocustom.DepartmentCustom">
+        SELECT department FROM department
     </select>
 </mapper>

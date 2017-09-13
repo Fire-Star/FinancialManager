@@ -3,6 +3,7 @@ package cn.ejie.dao;
 import cn.ejie.pocustom.DepartmentCustom;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/8/23.
@@ -30,4 +31,27 @@ public interface DepartmentMapper {
      * @throws Exception
      */
     public Integer hasDepartment(DepartmentCustom departmentCustom) throws Exception;
+
+    /**
+     * 通过部门名称查询部门ID
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    public String findDepartmentIDByDepNameAndCity(Map<String,String> params) throws Exception;
+
+    /**
+     * 通过部门ID查询城市ID
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public String findCityIdByDepartmentId(String id) throws Exception;
+
+    /**
+     * 查询出所有的 Department
+     * @return
+     * @throws Exception
+     */
+    public List<DepartmentCustom> findAllDepartment() throws Exception;
 }

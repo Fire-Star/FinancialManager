@@ -3,9 +3,12 @@ package cn.ejie.web.controller;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.VerifyMessage;
 import cn.ejie.pocustom.UserCustom;
+import cn.ejie.service.UserService;
 import cn.ejie.service.VertifyCodeService;
 import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +42,9 @@ public class UserController {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/user/login")
     public void login(HttpServletRequest request,HttpSession session,HttpServletResponse response,UserCustom userCustom){
@@ -95,5 +103,78 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("/user/user/query")
+    public String userCkeck(){
+        return "/WEB-INF/pages/user/userquery.html";
+    }
+
+    @RequestMapping("/user/user/search")
+    public void userQuery(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("user query");
+        List<UserCustom> userList = new ArrayList<UserCustom>();
+        String name = "";
+        String city = "";
+        String sql = "";
+        String sqltemp = "SELECT username,password,city FROM user";
+
+        if(!request.getParameter("username").equals("") && request.getParameter("username")!=null){
+            name = request.getParameter("username");
+        }
+        if(!request.getParameter("city").equals("") && request.getParameter("city")!=null){
+            city = request.getParameter("city");
+        }
+        System.out.println("user:"+name+" city:"+city);
+        if (!name.equals("")||!city.equals("")){
+            sqltemp = sqltemp + " WHERE";
+            if (!name.equals("")){
+                sqltemp = sqltemp + " username='"+ name +"'";
+            }
+            if(!city.equals("")){
+                sqltemp = sqltemp + " and city='"+ city +"'";
+            }
+            if(sqltemp.contains("WHERE and")){
+                sql = sqltemp.replaceAll("WHERE and","WHERE");
+            }else{
+                sql = sqltemp;
+            }
+        }
+        System.out.println("sql:"+sql);
+        try {
+            if(!sql.equals("")){
+                userList = userService.findBySql(sql);
+            }else {
+                userList = userService.findAll();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(userList.size());
+        List<Object> list = new ArrayList<>();
+        for(int i = 0;i<userList.size();i++){
+            Map<String,String> map = new HashMap<String,String>();
+            map.put("index",i+"");
+            map.put("name",userList.get(i).getUsername());
+            map.put("city",userList.get(i).getCity());
+            list.add(map);
+        }
+
+        /*List<Object> list = new ArrayList<>();
+        for(int i=0;i<50;i++){
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("index",i+"");
+            map.put("name","name"+i);
+            map.put("city","city"+i);
+            list.add(map);
+        }*/
+        JSONArray jsonObject = new JSONArray();
+        jsonObject = JSONArray.fromObject(list);
+        SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
+    }
+
+    @RequestMapping("/user/testmain")
+    public String testMain(){
+        return "/WEB-INF/pages/maintest.html";
     }
 }

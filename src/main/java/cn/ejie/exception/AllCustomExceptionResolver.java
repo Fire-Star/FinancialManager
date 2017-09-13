@@ -5,6 +5,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/8/22.
@@ -17,23 +19,30 @@ public class AllCustomExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
 
         ModelAndView mv = new ModelAndView();
+        String view = null;
+
+        String errorType = "defaultError";
+        String errorMessage = "发生了意想不到的错误，请通知管理人员！";
+
         //处理用户的所有异常，包括登录注册等。
         if(ex instanceof SimpleException){
             SimpleException simpleException = (SimpleException)ex;
+            errorType = simpleException.getErrorType();
+            errorMessage = simpleException.getErrorMessage();
 
-            request.setAttribute("errorType",simpleException.getErrorType());
-            request.setAttribute("errorMessage",simpleException.getErrorMessage());
-
-            //如果我们没有主动在抛异常哪里主动设置错误页面，那么这里默认就是 xml 中配置的错误页面。
-            String view = simpleException.getView();
-            if(view == null){
-                view = defaultErrorPage;
-            }
-            mv.setViewName(view);
-
-            return  mv;
+            view = simpleException.getView();
+        } else {
+            ex.printStackTrace();
         }
-        return null;
+        request.setAttribute("errorType",errorType);
+        request.setAttribute("errorMessage",errorMessage);
+
+        if(view == null){
+            view = defaultErrorPage;
+        }
+
+        mv.setViewName(view);
+        return mv;
     }
 
     public String getDefaultErrorPage() {

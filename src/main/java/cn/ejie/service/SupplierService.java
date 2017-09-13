@@ -31,6 +31,27 @@ public class SupplierService {
         return supplierCustoms;
     }
 
+    public List<SupplierCustom> findSupplierBySql(String sql) throws Exception{
+        List<SupplierCustom> supplierCustoms = null;
+        try {
+            supplierCustoms = supplierMapper.findSupplierBySql(sql);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SupplierException(errorType,"数据库发生错误！");
+        }
+        return supplierCustoms;
+    }
+
+    public SupplierCustom findSupplierById(String id) throws Exception{
+        SupplierCustom supplierCustom = new SupplierCustom();
+        try {
+            supplierCustom = supplierMapper.findSupplierById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SupplierException(errorType,"数据库发生错误！");
+        }
+        return supplierCustom;
+    }
 
     public void addSingleSupplier(SupplierCustom supplierCustom) throws Exception{
         //验证当前对象的属性是否满足 插入到数据库需求，比如字段是否为 null 或者 空字符串！

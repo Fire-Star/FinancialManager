@@ -9,8 +9,8 @@ public class UserCustom extends User{
     /**
      * 这里面写扩展属性。
      */
-    public UserCustom(String username, String password) {
-        super(username, password);
+    public UserCustom(String username, String password, String city) {
+        super(username, password, city);
     }
 
     public UserCustom() {

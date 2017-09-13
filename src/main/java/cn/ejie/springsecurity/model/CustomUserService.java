@@ -32,13 +32,14 @@ public class CustomUserService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        UserCustom requestMessage = new UserCustom(username,"");
+        UserCustom requestMessage = new UserCustom(username,"","");
 
         cn.ejie.po.User resultUser = userMapper.findUserByUsername(requestMessage);
         if (resultUser == null) {
             return null;
         }
         String password = resultUser.getPassword();
+        String city = resultUser.getCity();
         boolean enabled = true;
         boolean accountNonLoked = true;
         boolean accountNonExpired = true;

@@ -2,16 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>运营商查询</title>
     <!-- 引入 BootStrap 全家桶 -->
-    <script src="../res/js/jquery-3.2.1.min.js"></script>
-    <script src="../res/js/bootstrap.min.js"></script>
-    <script src="../res/js/bootstrap-table.js"></script>
-    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../res/css/bootstrap-table.css"/>
+    <script src="../../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../../res/js/bootstrap.min.js"></script>
+    <script src="../../res/js/bootstrap-table.js"></script>
+    <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
     <!-- 引入Vue.js -->
-    <script src="../res/js/vue.min.js"></script>
+    <script src="../../res/js/vue.min.js"></script>
     <style>
         body,html{
             height: 100%;background-color: #f1f1f1;
@@ -76,7 +76,7 @@
                                 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary">重置</button>
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                             </div>
                         </div>
                     </form>
@@ -98,7 +98,6 @@
 </body>
 <script>
     var data = {
-        verifyImageLink:"user/virifyImage"
     };
     var vm = new Vue({
         el:'.app',
@@ -149,7 +148,12 @@
                     title: '序列号'
                 }, {
                     field: 'name',
-                    title: '名称'
+                    title: '名称',
+                    formatter:function(value,row,index){
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\''+ row.id + '\')">'+value+'</a> ';
+                        //return '<a class="easyui-linkbutton" onclick="check(\''+rowData.uuid+'\',\''+rowData.title+'\')" href="javascript:void(0)">'+value+'</a>';
+                        return e ;
+                    }
                 }, {
                     field: 'contactName',
                     title: '联系人'
@@ -165,7 +169,7 @@
                 }, {
                     field: 'money',
                     title: '累计采购金额'
-                }, ]
+                }]
             });
         };
         //得到查询的参数
@@ -192,8 +196,18 @@
         };
         return oInit;
     };
+    function checkDetail(val) {
+        window.parent.document.getElementById('iframeContent').src="supplier/detail?val="+val;
+        alert(val);
+    }
     function datasearch() {
         $('#tb_departments').bootstrapTable('refresh');
+    };
+    function datareset() {
+        $('#suppliername').val("");
+        $('#suppliercontactname').val("");
+        $('#contacttel').val("");
+        $('#time').val("");
     };
 </script>
 </html>

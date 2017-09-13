@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.StaffMapper" >
+
+    <select id="selectByPrimaryKey" resultType="cn.ejie.pocustom.StaffCustom" >
+        select id staffId ,`name` ,department dep ,`position` ,`tel` ,entry_time entryTime ,custom_message customMessages,city  from staff where  `id` = #{staffId}
+    </select>
+
+    <select id="search" resultType="cn.ejie.pocustom.StaffCustom">
+        select id staffId ,`name` ,department dep ,`position` ,`tel` ,entry_time entryTime ,custom_message customMessages ,city from staff
+    </select>
+
+    <insert id="insert">
+        <selectKey keyProperty="staffId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        insert into staff (`id` ,`name` ,`department` ,`position` ,`tel` ,`entry_time` ,`custom_message`,city ) values (#{staffId},#{name},#{dep},#{position},#{tel},#{entryTime},#{customMessages},#{city})
+    </insert>
+
+    <delete id="deleteByPrimaryKey">
+        delete from staff where  `id` = #{staffId}
+    </delete>
+
+    <update id="updateByPrimaryKey" parameterType="cn.ejie.pocustom.StaffCustom" >
+        update staff set `name` = #{name},`department` = #{dep},`position` = #{position},`tel` = #{tel},`entry_time` = #{entryTime},`custom_message` = #{customMessages} where  `id` = #{staffId}
+    </update>
+    <!-- 用部门+姓名+电话号码判断这个人是否存在 -->
+    <select id="findStaffCountByDepAndNameAndTel" resultType="int">
+        SELECT count(id) FROM staff WHERE `department` = #{dep} AND `tel` = #{tel} AND `name` = #{name}
+    </select>
+
+    <select id="findAll" resultType="cn.ejie.pocustom.StaffCustom">
+        SELECT id as staffId,name,department as dep,position,tel,entry_time as entryTime,custom_message as customMessages,city FROM staff
+    </select>
+
+    <select id="findBySql" resultType="cn.ejie.pocustom.StaffCustom" parameterType="String">
+        ${value}
+    </select>
+</mapper>

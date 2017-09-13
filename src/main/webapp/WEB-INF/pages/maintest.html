@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>模板</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../res/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../res/js/vue.min.js"></script>
+    <style>
+        body,html{
+            height: 100%;background-color: #f1f1f1;
+        }
+        .app{
+            height: 100%;
+        }
+        .app:before{
+            content: "";display: inline-block;width: 0;vertical-align: middle;height: 85%;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            padding-left: 0px ;
+            padding-right: 0px;
+        }
+        .head {
+            width: 100%;
+            height: 9.9%;
+            background: cornflowerblue;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+        .navbar-default {
+            height: 100%;
+            background: steelblue;
+        }
+        .navbar-center{
+            margin: 0px;
+        }
+        .container-fluid{
+            margin-top: 0px;
+            margin-left: 0px;
+        }
+        .logo{
+
+        }
+        .head-title{
+            color:aliceblue;
+            font-size:40px;
+            letter-spacing: 1px;
+            text-align:center;
+            margin:20px 0 10px;
+        }
+        .navbar-default .navbar-nav>li>a {
+            color: aliceblue;
+        }
+        .navbar-nav>li>a {
+            padding-top: 45px;
+            padding-bottom: 15px;
+        }
+        .col-md-1 {
+            width: 8.33333333%;
+            height: 100%;
+            display:table-cell;      /*按照单元格的样式显示元素*/
+            vertical-align:bottom;   /*底对齐*/
+        }
+        .row{
+            width: 100%;
+            height: 100%;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .col-lg-2{
+            height: 100%;
+            width: 15%;
+            background: silver;
+            padding-right: 0px;
+            
+        }
+        .panel-group .panel+.panel {
+            margin-top: 0px;
+        }
+        .list-group-item {
+            padding: 10px 15px;
+        }
+        .menu-item-left{
+            width: 100%;
+        }
+        .panel-group .panel {
+            border-radius: 0px;
+        }
+        .col-lg-10{
+            height: 100%;
+            width: 85%;
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+        .main-content{
+            width: 100%;
+            height: 90%;
+        }
+        .content{
+            width: 100%;
+            height: 95%;
+        }
+        .footer{
+            width: 100%;
+            height: 5%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="head">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand brand">
+                        <img src="../res/img/brand.png">
+                    </a>
+                </div>
+                <div class="nav navbar-nav navbar-center">
+                    <p>
+                        <h2 class="head-title">资产管理系统</h2>
+                    </p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="panel-group table-responsive" role="tablist">
+                    <div class="panel panel-primary leftMenu">
+                        <!-- 利用data-target指定要折叠的分组列表 -->
+                        <div class="panel-heading" id="equipmentHeading" data-toggle="collapse" data-target="#equipmentGroup" role="tab" >
+                            <h4 class="panel-title">
+                                设备管理
+                                <span class="glyphicon right"></span>
+                            </h4>
+                        </div>
+                        <!-- .panel-collapse和.collapse标明折叠元素  -->
+                        <div id="equipmentGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="equipmentHeading">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <!-- 利用data-target指定URL -->
+                                    <a href="#"  onclick=changeIframe("equipment/query")>设备查询</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>新增设备</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>设备统计</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div><!--panel end-->
+                    <div class="panel panel-primary leftMenu">
+                        <div class="panel-heading" id="staffHeading" data-toggle="collapse" data-target="#staffGroup" role="tab" >
+                            <h4 class="panel-title">
+                                员工管理
+                                <span class="glyphicon right"></span>
+                            </h4>
+                        </div>
+                        <div id="staffGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="staffHeading">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("staff/query")>员工查询</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>新增员工</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary leftMenu">
+                        <div class="panel-heading" id="supllierHeading" data-toggle="collapse" data-target="#supllierGroup" role="tab" >
+                            <h4 class="panel-title">
+                                供应商管理
+                                <span class="glyphicon right"></span>
+                            </h4>
+                        </div>
+                        <div id="supllierGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="supllierHeading">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("supplier/query")>供应商查询</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>新增供应商信息</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary leftMenu">
+                        <div class="panel-heading" id="sysFieldHeading" data-toggle="collapse" data-target="#sysFieldGroup" role="tab" >
+                            <h4 class="panel-title">
+                                系统字段维护
+                                <span class="glyphicon right"></span>
+                            </h4>
+                        </div>
+                        <div id="sysFieldGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sysFieldHeading">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>设备字段添加</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("")>部门字段添加</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel panel-primary leftMenu">
+                        <div class="panel-heading" id="userHeading" data-toggle="collapse" data-target="#userGroup" role="tab" >
+                            <h4 class="panel-title">
+                                账号管理
+                                <span class="glyphicon right"></span>
+                            </h4>
+                        </div>
+                        <div id="userGroup" class="panel-collapse collapse" role="tabpanel" aria-labelledby="userHeading">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#"  onclick=changeIframe("user/query")>账号权限</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="content">
+                    <iframe id="iframeContent" src="" style="width: 100%;height: 100%;border: none;"></iframe>
+                </div>
+                <div style="width:100%;height:1px;margin:0px auto;padding:0px;background-color:#D5D5D5;overflow:hidden;"></div>
+                <div class="footer">
+                    <p class="text-center">
+                        <strong>Copyright &copy; 2017 <a href="http://www.ejie365.cn">易捷金融</a>.</strong> All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var data = {
+    };
+    var vm = new Vue({
+        el:'.app',
+        data:data
+    });
+    function changeIframe(val) {
+        document.getElementById('iframeContent').src=val;
+    };
+</script>
+</body>
+</html>

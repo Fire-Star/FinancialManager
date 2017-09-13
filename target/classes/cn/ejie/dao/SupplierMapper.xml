@@ -10,6 +10,9 @@
     <select id="hasSupplierByName" resultType="java.lang.Integer">
         SELECT count(id) FROM supplier WHERE `name`=#{name}
     </select>
+    <select id="findSupplierBySql" resultType="cn.ejie.pocustom.SupplierCustom" parameterType="String">
+        ${value}
+    </select>
     <insert id="addSingleSupplier">
         <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
             SELECT uuid()
