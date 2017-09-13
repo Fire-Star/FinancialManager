@@ -147,25 +147,26 @@ public class EquipmentController {
             map.put("fixnum","维修记录"+i);
             list.add(map);
         }
-        /*List<Object> lists = new ArrayList<Object>();
-        for(int i = 0;i<50;i++){
-            Map<String,String> map = new HashMap<String,String>();
-            map.put("index",i+"");
-            map.put("eqId","设备ID"+i);
-            map.put("eqType","设备类型"+i);
-            map.put("eqName","设备名称"+i);
-            map.put("brandName","品牌"+i);
-            map.put("supplier","供应商"+i);
-            map.put("belongDepart","归属部门"+i);
-            map.put("eqState","状态"+i);
-            map.put("dPurchasPrice","采购价格"+i);
-            map.put("time","使用时间"+i);
-            map.put("fixnum","维修记录"+i);
-            lists.add(map);
-        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());
         SimpleException.sendMessage(respose,jsonArray.toString(), objectMapper);
+    }
+
+    @RequestMapping("/user/staff/findEqByStaffId")
+    public void findEqByStaffId(HttpServletResponse response,HttpServletRequest request){
+        List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < 50; i++) {
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("index",i+"");
+            map.put("eqID","eqID"+i);
+            map.put("eqName","eqName"+i);
+            map.put("opratorTime","opratorTime"+i);
+            map.put("status","status"+i);
+            list.add(map);
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.fromObject(list);
+        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 }

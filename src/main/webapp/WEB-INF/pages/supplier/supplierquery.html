@@ -196,9 +196,9 @@
         };
         return oInit;
     };
-    function checkDetail(val) {
-        window.parent.document.getElementById('iframeContent').src="supplier/detail?val="+val;
-        alert(val);
+    function checkDetail(suppId) {
+        window.parent.document.getElementById('iframeContent').src="supplier/detail?suppId="+suppId;
+        alert(suppId);
     }
     function datasearch() {
         $('#tb_departments').bootstrapTable('refresh');

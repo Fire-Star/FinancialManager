@@ -170,7 +170,11 @@
                     title: '序列号'
                 }, {
                     field: 'eqId',
-                    title: '设备ID'
+                    title: '设备ID',
+                    formatter:function(value,row,index) {
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\'' + row.id + '\')">' + value + '</a> ';
+                        return e;
+                    }
                 }, {
                     field: 'eqType',
                     title: '设备类型'
@@ -239,5 +243,9 @@
         $("#eqState").val(""),
         $("#time").val("")
     };
+    function checkDetail(suppId) {
+        //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
+        alert(suppId);
+    }
 </script>
 </html>

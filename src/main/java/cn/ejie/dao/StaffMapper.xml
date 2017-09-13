@@ -38,4 +38,8 @@
     <select id="findBySql" resultType="cn.ejie.pocustom.StaffCustom" parameterType="String">
         ${value}
     </select>
+
+    <select id="findStaffById" resultType="cn.ejie.pocustom.StaffCustom" >
+        select id staffId ,`name` ,department dep ,`position` ,`tel` ,entry_time entryTime ,custom_message customMessages,city  from staff where  `id` = #{id}
+    </select>
 </mapper>
