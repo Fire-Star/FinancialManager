@@ -1,0 +1,9 @@
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:23:19 +0800] "GET /favicon.ico HTTP/1.1" 404 - http-bio-80-exec-1 0
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:23:19 +0800] "GET /FinancialManager HTTP/1.1" 302 - http-bio-80-exec-2 0
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:23:21 +0800] "GET /FinancialManager/ HTTP/1.1" 200 255 http-bio-80-exec-4 1118
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:07 +0800] "GET /FinancialManager/user/index HTTP/1.1" 200 6163 http-bio-80-exec-5 2003
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:07 +0800] "GET /FinancialManager/res/js/jquery-3.2.1.min.js HTTP/1.1" 200 86663 http-bio-80-exec-6 27
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:08 +0800] "GET /FinancialManager/res/img/brand.png HTTP/1.1" 200 7578 http-bio-80-exec-10 12
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:08 +0800] "GET /FinancialManager/res/js/bootstrap.min.js HTTP/1.1" 200 37051 http-bio-80-exec-7 11
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:08 +0800] "GET /FinancialManager/res/css/bootstrap.min.css HTTP/1.1" 200 121208 http-bio-80-exec-8 11
+0:0:0:0:0:0:0:1 - - [13/Sep/2017:17:24:08 +0800] "GET /FinancialManager/res/js/vue.min.js HTTP/1.1" 200 81631 http-bio-80-exec-9 6
