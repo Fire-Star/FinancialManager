@@ -196,6 +196,11 @@ public class EquipmentController {
         return "/WEB-INF/pages/equipment/equipdetail.html";
     }
 
+    @RequestMapping("/equipment/addPage")
+    public String equipAdd(){
+        return "/WEB-INF/pages/equipment/equipAdd.html";
+    }
+
     @RequestMapping("/user/equip/findEquipByEquipID")
     public void findEquipByEquipID(HttpServletResponse response,HttpServletRequest request){
         String eqId = "";

@@ -9,11 +9,13 @@ import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/user/loginPage")
+    public String loginPage(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        Map<String,String> message = new HashMap<>();
+        if(!"anonymousUser".equals(SecurityContextHolder.getContext().getAuthentication().getName())){
+            response.sendRedirect(request.getContextPath()+"/user/testmain");
+        }
+        return "/WEB-INF/pages/login.html";
+    }
     @RequestMapping(value = "/user/login")
     public void login(HttpServletRequest request,HttpSession session,HttpServletResponse response,UserCustom userCustom){
 
@@ -76,9 +86,10 @@ public class UserController {
 
             message.clear();
             message.put("code","1");
-            message.put("msg","登录成功！");
+            message.put("location",request.getContextPath()+"/user/testmain");
 
             SimpleException.sendMessage(response,message,objectMapper);
+
         } catch (AuthenticationException ex) {
             message.clear();
             message.put("code","0");

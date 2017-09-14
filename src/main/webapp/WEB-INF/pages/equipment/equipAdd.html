@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>员工添加</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../res/js/bootstrap.min.js"></script>
+    <script src="../res/js/bootstrap-datepicker.js"></script>
+    <script src="../res/js/bootstrap-datepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../res/js/vue.min.js"></script>
+    <style>
+        html,body{
+            height: 100%;width: 100%;padding: 0px;
+        }
+        .hr{
+            border: none;border-bottom: 1px solid #9d9d9d;
+        }
+        .form-control-x{
+            width: 186px !important;
+        }
+        .btn-submit{
+            width: 200px;
+        }
+        .datepicker:hover , #dep ,#city{
+            cursor: pointer;
+        }
+        .select-left{
+            width: 93px !important;
+        }
+        .select-right{
+            width: 93px !important;
+        }
+        @media (min-width: 768px) {
+            .from-line{
+                margin-bottom: 40px;
+            }
+            .item-left{
+                float: left;
+            }
+            .item-right{
+                float: right;
+            }
+            .content-line{
+                width: 700px;height: 30px;position: relative;
+            }
+            .content-item{
+                display: inline-block;width: 280px;position: relative;
+            }
+            .item-name{
+
+            }
+            .customTitle{
+                clear: both;
+            }
+        }
+        #calender{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="app container-fluid width-100per top-content">
+    <ul class="breadcrumb">
+        <li>
+            设备管理<span class="divider">></span>
+        </li>
+        <li class="active">设备添加</li>
+    </ul><br>
+    <form role="form" name="satff-add-form">
+        <span class="h4 text-primary">设备基本信息添加</span>
+        <hr class="hr">
+
+        <div class="content-line">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="staffName">设备类型：</label>
+                </div>
+                <div class="form-group form-control-x form-inline from-line item-right">
+                    <select class="form-control " propName="设备类型" id="staffName" data-toggle="tooltip" data-placement="top"  v-model="name" placeholder="请输入设备类型..." >
+                        <option selected value="">---请选择设备类型---</option>
+                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="city" class="">设备名称：</label>
+                </div>
+                <div class="form-group form-control-x form-inline from-line item-right">
+                    <select class="form-control" id="city" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
+                        <option selected value="">---请选择设备名称---</option>
+                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="content-line customTitle">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="dep">品牌名称：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right" >
+                    <select class="form-control form-control-x" v-model="dep" id="dep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                        <option selected value="" id="depIDOp">--请选择品牌名称--</option>
+                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="x" class="">采购部门：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right" role="group">
+                <div class="btn-group">
+                    <select class="btn btn-default form-control select-left" v-model="dep" id="x" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                        <option selected value="" id="">--城市--</option>
+                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                    </select>
+                    <select class="btn btn-default form-control select-right" v-model="dep" id="ds" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                        <option selected value="" id="fd">--部门--</option>
+                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                    </select>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        <div class="content-line customTitle">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="d">归属部门：</label>
+                </div>
+                <div class="form-group form-inline from-line item-right" >
+                    <div class="form-group form-inline from-line item-right" role="group">
+                        <div class="btn-group">
+                            <select class="btn btn-default form-control select-left" v-model="dep" id="x" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                                <option selected value="" id="d">--城市--</option>
+                                <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                            </select>
+                            <select class="btn btn-default form-control select-right" v-model="dep" id="ds" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                                <option selected value="" id="dsf">--部门--</option>
+                                <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="calender">采购时间:</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input class="form-control form-control-x" propName="采购时间" id="calender" name="entryTime" placeholder="选择采购时间..." type="text">
+                </div>
+            </div>
+        </div>
+        <div class="content-line">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="calender">供应商:</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <select class="form-control form-control-x" id="supplier" propName="供应商" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
+                        <option selected value="">---请选择供应商---</option>
+                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="item-right content-item">
+                <div class="item-left item-name">
+                    <label for="calender">采购价格:</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input class="form-control form-control-x" propName="采购价格" id="price" name="entryTime" placeholder="输入采购价格..." type="text">
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <p class="h4 text-primary customTitle">员工自定义信息添加</p>
+        <hr class="hr">
+        <input type="hidden" name="customKey">
+        <input type="hidden" name="customValue">
+        <div class="form-group form-inline" v-for="(item,index) in customFields">
+            <input type="text" class="form-control form-control-x" v-model="customFields[index].key" placeholder="自定义属性">
+            <input type="text" class="form-control form-control-x" v-model="customFields[index].value" placeholder="属性值">
+            <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
+            <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
+        </div>
+        <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+    </form>
+    <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    {{modalStatus}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    $("#city").change(function () {
+        loadDep();
+    })
+
+    var data = {
+        customFields:[{}],
+        name:"",
+        city:"",
+        dep:"",
+        position:"",
+        tel:"",
+        addTime:"",
+        isError:[],
+        modalStatus:"",
+        citys:[],
+        departments:[]
+    };
+
+    var vm = new Vue({
+        el:'.app',
+        data:data,
+        methods:{
+            addField(index,item){
+                this.customFields.push({});
+            },
+            delField(index){
+                if(this.customFields.length==1){
+                    return;
+                }
+                this.customFields.splice(index,1);
+            },
+            submitData(){
+                if(tableCheck()){
+                    return;
+                }
+                var $btn = $('#submitBtn').button('loading');
+                var _customFields ="";
+                var index;
+                for(index in this.customFields){
+                    if(this.customFields[index].key==""||this.customFields[index].key==undefined){
+                        continue;
+                    }
+                    _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
+                }
+                _customFields=_customFields;
+                $.post("add",
+                    {
+                        "name":this.name,
+                        "city":this.city,
+                        "dep":this.dep,
+                        "position":this.position,
+                        "tel":this.tel,
+                        "entryTime":this.addTime,
+                        "customMessages":_customFields
+                    },
+                    function(data,status){
+                        if(status){
+                            console.log(data);
+                            var _data = eval(data);
+                            if(_data.defaultError!=undefined){
+                                vm.modalStatus=_data.defaultError;
+                                $('#modalButton').click();
+                            }else if(_data.success===undefined&&_data.staffError!=undefined){
+                                vm.modalStatus=_data.staffError;
+                                $('#modalButton').click();
+                            }else if(_data.success!=undefined){
+                                vm.modalStatus="数据添加成功！";
+                                $('#modalButton').click();
+                                satff-add-form.reset();
+                            }
+                        }
+                    });
+                $btn.button('reset');
+            },
+            loadDep() {
+                $.get("../department/findDepartment?city="+vm.city,function(data,status){
+                    console.log(data);
+                    if(status=="success"){
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        if(_departmentData.departmentErrorType!=undefined){
+                            vm.modalStatus=_departmentData.departmentErrorType;
+                            $('#modalButton').click();
+                        }else{
+                            vm.departments=_departmentData;
+                        }
+                    }
+                });
+                $('#depIDOp').attr('selected',true);
+            }}
+    });
+    /**
+     * 加载城市选项
+     */
+    $.get("../city/findAllCity",function(data,status){
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    });
+    /**
+     * 加载部门选项
+     */
+
+
+    function tableCheck(){
+        vm.addTime=$('#calender')[0].value;
+        var inputObj = $('.form-control');
+        var i;
+        var len = 6;
+        var flag = false;
+        for(i=0 ;i < len; i++){
+            if(inputObj[i].value==""){
+                vm.isError[i]=true;
+                flag = true;
+                var propName = inputObj[i].getAttribute('propName');
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().addClass('has-error');
+                var errorMessage = propName+"不能有特殊字符也不能为空！";
+                $('#'+id).tooltip({
+                    title:errorMessage
+                });
+            }else{
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().removeClass('has-error');
+                $('#'+id).tooltip('destroy');
+            }
+        }
+        if(vm.tel.length<11){
+            $('#tel').parent().addClass('has-error');
+            $('#tel').tooltip({
+                title:"电话号码长度为11位！"
+            });
+            return true;
+        }
+        return flag;
+    }
+    $('#calender').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
+</script>
+</html>
