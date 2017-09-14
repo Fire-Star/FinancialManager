@@ -94,4 +94,15 @@ public class StaffService {
         }
         return staffList;
     }
+
+    public StaffCustom findStaffById(String id) throws Exception{
+        StaffCustom staffCustom = new StaffCustom();
+        try {
+            staffCustom = staffMapper.findStaffById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException(errorType,"数据库发生错误！");
+        }
+        return staffCustom;
+    }
 }

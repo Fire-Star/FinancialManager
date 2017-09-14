@@ -67,4 +67,12 @@ public interface StaffMapper {
      * @throws Exception
      */
     public List<StaffCustom> findBySql(String sql) throws Exception;
+
+    /**
+     * 
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public StaffCustom findStaffById(String id) throws Exception;
 }

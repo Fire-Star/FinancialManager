@@ -57,13 +57,13 @@ public class SupplierController {
     public String searchSupplierDetail() throws Exception{
         return "/WEB-INF/pages/supplier/supplierdetail.html";
     }
-    @RequestMapping("/user/supplier/check")
-    public  void checkSupplierDetail(HttpServletResponse response,HttpServletRequest request) throws Exception{
+    @RequestMapping("/user/supplier/findSuppBySuppID")
+    public  void findSuppBySuppID(HttpServletResponse response,HttpServletRequest request) throws Exception{
         String detailId = "";
-        if(request.getParameter("detail") != null){
-            detailId = request.getParameter("detail");
+        if(request.getParameter("suppId") != null){
+            detailId = request.getParameter("suppId");
         }
-        System.out.println("data:"+detailId);
+        System.out.println("suppId:"+detailId);
         SupplierCustom supplierCustom = new SupplierCustom();
         try {
             supplierCustom = supplierService.findSupplierById(detailId);
@@ -74,7 +74,7 @@ public class SupplierController {
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(supplierCustom);
         String detail = JSONObject.fromObject(supplierCustom).toString();
-        System.out.println("detail:"+detail);
+        System.out.println("suppdetail:"+detail);
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
     @RequestMapping("/user/supplier/search")
@@ -171,8 +171,8 @@ public class SupplierController {
         System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
-    @RequestMapping("/user/supplier/fixsearch")
-    public void fixDetailSearch(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping("/user/supplier/findEquipBySuppId")
+    public void findEquipBySuppId(HttpServletRequest request,HttpServletResponse response){
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < 50; i++) {
             Map map = new HashMap();

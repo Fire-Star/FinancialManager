@@ -118,7 +118,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_departments').bootstrapTable({
-                url: 'fixsearch',         //请求后台的URL（*）
+                url: 'findEquipBySuppId',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -211,11 +211,11 @@
         alert("123");
     }
     $(document).ready(function(){
-        var detail = $.getUrlParam('val');
-        var param = {"detail":detail};
-        alert(detail);
+        var suppId = $.getUrlParam('suppId');
+        var param = {"suppId":suppId};
+        alert(suppId);
         $.ajax({
-            url: "check",
+            url: "findSuppBySuppID",
             type: 'post',
             dataType: 'json',
             timeout: 1000,

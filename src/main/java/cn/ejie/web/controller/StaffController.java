@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 
 import cn.ejie.utils.SimpleBeanUtils;
 
+import net.sf.json.JSONObject;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ public class StaffController {
 
     @Autowired
     private ObjectMapper objectMapper;
+    private String errorType="staffError";
 
     @Autowired
     private StaffService staffService;
@@ -107,13 +109,14 @@ public class StaffController {
             staffCustomList = staffService.findBySql(sql);
         }catch (Exception e){
             e.printStackTrace();
-            throw new SimpleException("","");
+            throw new SimpleException(errorType,"数据库发生错误！");
         }
 
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < staffCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String,String>();
             map.put("index",i+"");
+            map.put("id",staffCustomList.get(i).getStaffId());
             map.put("name",staffCustomList.get(i).getName());
             map.put("city",staffCustomList.get(i).getCity());
             map.put("department",staffCustomList.get(i).getDep());
@@ -123,23 +126,32 @@ public class StaffController {
             map.put("equipnum","equipnum"+i);
             list.add(map);
         }
-
-        /*List<Object> list = new ArrayList<Object>();
-        for(int i=0;i<50;i++){
-            Map<String,String> map = new HashMap<String,String>();
-            map.put("index",i+"");
-            map.put("name","name"+i);
-            map.put("city","city"+i);
-            map.put("department","department"+i);
-            map.put("position","position"+i);
-            map.put("tel","tel"+i);
-            map.put("entrytime","entrytime"+i);
-            map.put("equipnum","equipnum"+i);
-            list.add(map);
-        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+    @RequestMapping("/user/staff/detail")
+    public String searchStaffDetail(){
+        return "/WEB-INF/pages/staff/staffdetail.html";
+    }
+    @RequestMapping("/user/staff/findStaffByStaffID")
+    public void findStaffByStaffID (HttpServletRequest request,HttpServletResponse response) throws Exception{
+        System.out.println("yuangongxiangqing");
+        String staffId = "";
+        StaffCustom staffCustom = new StaffCustom();
+        if(request.getParameter("suppId")!=null){
+            staffId = request.getParameter("suppId");
+        }
+        System.out.println("staffId:"+staffId);
+        try {
+            staffCustom = staffService.findStaffById(staffId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException(errorType,"数据库发生错误！");
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSONObject.fromObject(staffCustom);
+        SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 }
