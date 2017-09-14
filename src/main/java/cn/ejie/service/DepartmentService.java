@@ -34,6 +34,7 @@ public class DepartmentService {
             throw new DepartmentException(errorType,"查询部门时，城市不能为空！");
         }
         String cityID = cityService.findCityIDByCity(city);
+        System.out.println(cityID);
         //当我们返回的是 List 对象的时候，如果对象里面没有数据，那么不会返回空指针，而是 List 里面没有数据。
         return departmentMapper.findDepartmentByCity(cityID);
     }

@@ -26,6 +26,7 @@ import java.util.Map;
 @Controller
 public class StaffController {
 
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired

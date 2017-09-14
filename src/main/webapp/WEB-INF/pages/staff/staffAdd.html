@@ -83,7 +83,7 @@
                     <label for="city" class="">城市：</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <select class="form-control" id="city" propName="城市" data-toggle="tooltip" data-placement="top" v-model="city" >
+                    <select class="form-control" id="city" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
                         <option selected value="">---请选择城市---</option>
                         <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                     </select>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="form-group form-inline from-line item-right" >
                     <select class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" >
-                        <option selected value="">--请选择员工部门--</option>
+                        <option selected value="" id="depIDOp">--请选择员工部门--</option>
                         <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
                     </select>
                 </div>
@@ -234,8 +234,23 @@
                         }
                     });
                 $btn.button('reset');
-            }
-        }
+            },
+            loadDep() {
+                $.get("../department/findDepartment?city="+vm.city,function(data,status){
+                    console.log(data);
+                    if(status=="success"){
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        if(_departmentData.departmentErrorType!=undefined){
+                            vm.modalStatus=_departmentData.departmentErrorType;
+                            $('#modalButton').click();
+                        }else{
+                            vm.departments=_departmentData;
+                        }
+                    }
+            });
+                $('#depIDOp').attr('selected',true);
+    }}
     });
     /**
      * 加载城市选项
@@ -249,20 +264,7 @@
     /**
      * 加载部门选项
      */
-    function loadDep() {
-        $.get("../department/showAllByCity?city="+vm.city,function(data,status){
-            if(status=="success"){
-                var _departmentData = eval(data);
-                console.log(_departmentData);
-                if(_departmentData.departmentErrorType!=undefined){
-                    vm.modalStatus=_departmentData.departmentErrorType;
-                    $('#modalButton').click();
-                }else{
-                    vm.departments=_departmentData;
-                }
-            }
-        });
-    }
+
 
     function tableCheck(){
         vm.addTime=$('#calender')[0].value;

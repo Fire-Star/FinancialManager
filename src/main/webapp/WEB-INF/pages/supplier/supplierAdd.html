@@ -260,7 +260,7 @@
                 $('#'+id).tooltip('destroy');
             }
         }
-        if(vm.tel.length<11){
+        if(vm.tel.length!=11){
             $('#tel').parent().addClass('has-error');
             $('#tel').tooltip({
                 title:"电话号码长度为11位！"

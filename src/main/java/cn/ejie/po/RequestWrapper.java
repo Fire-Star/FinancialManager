@@ -32,9 +32,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
                 e.printStackTrace();
             }
         }
-        /**
-         * 不配置Tomcat时的处理方式。
-         else if(method.equalsIgnoreCase("get")){
+        /*else if(method.equalsIgnoreCase("get")){//不配置Tomcat时的处理方式。
          value=request.getParameter(name);
          if(value==null)return null;
          try {
@@ -43,8 +41,7 @@ public class RequestWrapper extends HttpServletRequestWrapper {
          e.printStackTrace();
          }
          return value;
-         }
-         */
+         }*/
         return request.getParameter(name);
     }
     @Override
@@ -57,7 +54,9 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }else if(method.equalsIgnoreCase("get")){
+        }
+
+        /*else if(method.equalsIgnoreCase("get")){
             Set<String> setKey=request.getParameterMap().keySet();
             Map<String, String[]> parram=request.getParameterMap();
 
@@ -75,7 +74,8 @@ public class RequestWrapper extends HttpServletRequestWrapper {
             }
 
             return parram;
-        }
+        }*/
+
         return request.getParameterMap();
     }
 }
