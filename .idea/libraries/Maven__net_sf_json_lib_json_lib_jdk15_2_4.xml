@@ -1,6 +1,15 @@
 <component name="libraryTable">
   <library name="Maven: net.sf.json-lib:json-lib:jdk15:2.4">
     <CLASSES>
+<<<<<<< HEAD
+      <root url="jar://J:/Maven/Repository/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://J:/Maven/Repository/net/sf/json-lib/json-lib/2.4/json-lib-2.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://J:/Maven/Repository/net/sf/json-lib/json-lib/2.4/json-lib-2.4-sources.jar!/" />
+=======
       <root url="jar://$MAVEN_REPOSITORY$/net/sf/json-lib/json-lib/2.4/json-lib-2.4-jdk15.jar!/" />
     </CLASSES>
     <JAVADOC>
@@ -8,6 +17,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/net/sf/json-lib/json-lib/2.4/json-lib-2.4-sources.jar!/" />
+>>>>>>> 67d73473cb2228dfd3d2b004ba09b9a4d62b94fc
     </SOURCES>
   </library>
 </component>
