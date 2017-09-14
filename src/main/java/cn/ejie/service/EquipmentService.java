@@ -49,4 +49,15 @@ public class EquipmentService {
         }
         return list;
     }
+
+    public EquipmentCustom findById(String id) throws Exception{
+        EquipmentCustom equipmentCustom = new EquipmentCustom();
+        try {
+            equipmentCustom = equipmentMapper.findById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new EquipmentException("equipmentErrorType","数据库发生错误！");
+        }
+        return equipmentCustom;
+    }
 }

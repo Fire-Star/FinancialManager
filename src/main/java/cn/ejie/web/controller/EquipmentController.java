@@ -50,10 +50,21 @@ public class EquipmentController {
         }
 
     }
+
+    /**
+     *
+     * @return 设备查询界面
+     */
     @RequestMapping("/user/equipment/query")
     public String queryEquip(){
         return "/WEB-INF/pages/equipment/equipquery.html";
     }
+
+    /**
+     * 设备查询界面Table数据
+     * @param respose
+     * @param request
+     */
     @RequestMapping("/user/equipment/search")
     public void searchEquipment(HttpServletResponse respose, HttpServletRequest request){
         System.out.println("equipment/search");
@@ -135,6 +146,7 @@ public class EquipmentController {
         for (int i = 0;i<listequip.size();i++){
             Map<String,String> map = new HashMap<String,String>();
             map.put("index",i+"");
+            map.put("id",listequip.get(i).getEqId());
             map.put("eqId",listequip.get(i).getEqOtherId());
             map.put("eqType",listequip.get(i).getEqType());
             map.put("eqName",listequip.get(i).getEqName());
@@ -153,6 +165,11 @@ public class EquipmentController {
         SimpleException.sendMessage(respose,jsonArray.toString(), objectMapper);
     }
 
+    /**
+     * 通过员工ID查询员工设备
+     * @param response
+     * @param request
+     */
     @RequestMapping("/user/staff/findEqByStaffId")
     public void findEqByStaffId(HttpServletResponse response,HttpServletRequest request){
         List<Object> list = new ArrayList<Object>();
@@ -168,5 +185,32 @@ public class EquipmentController {
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+
+    /**
+     *
+     * @return 设备详情界面
+     */
+    @RequestMapping("/user/equip/detail")
+    public String findEquipDetailById(){
+        return "/WEB-INF/pages/equipment/equipdetail.html";
+    }
+
+    @RequestMapping("/user/equip/findEquipByEquipID")
+    public void findEquipByEquipID(HttpServletResponse response,HttpServletRequest request){
+        String eqId = "";
+        if(request.getParameter("equipId") != null){
+            eqId = request.getParameter("equipId");
+        }
+        EquipmentCustom equipmentCustom = new EquipmentCustom();
+        try {
+            equipmentCustom = equipmentService.findById(eqId);
+        }catch (Exception e){
+            Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = JSONObject.fromObject(equipmentCustom);
+        SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 }

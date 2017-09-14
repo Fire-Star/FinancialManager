@@ -15,4 +15,6 @@ public interface EquipmentMapper {
     public List<EquipmentCustom> findAllBySql(String sql) throws Exception;
 
     public List<EquipmentCustom> findAll() throws  Exception;
+
+    public EquipmentCustom findById(String id) throws Exception;
 }

@@ -243,9 +243,9 @@
         $("#eqState").val(""),
         $("#time").val("")
     };
-    function checkDetail(suppId) {
-        //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
-        alert(suppId);
+    function checkDetail(equipId) {
+        window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
+        alert(equipId);
     }
 </script>
 </html>
