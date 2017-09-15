@@ -78,6 +78,7 @@ public class EquipmentNameService {
 
     public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(String eqTypeName) throws Exception{
         String eqTypeId = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
+        System.out.println("eqTypeId="+eqTypeId);
         if(eqTypeId==null || eqTypeId.equals("")){
             throw new EquipmentException(errorType,"设备类型不能为空！");
         }

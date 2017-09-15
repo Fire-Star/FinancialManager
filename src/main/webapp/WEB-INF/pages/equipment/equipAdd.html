@@ -78,23 +78,23 @@
         <div class="content-line">
             <div class="item-left content-item">
                 <div class="item-left item-name">
-                    <label for="staffName">设备类型：</label>
+                    <label for="equipmentType">设备类型：</label>
                 </div>
                 <div class="form-group form-control-x form-inline from-line item-right">
-                    <select class="form-control " propName="设备类型" id="staffName" data-toggle="tooltip" data-placement="top"  v-model="name" placeholder="请输入设备类型..." >
+                    <select class="form-control " propName="设备类型" id="equipmentType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
                         <option selected value="">---请选择设备类型---</option>
-                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                        <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
                     </select>
                 </div>
             </div>
             <div class="item-right content-item">
                 <div class="item-left item-name">
-                    <label for="city" class="">设备名称：</label>
+                    <label for="equipmentName" class="">设备名称：</label>
                 </div>
                 <div class="form-group form-control-x form-inline from-line item-right">
-                    <select class="form-control" id="city" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
+                    <select class="form-control" id="equipmentName" propName="城市" data-toggle="tooltip" data-placement="top">
                         <option selected value="">---请选择设备名称---</option>
-                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                        <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
                     </select>
                 </div>
             </div>
@@ -102,13 +102,10 @@
         <div class="content-line customTitle">
             <div class="item-left content-item">
                 <div class="item-left item-name">
-                    <label for="dep">品牌名称：</label>
+                    <label for="pingpaiName">品牌名称：</label>
                 </div>
                 <div class="form-group form-inline from-line item-right" >
-                    <select class="form-control form-control-x" v-model="dep" id="dep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                        <option selected value="" id="depIDOp">--请选择品牌名称--</option>
-                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
-                    </select>
+                    <input class="form-control form-control-x" propName="品牌名称" id="pingpaiName" name="pingpaiName" v-model="pingpaiName" placeholder="输入品牌名称..." type="text">
                 </div>
             </div>
             <div class="item-right content-item">
@@ -213,14 +210,18 @@
 </body>
 <script>
 
-    $("#city").change(function () {
-        loadDep();
-    })
+    $("#equipmentType").change(function () {
+        loadEqName();
+    });
+
 
     var data = {
-        customFields:[{}],
-        name:"",
+        pingpaiName:"",
         city:"",
+        eqTypeValue:"",
+        customFields:[{}],
+        equipmentType:"",
+        equipmentName:"",
         dep:"",
         position:"",
         tel:"",
@@ -234,88 +235,99 @@
     var vm = new Vue({
         el:'.app',
         data:data,
-        methods:{
-            addField(index,item){
+        methods: {
+            addField(index, item) {
                 this.customFields.push({});
             },
-            delField(index){
-                if(this.customFields.length==1){
+            delField(index) {
+                if (this.customFields.length == 1) {
                     return;
                 }
-                this.customFields.splice(index,1);
+                this.customFields.splice(index, 1);
             },
-            submitData(){
-                if(tableCheck()){
+            submitData() {
+                if (tableCheck()) {
                     return;
                 }
                 var $btn = $('#submitBtn').button('loading');
-                var _customFields ="";
+                var _customFields = "";
                 var index;
-                for(index in this.customFields){
-                    if(this.customFields[index].key==""||this.customFields[index].key==undefined){
+                for (index in this.customFields) {
+                    if (this.customFields[index].key == "" || this.customFields[index].key == undefined) {
                         continue;
                     }
-                    _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
+                    _customFields += (this.customFields[index].key + "=" + (this.customFields[index].value == undefined ? "" : this.customFields[index].value) + ";");
                 }
-                _customFields=_customFields;
+                _customFields = _customFields;
                 $.post("add",
                     {
-                        "name":this.name,
-                        "city":this.city,
-                        "dep":this.dep,
-                        "position":this.position,
-                        "tel":this.tel,
-                        "entryTime":this.addTime,
-                        "customMessages":_customFields
+                        "name": this.name,
+                        "city": this.city,
+                        "dep": this.dep,
+                        "position": this.position,
+                        "tel": this.tel,
+                        "entryTime": this.addTime,
+                        "customMessages": _customFields
                     },
-                    function(data,status){
-                        if(status){
+                    function (data, status) {
+                        if (status) {
                             console.log(data);
                             var _data = eval(data);
-                            if(_data.defaultError!=undefined){
-                                vm.modalStatus=_data.defaultError;
+                            if (_data.defaultError != undefined) {
+                                vm.modalStatus = _data.defaultError;
                                 $('#modalButton').click();
-                            }else if(_data.success===undefined&&_data.staffError!=undefined){
-                                vm.modalStatus=_data.staffError;
+                            } else if (_data.success === undefined && _data.staffError != undefined) {
+                                vm.modalStatus = _data.staffError;
                                 $('#modalButton').click();
-                            }else if(_data.success!=undefined){
-                                vm.modalStatus="数据添加成功！";
+                            } else if (_data.success != undefined) {
+                                vm.modalStatus = "数据添加成功！";
                                 $('#modalButton').click();
-                                satff-add-form.reset();
+                                satff - add - form.reset();
                             }
                         }
                     });
                 $btn.button('reset');
             },
             loadDep() {
-                $.get("../department/findDepartment?city="+vm.city,function(data,status){
+                $.get("../department/findDepartment?city=" + vm.city, function (data, status) {
                     console.log(data);
-                    if(status=="success"){
+                    if (status == "success") {
                         var _departmentData = eval(data);
                         console.log(_departmentData);
-                        if(_departmentData.departmentErrorType!=undefined){
-                            vm.modalStatus=_departmentData.departmentErrorType;
+                        if (_departmentData.departmentErrorType != undefined) {
+                            vm.modalStatus = _departmentData.departmentErrorType;
                             $('#modalButton').click();
-                        }else{
-                            vm.departments=_departmentData;
+                        } else {
+                            vm.departments = _departmentData;
                         }
                     }
                 });
-                $('#depIDOp').attr('selected',true);
-            }}
-    });
-    /**
-     * 加载城市选项
-     */
-    $.get("../city/findAllCity",function(data,status){
-        if(status=="success"){
-            var _cityData = eval(data);
-            vm.citys = _cityData;
+                $('#depIDOp').attr('selected', true);
+            },
+            loadEqName() {
+                /**
+                 * 加载设备名称选项
+                 */
+                $.get("../findAllEquipmentNameByEqTypeName?eqTypeId="+vm.eqTypeValue,function(data,status){
+                    if(status=="success"){
+                        var _equipmentName = eval(data);
+                        console.log(_equipmentName);
+                        vm.equipmentName = _equipmentName;
+                    }
+                });
+            }
         }
     });
     /**
-     * 加载部门选项
+     * 加载设备类型选项
      */
+    $.get("../showAllEquipmentType",function(data,status){
+        if(status=="success"){
+            var _equipmentTypes = eval(data);
+            console.log(_equipmentTypes);
+            vm.equipmentType = _equipmentTypes;
+        }
+    });
 
 
     function tableCheck(){

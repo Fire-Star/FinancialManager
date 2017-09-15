@@ -30,11 +30,16 @@ public class CustomUserService implements UserDetailsService{
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
 
         UserCustom requestMessage = new UserCustom(username,"","");
 
-        cn.ejie.po.User resultUser = userMapper.findUserByUsername(requestMessage);
+        cn.ejie.po.User resultUser = null;
+        try {
+            resultUser = userMapper.findUserByUsername(requestMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (resultUser == null) {
             return null;
         }

@@ -2,6 +2,7 @@ package cn.ejie.service;
 
 import cn.ejie.dao.CityMapper;
 import cn.ejie.exception.DepartmentException;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.CityCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,4 +53,11 @@ public class CityService{
         return cityID;
     }
 
+    public String findCityNameByCityID(String cityID) throws Exception {
+        if(cityID==null || cityID.equals("")){
+            throw new SimpleException(errorType,"系统发生错误：城市ID不能为空！！！");
+        }
+        System.out.println(cityID);
+        return cityMapper.findCityNameByCityID(cityID);
+    }
 }

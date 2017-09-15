@@ -40,7 +40,7 @@ public class TestUserController {
     private ResMapper resMapper;
 
     @RequestMapping("/test/showAllUser")
-    public void showAllUser(HttpServletResponse response){
+    public void showAllUser(HttpServletResponse response) throws Exception{
         UserCustom userCustom = new UserCustom("MoonFollow","","");
         User user = testService.findUserByUsername(userCustom);
         try {

@@ -37,4 +37,12 @@ public interface CityMapper {
      * @throws Exception
      */
     public String findCityIDByCity(String city) throws Exception;
+
+    /**
+     * 通过城市ID查找城市名称
+     * @param cityId
+     * @return
+     * @throws Exception
+     */
+    public String findCityNameByCityID(String cityId) throws Exception;
 }

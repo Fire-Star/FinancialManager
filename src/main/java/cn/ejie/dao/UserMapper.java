@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Administrator on 2017/8/9.
  */
 public interface UserMapper {
-    public User findUserByUsername(User user);
+    public User findUserByUsername(User user) throws Exception;
 
     public List<UserCustom> findAll() throws Exception;
 

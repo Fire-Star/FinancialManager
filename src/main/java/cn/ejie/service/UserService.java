@@ -1,6 +1,8 @@
 package cn.ejie.service;
 
 import cn.ejie.dao.UserMapper;
+import cn.ejie.exception.SimpleException;
+import cn.ejie.po.User;
 import cn.ejie.pocustom.UserCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +36,11 @@ public class UserService {
             e.printStackTrace();
         }
         return userList;
+    }
+    public User findUserByUsername(User user) throws Exception{
+        if(user.getUsername()==null||"".equals(user.getUsername())){
+            throw new SimpleException(errorType,"系统发生错误：查询用户时，用户名不能为空！！！");
+        }
+        return userMapper.findUserByUsername(user);
     }
 }

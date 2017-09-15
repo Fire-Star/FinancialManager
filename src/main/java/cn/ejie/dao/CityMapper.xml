@@ -18,4 +18,7 @@
     <select id="findCityIDByCity" resultType="java.lang.String">
         SELECT cityID FROM city WHERE city = #{city}
     </select>
+    <select id="findCityNameByCityID" resultType="java.lang.String">
+        SELECT city FROM city WHERE cityID = #{cityId}
+    </select>
 </mapper>

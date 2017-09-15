@@ -16,7 +16,7 @@ public class TestService {
     private UserMapper userMapper;
 
     @PreAuthorize("hasAnyRole('ROLE_USER')")
-    public User findUserByUsername(User user){
+    public User findUserByUsername(User user) throws Exception{
         return  userMapper.findUserByUsername(user);
     }
 }
