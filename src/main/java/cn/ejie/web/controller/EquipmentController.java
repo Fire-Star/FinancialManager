@@ -10,6 +10,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.View;
@@ -68,9 +69,8 @@ public class EquipmentController {
     @RequestMapping("/user/equipment/search")
     public void searchEquipment(HttpServletResponse respose, HttpServletRequest request){
         System.out.println("equipment/search");
-        Object object = (Object)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(object.toString());
-                //SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+
         String eqID = "";
         String eqType = "";
         String eqName = "";
@@ -105,28 +105,30 @@ public class EquipmentController {
         if(!eqID.equals("")||!eqType.equals("")||!eqName.equals("")||!supplier.equals("")||!belongDepart.equals("")||!eqState.equals("")||!time.equals("")){
             sqltemp = sqltemp + " WHERE";
             if(!eqID.equals("")){
-                sql = sqltemp + " eq_id="+eqID;
+                sqltemp = sqltemp + " and eq_id="+eqID;
             }
             if(!eqType.equals("")){
-                sql = sqltemp + " eq_type="+eqType;
+                sqltemp = sqltemp + " and eq_type='"+eqType+"'";
             }
             if(!eqName.equals("")){
-                sql = sqltemp + " eq_name="+eqName;
+                sqltemp = sqltemp + " and eq_name='"+eqName+"'";
             }
             if(!supplier.equals("")){
-                sql = sqltemp + " supplier="+supplier;
+                sqltemp = sqltemp + " and supplier="+supplier;
             }
             if(!belongDepart.equals("")){
-                sql = sqltemp + " belong_depart"+belongDepart;
+                sqltemp = sqltemp + " and belong_depart"+belongDepart;
             }
             if(!eqState.equals("")){
-                sql = sqltemp + " eq_state="+eqState;
+                sqltemp = sqltemp + " and eq_state="+eqState;
             }
             if(!time.equals("")){
-                sql = sqltemp + " purchas_date="+time;
+                sqltemp = sqltemp + " and purchas_date="+time;
             }
             if(sqltemp.contains("WHERE and")){
                 sql = sqltemp.replaceAll("WHERE and","WHERE");
+            }else{
+                sql = sqltemp;
             }
         }else {
             sql = sqltemp;

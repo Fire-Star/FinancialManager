@@ -7,6 +7,8 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -31,12 +33,10 @@
         }
         .col-sm-1{
             margin: 1px;
-            width: 8%;
             margin-top: 10px;
         }
         .col-sm-2 {
             margin: 1px;
-            width: 16.66666667%;
             margin-top: 10px;
         }
         .tablecontent{
@@ -65,34 +65,54 @@
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
+                    <div class="form-group card-group" style="margin-top:15px">
                         <label class="control-label col-sm-1" for="eqID">设备ID：</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
                             <input type="text" class="form-control" id="eqID" placeholder="ID...">
                         </div>
                         <label class="control-label col-sm-1" for="eqType">设备类型：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqType" placeholder="类型...">
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                            <select class="form-control " propName="设备类型" id="eqType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
+                                <option selected value="">---请选择设备类型---</option>
+                                <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
+                            </select>
                         </div>
                         <label class="control-label col-sm-1" for="eqName">设备名称：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqName" placeholder="名称...">
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                            <select class="form-control" id="eqName" propName="城市" data-toggle="tooltip" data-placement="top">
+                                <option selected value="">---请选择设备名称---</option>
+                                <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
+                            </select>
                         </div>
                         <label class="control-label col-sm-1" for="supplier">供应商：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="supplier" placeholder="供应商...">
+                        <div class="col-sm-2 form-group form-inline from-line item-right">
+                        <select class="form-control form-control-x" id="supplier" propName="供应商" @change="loadDep" data-toggle="tooltip" data-placement="top" >
+                            <option selected value="">---请选择供应商---</option>
+                            <option v-for="(item , index) in supplier" :value="item.supplier">{{item.supplier}}</option>
+                        </select>
                         </div>
-                        <label class="control-label col-sm-1" for="belongDepart">归属部门：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="belongDepart" placeholder="部门...">
+                        <label class="control-label col-sm-1">归属部门：</label>
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right" >
+                            <div class="form-group form-inline from-line item-right" role="group">
+                                <div class="btn-group ">
+                                    <select class="btn btn-default form-control select-left" id="belongCity" propName="" data-toggle="tooltip" data-placement="top" >
+                                        <option selected value="" id="d">--城市--</option>
+                                    </select>
+                                    <select class="btn btn-default form-control select-right" id="belongPart" propName="" data-toggle="tooltip" data-placement="top" >
+                                        <option selected value="" id="dsf">--部门--</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <label class="control-label col-sm-1" for="eqState">当前状态：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqState" placeholder="状态...">
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                            <select class="form-control form-control-x" id="eqState" propName="当前状态" data-toggle="tooltip" data-placement="top" >
+                                <option selected value="">---请选择状态---</option>
+                            </select>
                         </div>
                         <label class="control-label col-sm-1" for="time">签约时间:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="time" placeholder="签约时间...">
+                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                            <input class="form-control form-control-x" propName="采购时间" id="time" name="entryTime" placeholder="选择采购时间..." type="text">
                         </div>
                         <div class="col-sm-1" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
@@ -120,10 +140,44 @@
 </body>
 <script>
     var data = {
+        eqTypeValue:"",
+        equipmentType:"",
+        equipmentName:"",
+        supplier:""
     };
     var vm = new Vue({
         el:'.app',
-        data:data
+        data:data,
+        methods: {
+            loadEqName() {
+                /**
+                 * 加载设备名称选项
+                 */
+                $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId="+vm.eqTypeValue,function(data,status){
+                    if(status=="success"){
+                        var _equipmentName = eval(data);
+                        console.log(_equipmentName);
+                        vm.equipmentName = _equipmentName;
+                    }
+                });
+            },
+            loadDep() {
+                $.get("../department/findDepartment", function (data, status) {
+                    /*console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        if (_departmentData.departmentErrorType != undefined) {
+                            vm.modalStatus = _departmentData.departmentErrorType;
+                            $('#modalButton').click();
+                        } else {
+                            vm.departments = _departmentData;
+                        }
+                    }*/
+                });
+                $('#depIDOp').attr('selected', true);
+            }
+        }
     });
     $(function () {
         //1.初始化Table
@@ -247,5 +301,20 @@
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
         alert(equipId);
     }
+    $("#equipmentType").change(function () {
+        loadEqName();
+    });
+    $.get("../../showAllEquipmentType",function(data,status){
+        if(status=="success"){
+            var _equipmentTypes = eval(data);
+            console.log(_equipmentTypes);
+            vm.equipmentType = _equipmentTypes;
+        }
+    });
+    $('#time').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
 </script>
 </html>
