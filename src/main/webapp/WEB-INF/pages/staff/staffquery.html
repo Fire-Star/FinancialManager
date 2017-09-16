@@ -7,6 +7,8 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -41,6 +43,9 @@
         .col-sm-2{
             margin-top: 10px;
         }
+        .col-sm-3{
+            margin-top: 10px;
+        }
         .bootstrap-table.fixed-table-container{
             height: 85%;
         }
@@ -63,36 +68,39 @@
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
                         <label class="control-label col-sm-1" for="name">姓名：</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <input type="text" class="form-control" id="name" placeholder="姓名...">
                         </div>
-                        <label class="control-label col-sm-1" for="department">部门：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="department" placeholder="部门...">
-                        </div>
-                        <label class="control-label col-sm-1" for="position">岗位:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="position" placeholder="岗位...">
-                        </div>
                         <label class="control-label col-sm-1" for="tel">联系电话:</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-3">
                             <input type="text" class="form-control" id="tel" placeholder="联系电话...">
                         </div>
-                        <label class="control-label col-sm-1" for="entrytime">入职时间:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="entrytime" placeholder="入职时间...">
+                        <label class="control-label col-sm-1" for="time">入职时间:</label>
+                        <div class="col-sm-3">
+                            <input name="time" type="text" class="form-control" id="time" placeholder="入职时间...">
                         </div>
-                        <label class="control-label col-sm-1"></label>
-                        <div class="col-sm-2">
+                        <label class="control-label col-sm-1" for="department">部门：</label>
+                        <div class="col-sm-3 form-group form-inline from-line item-right" role="group">
+                            <div class="btn-group ">
+                                <select class="btn btn-default form-control select-left" id="belongCity" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city">
+                                    <option selected value="">---城市---</option>
+                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                </select>
+                                <select class="btn btn-default form-control select-right" id="department" propName="" data-toggle="tooltip" data-placement="top" >
+                                    <option selected value="" id="depIDOp">--员工部门--</option>
+                                    <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <label class="control-label col-sm-1" for="position">岗位:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="position" placeholder="岗位...">
+                        </div>
 
-                        </div>
-                        <label class="control-label col-sm-1"></label>
-                        <div class="col-sm-2">
-
-                        </div>
                         <div class="col-sm-1" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
-                        </div><div class="col-sm-1" style="text-align:left;">
+                        </div>
+                        <div class="col-sm-1" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                         </div>
                     </div>
@@ -114,11 +122,34 @@
 </div>
 </body>
 <script>
+    $("#belongCity").change(function () {
+        loadDep();
+    })
     var data = {
+        citys : [],
+        city : "",
+        departments : []
     };
     var vm = new Vue({
         el:'.app',
-        data:data
+        data:data,
+        methods:{
+            loadDep() {
+                $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        if (_departmentData.departmentErrorType != undefined) {
+                            vm.modalStatus = _departmentData.departmentErrorType;
+                            $('#modalButton').click();
+                        } else {
+                            vm.departments = _departmentData;
+                        }
+                    }
+                });
+            }
+        }
     });
     $(function () {
         //1.初始化Table
@@ -228,6 +259,21 @@
         $('#position').val("");
         $('#tel').val("");
         $('#entrytime').val("");
+        $('#belongCity').val("");
     };
+    /**
+     * 加载城市选项
+     */
+    $.get("../../city/findAllCity",function(data,status){
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    });
+    $('#time').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
 </script>
 </html>
