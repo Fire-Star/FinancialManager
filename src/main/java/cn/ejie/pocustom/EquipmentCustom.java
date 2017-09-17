@@ -1,5 +1,6 @@
 package cn.ejie.pocustom;
 
+import cn.ejie.annotations.BeanPropertyErrorType;
 import cn.ejie.po.Equipment;
 
 /**
@@ -9,5 +10,4 @@ public class EquipmentCustom extends Equipment{
     /**
      * 这里面写扩展属性
      */
-
 }

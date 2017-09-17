@@ -26,4 +26,7 @@
     <select id="findAllDepartment" resultType="cn.ejie.pocustom.DepartmentCustom">
         SELECT department FROM department
     </select>
+    <select id="findDepartIDByCityIDAndDepartStr" resultType="String">
+        SELECT id FROM department WHERE city = #{cityID} AND department = #{departStr}
+    </select>
 </mapper>

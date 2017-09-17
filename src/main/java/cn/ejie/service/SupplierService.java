@@ -1,6 +1,7 @@
 package cn.ejie.service;
 
 import cn.ejie.dao.SupplierMapper;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.exception.SupplierException;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
@@ -64,6 +65,5 @@ public class SupplierService {
         }
         supplierMapper.addSingleSupplier(supplierCustom);
     }
-
 
 }

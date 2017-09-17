@@ -1,14 +1,19 @@
 package cn.ejie.web.controller;
 
 import cn.ejie.exception.SimpleException;
+import cn.ejie.po.User;
+import cn.ejie.pocustom.CityCustom;
 import cn.ejie.pocustom.SupplierCustom;
+import cn.ejie.service.CityService;
 import cn.ejie.service.SupplierService;
+import cn.ejie.service.UserService;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,13 +25,21 @@ import java.util.*;
 @Controller
 public class SupplierController {
 
+    private String errorType = "supplierErrorType";
+
     @Autowired
     private SupplierService supplierService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    @RequestMapping("/supplier/showAll")
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CityService cityService;
+
+    @RequestMapping("/supplier/findAllSupplier")
     public @ResponseBody List<SupplierCustom> showAllSupplier() throws Exception {
         return  supplierService.findAllSupplier();
     }

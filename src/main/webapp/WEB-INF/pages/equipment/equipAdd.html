@@ -30,10 +30,10 @@
             cursor: pointer;
         }
         .select-left{
-            width: 93px !important;
+            width: 76px !important;
         }
         .select-right{
-            width: 93px !important;
+            width: 110px !important;
         }
         @media (min-width: 768px) {
             .from-line{
@@ -114,13 +114,13 @@
                 </div>
                 <div class="form-group form-inline from-line item-right" role="group">
                 <div class="btn-group">
-                    <select class="btn btn-default form-control select-left" v-model="dep" id="x" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                        <option selected value="" id="">--城市--</option>
-                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                    <select class="btn btn-default form-control select-left" v-model="buyCity" @change="loadBuyDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                        <option selected value="" id="">城市</option>
+                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                     </select>
-                    <select class="btn btn-default form-control select-right" v-model="dep" id="ds" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                    <select class="btn btn-default form-control select-right" propName="采购部门" id="buyDep" data-toggle="tooltip" data-placement="top" >
                         <option selected value="" id="fd">--部门--</option>
-                        <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                        <option v-for="(item , index) in buyDepartments" :value="item.department">{{item.department}}</option>
                     </select>
                 </div>
 
@@ -135,13 +135,13 @@
                 <div class="form-group form-inline from-line item-right" >
                     <div class="form-group form-inline from-line item-right" role="group">
                         <div class="btn-group">
-                            <select class="btn btn-default form-control select-left" v-model="dep" id="x" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                                <option selected value="" id="d">--城市--</option>
-                                <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                            <select class="btn btn-default form-control select-left" id="x" v-model="belongCity" @change="loadBelongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                                <option selected value="" id="d">城市</option>
+                                <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                             </select>
-                            <select class="btn btn-default form-control select-right" v-model="dep" id="ds" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
+                            <select class="btn btn-default form-control select-right" id="belongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
                                 <option selected value="" id="dsf">--部门--</option>
-                                <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+                                <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
                             </select>
                         </div>
 
@@ -160,12 +160,12 @@
         <div class="content-line">
             <div class="item-left content-item">
                 <div class="item-left item-name">
-                    <label for="calender">供应商:</label>
+                    <label for="supplier">供应商:</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <select class="form-control form-control-x" id="supplier" propName="供应商" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
+                    <select class="form-control form-control-x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" v-model="supplier" >
                         <option selected value="">---请选择供应商---</option>
-                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                        <option v-for="(item , index) in autoSuppliers" :value="item.name">{{item.name}}</option>
                     </select>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     <label for="calender">采购价格:</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <input class="form-control form-control-x" propName="采购价格" id="price" name="entryTime" placeholder="输入采购价格..." type="text">
+                    <input class="form-control form-control-x" propName="采购价格" id="price" v-model="buyPrice" name="entryTime" placeholder="输入采购价格..." type="text">
                 </div>
             </div>
         </div>
@@ -216,20 +216,26 @@
 
 
     var data = {
-        pingpaiName:"",
-        city:"",
         eqTypeValue:"",
+        //equipmentName
+        pingpaiName:"",
+        buyCity:"",
+        //buyDep
+        belongCity:"",
+        //belongDep
+        buyTime:"",
+        supplier:"",
+        buyPrice:"",
         customFields:[{}],
+
         equipmentType:"",
         equipmentName:"",
-        dep:"",
-        position:"",
-        tel:"",
-        addTime:"",
         isError:[],
         modalStatus:"",
         citys:[],
-        departments:[]
+        buyDepartments:[],
+        belongDepartment:[],
+        autoSuppliers:[]
     };
 
     var vm = new Vue({
@@ -259,37 +265,39 @@
                     _customFields += (this.customFields[index].key + "=" + (this.customFields[index].value == undefined ? "" : this.customFields[index].value) + ";");
                 }
                 _customFields = _customFields;
+                var eqName = $('#equipmentName')[0].value;
+                var belongDepart = $('#belongDep')[0].value;
+                var purchaseTime = $('#calender')[0].value;
+                var purchaseDep = $('#buyDep')[0].value;
+
+                alert(this.buyCity);
+                alert(this.belongCity);
+
                 $.post("add",
                     {
-                        "name": this.name,
-                        "city": this.city,
-                        "dep": this.dep,
-                        "position": this.position,
-                        "tel": this.tel,
-                        "entryTime": this.addTime,
-                        "customMessages": _customFields
+                        "eqType":this.eqTypeValue,
+                        "eqName": eqName,
+                        "brandName": this.pingpaiName,
+                        "buyCity": this.buyCity,
+                        "purchasDepart":purchaseDep,
+                        "city":this.belongCity,
+                        "belongDepart":belongDepart,
+                        "purchasDate":$('#calender')[0].value,
+                        "supplier":this.supplier,
+                        "purchasPrice":this.buyPrice,
+                        "purchasTime":purchaseTime,
+                        "customMessage": _customFields
                     },
                     function (data, status) {
                         if (status) {
                             console.log(data);
-                            var _data = eval(data);
-                            if (_data.defaultError != undefined) {
-                                vm.modalStatus = _data.defaultError;
-                                $('#modalButton').click();
-                            } else if (_data.success === undefined && _data.staffError != undefined) {
-                                vm.modalStatus = _data.staffError;
-                                $('#modalButton').click();
-                            } else if (_data.success != undefined) {
-                                vm.modalStatus = "数据添加成功！";
-                                $('#modalButton').click();
-                                satff - add - form.reset();
-                            }
+
                         }
                     });
                 $btn.button('reset');
             },
-            loadDep() {
-                $.get("../department/findDepartment?city=" + vm.city, function (data, status) {
+            loadBuyDep() {
+                $.get("../department/findDepartment?city=" + vm.buyCity, function (data, status) {
                     console.log(data);
                     if (status == "success") {
                         var _departmentData = eval(data);
@@ -298,11 +306,30 @@
                             vm.modalStatus = _departmentData.departmentErrorType;
                             $('#modalButton').click();
                         } else {
-                            vm.departments = _departmentData;
+                            vm.buyDepartments = _departmentData;
                         }
                     }
                 });
                 $('#depIDOp').attr('selected', true);
+            },
+            loadBelongDep(){
+                $.get("../department/findDepartment?city=" + vm.belongCity, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                         var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        if (_departmentData.departmentErrorType != undefined) {
+                            vm.modalStatus = _departmentData.departmentErrorType;
+                            $('#modalButton').click();
+                        } else {
+                            vm.belongDepartment = _departmentData;
+                        }
+                    }
+                });
+                $('#depIDOp').attr('selected', true);
+            },
+            loadDep(){
+
             },
             loadEqName() {
                 /**
@@ -329,12 +356,33 @@
         }
     });
 
+    /**
+     * 加载当前用户的所有提供商
+     */
+    $.get("../supplier/findAllSupplier",function (data, status) {
+        if(status=="success"){
+            var _autoSuppliers = eval(data);
+            console.log(_autoSuppliers);
+            vm.autoSuppliers = _autoSuppliers;
+        }
+    });
+
+
+    /**
+     * 加载当前用户的所有城市
+     */
+    $.get("../city/findAllCity",function (data, status) {
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    })
+
 
     function tableCheck(){
-        vm.addTime=$('#calender')[0].value;
         var inputObj = $('.form-control');
         var i;
-        var len = 6;
+        var len = 10;
         var flag = false;
         for(i=0 ;i < len; i++){
             if(inputObj[i].value==""){
@@ -352,13 +400,6 @@
                 $(inputObj[i]).parent().removeClass('has-error');
                 $('#'+id).tooltip('destroy');
             }
-        }
-        if(vm.tel.length<11){
-            $('#tel').parent().addClass('has-error');
-            $('#tel').tooltip({
-                title:"电话号码长度为11位！"
-            });
-            return true;
         }
         return flag;
     }

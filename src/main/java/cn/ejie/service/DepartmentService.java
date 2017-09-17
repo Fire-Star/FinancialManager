@@ -8,14 +8,16 @@ import cn.ejie.pocustom.DepartmentCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/8/23.
  */
 @Service
 public class DepartmentService {
-    private String errorType = "departmentErrorType";
+    private String errorType = "errorType";
 
     @Autowired
     private DepartmentMapper departmentMapper;
@@ -37,6 +39,31 @@ public class DepartmentService {
         System.out.println(cityID);
         //当我们返回的是 List 对象的时候，如果对象里面没有数据，那么不会返回空指针，而是 List 里面没有数据。
         return departmentMapper.findDepartmentByCity(cityID);
+    }
+
+    public String findDepartIDByCityStrAndDepartStr(String cityStr , String departStr) throws Exception {
+        if(cityStr==null || cityStr.equals("")){
+            throw new SimpleException(errorType,"城市不能为空！");
+        }
+        if(departStr==null || departStr.equals("")){
+            throw new SimpleException(errorType,"部门不能为空！");
+        }
+        String departID = null;
+        try {
+            String cityID = cityService.findCityIDByCity(cityStr);
+            Map<String,String> params = new HashMap<>();
+            params.put("cityID",cityID);
+            params.put("departStr",departStr);
+            departID = departmentMapper.findDepartIDByCityIDAndDepartStr(params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SimpleException(errorType,"查找城市ID发生错误！");
+        }
+        if(departID == null){
+            throw new SimpleException(errorType,"通过城市和部门查找城市ID时，系统发生错误！");
+        }
+
+        return departID;
     }
 
     /**

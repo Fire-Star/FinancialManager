@@ -54,4 +54,12 @@ public interface DepartmentMapper {
      * @throws Exception
      */
     public List<DepartmentCustom> findAllDepartment() throws Exception;
+
+    /**
+     * 通过城市ID和部门名称查找出部门ID
+     *  params :String cityID , String departStr
+     * @return
+     * @throws Exception
+     */
+    public String findDepartIDByCityIDAndDepartStr(Map<String,String> params) throws Exception;
 }

@@ -4,6 +4,8 @@ package cn.ejie.po;
  * Created by Administrator on 2017/8/21.
  */
 
+import cn.ejie.annotations.BeanPropertyErrorType;
+
 import java.util.Date;
 
 /**
@@ -11,18 +13,35 @@ import java.util.Date;
  */
 public class Equipment {
     private String eqId;//设备ID
+    @BeanPropertyErrorType(propertyName = "设备类型")
     private String eqType;//设备类型
+    @BeanPropertyErrorType(propertyName = "设备名称")
     private String eqName;//设备名称
+    @BeanPropertyErrorType(propertyName = "品牌名称")
     private String brandName;//品牌名称
+    @BeanPropertyErrorType(propertyName = "采购部门")
     private String purchasDepart;//采购部门
+    @BeanPropertyErrorType(propertyName = "归属部门")
     private String belongDepart;//归属部门
-    private Date purchasDate;//采购时间
+    @BeanPropertyErrorType(propertyName = "采购时间")
+    private String purchasTime;//采购时间
+    @BeanPropertyErrorType(propertyName = "供应商")
     private String supplier;//供应商
     private String eqStateId;//设备状态
-    private double dPurchasPrice;//采购价格
+    @BeanPropertyErrorType(propertyName = "采购价格")
+    private String purchasPrice;//采购价格
     private String customMessage;//自定义信息，该自定义信息满足以下格式：key:value,key:value
     private String eqOtherId;//设备别名ID
-    private String city;//城市ID
+    private String city;//城市ID,归属城市
+    private String buyCity;//采购城市
+
+    public String getBuyCity() {
+        return buyCity;
+    }
+
+    public void setBuyCity(String buyCity) {
+        this.buyCity = buyCity;
+    }
 
     public Equipment() {
     }
@@ -36,13 +55,14 @@ public class Equipment {
                 ", brandName='" + brandName + '\'' +
                 ", purchasDepart='" + purchasDepart + '\'' +
                 ", belongDepart='" + belongDepart + '\'' +
-                ", purchasDate=" + purchasDate +
+                ", purchasTime='" + purchasTime + '\'' +
                 ", supplier='" + supplier + '\'' +
                 ", eqStateId='" + eqStateId + '\'' +
-                ", dPurchasPrice=" + dPurchasPrice +
+                ", purchasPrice='" + purchasPrice + '\'' +
                 ", customMessage='" + customMessage + '\'' +
                 ", eqOtherId='" + eqOtherId + '\'' +
                 ", city='" + city + '\'' +
+                ", buyCity='" + buyCity + '\'' +
                 '}';
     }
 
@@ -94,12 +114,12 @@ public class Equipment {
         this.belongDepart = belongDepart;
     }
 
-    public Date getPurchasDate() {
-        return purchasDate;
+    public String getPurchasTime() {
+        return purchasTime;
     }
 
-    public void setPurchasDate(Date purchasDate) {
-        this.purchasDate = purchasDate;
+    public void setPurchasTime(String purchasTime) {
+        this.purchasTime = purchasTime;
     }
 
     public String getSupplier() {
@@ -118,12 +138,12 @@ public class Equipment {
         this.eqStateId = eqStateId;
     }
 
-    public double getdPurchasPrice() {
-        return dPurchasPrice;
+    public String getPurchasPrice() {
+        return purchasPrice;
     }
 
-    public void setdPurchasPrice(double dPurchasPrice) {
-        this.dPurchasPrice = dPurchasPrice;
+    public void setPurchasPrice(String purchasPrice) {
+        this.purchasPrice = purchasPrice;
     }
 
     public String getCustomMessage() {

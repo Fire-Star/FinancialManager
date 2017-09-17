@@ -8,10 +8,10 @@
             SELECT uuid()
         </selectKey>
         INSERT INTO equipment(eq_id,eq_type,eq_name,brand_name,
-        purchas_depart,belong_depart,purchas_date,supplier,eq_state_id,
-        purchas_price,custom_message) VALUES(#{eqId},#{eqType},#{eqName},
-        #{brandName},#{purchasDepart},#{belongDepart},#{purchasDate},#{supplier},
-        #{eqStateId},#{dPurchasPrice},#{customMessage})
+        purchas_depart,belong_depart,purchas_date,supplier,eq_state,
+        purchas_price,custom_message,buyCity,city,eq_other_id) VALUES(#{eqId},#{eqType},#{eqName},
+        #{brandName},#{purchasDepart},#{belongDepart},#{purchasTime},#{supplier},
+        #{eqStateId},#{purchasPrice},#{customMessage},#{buyCity},#{city},#{eqOtherId})
     </insert>
     <select id="countEquipment" resultType="java.lang.Integer">
     SELECT count(eq_id) FROM equipment

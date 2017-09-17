@@ -34,18 +34,16 @@ public class EquipmentController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @RequestMapping("/addEquipment")
+    @RequestMapping("/equipment/add")
     public void insertSingleEquipment(EquipmentCustom equipmentCustom, HttpServletResponse response){
         System.out.println(equipmentCustom);
+
+
         try {
             equipmentService.insertSingleEquipment(equipmentCustom);
-            response.getWriter().println("insert Success！！！");
+            SimpleException.sendSuccessMessage(response,objectMapper);
         } catch (Exception e) {
-            try {
-                response.getWriter().println("insert failed");
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+
             e.printStackTrace();
         }
 
@@ -154,7 +152,7 @@ public class EquipmentController {
             map.put("supplier",listequip.get(i).getSupplier());
             map.put("belongDepart",listequip.get(i).getBelongDepart());
             map.put("eqState",listequip.get(i).getEqStateId());
-            map.put("dPurchasPrice",listequip.get(i).getdPurchasPrice()+"");
+            map.put("dPurchasPrice",listequip.get(i).getPurchasPrice()+"");
             map.put("time","使用时间"+i);
             map.put("fixnum","维修记录"+i);
             list.add(map);
