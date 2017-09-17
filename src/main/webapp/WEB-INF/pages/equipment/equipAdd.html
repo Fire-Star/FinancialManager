@@ -270,9 +270,6 @@
                 var purchaseTime = $('#calender')[0].value;
                 var purchaseDep = $('#buyDep')[0].value;
 
-                alert(this.buyCity);
-                alert(this.belongCity);
-
                 $.post("add",
                     {
                         "eqType":this.eqTypeValue,
@@ -290,8 +287,15 @@
                     },
                     function (data, status) {
                         if (status) {
-                            console.log(data);
-
+                            var _data = eval(data);
+                            if(_data.success){
+                                vm.modalStatus = _data.success;
+                            }else if(_data.errorType){
+                                vm.modalStatus = _data.errorType;
+                            }else{
+                                vm.modalStatus = "添加数据失败，请联系管理员！！！";
+                            }
+                            $('#modalButton').click();
                         }
                     });
                 $btn.button('reset');

@@ -3,6 +3,7 @@ package cn.ejie.service;
 import cn.ejie.dao.EquipmentMapper;
 import cn.ejie.dao.EquipmentStateMapper;
 import cn.ejie.exception.EquipmentException;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.StringUtils;

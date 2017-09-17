@@ -37,8 +37,6 @@ public class EquipmentController {
 
     @RequestMapping("/equipment/add")
     public void insertSingleEquipment(EquipmentCustom equipmentCustom, HttpServletResponse response){
-        System.out.println(equipmentCustom);
-
 
         try {
             equipmentService.insertSingleEquipment(equipmentCustom);
