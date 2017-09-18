@@ -65,4 +65,8 @@ public class EquipmentTypeService {
         }
         return result;
     }
+
+    public String findEquipmentTypeOtherIDByTypeName(String equipmentTypeName) throws Exception{
+        return equipmentTypeMapper.findEquipmentTypeOtherIDByTypeName(equipmentTypeName);
+    }
 }

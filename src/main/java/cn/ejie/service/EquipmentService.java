@@ -33,6 +33,9 @@ public class EquipmentService {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private EquipmentTypeService equipmentTypeService;
+
     public void insertSingleEquipment(EquipmentCustom equipmentCustom) throws Exception{
         System.out.println(equipmentCustom);
         BeanPropertyValidateUtils.validateIsEmptyProperty(equipmentCustom);//验证Bean属性是否为空！！！
@@ -58,9 +61,10 @@ public class EquipmentService {
         equipmentCustom.setPurchasTime(StringUtils.zhDateStrToENDateStr(equipmentCustom.getPurchasTime()));//将时间转换并设置
 
         Integer count = equipmentMapper.countEquipment()+1;
-        String eqOtherId = StringUtils.fillPreString(count.toString(),'0',4);
-        System.out.println(eqOtherId);
-        equipmentCustom.setEqOtherId(eqOtherId);
+        String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);
+        String eqOtherIdBefore = equipmentTypeService.findEquipmentTypeOtherIDByTypeName(equipmentCustom.getEqType());
+
+        equipmentCustom.setEqOtherId(eqOtherIdBefore+eqOtherIdAfter);
         equipmentMapper.insertSingleEquipment(equipmentCustom);
     }
 

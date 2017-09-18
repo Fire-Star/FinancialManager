@@ -288,9 +288,11 @@
                     function (data, status) {
                         if (status) {
                             var _data = eval(data);
-                            if(_data.success){
+                            if(!_data){
+                                vm.modalStatus = "添加数据失败，请联系管理员！！！";
+                            }else if(_data.success!=undefined){
                                 vm.modalStatus = _data.success;
-                            }else if(_data.errorType){
+                            }else if(_data.errorType!=undefined){
                                 vm.modalStatus = _data.errorType;
                             }else{
                                 vm.modalStatus = "添加数据失败，请联系管理员！！！";

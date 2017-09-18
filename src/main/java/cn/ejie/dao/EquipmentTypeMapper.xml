@@ -21,4 +21,7 @@
     <select id="findEquipmentTypeIDByTypeName" resultType="java.lang.String">
         SELECT eq_type_id FROM eq_type WHERE eq_type_name = #{equipmentTypeName}
     </select>
+    <select id="findEquipmentTypeOtherIDByTypeName" resultType="String">
+        SELECT eq_type_other_id FROM eq_type WHERE eq_type_name = #{equipmentTypeName}
+    </select>
 </mapper>

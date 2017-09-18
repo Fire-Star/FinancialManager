@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES gbk */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -23,8 +23,8 @@ DROP TABLE IF EXISTS `city`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `city` (
-  `cityID` char(36) NOT NULL COMMENT '鍩庡競ID',
-  `city` varchar(50) NOT NULL COMMENT '鍩庡競',
+  `cityID` char(36) NOT NULL COMMENT '城市ID',
+  `city` varchar(50) NOT NULL COMMENT '城市',
   PRIMARY KEY (`cityID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -47,9 +47,9 @@ DROP TABLE IF EXISTS `department`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `department` (
-  `id` char(36) NOT NULL COMMENT '閮ㄩ棬ID',
-  `city` char(36) NOT NULL COMMENT '鍩庡競',
-  `department` varchar(50) NOT NULL COMMENT '閮ㄩ棬',
+  `id` char(36) NOT NULL COMMENT '部门ID',
+  `city` char(36) NOT NULL COMMENT '城市',
+  `department` varchar(50) NOT NULL COMMENT '部门',
   PRIMARY KEY (`id`),
   KEY `fk_city_department` (`city`),
   CONSTRAINT `fk_city_department` FOREIGN KEY (`city`) REFERENCES `city` (`cityID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -74,12 +74,12 @@ DROP TABLE IF EXISTS `eq_borrow_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eq_borrow_log` (
-  `borrow_id` char(36) NOT NULL COMMENT '璁惧鍊熻皟ID',
-  `eq_id` char(36) NOT NULL COMMENT '璁惧ID',
-  `state` char(36) NOT NULL COMMENT '鐘舵€?,
-  `use_by` char(36) NOT NULL COMMENT '浣跨敤浜?,
-  `do_time` date NOT NULL COMMENT '鎿嶄綔鏃堕棿',
-  `use_by_depart` char(36) NOT NULL COMMENT '浣跨敤閮ㄩ棬',
+  `borrow_id` char(36) NOT NULL COMMENT '设备借调ID',
+  `eq_id` char(36) NOT NULL COMMENT '设备ID',
+  `state` char(36) NOT NULL COMMENT '状态',
+  `use_by` char(36) NOT NULL COMMENT '使用人',
+  `do_time` date NOT NULL COMMENT '操作时间',
+  `use_by_depart` char(36) NOT NULL COMMENT '使用部门',
   PRIMARY KEY (`borrow_id`),
   KEY `eqState_eqBorrowLog` (`state`),
   KEY `eqBorrowLog_equipment` (`eq_id`),
@@ -137,9 +137,9 @@ DROP TABLE IF EXISTS `eq_name`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eq_name` (
-  `eq_name_id` char(36) NOT NULL COMMENT '璁惧鍚嶇ОID',
-  `eq_name` varchar(50) NOT NULL COMMENT '璁惧鍚嶇О',
-  `eq_type_id` char(36) NOT NULL COMMENT '璁惧绫诲瀷',
+  `eq_name_id` char(36) NOT NULL COMMENT '设备名称ID',
+  `eq_name` varchar(50) NOT NULL COMMENT '设备名称',
+  `eq_type_id` char(36) NOT NULL COMMENT '设备类型',
   PRIMARY KEY (`eq_name_id`),
   KEY `eqName_eqType` (`eq_type_id`),
   CONSTRAINT `eqName_eqType` FOREIGN KEY (`eq_type_id`) REFERENCES `eq_type` (`eq_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -164,9 +164,9 @@ DROP TABLE IF EXISTS `eq_starff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eq_starff` (
-  `staff_eq_id` char(36) NOT NULL COMMENT '鍛樺伐璁惧ID',
-  `eq_id` char(36) NOT NULL COMMENT '璁惧ID',
-  `staff_id` char(36) NOT NULL COMMENT '鍛樺伐ID',
+  `staff_eq_id` char(36) NOT NULL COMMENT '员工设备ID',
+  `eq_id` char(36) NOT NULL COMMENT '设备ID',
+  `staff_id` char(36) NOT NULL COMMENT '员工ID',
   PRIMARY KEY (`staff_eq_id`),
   KEY `eqStaff_staff` (`staff_id`),
   KEY `eqStaff_equipment` (`eq_id`),
@@ -192,8 +192,8 @@ DROP TABLE IF EXISTS `eq_state`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eq_state` (
-  `eq_state_id` char(36) NOT NULL COMMENT '璁惧鐘舵€両D',
-  `state` char(10) NOT NULL COMMENT '鐘舵€?,
+  `eq_state_id` char(36) NOT NULL COMMENT '设备状态ID',
+  `state` char(10) NOT NULL COMMENT '状态',
   PRIMARY KEY (`eq_state_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -216,9 +216,9 @@ DROP TABLE IF EXISTS `eq_type`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eq_type` (
-  `eq_type_id` char(36) NOT NULL COMMENT '璁惧绫诲瀷ID',
-  `eq_type_name` varchar(50) NOT NULL COMMENT '璁惧绫诲瀷',
-  `eq_type_other_id` char(36) NOT NULL COMMENT '璁惧鍒悕ID',
+  `eq_type_id` char(36) NOT NULL COMMENT '设备类型ID',
+  `eq_type_name` varchar(50) NOT NULL COMMENT '设备类型',
+  `eq_type_other_id` char(36) NOT NULL COMMENT '设备别名ID',
   PRIMARY KEY (`eq_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -241,20 +241,20 @@ DROP TABLE IF EXISTS `equipment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `equipment` (
-  `eq_id` char(36) NOT NULL COMMENT '璁惧ID',
-  `eq_type` varchar(50) NOT NULL COMMENT '璁惧绫诲瀷',
-  `eq_name` varchar(50) NOT NULL COMMENT '璁惧鍚嶇О',
-  `brand_name` varchar(50) NOT NULL COMMENT '鍝佺墝鍚嶇О',
-  `purchas_depart` varchar(50) NOT NULL COMMENT '閲囪喘閮ㄩ棬',
-  `belong_depart` varchar(50) NOT NULL COMMENT '褰掑睘閮ㄩ棬',
-  `purchas_date` date NOT NULL COMMENT '閲囪喘鏃堕棿',
-  `supplier` char(36) NOT NULL COMMENT '渚涘簲鍟?,
-  `eq_state` char(36) NOT NULL COMMENT '璁惧鐘舵€?,
-  `purchas_price` double NOT NULL COMMENT '閲囪喘浠锋牸',
-  `custom_message` varchar(1024) DEFAULT NULL COMMENT '鑷畾涔変俊鎭?,
-  `eq_other_id` char(36) NOT NULL COMMENT '璁惧鍒悕ID',
-  `city` char(36) NOT NULL COMMENT '鍩庡競ID',
-  `buyCity` char(36) NOT NULL COMMENT '璐拱鍩庡競',
+  `eq_id` char(36) NOT NULL COMMENT '设备ID',
+  `eq_type` varchar(50) NOT NULL COMMENT '设备类型',
+  `eq_name` varchar(50) NOT NULL COMMENT '设备名称',
+  `brand_name` varchar(50) NOT NULL COMMENT '品牌名称',
+  `purchas_depart` varchar(50) NOT NULL COMMENT '采购部门',
+  `belong_depart` varchar(50) NOT NULL COMMENT '归属部门',
+  `purchas_date` date NOT NULL COMMENT '采购时间',
+  `supplier` char(36) NOT NULL COMMENT '供应商',
+  `eq_state` char(36) NOT NULL COMMENT '设备状态',
+  `purchas_price` double NOT NULL COMMENT '采购价格',
+  `custom_message` varchar(1024) DEFAULT NULL COMMENT '自定义信息',
+  `eq_other_id` char(36) NOT NULL COMMENT '设备别名ID',
+  `city` char(36) NOT NULL COMMENT '城市ID',
+  `buyCity` char(36) NOT NULL COMMENT '购买城市',
   PRIMARY KEY (`eq_id`),
   KEY `purchasDepartment_equipment` (`purchas_depart`),
   KEY `belongDepartment_equipment` (`belong_depart`),
@@ -340,7 +340,7 @@ DROP TABLE IF EXISTS `role`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `role` (
   `rid` char(36) NOT NULL,
-  `rname` varchar(40) NOT NULL COMMENT '瑙掕壊鍚嶇О',
+  `rname` varchar(40) NOT NULL COMMENT '角色名称',
   `rdescription` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`rid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -364,13 +364,13 @@ DROP TABLE IF EXISTS `staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `staff` (
-  `id` char(36) NOT NULL COMMENT '鍛樺伐ID',
-  `name` varchar(30) NOT NULL COMMENT '濮撳悕',
-  `department` char(36) NOT NULL COMMENT '閮ㄩ棬',
-  `position` varchar(50) NOT NULL COMMENT '宀椾綅',
-  `tel` char(11) NOT NULL COMMENT '鑱旂郴鐢佃瘽',
-  `entry_time` date NOT NULL COMMENT '鍏ヨ亴鏃堕棿',
-  `custom_message` varchar(1024) DEFAULT NULL COMMENT '鑷畾涔変俊鎭?,
+  `id` char(36) NOT NULL COMMENT '员工ID',
+  `name` varchar(30) NOT NULL COMMENT '姓名',
+  `department` char(36) NOT NULL COMMENT '部门',
+  `position` varchar(50) NOT NULL COMMENT '岗位',
+  `tel` char(11) NOT NULL COMMENT '联系电话',
+  `entry_time` date NOT NULL COMMENT '入职时间',
+  `custom_message` varchar(1024) DEFAULT NULL COMMENT '自定义信息',
   `city` char(36) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -394,15 +394,15 @@ DROP TABLE IF EXISTS `supplier`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `supplier` (
-  `id` char(36) NOT NULL COMMENT '渚涘簲鍟咺D',
-  `name` varchar(50) NOT NULL COMMENT '鍚嶇О',
-  `adtitude` char(30) NOT NULL COMMENT '璧勮川',
-  `address` varchar(300) NOT NULL COMMENT '鍦板潃',
-  `contact_name` char(20) NOT NULL COMMENT '鑱旂郴浜?,
-  `tel` char(11) NOT NULL COMMENT '鑱旂郴鐢佃瘽',
-  `business` varchar(300) NOT NULL COMMENT '涓昏惀涓氬姟',
-  `contract_time` date NOT NULL COMMENT '绛剧害鏃堕棿',
-  `custom_message` varchar(1024) DEFAULT NULL COMMENT '鑷畾涔変俊鎭?,
+  `id` char(36) NOT NULL COMMENT '供应商ID',
+  `name` varchar(50) NOT NULL COMMENT '名称',
+  `adtitude` char(30) NOT NULL COMMENT '资质',
+  `address` varchar(300) NOT NULL COMMENT '地址',
+  `contact_name` char(20) NOT NULL COMMENT '联系人',
+  `tel` char(11) NOT NULL COMMENT '联系电话',
+  `business` varchar(300) NOT NULL COMMENT '主营业务',
+  `contract_time` date NOT NULL COMMENT '签约时间',
+  `custom_message` varchar(1024) DEFAULT NULL COMMENT '自定义信息',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -425,9 +425,9 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `username` varchar(40) NOT NULL COMMENT '鐢ㄦ埛鍚?,
-  `password` varchar(30) NOT NULL COMMENT '瀵嗙爜',
-  `city` char(36) NOT NULL COMMENT '鍩庡競',
+  `username` varchar(40) NOT NULL COMMENT '用户名',
+  `password` varchar(30) NOT NULL COMMENT '密码',
+  `city` char(36) NOT NULL COMMENT '城市',
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -480,4 +480,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-09-17 23:11:45
+-- Dump completed on 2017-09-18 10:11:10

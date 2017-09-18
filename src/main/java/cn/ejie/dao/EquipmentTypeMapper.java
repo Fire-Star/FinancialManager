@@ -45,4 +45,12 @@ public interface EquipmentTypeMapper {
      * @throws Exception
      */
     public Integer findEquipmentTypeCount() throws Exception;
+
+    /**
+     * 通过设备类型名称查询出设备OtherID
+     * @param equipmentTypeName
+     * @return
+     * @throws Exception
+     */
+    String findEquipmentTypeOtherIDByTypeName(String equipmentTypeName) throws Exception;
 }
