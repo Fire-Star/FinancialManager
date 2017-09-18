@@ -43,28 +43,29 @@ public class EquipmentService {
         String stateID = equipmentStateMapper.findStateIDByStateName(inserState);//查找ID并设置ID
         equipmentCustom.setEqStateId(stateID);
 
-        {
-            //将字符串转换为ID
-            String purchaseCityID = cityService.findCityIDByCity(equipmentCustom.getBuyCity());
-            String purchaseDepartID = departmentService.findDepartIDByCityStrAndDepartStr(equipmentCustom.getBuyCity(),equipmentCustom.getPurchasDepart());
 
-            String belongCityID = cityService.findCityIDByCity(equipmentCustom.getCity());
-            String belongDepartID = departmentService.findDepartIDByCityStrAndDepartStr(equipmentCustom.getCity(),equipmentCustom.getBelongDepart());
+        //将字符串转换为ID
+        String purchaseCityID = cityService.findCityIDByCity(equipmentCustom.getBuyCity());
+        String purchaseDepartID = departmentService.findDepartIDByCityStrAndDepartStr(equipmentCustom.getBuyCity(),equipmentCustom.getPurchasDepart());
 
-            equipmentCustom.setBuyCity(purchaseCityID);
-            equipmentCustom.setPurchasDepart(purchaseDepartID);
+        String belongCityID = cityService.findCityIDByCity(equipmentCustom.getCity());
+        String belongDepartID = departmentService.findDepartIDByCityStrAndDepartStr(equipmentCustom.getCity(),equipmentCustom.getBelongDepart());
 
-            equipmentCustom.setCity(belongCityID);
-            equipmentCustom.setBelongDepart(belongDepartID);
-        }
+        equipmentCustom.setBuyCity(purchaseCityID);
+        equipmentCustom.setPurchasDepart(purchaseDepartID);
+
+        equipmentCustom.setCity(belongCityID);
+        equipmentCustom.setBelongDepart(belongDepartID);
+
 
         equipmentCustom.setPurchasTime(StringUtils.zhDateStrToENDateStr(equipmentCustom.getPurchasTime()));//将时间转换并设置
 
-        Integer count = equipmentMapper.countEquipment()+1;
-        String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);
-        String eqOtherIdBefore = equipmentTypeService.findEquipmentTypeOtherIDByTypeName(equipmentCustom.getEqType());
+        String cityOtherID = cityService.findCityOtherIDByCityID(belongCityID);//查找出城市ID
+        Integer count = equipmentMapper.countEquipmentByCity(belongCityID)+1;
+        String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);//计算出设备ID
+        String eqTypeOtherId = equipmentTypeService.findEquipmentTypeOtherIDByTypeName(equipmentCustom.getEqType());//查找出设备类型ID
 
-        equipmentCustom.setEqOtherId(eqOtherIdBefore+eqOtherIdAfter);
+        equipmentCustom.setEqOtherId(cityOtherID+eqTypeOtherId+eqOtherIdAfter);
         equipmentMapper.insertSingleEquipment(equipmentCustom);
     }
 

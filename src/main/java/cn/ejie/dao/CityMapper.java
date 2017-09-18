@@ -45,4 +45,6 @@ public interface CityMapper {
      * @throws Exception
      */
     public String findCityNameByCityID(String cityId) throws Exception;
+
+    public String findCityOtherIDByCityID(String cityID) throws Exception;
 }

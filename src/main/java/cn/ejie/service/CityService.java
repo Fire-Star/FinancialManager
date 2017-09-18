@@ -60,4 +60,8 @@ public class CityService{
         System.out.println(cityID);
         return cityMapper.findCityNameByCityID(cityID);
     }
+
+    public String findCityOtherIDByCityID(String cityID) throws Exception{
+        return cityMapper.findCityOtherIDByCityID(cityID);
+    }
 }

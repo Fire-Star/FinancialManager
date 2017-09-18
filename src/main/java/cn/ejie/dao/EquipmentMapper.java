@@ -17,4 +17,6 @@ public interface EquipmentMapper {
     public List<EquipmentCustom> findAll() throws  Exception;
 
     public EquipmentCustom findById(String id) throws Exception;
+
+    public Integer countEquipmentByCity(String cityID) throws Exception;
 }

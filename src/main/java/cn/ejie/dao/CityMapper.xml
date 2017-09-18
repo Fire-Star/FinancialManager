@@ -21,4 +21,7 @@
     <select id="findCityNameByCityID" resultType="java.lang.String">
         SELECT city FROM city WHERE cityID = #{cityId}
     </select>
+    <select id="findCityOtherIDByCityID" resultType="String">
+        SELECT cityOtherID FROM city WHERE cityID = #{cityID}
+    </select>
 </mapper>
