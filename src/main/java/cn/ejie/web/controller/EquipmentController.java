@@ -271,12 +271,27 @@ public class EquipmentController {
         EquipmentCustom equipmentCustom = new EquipmentCustom();
         try {
             equipmentCustom = equipmentService.findById(eqId);
+            String depart = "";
+            try{
+                depart = departmentService.findDepartmentById(equipmentCustom.getBelongDepart());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+            equipmentCustom.setBelongDepart(depart);
+            EquipmentStateCustom stateCustom = null;
+            try {
+                stateCustom = equipmentStateService.searchById(equipmentCustom.getEqStateId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            equipmentCustom.setEqStateId(stateCustom.getState());
         }catch (Exception e){
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(equipmentCustom);
+        System.out.println(jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 }

@@ -23,15 +23,39 @@ public class FixedLogController {
     @Autowired
     private FixedLogService fixedLogService;
 
-    @RequestMapping("")
+    @RequestMapping("/eqfix/query")
     public void findFixedLog(HttpServletRequest request, HttpServletResponse response){
-        List<Object> list = new ArrayList<Object>();
-        for (int i = 0; i < 50; i++) {
-            Map<String,String> map = new HashMap<String,String>();
-            map.put("","");
-
+        String eqId = "";
+        if(request.getParameter("equipId") != null){
+            eqId = request.getParameter("equipId");
+        }
+        System.out.println("借出记录查询by eqid:"+eqId);
+        List<FixedLogCustom> fixedLogCustomList = new ArrayList<FixedLogCustom>();
+        try {
+            fixedLogCustomList = fixedLogService.findAllByEqId(eqId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(fixedLogCustomList.size());
+        List<Object> list = new ArrayList<>();
+        for (int i = 0; i < fixedLogCustomList.size(); i++) {
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("index",i+"");
+            map.put("fixTime",fixedLogCustomList.get(i).getFixTime());
+            map.put("fixType",fixedLogCustomList.get(i).getFixType());
+            map.put("fixDetail",fixedLogCustomList.get(i).getFixDetail());
             list.add(map);
         }
+
+       /* List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < 50; i++) {
+            Map<String,String> map = new HashMap<String,String>();
+            map.put("index",i+"");
+            map.put("fixTime",i+"status");
+            map.put("fixType",i+"userName");
+            map.put("fixDetail",i+"operatorTime");
+            list.add(map);
+        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);

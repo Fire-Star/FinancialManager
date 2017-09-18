@@ -48,4 +48,15 @@ public class FixedLogService {
         }
         return num;
     }
+
+    public List<FixedLogCustom> findAllByEqId(String eqId){
+        List<FixedLogCustom> fixedLogCustomList = new ArrayList<FixedLogCustom>();
+        try {
+            fixedLogCustomList = fixedLogMapper.findAllByEqId(eqId);
+        }catch (Exception e){
+            e.printStackTrace();
+            new FixedLogException("fixedLogErrorType","数据库发生错误！");
+        }
+        return fixedLogCustomList;
+    }
 }

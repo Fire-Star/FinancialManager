@@ -12,4 +12,7 @@
     <select id="countByEqId" resultType="java.lang.Integer" >
         select count(*) from eq_fix_log WHERE eqId = #{eqId}
     </select>
+    <select id="findAllByEqId" resultType="cn.ejie.pocustom.FixedLogCustom" >
+        select id,fixTime,fixType,fixDetail,eqId FROM eq_fix_log WHERE eqId = #{eqId}
+    </select>
 </mapper>

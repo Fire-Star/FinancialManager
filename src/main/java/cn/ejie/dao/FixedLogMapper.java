@@ -28,4 +28,12 @@ public interface FixedLogMapper {
      */
     public int countByEqId(String eqId) throws Exception;
 
+    /**
+     *
+     * @param eqId
+     * @return
+     * @throws Exception
+     */
+    public List<FixedLogCustom> findAllByEqId(String eqId) throws Exception;
+
 }
