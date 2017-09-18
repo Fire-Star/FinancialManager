@@ -7,6 +7,8 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -41,6 +43,9 @@
         .btn-group{
             height:5%;
         }
+        .row{
+            padding-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -56,27 +61,34 @@
                 <div class="panel-body">
                     <form id="formSearch" class="form-horizontal">
                         <div class="form-group" style="margin-top:15px">
-                            <label class="control-label col-sm-1" for="suppliername">供应商：</label>
-                            <div class="col-sm-1">
-                                <input type="text" class="form-control" id="suppliername" placeholder="供应商...">
+                            <div class="row">
+                                <label class="control-label col-sm-1" for="suppliername">供应商：</label>
+                                <div class="col-sm-2 form-group form-inline from-line item-right">
+                                    <select class="form-control form-control-x" id="suppliername" propName="供应商" data-toggle="tooltip" data-placement="top">
+                                        <option selected value="">---请选择供应商---</option>
+                                        <option v-for="(item , index) in suppliers" :value="item.name">{{item.name}}</option>
+                                    </select>
+                                </div>
+                                <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人...">
+                                </div>
+                                <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="contacttel" placeholder="电话...">
+                                </div>
                             </div>
-                            <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
-                            <div class="col-sm-1">
-                                <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人...">
-                            </div>
-                            <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
-                            <div class="col-sm-1">
-                                <input type="text" class="form-control" id="contacttel" placeholder="电话...">
-                            </div>
-                            <label class="control-label col-sm-1" for="time">签约时间:</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="time" placeholder="签约时间...">
-                            </div>
-                            <div class="col-sm-1" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
-                            </div>
-                            <div class="col-sm-1" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                            <div class="row">
+                                <label class="control-label col-sm-1" for="time">签约时间:</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="time" placeholder="签约时间...">
+                                </div>
+                                <div class="col-sm-1" style="text-align:left;">
+                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
+                                </div>
+                                <div class="col-sm-1" style="text-align:left;">
+                                    <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -98,6 +110,7 @@
 </body>
 <script>
     var data = {
+        suppliers:[]
     };
     var vm = new Vue({
         el:'.app',
@@ -209,5 +222,20 @@
         $('#contacttel').val("");
         $('#time').val("");
     };
+    /**
+     * 加载当前用户的所有提供商
+     */
+    $.get("../../supplier/findAllSupplier",function (data, status) {
+        if(status=="success"){
+            var _suppliers = eval(data);
+            console.log(_suppliers);
+            vm.suppliers = _suppliers;
+        }
+    });
+    $('#time').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
 </script>
 </html>

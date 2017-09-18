@@ -69,36 +69,40 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="eqID">设备ID：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqID" placeholder="ID..." readonly="enable">
+                        <div class="row">
+                            <label class="control-label col-sm-1" for="eqID">设备ID：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="eqID" placeholder="ID..." readonly="enable">
+                            </div>
+                            <label class="control-label col-sm-1" for="eqType">设备类型：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="eqType" placeholder="类型..." readonly="enable">
+                            </div>
+                            <label class="control-label col-sm-1" for="eqName">设备名称：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="eqName" placeholder="名称..." readonly="enable">
+                            </div>
+                            <label class="control-label col-sm-1" for="supplier">供应商：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="supplier" placeholder="供应商..." readonly="enable">
+                            </div>
                         </div>
-                        <label class="control-label col-sm-1" for="eqType">设备类型：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqType" placeholder="类型..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="eqName">设备名称：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqName" placeholder="名称..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="supplier">供应商：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="supplier" placeholder="供应商..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="belongDepart">归属部门：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="belongDepart" placeholder="部门..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="eqState">当前状态：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="time">签约时间:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="dataedit()">编辑</button>
+                        <div class="row">
+                            <label class="control-label col-sm-1" for="belongDepart">归属部门：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="belongDepart" placeholder="部门..." readonly="enable">
+                            </div>
+                            <label class="control-label col-sm-1" for="eqState">当前状态：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
+                            </div>
+                            <label class="control-label col-sm-1" for="time">签约时间:</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="dataedit()">编辑</button>
+                            </div>
                         </div>
                     </div>
                 </form>

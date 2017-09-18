@@ -31,14 +31,6 @@
         .panel-body{
             padding:0px;
         }
-        .col-sm-1{
-            margin: 1px;
-            margin-top: 10px;
-        }
-        .col-sm-2 {
-            margin: 1px;
-            margin-top: 10px;
-        }
         .tablecontent{
             height: 65%;
         }
@@ -50,6 +42,9 @@
         }
         .btn-group{
             height:5%;
+        }
+        .row{
+            padding-top: 10px;
         }
     </style>
 </head>
@@ -66,59 +61,66 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group card-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="eqID">设备ID：</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                            <input type="text" class="form-control" id="eqID" placeholder="ID...">
-                        </div>
-                        <label class="control-label col-sm-1" for="eqType">设备类型：</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                            <select class="form-control " propName="设备类型" id="eqType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
-                                <option selected value="">---请选择设备类型---</option>
-                                <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
-                            </select>
-                        </div>
-                        <label class="control-label col-sm-1" for="eqName">设备名称：</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                            <select class="form-control" id="eqName" propName="城市" data-toggle="tooltip" data-placement="top">
-                                <option selected value="">---请选择设备名称---</option>
-                                <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
-                            </select>
-                        </div>
-                        <label class="control-label col-sm-1" for="supplier">供应商：</label>
-                        <div class="col-sm-2 form-group form-inline from-line item-right">
-                        <select class="form-control form-control-x" id="supplier" propName="供应商" @change="loadDep" data-toggle="tooltip" data-placement="top" >
-                            <option selected value="">---请选择供应商---</option>
-                            <option v-for="(item , index) in supplier" :value="item.supplier">{{item.supplier}}</option>
-                        </select>
-                        </div>
-                        <label class="control-label col-sm-1">归属部门：</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right" >
-                            <div class="form-group form-inline from-line item-right" role="group">
-                                <div class="btn-group ">
-                                    <select class="btn btn-default form-control select-left" id="belongCity" propName="" data-toggle="tooltip" data-placement="top" >
-                                        <option selected value="" id="d">--城市--</option>
-                                    </select>
-                                    <select class="btn btn-default form-control select-right" id="belongPart" propName="" data-toggle="tooltip" data-placement="top" >
-                                        <option selected value="" id="dsf">--部门--</option>
-                                    </select>
-                                </div>
+                        <div class="row">
+                            <label class="control-label col-sm-1" for="eqID">设备ID：</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                                <input type="text" class="form-control" id="eqID" placeholder="ID...">
+                            </div>
+                            <label class="control-label col-sm-1" for="eqType">设备类型：</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                                <select class="form-control " propName="设备类型" id="eqType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
+                                    <option selected value="">---请选择设备类型---</option>
+                                    <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-1" for="eqName">设备名称：</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                                <select class="form-control" id="eqName" propName="城市" data-toggle="tooltip" data-placement="top">
+                                    <option selected value="">---请选择设备名称---</option>
+                                    <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-1" for="supplier">供应商：</label>
+                            <div class="col-sm-2 form-group form-inline from-line item-right">
+                                <select class="form-control form-control-x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" >
+                                    <option selected value="">---请选择供应商---</option>
+                                    <option v-for="(item , index) in suppliers" :value="item.name">{{item.name}}</option>
+                                </select>
                             </div>
                         </div>
-                        <label class="control-label col-sm-1" for="eqState">当前状态：</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                            <select class="form-control form-control-x" id="eqState" propName="当前状态" data-toggle="tooltip" data-placement="top" >
-                                <option selected value="">---请选择状态---</option>
-                            </select>
-                        </div>
-                        <label class="control-label col-sm-1" for="time">签约时间:</label>
-                        <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                            <input class="form-control form-control-x" propName="采购时间" id="time" name="entryTime" placeholder="选择采购时间..." type="text">
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                        <div class="row">
+                            <label class="control-label col-sm-1">归属部门：</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right" >
+                                <div class="form-group form-inline from-line item-right" role="group">
+                                    <div class="btn-group ">
+                                        <select class="btn btn-default form-control select-left" id="belongCity" @change="loadBelongDep"  propName="" data-toggle="tooltip" data-placement="top" v-model="city" >
+                                            <option selected value="" id="d">--城市--</option>
+                                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                        </select>
+                                        <select class="btn btn-default form-control select-right" id="belongDepart" propName="" data-toggle="tooltip" data-placement="top" >
+                                            <option selected value="" id="dsf">--部门--</option>
+                                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <label class="control-label col-sm-1" for="eqState">当前状态：</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                                <select class="form-control form-control-x" id="eqState" propName="当前状态" data-toggle="tooltip" data-placement="top" v-model="eqState" >
+                                    <option selected value="">---请选择状态---</option>
+                                    <option v-for="(item , index) in allState" :value="item.state">{{item.state}}</option>
+                                </select>
+                            </div>
+                            <label class="control-label col-sm-1" for="time">签约时间:</label>
+                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
+                                <input class="form-control form-control-x" propName="采购时间" id="time" name="entryTime" placeholder="选择采购时间..." type="text">
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -143,7 +145,13 @@
         eqTypeValue:"",
         equipmentType:"",
         equipmentName:"",
-        supplier:""
+        supplier:"",
+        suppliers:[],
+        citys:[],
+        city:"",
+        belongDepartment:[],
+        allState:[],
+        eqState:""
     };
     var vm = new Vue({
         el:'.app',
@@ -163,20 +171,21 @@
             },
             loadDep() {
                 $.get("../department/findDepartment", function (data, status) {
-                    /*console.log(data);
+                    alert("loadDep");
+                });
+                //$('#depIDOp').attr('selected', true);
+            },
+            loadBelongDep(){
+                $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+                    console.log(data);
                     if (status == "success") {
                         var _departmentData = eval(data);
                         console.log(_departmentData);
-                        if (_departmentData.departmentErrorType != undefined) {
-                            vm.modalStatus = _departmentData.departmentErrorType;
-                            $('#modalButton').click();
-                        } else {
-                            vm.departments = _departmentData;
-                        }
-                    }*/
+                        vm.belongDepartment = _departmentData;
+                    }
                 });
-                $('#depIDOp').attr('selected', true);
-            }
+               // $('#depIDOp').attr('selected', true);
+            },
         }
     });
     $(function () {
@@ -304,6 +313,9 @@
     $("#equipmentType").change(function () {
         loadEqName();
     });
+    /**
+     * 加载当前用户的所有设备类型
+     */
     $.get("../../showAllEquipmentType",function(data,status){
         if(status=="success"){
             var _equipmentTypes = eval(data);
@@ -311,6 +323,35 @@
             vm.equipmentType = _equipmentTypes;
         }
     });
+
+    /**
+     * 加载当前用户的所有提供商
+     */
+    $.get("../../supplier/findAllSupplier",function (data, status) {
+        if(status=="success"){
+            var _suppliers = eval(data);
+            console.log(_suppliers);
+            vm.suppliers = _suppliers;
+        }
+    });
+    /**
+     * 加载当前用户的所有城市
+     */
+    $.get("../../city/findAllCity",function (data, status) {
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    })
+    /**
+     * 加载设备状态类型
+     */
+    $.get("../../equipState/findAll",function (data, status) {
+        if(status=="success"){
+            var _allState = eval(data);
+            vm.allState = _allState;
+        }
+    })
     $('#time').datepicker({
         language: 'zh-CN',
         autoclose: true,

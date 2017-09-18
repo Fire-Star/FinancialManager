@@ -39,6 +39,9 @@
         .bootstrap-table.fixed-table-container{
             height: 85%;
         }
+        .row{
+            padding-top: 10px;
+        }
         .btn-group{
             height:5%;
         }
@@ -60,18 +63,23 @@
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="username">用户名：</label>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="username" placeholder="用户名...">
+                        <div class="row">
+                            <label class="control-label col-sm-1" for="username">用户名：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="username" placeholder="用户名...">
+                            </div>
+                            <label class="control-label col-sm-1" for="city">城市：</label>
+                            <div class="col-sm-2">
+                                <select class="btn btn-default form-control select-left" id="city"  propName="" data-toggle="tooltip" data-placement="top" v-model="city" >
+                                    <option selected value="" id="d">--城市--</option>
+                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-1" style="text-align:left;">
+                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
+                            </div><div class="col-sm-1" style="text-align:left;">
+                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                         </div>
-                        <label class="control-label col-sm-1" for="city">城市：</label>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="city" placeholder="城市...">
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
-                        </div><div class="col-sm-1" style="text-align:left;">
-                        <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                     </div>
                     </div>
                 </form>
@@ -93,6 +101,8 @@
 </body>
 <script>
     var data = {
+        citys:[],
+        city:""
     };
     var vm = new Vue({
         el:'.app',
@@ -189,14 +199,24 @@
         ].join('');
     };
 
-        window.operateEvents = {
-            'click .RoleOfA': function (e, value, row, index) {
-                alert(row.name);
-            },
-            'click .RoleOfB': function (e, value, row, index) {
-                alert(index);
-            }
+    window.operateEvents = {
+        'click .RoleOfA': function (e, value, row, index) {
+            alert(row.name);
+        },
+        'click .RoleOfB': function (e, value, row, index) {
+            alert(index);
         }
+    }
+
+    /**
+     * 加载当前用户的所有城市
+     */
+    $.get("../../city/findAllCity",function (data, status) {
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    })
 
 </script>
 </html>

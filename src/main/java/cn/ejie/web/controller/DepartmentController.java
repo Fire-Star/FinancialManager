@@ -42,6 +42,7 @@ public class DepartmentController {
     public @ResponseBody List<DepartmentCustom> findDepartmentByCity(HttpServletRequest request) throws Exception{
         DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
         System.out.println(departmentCustom);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!"+departmentCustom.getCity());
         return departmentService.findDepartmentByCity(departmentCustom.getCity());
     }
 
