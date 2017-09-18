@@ -2,6 +2,9 @@ package cn.ejie.web.controller;
 
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.StaffCustom;
+import cn.ejie.service.CityService;
+import cn.ejie.service.DepartmentService;
+import cn.ejie.service.EquipmentBorrowService;
 import cn.ejie.service.StaffService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,7 +34,16 @@ public class StaffController {
     private String errorType="staffError";
 
     @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
     private StaffService staffService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private EquipmentBorrowService equipmentBorrowService;
 
     @RequestMapping("/staff/add")
     public void staffAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -117,12 +129,31 @@ public class StaffController {
             map.put("index",i+"");
             map.put("id",staffCustomList.get(i).getStaffId());
             map.put("name",staffCustomList.get(i).getName());
-            map.put("city",staffCustomList.get(i).getCity());
-            map.put("department",staffCustomList.get(i).getDep());
+
+            String cityName = "";
+            try {
+                cityName = cityService.findCityNameByCityID(staffCustomList.get(i).getCity().toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("city",cityName);
+            String depart = "";
+            try {
+                depart = departmentService.findDepartNameByDepId(staffCustomList.get(i).getDep().toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("department",depart);
             map.put("position",staffCustomList.get(i).getPosition());
             map.put("tel",staffCustomList.get(i).getTel());
             map.put("entrytime",staffCustomList.get(i).getEntryTime());
-            map.put("equipnum","equipnum"+i);
+            String borrowNum = "";
+            try {
+                borrowNum = String.valueOf(equipmentBorrowService.countAllByUser(staffCustomList.get(i).getStaffId()));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("equipnum",borrowNum);
             list.add(map);
         }
         JSONArray jsonArray = new JSONArray();

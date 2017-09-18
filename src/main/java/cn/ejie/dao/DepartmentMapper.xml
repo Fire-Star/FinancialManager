@@ -32,4 +32,7 @@
     <select id="findDepartmentById" resultType="String">
         SELECT concat(city.city,department.department) FROM department,city WHERE department.city = city.cityID AND department.id = #{id}
     </select>
+    <select id="findDepartNameByDepId" resultType="String">
+        SELECT department FROM department WHERE id = #{id}
+    </select>
 </mapper>

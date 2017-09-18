@@ -25,4 +25,15 @@ public class EquipmentBorrowService {
         }
         return equipmentBorrowCustomList;
     }
+
+    public int countAllByUser(String userId) throws Exception{
+        int borrowNum = 0;
+        try {
+            borrowNum = equipmentBorrowMapper.countAllByUser(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            new SimpleException("borrowLogErrorType","数据库查询借出记录时出现错误");
+        }
+        return borrowNum;
+    }
 }

@@ -6,4 +6,8 @@
     <select id="findBorrowByEqId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
         SELECT borrow_id as borrowId,eq_id as eqId,eq_state.state as state,staff.name as useBy,do_time as doTime,concat(city.city,department.department) as useByDepart FROM eq_borrow_log,eq_state,staff,city,department WHERE department.city = city.cityID AND department.id = eq_borrow_log.use_by_depart AND staff.id = eq_borrow_log.use_by AND eq_borrow_log.state = eq_state.eq_state_id AND eq_id = #{id}
     </select>
+    <select id="countAllByUser" resultType="java.lang.Integer">
+        select count(*) from eq_borrow_log WHERE use_by = #{userId}
+    </select>
+
 </mapper>
