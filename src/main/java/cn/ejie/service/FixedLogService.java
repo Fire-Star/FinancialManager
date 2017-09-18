@@ -37,4 +37,15 @@ public class FixedLogService {
         }
         return fixedLogCustomList;
     }
+
+    public int countByEqId(String eqId) throws Exception{
+        int num = 0;
+        try {
+            num = fixedLogMapper.countByEqId(eqId);
+        }catch (Exception e){
+            e.printStackTrace();
+            new FixedLogException("fixedLogErrorType","数据库发生错误！");
+        }
+        return num;
+    }
 }

@@ -43,4 +43,16 @@ public class UserService {
         }
         return userMapper.findUserByUsername(user);
     }
+    public UserCustom findUserByName(String userName) throws Exception{
+        if(userName==null||"".equals(userName)){
+            throw new SimpleException(errorType,"系统发生错误：查询用户时，用户名不能为空！！！");
+        }
+        return userMapper.findUserByName(userName);
+    }
+    public String findCityByUserName(String userName) throws Exception{
+        if(userName==null||"".equals(userName)){
+            throw new SimpleException(errorType,"系统发生错误：查询用户时，用户名不能为空！！！");
+        }
+        return userMapper.findCityByUserName(userName);
+    }
 }

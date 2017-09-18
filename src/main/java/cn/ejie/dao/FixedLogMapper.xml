@@ -9,4 +9,7 @@
     <select id="findBySql" parameterType="String" resultType="cn.ejie.pocustom.FixedLogCustom">
         ${value}
     </select>
+    <select id="countByEqId" resultType="java.lang.Integer" >
+        select count(*) from eq_fix_log WHERE eqId = #{eqId}
+    </select>
 </mapper>

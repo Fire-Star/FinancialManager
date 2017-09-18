@@ -20,4 +20,12 @@ public interface FixedLogMapper {
      */
     public List<FixedLogCustom> findBySql(String sql) throws Exception;
 
+    /**
+     *
+     * @param eqId
+     * @return
+     * @throws Exception
+     */
+    public int countByEqId(String eqId) throws Exception;
+
 }

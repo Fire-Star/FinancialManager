@@ -12,4 +12,10 @@
     <select id="findBySql" resultType="cn.ejie.pocustom.UserCustom" parameterType="String">
         ${value}
     </select>
+    <select id="findUserByName" resultType="cn.ejie.pocustom.UserCustom">
+        SELECT username,password,city FROM `user` WHERE username = #{username}
+    </select>
+    <select id="findCityByUserName" resultType="java.lang.String">
+        SELECT city.city FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
+    </select>
 </mapper>

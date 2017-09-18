@@ -62,4 +62,12 @@ public interface DepartmentMapper {
      * @throws Exception
      */
     public String findDepartIDByCityIDAndDepartStr(Map<String,String> params) throws Exception;
+
+    /**
+     *通过id查询部门
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    public String findDepartmentById(String id) throws Exception;
 }

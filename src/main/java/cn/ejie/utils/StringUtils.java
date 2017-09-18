@@ -1,7 +1,9 @@
 package cn.ejie.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class StringUtils {
@@ -44,5 +46,33 @@ public class StringUtils {
             e.printStackTrace();
         }
         return targetDateStr;
+    }
+
+    /**
+     * 计算与参数时间与现在所差的月数
+     *
+     * @param date
+     * @return
+     * @throws ParseException
+     */
+    public static int getMonthSpace(String date)
+            throws ParseException {
+
+        int result = 0;
+
+        Date now=new Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        String nowTime=format.format(now);
+
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+
+        c1.setTime(format.parse(nowTime));
+        c2.setTime(format.parse(date));
+
+        result = (c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR)) * 12 + c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
+
+        return result;
+
     }
 }

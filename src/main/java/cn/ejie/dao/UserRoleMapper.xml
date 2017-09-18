@@ -6,4 +6,7 @@
     <select id="findRolesByUsername" resultType="cn.ejie.po.Role">
         SELECT role.rname FROM user_role,`user`,role WHERE role.`rid`=user_role.`rid` AND user_role.username=`user`.username AND user.username = #{username}
     </select>
+    <select id="findRoleByUserName" resultType="java.lang.String">
+        SELECT role.rname FROM user_role,role WHERE role.`rid`=user_role.`rid` AND user_role.username = #{username}
+    </select>
 </mapper>

@@ -107,4 +107,14 @@ public class DepartmentService {
         }
         return result;
     }
+
+    public String findDepartmentById(String id) throws Exception{
+        String departmentCustom = "";
+        try {
+            departmentCustom = departmentMapper.findDepartmentById(id);
+        }catch (Exception e){
+            throw new SimpleException(errorType,"查询部门时，数据库发生错误，请报告给维修人员！");
+        }
+        return departmentCustom;
+    }
 }

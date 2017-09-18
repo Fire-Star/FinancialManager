@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface UserRoleMapper {
     public List<Role> findRolesByUsername(UserCustom userCustom);
+
+    public String findRoleByUserName(String userCustom);
 }

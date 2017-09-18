@@ -30,9 +30,10 @@
         }
         .panel-body{
             padding:0px;
+            height: 30%;
         }
         .tablecontent{
-            height: 65%;
+            height: 55%;
         }
         .bootstrap-table{
             height: 100%;
@@ -45,6 +46,7 @@
         }
         .row{
             padding-top: 10px;
+            width:100%;
         }
     </style>
 </head>
@@ -281,7 +283,7 @@
                 eqState: $("#eqState").val(),
                 time: $("#time").val()
             };
-            alert(params.limit);
+            //alert(params.limit);
             return temp;
         };
         return oTableInit;

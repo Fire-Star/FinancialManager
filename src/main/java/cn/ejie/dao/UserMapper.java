@@ -15,4 +15,8 @@ public interface UserMapper {
 
     public List<UserCustom> findBySql(String sql) throws Exception;
 
+    public UserCustom findUserByName(String username) throws Exception;
+
+    public String findCityByUserName(String userName) throws Exception;
+
 }
