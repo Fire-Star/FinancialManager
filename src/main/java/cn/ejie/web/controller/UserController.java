@@ -3,6 +3,8 @@ package cn.ejie.web.controller;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.VerifyMessage;
 import cn.ejie.pocustom.UserCustom;
+import cn.ejie.service.CityService;
+import cn.ejie.service.UserRoleService;
 import cn.ejie.service.UserService;
 import cn.ejie.service.VertifyCodeService;
 import cn.ejie.utils.SimpleBeanUtils;
@@ -46,6 +48,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CityService cityService;
+
+    @Autowired
+    private UserRoleService userRoleService;
 
     @RequestMapping("/user/loginPage")
     public String loginPage(HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -166,10 +174,24 @@ public class UserController {
             Map<String,String> map = new HashMap<String,String>();
             map.put("index",i+"");
             map.put("name",userList.get(i).getUsername());
-            map.put("city",userList.get(i).getCity());
+            String cityName = "";
+            try {
+                if(!"".equals(userList.get(i).getCity().toString())&&userList.get(i).getCity()!=null){
+                    cityName = cityService.findCityNameByCityID(userList.get(i).getCity().toString());
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("city",cityName);
+            String roleName ="";
+            try {
+                roleName = userRoleService.findRoleByUserName(userList.get(i).getUsername().toString());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("role",roleName);
             list.add(map);
         }
-
         /*List<Object> list = new ArrayList<>();
         for(int i=0;i<50;i++){
             Map<String,String> map = new HashMap<String, String>();

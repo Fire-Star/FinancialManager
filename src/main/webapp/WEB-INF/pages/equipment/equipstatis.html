@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>账号权限</title>
+    <title>设备统计</title>
     <!-- 引入 BootStrap 全家桶 -->
     <!-- 引入Vue.js -->
     <script src="../../res/js/vue.min.js"></script>
@@ -53,23 +53,19 @@
 <div class="app container">
     <ul class="breadcrumb">
         <li>
-            账号权限<span class="divider">></span>
+            设备管理<span class="divider">></span>
         </li>
-        <li class="active">账号管理</li>
+        <li class="active">设备统计</li>
     </ul><br>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong><p class="lead">账号管理</p></strong>
+                <strong><p class="lead">设备统计</p></strong>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
                     <div class="form-group" style="margin-top:15px">
                         <div class="row">
-                            <label class="control-label col-sm-1" for="username">用户名：</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="username" placeholder="用户名...">
-                            </div>
                             <label class="control-label col-sm-1" for="city">城市：</label>
                             <div class="col-sm-2">
                                 <select class="btn btn-default form-control select-left" id="city"  propName="" data-toggle="tooltip" data-placement="top" v-model="city" >
@@ -82,7 +78,7 @@
                             </div><div class="col-sm-1" style="text-align:left;">
                             <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                         </div>
-                    </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -123,7 +119,7 @@
         //初始化Table
         oTableInit.Init = function () {
             $('#tb_user').bootstrapTable({
-                url: 'search',         //请求后台的URL（*）
+               // url: 'search',         //请求后台的URL（*）
                 method: 'post',                      //请求方式（*）
                 contentType : "application/x-www-form-urlencoded",//因为如果不指定contentType 的话就会默认以application/json的方式发送数据，java就不能用getParameter拿到内容了，但是可以用输入流接收
                 toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -154,16 +150,29 @@
                     field: 'index',
                     title: '序列号'
                 }, {
-                    field: 'name',
-                    title: '账号'
+                    field: 'eqType',
+                    title: '设备类型'
                 }, {
-                    field: 'city',
-                    title: '城市'
+                    field: 'eqName',
+                    title: '设备名称'
                 }, {
-                    field: 'option',
-                    title: '操作',
-                    events: operateEvents,
-                    formatter: operateFormatter
+                    field: 'eqBrand',
+                    title: '品牌'
+                }, {
+                    field: 'eqNum',
+                    title: '数量'
+                }, {
+                    field: 'eqBeUsed',
+                    title: '使用中'
+                }, {
+                    field: 'eqNoUsed',
+                    title: '闲置'
+                }, {
+                    field: 'eqReject',
+                    title: '报废'
+                }, {
+                    field: 'totleValue',
+                    title: '总价值'
                 }]
             });
         };
@@ -172,7 +181,6 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                username: $("#username").val(),
                 city: $("#city").val(),
             };
             return temp;
@@ -191,32 +199,8 @@
         $('#tb_user').bootstrapTable('refresh');
     };
     function datareset() {
-        $('#name').val("");
         $('#city').val("");
     };
-    function operateFormatter(value, row, index) {
-        if("ROLE_ADMIN"==row.role){
-            return [
-                '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;" disabled="true">密码重置</button>',
-                '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;" disabled="true">删除</button>'
-            ].join('');
-        }else {
-            return [
-                '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">密码重置</button>',
-                '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">删除</button>'
-            ].join('');
-        }
-    };
-
-    window.operateEvents = {
-        'click .RoleOfA': function (e, value, row, index) {
-            alert(row.role);
-        },
-        'click .RoleOfB': function (e, value, row, index) {
-            alert(index);
-        }
-    }
-
     /**
      * 加载当前用户的所有城市
      */
@@ -226,6 +210,5 @@
             vm.citys = _cityData;
         }
     })
-
 </script>
 </html>

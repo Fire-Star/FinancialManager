@@ -3,10 +3,10 @@ package cn.ejie.web.controller;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.User;
 import cn.ejie.pocustom.CityCustom;
+import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.pocustom.SupplierCustom;
-import cn.ejie.service.CityService;
-import cn.ejie.service.SupplierService;
-import cn.ejie.service.UserService;
+import cn.ejie.pocustom.UserCustom;
+import cn.ejie.service.*;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +14,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +39,18 @@ public class SupplierController {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
+    @Autowired
+    private EquipmentService equipmentService;
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private EquipmentStateService equipmentStateService;
 
     @RequestMapping("/supplier/findAllSupplier")
     public @ResponseBody List<SupplierCustom> showAllSupplier() throws Exception {
@@ -186,21 +199,54 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/findEquipBySuppId")
     public void findEquipBySuppId(HttpServletRequest request,HttpServletResponse response){
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+        UserCustom userCustom = new UserCustom();
+        try {
+            userCustom = userService.findUserByName(userDetails.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String role = userRoleService.findRoleByUserName(userCustom.getUsername());
+        String city = "";
+        try {
+            city = userService.findCityByUserName(userCustom.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+            city = "";
+        }
+        String suppId = "";
+        if("".equals(request.getParameter("suppId"))&&request.getParameter("suppId")!=null){
+            suppId = request.getParameter("suppId");
+        }
+        System.out.println("suppId:"+suppId);
+        String sql ="";
+        String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,department.department as purchasDepart,department.department as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state.state as eqStateId,purchas_price as purchasPrice,custom_message as customMessage,eq_other_id as eqOtherId,equipment.city as city FROM equipment,eq_state,department WHERE eq_state.eq_state_id=equipment.eq_state AND equipment.purchas_depart=department.id AND equipment.belong_depart=department.id";
+        if(!"ROLE_ADMIN".equals(role)&&!"".equals(city)){
+            sql = sqltemp + " AND equipment.city = '" + city + "'";
+        }else{
+            sql = sqltemp;
+        }
         List<Object> list = new ArrayList<Object>();
-        for (int i = 0; i < 50; i++) {
-            Map map = new HashMap();
-            map.put("index",""+i);
-            map.put("equipID","equipID"+i);
-            map.put("equipType","equipType"+i);
-            map.put("equipName","equipName"+i);
-            map.put("brand","brand"+i);
-            map.put("purchasDepart","purchasDepart"+i);
-            map.put("belongDepart","belongDepart"+i);
-            map.put("state","state"+i);
-            map.put("purchasDate","purchasDate"+i);
-            map.put("purchasPrice","purchasPrice"+i);
-            map.put("fixTime","fixTime"+i);
-            map.put("useTime","useTime"+i);
+        List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
+        try {
+            equipmentCustomList = equipmentService.findAllBySql(sql);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        for (int i = 0; i < equipmentCustomList.size(); i++) {
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("index",i+"");
+            map.put("equipID",equipmentCustomList.get(i).getEqOtherId());
+            map.put("equipType",equipmentCustomList.get(i).getEqType());
+            map.put("equipName",equipmentCustomList.get(i).getEqName());
+            map.put("brand",equipmentCustomList.get(i).getBrandName());
+            map.put("purchasDepart",equipmentCustomList.get(i).getPurchasDepart());
+            map.put("belongDepart",equipmentCustomList.get(i).getBelongDepart());
+            map.put("state",equipmentCustomList.get(i).getEqStateId());
+            map.put("purchasDate",equipmentCustomList.get(i).getPurchasTime());
+            map.put("purchasPrice",equipmentCustomList.get(i).getPurchasPrice());
+            map.put("fixTime",i+"fixTime");
+            map.put("useTime",i+"useTime");
             list.add(map);
         }
         JSONArray jsonArray = new JSONArray();

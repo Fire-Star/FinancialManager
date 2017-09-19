@@ -294,4 +294,8 @@ public class EquipmentController {
         System.out.println(jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
+    @RequestMapping("/user/equipment/statis")
+    public String showEqStatis(){
+        return "/WEB-INF/pages/equipment/equipstatis.html";
+    }
 }

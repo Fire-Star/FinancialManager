@@ -48,6 +48,10 @@
             padding-top: 10px;
             width:100%;
         }
+        .form-horizontal .form-group {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
     </style>
 </head>
 <body>
@@ -92,11 +96,11 @@
                         </div>
                         <div class="row">
                             <label class="control-label col-sm-1">归属部门：</label>
-                            <div class="col-sm-2 form-group form-control-x form-inline from-line item-right" >
+                            <div class="col-sm-2 form-control-x form-inline from-line item-right" >
                                 <div class="form-group form-inline from-line item-right" role="group">
                                     <div class="btn-group ">
                                         <select class="btn btn-default form-control select-left" id="belongCity" @change="loadBelongDep"  propName="" data-toggle="tooltip" data-placement="top" v-model="city" >
-                                            <option selected value="" id="d">--城市--</option>
+                                            <option selected value="" id="d">城市</option>
                                             <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                         </select>
                                         <select class="btn btn-default form-control select-right" id="belongDepart" propName="" data-toggle="tooltip" data-placement="top" >
@@ -113,7 +117,7 @@
                                     <option v-for="(item , index) in allState" :value="item.state">{{item.state}}</option>
                                 </select>
                             </div>
-                            <label class="control-label col-sm-1" for="time">签约时间:</label>
+                            <label class="control-label col-sm-1" for="time">签约时间：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
                                 <input class="form-control form-control-x" propName="采购时间" id="time" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
