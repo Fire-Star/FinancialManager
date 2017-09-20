@@ -110,6 +110,7 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/search")
     public void searchSupplier(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("供应商查询界面，供应商信息Table模块的加载......");
         String limit = "";
         String offset = "";
         String suppliername = "";
@@ -136,29 +137,28 @@ public class SupplierController {
         }
         System.out.println("limit:"+limit+"   "+"offset:"+offset+"   "+"suppliername:"+suppliername+"   "+"suppliercontactname:"+suppliercontactname+"   "+"contacttel:"+contacttel+"   "+"time:"+time+"   ");
         String sql = "";
-        String sqltemp = "";
-        //sql = "SELECT `name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE tel = 13822221111";
+        String sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier";
         if(!suppliername.equals("")||!suppliercontactname.equals("")||!contacttel.equals("")||!time.equals("")){
-            sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier WHERE ";
+            sqltemp = sqltemp + " WHERE";
         }
         if(!suppliername.equals("")){
-            sqltemp = sqltemp + "name= " + suppliername +" ";
+            sqltemp = sqltemp + " name= '" + suppliername +"'";
         }
         if(!suppliercontactname.equals("")){
-            sqltemp = sqltemp + "and contact_name=" + suppliercontactname +" ";
+            sqltemp = sqltemp + " and contact_name='" + suppliercontactname +"'";
         }
         if(!contacttel.equals("")){
-            sqltemp = sqltemp + "and tel=" + contacttel +" ";
+            sqltemp = sqltemp + " and tel='" + contacttel +"'";
         }
         if(!time.equals("")){
-            sqltemp = sqltemp + "and contract_time=" + time +" ";
+            sqltemp = sqltemp + " and contract_time='" + time +"'";
         }
         if(sqltemp.contains("WHERE and")){
             sql = sqltemp.replaceAll("WHERE and","WHERE");
         }else {
             sql = sqltemp;
         }
-        System.out.println(sql);
+        System.out.println("sql:"+sql);
         List<SupplierCustom> listSupplier = null;
         try {
             if(!sql.equals("")&&sql!=null){
@@ -203,7 +203,7 @@ public class SupplierController {
         String role = userRoleService.findRoleByUserName(userCustom.getUsername());
         String city = "";
         try {
-            city = userService.findCityByUserName(userCustom.getUsername());
+            city = userService.findCityIdByUserName(userCustom.getUsername());
         }catch (Exception e){
             e.printStackTrace();
             city = "";
@@ -220,6 +220,7 @@ public class SupplierController {
         }else{
             sql = sqltemp;
         }
+        System.out.println("sql:"+sql);
         List<Object> list = new ArrayList<Object>();
         List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
         try {
@@ -258,6 +259,7 @@ public class SupplierController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
+        System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 }

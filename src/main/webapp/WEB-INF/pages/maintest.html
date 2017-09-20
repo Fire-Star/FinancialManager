@@ -132,8 +132,8 @@
                     </p>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+                    <li><a href="#"  id="userName"><span class="glyphicon glyphicon-user"></span>注册</a></li>
+                    <li><a href="../logoutSecurity"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
                 </ul>
             </div>
         </nav>
@@ -261,6 +261,21 @@
     function changeIframe(val) {
         document.getElementById('iframeContent').src=val;
     };
+    $(document).ready(function(){
+        $.ajax({
+            url: "getUsername",
+            type: 'post',
+            dataType: 'json',
+            timeout: 1000,
+            success: function (data, status) {
+                alert(data.userName);
+                $('#userName').text("当前用户:"+data.userName);
+            },
+            fail: function (err, status) {
+                alert("741147");
+            }
+        });
+    });
 </script>
 </body>
 </html>

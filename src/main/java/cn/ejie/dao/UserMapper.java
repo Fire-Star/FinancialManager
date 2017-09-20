@@ -19,4 +19,6 @@ public interface UserMapper {
 
     public String findCityByUserName(String userName) throws Exception;
 
+    public String findCityIdByUserName(String userName) throws Exception;
+
 }

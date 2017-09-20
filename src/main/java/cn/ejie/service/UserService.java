@@ -55,4 +55,11 @@ public class UserService {
         }
         return userMapper.findCityByUserName(userName);
     }
+
+    public String findCityIdByUserName(String userName) throws Exception{
+        if(userName==null||"".equals(userName)){
+            throw new SimpleException(errorType,"系统发生错误：查询用户时，用户名不能为空！！！");
+        }
+        return userMapper.findCityIdByUserName(userName);
+    }
 }

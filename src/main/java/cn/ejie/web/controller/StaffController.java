@@ -2,10 +2,8 @@ package cn.ejie.web.controller;
 
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.StaffCustom;
-import cn.ejie.service.CityService;
-import cn.ejie.service.DepartmentService;
-import cn.ejie.service.EquipmentBorrowService;
-import cn.ejie.service.StaffService;
+import cn.ejie.pocustom.UserCustom;
+import cn.ejie.service.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
@@ -14,6 +12,8 @@ import cn.ejie.utils.SimpleBeanUtils;
 
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -45,6 +45,12 @@ public class StaffController {
     @Autowired
     private EquipmentBorrowService equipmentBorrowService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRoleService userRoleService;
+
     @RequestMapping("/staff/add")
     public void staffAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
         StaffCustom staffCustom = SimpleBeanUtils.setMapPropertyToBean(StaffCustom.class,request.getParameterMap());
@@ -64,7 +70,23 @@ public class StaffController {
 
     @RequestMapping("/user/staff/search")
     public void queryStaff(HttpServletRequest request, HttpServletResponse response) throws Exception{
-
+        System.out.println("员工查询界面，员工信息table模块的数据加载......");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+        UserCustom userCustom = new UserCustom();
+        try {
+            userCustom = userService.findUserByName(userDetails.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String role = userRoleService.findRoleByUserName(userCustom.getUsername());
+        String city = "";
+        try {
+            city = userService.findCityIdByUserName(userCustom.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+            city = "";
+        }
+        System.out.println("userDetail::::"+role+"&&&&&&&&&&"+city);
         String sql = "";
         String name = "";
         String dep = "";
@@ -88,10 +110,15 @@ public class StaffController {
             entrytime = request.getParameter("entrytime");
         }
 
-        if(!name.equals("")||!dep.equals("")||!position.equals("")||!tel.equals("")||!entrytime.equals("")){
-            sqltemp = sqltemp + " WHERE";
+        if(!name.equals("")||!dep.equals("")||!position.equals("")||!tel.equals("")||!entrytime.equals("")
+                ||!"ROLE_ADMIN".equals(role)){
+            if("ROLE_ADMIN".equals(role)||"".equals(city)) {
+                sqltemp = sqltemp + " WHERE";
+            }else{
+                sqltemp = sqltemp + " WHERE city='"+  city +"'";
+            }
             if(!name.equals("")){
-                sqltemp = sqltemp + " name='"+name+"'";
+                sqltemp = sqltemp + " and name='"+name+"'";
             }
             if(!dep.equals("")){
                 sqltemp = sqltemp + " and department='"+dep+"'";
@@ -167,7 +194,7 @@ public class StaffController {
     }
     @RequestMapping("/user/staff/findStaffByStaffID")
     public void findStaffByStaffID (HttpServletRequest request,HttpServletResponse response) throws Exception{
-        System.out.println("用户详情界面，员工详细信息panel模块的数据加载......");
+        System.out.println("员工详情界面，员工详细信息panel模块的数据加载......");
         String staffId = "";
         StaffCustom staffCustom = new StaffCustom();
         if(request.getParameter("staffId")!=null){
