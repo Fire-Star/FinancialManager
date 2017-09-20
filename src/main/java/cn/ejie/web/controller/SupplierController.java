@@ -52,6 +52,9 @@ public class SupplierController {
     @Autowired
     private EquipmentStateService equipmentStateService;
 
+    @Autowired
+    private FixedLogService fixedLogService;
+
     @RequestMapping("/supplier/findAllSupplier")
     public @ResponseBody List<SupplierCustom> showAllSupplier() throws Exception {
         return  supplierService.findAllSupplier();
@@ -85,6 +88,8 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/findSuppBySuppID")
     public  void findSuppBySuppID(HttpServletResponse response,HttpServletRequest request) throws Exception{
+        System.out.println
+                ("供应商详情界面，该供应商详情panel模块的数据加载......");
         String detailId = "";
         if(request.getParameter("suppId") != null){
             detailId = request.getParameter("suppId");
@@ -180,18 +185,6 @@ public class SupplierController {
             mapp.put("id",listSupplier.get(i).getId());
             list.add(mapp);
         }
-        /*List<Object> list = new ArrayList<Object>();
-        for(int i=0;i<50;i++){
-            Map<String, Object> mapp = new HashMap<String, Object>();
-            mapp.put("index", i+"");
-            mapp.put("name","test"+i);
-            mapp.put("contactName","name"+i);
-            mapp.put("tel","1387878454"+i);
-            mapp.put("business","busy"+i);
-            mapp.put("count","151545");
-            mapp.put("money","21321");
-            list.add(mapp);
-        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());
@@ -199,6 +192,7 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/findEquipBySuppId")
     public void findEquipBySuppId(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("供应商详情界面，该供应商采购设备table模块的数据加载......");
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -215,12 +209,12 @@ public class SupplierController {
             city = "";
         }
         String suppId = "";
-        if("".equals(request.getParameter("suppId"))&&request.getParameter("suppId")!=null){
+        if(!"".equals(request.getParameter("suppId"))&&request.getParameter("suppId")!=null){
             suppId = request.getParameter("suppId");
         }
         System.out.println("suppId:"+suppId);
         String sql ="";
-        String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,department.department as purchasDepart,department.department as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state.state as eqStateId,purchas_price as purchasPrice,custom_message as customMessage,eq_other_id as eqOtherId,equipment.city as city FROM equipment,eq_state,department WHERE eq_state.eq_state_id=equipment.eq_state AND equipment.purchas_depart=department.id AND equipment.belong_depart=department.id";
+        String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,department.department as purchasDepart,department.department as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state.state as eqStateId,purchas_price as purchasPrice,equipment.custom_message as customMessage,eq_other_id as eqOtherId,equipment.city as city FROM equipment,eq_state,department,supplier WHERE eq_state.eq_state_id=equipment.eq_state AND equipment.purchas_depart=department.id AND equipment.belong_depart=department.id AND supplier.name = equipment.supplier AND supplier.id = '" + suppId +"'";
         if(!"ROLE_ADMIN".equals(role)&&!"".equals(city)){
             sql = sqltemp + " AND equipment.city = '" + city + "'";
         }else{
@@ -236,6 +230,7 @@ public class SupplierController {
         for (int i = 0; i < equipmentCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String, String>();
             map.put("index",i+"");
+            map.put("id",equipmentCustomList.get(i).getEqId());
             map.put("equipID",equipmentCustomList.get(i).getEqOtherId());
             map.put("equipType",equipmentCustomList.get(i).getEqType());
             map.put("equipName",equipmentCustomList.get(i).getEqName());
@@ -245,8 +240,20 @@ public class SupplierController {
             map.put("state",equipmentCustomList.get(i).getEqStateId());
             map.put("purchasDate",equipmentCustomList.get(i).getPurchasTime());
             map.put("purchasPrice",equipmentCustomList.get(i).getPurchasPrice());
-            map.put("fixTime",i+"fixTime");
-            map.put("useTime",i+"useTime");
+            String month = "";
+            int num = 0;
+            try {
+                num = fixedLogService.countByEqId(equipmentCustomList.get(i).getEqId());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("fixTime",num+"");
+            try {
+                month = StringUtils.getMonthSpace(equipmentCustomList.get(i).getPurchasTime()) + "";
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("useTime",month);
             list.add(map);
         }
         JSONArray jsonArray = new JSONArray();

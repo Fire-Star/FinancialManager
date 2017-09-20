@@ -167,7 +167,7 @@ public class StaffController {
     }
     @RequestMapping("/user/staff/findStaffByStaffID")
     public void findStaffByStaffID (HttpServletRequest request,HttpServletResponse response) throws Exception{
-        System.out.println("yuangongxiangqing");
+        System.out.println("用户详情界面，员工详细信息panel模块的数据加载......");
         String staffId = "";
         StaffCustom staffCustom = new StaffCustom();
         if(request.getParameter("staffId")!=null){
