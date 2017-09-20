@@ -56,4 +56,50 @@ public class EquipmentBorrowController {
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 
+    /**
+     * 通过员工ID查询员工设备
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/user/staff/findEqByStaffId")
+    public void findEqByStaffId(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("用户详情界面，table的数据加载......");
+        String staffId = "";
+        if(!"".equals(request.getParameter("staffId"))&&request.getParameter("staffId")!=null){
+            staffId = request.getParameter("staffId");
+        }
+        String sql = "";
+        List<EquipmentBorrowCustom> equipmentCustomList = new ArrayList<EquipmentBorrowCustom>();
+        try {
+            if(!"".equals(staffId)){
+                equipmentCustomList = equipmentBorrowService.findAllByUserId(staffId);
+            }else{
+                throw new SimpleException("errorType","查询设备出借记录时，用户Id不能为空");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(JSONArray.fromObject(equipmentCustomList).toString());
+        List<Object> list = new ArrayList<Object>();
+        for (int i = 0; i < equipmentCustomList.size(); i++) {
+            Map<String,String> map = new HashMap<String, String>();
+            map.put("index",i+"");
+            String eqId = "";
+            String eqName = "";
+            if(!"".equals(equipmentCustomList.get(i).getEqId())){
+                eqId = equipmentCustomList.get(i).getEqId().substring(0,6);
+                eqName = equipmentCustomList.get(i).getEqId().substring(6);
+            }
+            map.put("eqId",equipmentCustomList.get(i).getUseByDepart());
+            map.put("eqOtherID",eqId);
+            map.put("eqName",eqName);
+            map.put("opratorTime",equipmentCustomList.get(i).getDoTime());
+            map.put("status",equipmentCustomList.get(i).getState());
+            list.add(map);
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.fromObject(list);
+        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+
 }

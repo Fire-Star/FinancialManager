@@ -227,28 +227,6 @@ public class EquipmentController {
     }
 
     /**
-     * 通过员工ID查询员工设备
-     * @param response
-     * @param request
-     */
-    @RequestMapping("/user/staff/findEqByStaffId")
-    public void findEqByStaffId(HttpServletResponse response,HttpServletRequest request){
-        List<Object> list = new ArrayList<Object>();
-        for (int i = 0; i < 50; i++) {
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("index",i+"");
-            map.put("eqID","eqID"+i);
-            map.put("eqName","eqName"+i);
-            map.put("opratorTime","opratorTime"+i);
-            map.put("status","status"+i);
-            list.add(map);
-        }
-        JSONArray jsonArray = new JSONArray();
-        jsonArray = JSONArray.fromObject(list);
-        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
-    }
-
-    /**
      *
      * @return 设备详情界面
      */

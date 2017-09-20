@@ -246,9 +246,9 @@
         };
         return oInit;
     };
-    function checkDetail(suppId) {
-        window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
-        alert(suppId);
+    function checkDetail(staffId) {
+        window.parent.document.getElementById('iframeContent').src="staff/detail?staffId="+staffId;
+        alert(staffId);
     }
     function datasearch() {
         $('#tb_staff').bootstrapTable('refresh');

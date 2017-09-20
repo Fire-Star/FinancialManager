@@ -9,5 +9,8 @@
     <select id="countAllByUser" resultType="java.lang.Integer">
         select count(*) from eq_borrow_log WHERE use_by = #{userId}
     </select>
+    <select id="findAllByUserId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
+        SELECT borrow_id as borrowId,concat(equipment.eq_other_id,equipment.eq_name) as eqId,eq_borrow_log.eq_id as useByDepart,eq_state.state as state,do_time as doTime FROM eq_borrow_log,eq_state,equipment WHERE eq_borrow_log.state = eq_state.eq_state_id AND equipment.eq_id = eq_borrow_log.eq_id AND use_by = #{userId}
+    </select>
 
 </mapper>

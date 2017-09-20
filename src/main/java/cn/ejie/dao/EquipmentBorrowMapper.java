@@ -20,4 +20,12 @@ public interface EquipmentBorrowMapper {
      * @throws Exception
      */
     public int countAllByUser(String userId) throws Exception;
+
+    /**
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     */
+    public List<EquipmentBorrowCustom> findAllByUserId(String userId) throws Exception;
 }

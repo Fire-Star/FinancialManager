@@ -93,7 +93,7 @@
 
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="data()">重置</button>
                             </div>
                         </div>
                     </div>
@@ -165,10 +165,10 @@
                     field: 'index',
                     title: '序列号'
                 }, {
-                    field: 'eqID',
+                    field: 'eqOtherID',
                     title: '设备ID',
                     formatter:function(value,row,index){
-                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\''+ row.id + '\')">'+value+'</a> ';
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\''+ row.eqId + '\')">'+value+'</a> ';
                         return e ;
                     }
                 }, {
@@ -185,14 +185,11 @@
         };
         //得到查询的参数
         oTableInit.queryParams = function (params) {
+            var staffId = $.getUrlParam('staffId');
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                name: $("#name").val(),
-                department: $("#department").val(),
-                position: $("#position").val(),
-                tel: $("#tel").val(),
-                entrytime: $("entrytime").val()
+                staffId: staffId
             };
             return temp;
         };
@@ -207,25 +204,19 @@
         };
         return oInit;
     };
-    function checkDetail(val) {
-        //window.parent.document.getElementById('iframeContent').src="/staff/detail?val="+val;
-        alert(val);
+    function checkDetail(equipId) {
+        window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
+        alert(equipId);
     }
-    function datasearch() {
-        $('#tb_staff').bootstrapTable('refresh');
+    function dataedit() {
+        alert("修改员工信息");
     };
-    function datareset() {
-        $('#name').val("");
-        $('#department').val("");
-        $('#position').val("");
-        $('#tel').val("");
-        $('#entrytime').val("");
-    };
+
     $(document).ready(function(){
-        alert("123455");
-        var suppId = $.getUrlParam('suppId');
-        var param = {"suppId":suppId};
-        alert(suppId);
+        alert("员工详情界面数据预加载");
+        var staffId = $.getUrlParam('staffId');
+        var param = {"staffId":staffId};
+        alert(staffId);
         $.ajax({
             url: "findStaffByStaffID",
             type: 'post',
@@ -240,7 +231,7 @@
                 $('#entrytime').val(data.entryTime);
             },
             fail: function (err, status) {
-                alert("741147");
+                alert("获取员工详情失败");
             }
         });
     });

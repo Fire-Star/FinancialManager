@@ -36,4 +36,15 @@ public class EquipmentBorrowService {
         }
         return borrowNum;
     }
+
+    public List<EquipmentBorrowCustom> findAllByUserId(String userId) throws Exception{
+        List<EquipmentBorrowCustom> equipmentBorrowCustomList = new ArrayList<EquipmentBorrowCustom>();
+        try {
+            equipmentBorrowCustomList = equipmentBorrowMapper.findAllByUserId(userId);
+        }catch (Exception e){
+            e.printStackTrace();
+            new SimpleException("borrowLogErrorType","数据库查询借出记录时出现错误");
+        }
+        return equipmentBorrowCustomList;
+    }
 }

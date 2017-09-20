@@ -170,8 +170,8 @@ public class StaffController {
         System.out.println("yuangongxiangqing");
         String staffId = "";
         StaffCustom staffCustom = new StaffCustom();
-        if(request.getParameter("suppId")!=null){
-            staffId = request.getParameter("suppId");
+        if(request.getParameter("staffId")!=null){
+            staffId = request.getParameter("staffId");
         }
         System.out.println("staffId:"+staffId);
         try {
