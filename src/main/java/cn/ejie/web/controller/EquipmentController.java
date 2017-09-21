@@ -82,7 +82,7 @@ public class EquipmentController {
      */
     @RequestMapping("/user/equipment/search")
     public void searchEquipment(HttpServletResponse respose, HttpServletRequest request){
-        System.out.println("equipment/search");
+        System.out.println("设备查询界面，设备信息table模块的数据加载......");
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -93,7 +93,7 @@ public class EquipmentController {
         String role = userRoleService.findRoleByUserName(userCustom.getUsername());
         String city = "";
         try {
-            city = userService.findCityByUserName(userCustom.getUsername());
+            city = userService.findCityIdByUserName(userCustom.getUsername());
         }catch (Exception e){
             e.printStackTrace();
             city = "";
@@ -133,7 +133,8 @@ public class EquipmentController {
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
         String sql = "";
         String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,purchas_depart as purchasDepart,belong_depart as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state as eqStateId,purchas_price as purchasPrice,custom_message as customMessage,eq_other_id as eqOtherId,city as city FROM equipment";
-        if(!eqID.equals("")||!eqType.equals("")||!eqName.equals("")||!supplier.equals("")||!belongDepart.equals("")||!eqState.equals("")||!time.equals("")){
+        if(!eqID.equals("")||!eqType.equals("")||!eqName.equals("")||!supplier.equals("")||!belongDepart.equals("")
+                ||!eqState.equals("")||!time.equals("")||!"ROLE_ADMIN".equals(role)){
             if("ROLE_ADMIN".equals(role)||"".equals(city)) {
                 sqltemp = sqltemp + " WHERE";
             }else{

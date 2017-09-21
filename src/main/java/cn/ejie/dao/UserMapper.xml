@@ -18,4 +18,7 @@
     <select id="findCityByUserName" resultType="java.lang.String">
         SELECT city.city FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
     </select>
+    <select id="findCityIdByUserName" resultType="java.lang.String">
+        SELECT city.cityID FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
+    </select>
 </mapper>

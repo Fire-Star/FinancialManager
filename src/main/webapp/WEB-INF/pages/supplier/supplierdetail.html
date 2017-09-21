@@ -150,7 +150,12 @@
                     title: '序列号'
                 }, {
                     field: 'equipID',
-                    title: '设备ID'
+                    title: '设备ID',
+                    formatter:function(value,row,index) {
+                        var e = '<a href="#" mce_href="#" onclick="checkToEqDetail(\'' + row.id + '\')">' + value +
+                            '</a> ';
+                        return e;
+                    }
                 }, {
                     field: 'equipType',
                     title: '设备类型'
@@ -211,7 +216,6 @@
     $(document).ready(function(){
         var suppId = $.getUrlParam('suppId');
         var param = {"suppId":suppId};
-        alert(suppId);
         $.ajax({
             url: "findSuppBySuppID",
             type: 'post',
@@ -236,6 +240,10 @@
             if (r != null) return decodeURI(r[2]); return null;
         }
     })(jQuery);
+    function checkToEqDetail(equipId) {
+        window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
+        alert(equipId);
+    }
 
 </script>
 </html>

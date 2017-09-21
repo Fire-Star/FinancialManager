@@ -10,6 +10,7 @@ import cn.ejie.service.VertifyCodeService;
 import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -208,5 +209,18 @@ public class UserController {
     @RequestMapping("/user/testmain")
     public String testMain(){
         return "/WEB-INF/pages/maintest.html";
+    }
+
+    @RequestMapping("/user/getUsername")
+    public void getUserName(HttpServletResponse response){
+        System.out.println("主界面获取登录名......");
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+        String userName = userDetails.getUsername();
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("userName",userName);
+        JSONObject jsonObject = JSONObject.fromObject(map);
+        System.out.println(jsonObject.toString());
+        SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
+
     }
 }
