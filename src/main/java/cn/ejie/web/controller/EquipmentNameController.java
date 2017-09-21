@@ -45,19 +45,14 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/addSingleEquipmentName")
-    public @ResponseBody Map<String,String> insertSingleEquipmentName(HttpServletRequest request){
+    public void insertSingleEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
         Map<String,String> responseJsonMessage = new HashMap<>();
 
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
-        try {
-            equipmentNameService.insertSingleEquipmentName(equipmentNameCustom);
-        } catch (Exception e) {
-           return SimpleException.getMapMessage(responseJsonMessage,e);
-        }
-        //如果没有抛出异常，那么这里就是成功返回了！
-        responseJsonMessage.put("status","成功插入！！");
-        return responseJsonMessage;
+        equipmentNameService.insertSingleEquipmentName(equipmentNameCustom);
+
+        SimpleException.sendSuccessMessage(response,objectMapper);
     }
 
     @RequestMapping("/findAllEquipmentNameByEqTypeName")

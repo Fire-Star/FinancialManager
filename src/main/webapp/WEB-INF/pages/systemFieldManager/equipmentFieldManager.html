@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>设备字段维护</title>
+    <!-- 引入 BootStrap 全家桶 -->
+    <script src="../res/js/jquery-3.2.1.min.js"></script>
+    <script src="../res/js/bootstrap.min.js"></script>
+    <script src="../res/js/bootstrap-datepicker.js"></script>
+    <script src="../res/js/bootstrap-datepicker.zh-CN.js"></script>
+    <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+
+    <!-- 引入Vue.js -->
+    <script src="../res/js/vue.min.js"></script>
+    <style>
+        html,body{
+            height: 100%;width: 100%;padding: 0px;
+        }
+        .hr{
+            border: none;border-bottom: 1px solid #9d9d9d;
+        }
+        .text-order{
+            vertical-align: middle;margin-right: 21px;    margin-left: 10px;
+        }
+        .bottom{
+            width: 600px;
+        }
+        .list{
+            margin-top: 2px;  list-style: none;margin-bottom: 0px;
+        }
+        .list>li{
+            margin-left: 30px;line-height: 30px;margin-top: 1px;width: 170px;text-align: center;
+        }
+        .list>span{
+            width: 156px!important;margin-right: 3px;margin-top: 1px;
+        }
+        .list> div > input{
+            width: 126px;margin-left: 30px;margin-top: 3px;margin-right: 5px;
+        }
+        .bottom > div > input{
+            margin-top: 4px; margin-left: 40px; width: 157px; margin-right: 3px;
+        }
+        .inline{
+            display: inline-block;
+        }
+        .width-100{
+            width: 100% !important;
+        }
+        .list > li ,.list > div ,.bottom > div{
+            display: none;
+        }
+        .del-btn{
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+<div class="app container-fluid width-100per top-content">
+    <ul class="breadcrumb">
+        <li>
+            系统字段维护<span class="divider">></span>
+        </li>
+        <li class="active">设备字段添加</li>
+    </ul><br>
+    <span class="h4 text-primary">设备基本信息字段维护</span>
+    <hr class="hr">
+    <span class="text-primary text-order h3">设备类型/名称添加</span><button class="btn btn-sm btn-primary glyphicon glyphicon-plus addTypeBoss"></button>
+    <div class="bottom">
+        <ul class="list" v-for="(item,index) in eqTypes">
+            <span class="btn btn-primary eqTypeButton">{{item.equipmentTypeName}}</span><button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
+            <button class="btn btn-danger btn-sm del-btn">删除该类型</button>
+            <li v-for="itemName in eqNames[index]"><span class="btn btn-info width-100">{{itemName.eqName}}</span></li>
+            <div><input type="text" class="form-control inline" placeholder="请输入设备名称..." :belongType="item.equipmentTypeName"><button class="btn btn-warning addNameButton" style="margin-top: -2px">新增名称</button></div>
+        </ul>
+        <div><input type="text" class="form-control inline" placeholder="请输入设备类型..." v-model="insertType"><button @click="insertTypeMethod()" class="btn btn-primary" style="margin-top: -2px">新增类型</button></div>
+    </div>
+
+    <!-- ModalButton -->
+    <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    {{modalStatus}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var data = {
+        modalStatus:"",
+        addTypeShow:false,
+        eqTypes:[],
+        eqNames:[],
+        insertType:""
+    };
+
+    var vm = new Vue({
+        el: '.app',
+        data: data,
+        updated:function () {
+            init();
+            init();
+        },
+        methods:{
+            insertTypeMethod(){
+                $.get('../addEquipmentType?equipmentTypeName='+this.insertType,function (data, status) {
+                    if(status=='success'){
+                        var _data = eval(data);
+                        if(!_data){
+                            vm.modalStatus="系统发生错误：添加设备类型失败，请通知管理员！";
+                        }else if(_data.success){
+                            vm.modalStatus =  _data.success;
+                        }else if(_data.eqTypeError){
+                            vm.modalStatus = _data.eqTypeError;
+                        }
+                        $('#modalButton').click();
+                        loadData();
+                    }
+                });
+                this.insertType = "";
+            }
+        }
+    });
+
+    function init() {
+
+        $('.addTypeBoss').unbind("click").click(function (e) {
+            $(this).toggleClass('glyphicon-minus btn-danger','glyphicon-plus btn-primary');
+            var target = $('.bottom').children('div');
+            $(target).slideToggle();
+        });
+        $('.addTypeButton').unbind("click").click(function (e) {
+            $(this).toggleClass('glyphicon-minus btn-danger','glyphicon-plus btn-success');
+            var target = $(this).parent('ul').children('div');
+            $(target).slideToggle();
+        });
+        $('.eqTypeButton').unbind("click").click(function (e) {
+            var target = $(this).parent('ul').children('li');
+            $(target).slideToggle();
+        });
+        $('.addNameButton').unbind("click").click(function (e) {
+            var targetInput = $(this).prev();
+            var targetType = $(targetInput).attr('belongType');
+            var value = $(targetInput).val();
+            if(value == ""){
+                vm.modalStatus = "属性名称不能为空！";
+                $('#modalButton').click();
+                return ;
+            }
+            $.get('../addSingleEquipmentName?eqName='+value+"&eqTypeId="+targetType,function (data, status) {
+                if(status=="success"){
+                    var _data = eval(data);
+                    if(!_data){
+                        vm.modalStatus="系统发生错误：添加设备名称失败，请通知管理员！";
+                    }else if(_data.success){
+                        vm.modalStatus =  _data.success;
+                    }else if(_data.eqNameError){
+                        vm.modalStatus = _data.eqNameError;
+                    }
+                    $('#modalButton').click();
+                    loadData();
+                }
+            });
+        });
+    }
+
+    var eqNameTemps=[];
+    loadData();
+    function loadData() {
+        $.get("../showAllEquipmentType",function (data,status) {
+            if(status=='success'){
+                var _data = eval(data);
+
+                //遍历eqTypes获取当前类型下的设备名称
+                for(index in _data){
+
+                    var curentEqType = _data[index].equipmentTypeName;
+                    $.get('../findAllEquipmentNameByEqTypeName?eqTypeId='+curentEqType,function (data, status) {
+                        if('success' == status){
+                            var _eqNamesData = eval(data);
+                            eqNameTemps.push(_eqNamesData);
+                        }
+                    });
+                    if(index == _data.length-1){
+                        vm.eqTypes = _data;
+                        vm.eqNames = eqNameTemps;
+                    }
+                }
+            }
+        });
+    }
+
+</script>
+</html>
