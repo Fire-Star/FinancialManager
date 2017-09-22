@@ -2,7 +2,10 @@ package cn.ejie.service;
 
 import cn.ejie.dao.EquipmentNameMapper;
 import cn.ejie.exception.EquipmentException;
+import cn.ejie.exception.SimpleException;
+import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.pocustom.EquipmentNameCustom;
+import cn.ejie.utils.BeanPropertyValidateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ public class EquipmentNameService {
 
     @Autowired
     private EquipmentTypeService equipmentTypeService;
+
+    @Autowired
+    private EquipmentService equipmentService;
 
     /**
      * 插入单个设备名称！
@@ -78,10 +84,41 @@ public class EquipmentNameService {
 
     public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(String eqTypeName) throws Exception{
         String eqTypeId = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
-        System.out.println("eqTypeId="+eqTypeId);
         if(eqTypeId==null || eqTypeId.equals("")){
             throw new EquipmentException(errorType,"设备类型不能为空！");
         }
         return  equipmentNameMapper.findAllEquipmentNameByEqTypeID(eqTypeId);
+    }
+
+    public void delEquipmentName(EquipmentNameCustom equipmentNameCustom) throws Exception{
+
+        String eqTypeName = equipmentNameCustom.getEqTypeId();
+        String eqName = equipmentNameCustom.getEqName();
+
+        if(eqTypeName==null || eqTypeName.equals("")){
+            throw new SimpleException(errorType,"删除设备名称时，设备类型不能为空！！！");
+        }
+        if(eqName == null || eqName.equals("")){
+            throw new SimpleException(errorType,"删除设备名称时，设备名称不能为空！！！");
+        }
+        EquipmentCustom equipmentCustom = new EquipmentCustom();
+        equipmentCustom.setEqType(eqTypeName);
+        equipmentCustom.setEqName(eqName);
+
+        Integer count = equipmentService.countEquipmentByEqTypeAndEqName(equipmentCustom);
+        if(count>0){
+            throw new SimpleException(errorType,"该设备类型或设备名称下涉及有设备，不能够删除！！！如有紧急需求，请通知管理员！");
+        }
+        String eqTypeID = equipmentTypeService.findEquipmentTypeIDByTypeName(eqTypeName);
+
+        equipmentNameCustom.setEqTypeId(eqTypeID);
+        equipmentNameMapper.delEquipmentName(equipmentNameCustom);
+    }
+
+    public void delEquipmentNameByEqType(String eqType) throws Exception{
+        if(eqType == null || eqType.equals("")){
+            throw new SimpleException(errorType,"删除设备名称时，设备类型不能为空！！！");
+        }
+        equipmentNameMapper.delEquipmentNameByEqType(eqType);
     }
 }

@@ -28,4 +28,16 @@
     <select id="countEquipmentByCity" resultType="int">
         SELECT count(eq_id) FROM equipment WHERE city = #{cityID}
     </select>
+    <delete id="delEquipmentByEqTypeAndEqName">
+        DELETE FROM equipment WHERE eq_type = #{eqType} AND eq_name = #{eqName}
+    </delete>
+    <delete id="delEquipmentByEqType">
+        DELETE FROM equipment WHERE eq_type = #{eqType}
+    </delete>
+    <select id="countEquipmentByEqTypeAndEqName" resultType="int">
+        SELECT count(eq_id) FROM equipment WHERE eq_type = #{eqType} AND eq_name = #{eqName}
+    </select>
+    <select id="countEquipmentByEqType" resultType="int">
+        SELECT count(eq_id) FROM equipment WHERE eq_type = #{eqType}
+    </select>
 </mapper>

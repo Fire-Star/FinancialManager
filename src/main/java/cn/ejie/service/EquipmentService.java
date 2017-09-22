@@ -101,4 +101,51 @@ public class EquipmentService {
         }
         return equipmentCustom;
     }
+
+    public void delEquipmentByEqTypeAndEqName(EquipmentCustom equipmentCustom) throws Exception{
+        String eqType = equipmentCustom.getEqType();
+        String eqName = equipmentCustom.getEqName();
+        if(eqType==null || eqType.equals("")){
+            throw new SimpleException("equipmentErrorType","删除设备时，设备类型不能为空！！！");
+        }
+        if(eqName == null || eqName.equals("")){
+            throw new SimpleException("equipmentErrorType","删除设备时，设备名称不能为空！！！");
+        }
+
+        equipmentMapper.delEquipmentByEqTypeAndEqName(equipmentCustom);
+    }
+
+    public void delEquipmentByEqType(String eqType) throws Exception{
+        if(eqType == null || eqType.equals("")){
+            throw new SimpleException("equipmentErrorType","删除设备时，设备类型不能为空！！！");
+        }
+        equipmentMapper.delEquipmentByEqType(eqType);
+    }
+
+    public Integer countEquipmentByEqTypeAndEqName(EquipmentCustom equipmentCustom) throws Exception{
+        String eqType = equipmentCustom.getEqType();
+        String eqName = equipmentCustom.getEqName();
+        if(eqType==null || eqType.equals("")){
+            throw new SimpleException("equipmentErrorType","查询设备时，设备类型不能为空！！！");
+        }
+        if(eqName == null || eqName.equals("")){
+            throw new SimpleException("equipmentErrorType","查询设备时，设备名称不能为空！！！");
+        }
+        Integer count = equipmentMapper.countEquipmentByEqTypeAndEqName(equipmentCustom);
+        if(count == null){
+            throw new SimpleException("equipmentErrorType","系统数据库发生错误，请通知管理员！！！");
+        }
+        return count;
+    }
+
+    public Integer countEquipmentByEqType(String eqType) throws Exception{
+        if(eqType==null || eqType.equals("")){
+            throw new SimpleException("equipmentErrorType","查询设备时，设备类型不能为空！！！");
+        }
+        Integer count = equipmentMapper.countEquipmentByEqType(eqType);
+        if(count == null){
+            throw new SimpleException("equipmentErrorType","系统数据库发生错误，请通知管理员！！！");
+        }
+        return  count;
+    }
 }

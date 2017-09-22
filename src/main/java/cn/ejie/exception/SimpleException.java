@@ -121,4 +121,9 @@ public class SimpleException extends GetAllCustomException{
         message.put("success","添加成功！");
         SimpleException.sendMessage(response,message,objectMapper);
     }
+    public static void sendMessage(HttpServletResponse response,ObjectMapper objectMapper,String key,String value){
+        Map<String,String> message = new HashMap<>();
+        message.put(key,value);
+        SimpleException.sendMessage(response,message,objectMapper);
+    }
 }

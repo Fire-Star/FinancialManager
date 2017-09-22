@@ -2,6 +2,7 @@ package cn.ejie.service;
 
 import cn.ejie.dao.EquipmentTypeMapper;
 import cn.ejie.exception.EquipmentException;
+import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentTypeCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.StringUtils;
@@ -19,6 +20,12 @@ public class EquipmentTypeService {
 
     @Autowired
     private EquipmentTypeMapper equipmentTypeMapper;
+
+    @Autowired
+    private EquipmentService equipmentService;
+
+    @Autowired
+    private EquipmentNameService equipmentNameService;
 
     /**
      * 查询所有设备类型
@@ -68,5 +75,15 @@ public class EquipmentTypeService {
 
     public String findEquipmentTypeOtherIDByTypeName(String equipmentTypeName) throws Exception{
         return equipmentTypeMapper.findEquipmentTypeOtherIDByTypeName(equipmentTypeName);
+    }
+
+    public void delEquipmentType(String eqType) throws Exception{
+        Integer count = equipmentService.countEquipmentByEqType(eqType);
+        if(count>0){
+            throw new SimpleException(errorType,"该设备类型下涉及有设备，不能够删除！！！如有紧急需求，请通知管理员！");
+        }
+        String eqTypeID = equipmentTypeMapper.findEquipmentTypeIDByTypeName(eqType);
+        equipmentNameService.delEquipmentNameByEqType(eqTypeID);//删除所有该类型的设备名称
+        equipmentTypeMapper.delEqTypeByEqTypeName(eqType);//删除该设备类型
     }
 }

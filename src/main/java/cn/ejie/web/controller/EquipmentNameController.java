@@ -45,30 +45,34 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/addSingleEquipmentName")
-    public @ResponseBody Map<String,String> insertSingleEquipmentName(HttpServletRequest request){
+    public void insertSingleEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
         Map<String,String> responseJsonMessage = new HashMap<>();
 
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
-        try {
-            equipmentNameService.insertSingleEquipmentName(equipmentNameCustom);
-        } catch (Exception e) {
-           return SimpleException.getMapMessage(responseJsonMessage,e);
-        }
-        //如果没有抛出异常，那么这里就是成功返回了！
-        responseJsonMessage.put("status","成功插入！！");
-        return responseJsonMessage;
+        equipmentNameService.insertSingleEquipmentName(equipmentNameCustom);
+
+        SimpleException.sendSuccessMessage(response,objectMapper);
     }
 
     @RequestMapping("/findAllEquipmentNameByEqTypeName")
-    public @ResponseBody List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public @ResponseBody Map<String,Object> findAllEquipmentNameByEqTypeName(HttpServletRequest request, HttpServletResponse response) throws Exception{
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
         List<EquipmentNameCustom> equipmentNameCustoms = null;
 
         //这里面出了问题，由全局异常处理器处理！
         equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeName(equipmentNameCustom.getEqTypeId());
+        Map<String,Object> result = new HashMap<>();
+        result.put("data",equipmentNameCustoms);
+        result.put("key",equipmentNameCustom.getEqTypeId());
+        return result;
+    }
 
-        return equipmentNameCustoms;
+    @RequestMapping("/equipmentName/delName")
+    public void delEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
+        equipmentNameService.delEquipmentName(equipmentNameCustom);
+        SimpleException.sendMessage(response,objectMapper,"success","删除成功！！");
     }
 }

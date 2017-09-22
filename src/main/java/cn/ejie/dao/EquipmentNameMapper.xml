@@ -18,4 +18,10 @@
     <select id="findAllEquipmentNameByEqTypeID" resultType="cn.ejie.pocustom.EquipmentNameCustom">
         SELECT eq_name eqName FROM eq_name WHERE eq_type_id = #{eqTypeId}
     </select>
+    <delete id="delEquipmentName">
+        DELETE FROM eq_name WHERE eq_type_id = #{eqTypeId} AND eq_name = #{eqName}
+    </delete>
+    <delete id="delEquipmentNameByEqType">
+        DELETE FROM eq_name WHERE eq_type_id = #{eqTypeId}
+    </delete>
 </mapper>

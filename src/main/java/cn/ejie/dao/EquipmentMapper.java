@@ -19,4 +19,12 @@ public interface EquipmentMapper {
     public EquipmentCustom findById(String id) throws Exception;
 
     public Integer countEquipmentByCity(String cityID) throws Exception;
+
+    public void delEquipmentByEqTypeAndEqName(EquipmentCustom equipmentCustom) throws Exception;
+
+    public void delEquipmentByEqType(String eqType) throws Exception;
+
+    public Integer countEquipmentByEqTypeAndEqName(EquipmentCustom equipmentCustom) throws Exception;
+
+    public Integer countEquipmentByEqType(String eqType) throws Exception;
 }
