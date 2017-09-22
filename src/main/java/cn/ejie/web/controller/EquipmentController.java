@@ -53,6 +53,9 @@ public class EquipmentController {
     @Autowired
     private FixedLogService fixedLogService;
 
+    @Autowired
+    private CityService cityService;
+
     @RequestMapping("/equipment/add")
     public void insertSingleEquipment(EquipmentCustom equipmentCustom, HttpServletResponse response){
 
@@ -243,6 +246,7 @@ public class EquipmentController {
 
     @RequestMapping("/user/equip/findEquipByEquipID")
     public void findEquipByEquipID(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("设备详情界面，设备信息panel模块的数据加载......");
         String eqId = "";
         if(request.getParameter("equipId") != null){
             eqId = request.getParameter("equipId");
@@ -252,7 +256,7 @@ public class EquipmentController {
             equipmentCustom = equipmentService.findById(eqId);
             String depart = "";
             try{
-                depart = departmentService.findDepartmentById(equipmentCustom.getBelongDepart());
+                depart = departmentService.findDepartNameByDepId(equipmentCustom.getBelongDepart());
             }catch (Exception e) {
                 e.printStackTrace();
             }
@@ -263,7 +267,14 @@ public class EquipmentController {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            String city = "";
             equipmentCustom.setEqStateId(stateCustom.getState());
+            try {
+                city = cityService.findCityNameByCityID(equipmentCustom.getCity());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            equipmentCustom.setCity(city);
         }catch (Exception e){
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！

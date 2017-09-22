@@ -7,8 +7,13 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-dialog.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
+    <link rel="stylesheet" href="../../res/css/bootstrap-dialog.css"/>
+
 
     <!-- 引入Vue.js -->
     <script src="../../res/js/vue.min.js"></script>
@@ -48,6 +53,13 @@
         }
         .btn-group{
             height:5%;
+        }
+        .con{
+            vertical-align: middle;
+            text-align: right;
+        }
+        .col-sm-3{
+            padding-left: 0px;
         }
     </style>
 </head>
@@ -96,7 +108,8 @@
                                 <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="dataedit()">编辑</button>
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
+                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
                             </div>
                         </div>
                     </div>
@@ -105,25 +118,230 @@
         </div>
     </div>
     <div id="borrow_toolbar" class="btn-group">
-        <p><h4>设备借调记录</h4></p>
+        <row>
+            <div class="col-sm-6">
+                <p><h4>设备借调记录</h4></p>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addBorrowLog()"
+                        data-toggle="modal" data-target="#borrowModal">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加借调记录
+                </button>
+            </div>
+        </row>
     </div>
     <div class="tablecontent_borrow">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_borrow"></table>
     </div>
     <div id="fix_toolbar" class="btn-group">
-        <p><h4>设备维护记录</h4></p>
+        <row>
+            <div class="col-sm-6">
+                <p><h4>设备维护记录</h4></p>
+            </div>
+            <div class="col-sm-3">
+                <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addFixLog()"
+                        data-toggle="modal" data-target="#fixModal">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加维护记录
+                </button>
+            </div>
+        </row>
     </div>
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
+    </div>
+    <!-- Modal 弹出框的结构 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">设备信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formSubmit" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">设备ID：</label>
+                            <input type="text" id="eqSubmitId" class="form-control,col-sm-3" name="phone" value=""
+                                   disabled="true">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">设备其他ID：</label>
+                            <input type="text" id="eqSubmitOtherId" class="form-control,col-sm-3" name="phone"
+                                   value="" disabled="true">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitType">设备类型：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" propName="设备类型" id="eqSubmitType" @change="loadEqName" v-model="eqTypeValue"
+                                        data-toggle="tooltip" data-placement="top">
+                                    <option selected value="">---请选择设备类型---</option>
+                                    <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitName">设备名称：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" propName="设备名称" id="eqSubmitName" v-model="eqNameValue" data-toggle="tooltip" data-placement="top">
+                                    <option selected value="">---请选择设备名称---</option>
+                                    <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitSupplier">供应商：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" propName="供应商" id="eqSubmitSupplier" v-model="supplier"
+                                        data-toggle="tooltip" data-placement="top">
+                                    <option selected value="">---请选择设供应商---</option>
+                                    <option v-for="(item , index) in suppliers" :value="item.name">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">归属部门：</label>
+                            <div class="col-sm-4" >
+                                <div class="form-group form-inline from-line item-right" role="group">
+                                    <div class="btn-group ">
+                                        <select class="btn btn-default form-control select-left" id="eqSubmitCity"
+                                                data-toggle="tooltip" data-placement="top" @change="loadBelongDep"
+                                                v-model="city">
+                                            <option selected value="" id="d">-城市-</option>
+                                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                        </select>
+                                        <select class="btn btn-default form-control select-right"
+                                                id="eqSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
+                                                data-placement="top" >
+                                            <option selected value="" id="dsf">--部门--</option>
+                                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitState">当前状态：</label>
+                            <div class="col-sm-3">
+                                <select class="form-control" propName="设备状态" id="eqSubmitState" v-model="eqState"
+                                        data-toggle="tooltip" data-placement="top">
+                                    <option selected value="">---请选择设备状态---</option>
+                                    <option v-for="(item , index) in allState" :value="item.state">{{item.state}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">签约时间：</label>
+                            <div class="col-sm-3">
+                                <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="borrow-modal modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="borrowModalLabel">设备借调</h4>
+                </div>
+                <div class="modal-body">
+                    <row>
+                        <div class="col-sm-4">
+                            <input id="eqUsed" type="radio" name="borrowState" value="使用">使用
+                        </div>
+                        <div class="col-sm-4">
+                            <input id="eqNoUsed" type="radio" name="borrowState"value="闲置">闲置
+                        </div>
+                        <div class="col-sm-4">
+                            <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
+                        </div>
+                    </row>
+                    <form id="formBorrowSubmit" class="form-horizontal">
+                        <div id="eqUsedDiv" hidden>123</div>
+                        <div id="eqNoUsedDiv" hidden>456</div>
+                        <div id="eqUnUsedDiv" hidden>789</div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fix-modal modal fade" id="fixModal" tabindex="-1" role="dialog" aria-labelledby="fixModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="fixModalLabel">维护记录</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formfixSubmit" class="form-horizontal">
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 <script>
     var data = {
+        equipmentType:"",
+        equipmentName:"",
+        eqNameValue:"",
+        eqTypeValue:"",
+        belongDepartment:[],
+        beDepValue:"",
+        citys:[],
+        city:"",
+        suppliers :[],
+        supplier:"",
+        allState:[],
+        eqState:""
     };
     var vm = new Vue({
         el:'.app',
-        data:data
+        data:data,
+        methods: {
+            loadEqName() {
+                /**
+                 * 加载设备名称选项
+                 */
+                $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
+                    if (status == "success") {
+                        var _equipmentName = eval(data);
+                        console.log(_equipmentName);
+                        vm.equipmentName = _equipmentName;
+                    }
+                });
+            },
+            loadBelongDep(){
+                $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        vm.belongDepartment = _departmentData;
+                    }
+                });
+                // $('#depIDOp').attr('selected', true);
+            },
+        }
     });
     $(function () {
         //1.初始化Table
@@ -240,10 +458,37 @@
     function checkDetail(suppId) {
         //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
         alert(suppId);
-    }
-    function dataedit() {
-        alert(321);
-    }
+    };
+    function preLoadEqName() {
+        /**
+         * 页面加载之前加载设备名称选项
+         */
+        alert("现在在执行加载name");
+        $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
+            if (status == "success") {
+                var _equipmentName = eval(data);
+                console.log(_equipmentName);
+                vm.equipmentName = _equipmentName;
+                //document.getElementById("eqSubmitName").value = eqNameData;
+                //vm.eqNameValue = eqNameData;
+            }
+            alert("4"+vm.equipmentName);
+        });
+    };
+    function preLoadDepName() {
+        /**
+         * 页面加载之前加载部门名称选项
+         */
+        $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+            console.log(data);
+            if (status == "success") {
+                var _departmentData = eval(data);
+                console.log(_departmentData);
+                vm.belongDepartment = _departmentData;
+                //vm.beDepValue = beDepData;
+            }
+        });
+    };
     $(document).ready(function(){
         var equipId = $.getUrlParam('equipId');
         var param = {"equipId":equipId};
@@ -259,9 +504,33 @@
                 $('#eqType').val(data.eqType);
                 $('#eqName').val(data.eqName);
                 $('#supplier').val(data.supplier);
-                $('#belongDepart').val(data.belongDepart);
+                $('#belongDepart').val(data.city+data.belongDepart);
                 $('#eqState').val(data.eqStateId);
                 $('#time').val(data.purchasTime);
+
+                //加载设备信息修改界面默认值
+                $('#eqSubmitId').val(data.eqOtherId);
+                $('#eqSubmitOtherId').val(data.eqId);
+                eqTypeData = data.eqType;
+                vm.eqTypeValue = data.eqType;
+                preLoadEqName();
+                eqNameData = data.eqName;
+                supplierData = data.supplier;
+                cityData = data.city;
+                vm.city = data.city;
+                preLoadDepName();
+                beDepData = data.belongDepart;
+                eqStateData = data.eqStateId;
+                eqPurDate = data.purchasTime;
+                /*vm.eqTypeValue = data.eqType;
+                preLoadEqName();
+                eqNameData = data.eqName;
+                vm.supplier = data.supplier;
+                vm.city = data.city;
+                preLoadDepName();
+                beDepData = data.belongDepart;
+                vm.eqState = data.eqStateId;
+                $('#eqSubmitDate').val(data.purchasTime);*/
             },
             fail: function (err, status) {
                 alert("741147");
@@ -275,6 +544,82 @@
             if (r != null) return decodeURI(r[2]); return null;
         }
     })(jQuery);
-
+    $('#eqSubmitDate').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
+    $("#equipmentType").change(function () {
+        loadEqName();
+    });
+    /**
+     * 加载当前用户的所有设备类型
+     */
+    $.get("../../showAllEquipmentType",function(data,status){
+        if(status=="success"){
+            var _equipmentTypes = eval(data);
+            console.log(_equipmentTypes);
+            vm.equipmentType = _equipmentTypes;
+        }
+    });
+    /**
+     * 加载当前用户的所有提供商
+     */
+    $.get("../../supplier/findAllSupplier",function (data, status) {
+        if(status=="success"){
+            var _suppliers = eval(data);
+            console.log(_suppliers);
+            vm.suppliers = _suppliers;
+        }
+    });
+    /**
+     * 加载当前用户的所有城市
+     */
+    $.get("../../city/findAllCity",function (data, status) {
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
+    })
+    /**
+     * 加载设备状态类型
+     */
+    $.get("../../equipState/findAll",function (data, status) {
+        if(status=="success"){
+            var _allState = eval(data);
+            vm.allState = _allState;
+        }
+    })
+    function editData(){
+        vm.eqTypeValue = eqTypeData;
+        vm.eqNameValue = eqNameData;
+        vm.supplier = supplierData;
+        vm.city = cityData;
+        vm.beDepValue = beDepData;
+        vm.eqState = eqStateData;
+        $('#eqSubmitDate').val(eqPurDate);
+    };
+    function addFixLog() {
+        
+    };
+    function addBorrowLog() {
+        
+    };
+    //给radio绑定点击事件
+    $("#eqUsed").bind("click", function(event) {
+        $("#eqUsedDiv").show();
+        $("#eqNoUsedDiv").hide();
+        $("#eqUnUsedDiv").hide();
+    });
+    $("#eqNoUsed").bind("click", function(event) {
+        $("#eqUsedDiv").hide();
+        $("#eqNoUsedDiv").show();
+        $("#eqUnUsedDiv").hide();
+    });
+    $("#eqUnUsed").bind("click", function(event) {
+        $("#eqUsedDiv").hide();
+        $("#eqNoUsedDiv").hide();
+        $("#eqUnUsedDiv").show();
+    });
 </script>
 </html>

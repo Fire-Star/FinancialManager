@@ -11,6 +11,7 @@ import net.sf.json.JSONArray;
 import cn.ejie.utils.SimpleBeanUtils;
 
 import net.sf.json.JSONObject;
+import org.apache.ibatis.javassist.bytecode.stackmap.BasicBlock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -207,8 +208,24 @@ public class StaffController {
             e.printStackTrace();
             throw new SimpleException(errorType,"数据库发生错误！");
         }
+
+        String department = "";
+        try {
+            department = departmentService.findDepartNameByDepId(staffCustom.getDep());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        staffCustom.setDep(department);
+        String city = "";
+        try {
+            city = cityService.findCityNameByCityID(staffCustom.getCity());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        staffCustom.setCity(city);
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(staffCustom);
+        System.out.println("jsonObject:"+jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 }
