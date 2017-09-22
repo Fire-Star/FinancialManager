@@ -56,14 +56,23 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/findAllEquipmentNameByEqTypeName")
-    public @ResponseBody List<EquipmentNameCustom> findAllEquipmentNameByEqTypeName(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public @ResponseBody Map<String,Object> findAllEquipmentNameByEqTypeName(HttpServletRequest request, HttpServletResponse response) throws Exception{
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
 
         List<EquipmentNameCustom> equipmentNameCustoms = null;
 
         //这里面出了问题，由全局异常处理器处理！
         equipmentNameCustoms = equipmentNameService.findAllEquipmentNameByEqTypeName(equipmentNameCustom.getEqTypeId());
+        Map<String,Object> result = new HashMap<>();
+        result.put("data",equipmentNameCustoms);
+        result.put("key",equipmentNameCustom.getEqTypeId());
+        return result;
+    }
 
-        return equipmentNameCustoms;
+    @RequestMapping("/equipmentName/delName")
+    public void delEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
+        equipmentNameService.delEquipmentName(equipmentNameCustom);
+        SimpleException.sendMessage(response,objectMapper,"success","删除成功！！");
     }
 }

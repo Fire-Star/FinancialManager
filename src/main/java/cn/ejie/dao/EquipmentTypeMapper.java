@@ -53,4 +53,6 @@ public interface EquipmentTypeMapper {
      * @throws Exception
      */
     String findEquipmentTypeOtherIDByTypeName(String equipmentTypeName) throws Exception;
+
+    public void delEqTypeByEqTypeName(String eqTypeName) throws Exception;
 }

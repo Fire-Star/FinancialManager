@@ -31,4 +31,8 @@ public interface EquipmentNameMapper {
     public Integer findEquipmentNameCountByEquipmentNameAndType(EquipmentNameCustom equipmentNameCustom) throws Exception;
 
     public List<EquipmentNameCustom> findAllEquipmentNameByEqTypeID(String eqTypeId) throws Exception;
+
+    public void delEquipmentName(EquipmentNameCustom equipmentNameCustom) throws Exception;
+
+    public void delEquipmentNameByEqType(String eqType) throws Exception;
 }

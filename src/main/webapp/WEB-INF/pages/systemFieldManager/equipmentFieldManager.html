@@ -30,7 +30,7 @@
             margin-top: 2px;  list-style: none;margin-bottom: 0px;
         }
         .list>li{
-            margin-left: 30px;line-height: 30px;margin-top: 1px;width: 170px;text-align: center;
+            margin-left: 30px;line-height: 30px;margin-top: 1px;width: 280px;text-align: left;
         }
         .list>span{
             width: 156px!important;margin-right: 3px;margin-top: 1px;
@@ -44,8 +44,8 @@
         .inline{
             display: inline-block;
         }
-        .width-100{
-            width: 100% !important;
+        .width-auto{
+            width: 154px !important; margin-right: 3px;
         }
         .list > li ,.list > div ,.bottom > div{
             display: none;
@@ -69,8 +69,8 @@
     <div class="bottom">
         <ul class="list" v-for="(item,index) in eqTypes">
             <span class="btn btn-primary eqTypeButton">{{item.equipmentTypeName}}</span><button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
-            <button class="btn btn-danger btn-sm del-btn">删除该类型</button>
-            <li v-for="itemName in eqNames[index]"><span class="btn btn-info width-100">{{itemName.eqName}}</span></li>
+            <button class="btn btn-danger btn-sm del-btn" @click="delTypeMethod(item.equipmentTypeName)">删除该类型</button>
+            <li v-for="item2 in eqNames[item.equipmentTypeName]"><span class="btn btn-info width-auto">{{item2.eqName}}</span><span class="btn btn-warning btn-sm del-btn"  @click="delNameMethod(item.equipmentTypeName,item2.eqName)">删除该名称</span></li>
             <div><input type="text" class="form-control inline" placeholder="请输入设备名称..." :belongType="item.equipmentTypeName"><button class="btn btn-warning addNameButton" style="margin-top: -2px">新增名称</button></div>
         </ul>
         <div><input type="text" class="form-control inline" placeholder="请输入设备类型..." v-model="insertType"><button @click="insertTypeMethod()" class="btn btn-primary" style="margin-top: -2px">新增类型</button></div>
@@ -87,7 +87,7 @@
                     <h4 class="modal-title" id="myModalLabel">提示</h4>
                 </div>
                 <div class="modal-body">
-                    {{modalStatus}}
+                    <span class="h4">{{modalStatus}}</span>
                 </div>
             </div>
         </div>
@@ -99,8 +99,9 @@
         modalStatus:"",
         addTypeShow:false,
         eqTypes:[],
-        eqNames:[],
-        insertType:""
+        eqNames:{},
+        insertType:"",
+        tempType:""
     };
 
     var vm = new Vue({
@@ -118,15 +119,55 @@
                         if(!_data){
                             vm.modalStatus="系统发生错误：添加设备类型失败，请通知管理员！";
                         }else if(_data.success){
+                            loadData();
                             vm.modalStatus =  _data.success;
                         }else if(_data.eqTypeError){
                             vm.modalStatus = _data.eqTypeError;
                         }
                         $('#modalButton').click();
-                        loadData();
                     }
                 });
                 this.insertType = "";
+            },
+            delNameMethod(eqType,eqName){
+                console.log("删除中...："+eqType+"="+eqName);
+                $.get('../equipmentName/delName?eqTypeId='+eqType+'&eqName='+eqName,function (data, status) {
+                    if(status=='success'){
+                        var _data = eval(data);
+                        if(!_data){
+                            vm.modalStatus="系统发生错误：删除设备名称失败，请通知管理员！";
+                        }else if(_data.success){
+                            vm.modalStatus =  _data.success;
+                            $('#eqFieldAdd', window.parent.document).click();
+                        }else if(_data.eqNameError) {
+                            console.log(data);
+                            vm.modalStatus =  _data.eqNameError;
+                        }else{
+                            console.log(data);
+                            vm.modalStatus =  '发生未知错误！！请通知管理员';
+                        }
+                        $('#modalButton').click();
+                    }
+                })
+            },delTypeMethod(eqType){//eqTypeError
+                $.get("../equipmentType/del?equipmentTypeName="+eqType,function (data, status) {
+                    if(status=="success"){
+                        var _data = eval(data);
+                        if(!_data){
+                            vm.modalStatus="系统发生错误：删除设备类型失败，请通知管理员！";
+                        }else if(_data.success){
+                            vm.modalStatus =  _data.success;
+                            $('#eqFieldAdd', window.parent.document).click();
+                        }else if(_data.eqTypeError) {
+                            console.log(data);
+                            vm.modalStatus =  _data.eqTypeError;
+                        }else{
+                            console.log(data);
+                            vm.modalStatus =  '发生未知错误！！请通知管理员';
+                        }
+                        $('#modalButton').click();
+                    }
+                })
             }
         }
     });
@@ -148,6 +189,7 @@
             $(target).slideToggle();
         });
         $('.addNameButton').unbind("click").click(function (e) {
+            //$(this).parent('ul').children('li').slideToggle();
             var targetInput = $(this).prev();
             var targetType = $(targetInput).attr('belongType');
             var value = $(targetInput).val();
@@ -159,21 +201,23 @@
             $.get('../addSingleEquipmentName?eqName='+value+"&eqTypeId="+targetType,function (data, status) {
                 if(status=="success"){
                     var _data = eval(data);
+                    $(targetInput).val("");
                     if(!_data){
                         vm.modalStatus="系统发生错误：添加设备名称失败，请通知管理员！";
                     }else if(_data.success){
+                        $('#eqFieldAdd', window.parent.document).click();
                         vm.modalStatus =  _data.success;
                     }else if(_data.eqNameError){
                         vm.modalStatus = _data.eqNameError;
                     }
                     $('#modalButton').click();
-                    loadData();
                 }
             });
         });
     }
 
-    var eqNameTemps=[];
+    var eqNameTemps={};
+    var count = 0;
     loadData();
     function loadData() {
         $.get("../showAllEquipmentType",function (data,status) {
@@ -181,19 +225,30 @@
                 var _data = eval(data);
 
                 //遍历eqTypes获取当前类型下的设备名称
+                count = 0;
                 for(index in _data){
 
-                    var curentEqType = _data[index].equipmentTypeName;
-                    $.get('../findAllEquipmentNameByEqTypeName?eqTypeId='+curentEqType,function (data, status) {
+                    vm.tempType = _data[index].equipmentTypeName;
+
+                    $.get('../findAllEquipmentNameByEqTypeName?eqTypeId='+vm.tempType,function (data, status) {
+
                         if('success' == status){
                             var _eqNamesData = eval(data);
-                            eqNameTemps.push(_eqNamesData);
+                            if(!_eqNamesData){
+                                vm.modalStatus="系统发生错误：查询设备名称失败，请通知管理员！";
+                                $('#modalButton').click();
+                                return;
+                            }else {
+                                eqNameTemps[_eqNamesData.key]=_eqNamesData.data;
+                            }
+                            ++count;
+                            if(count == _data.length){
+                                vm.eqTypes = _data;
+                                vm.eqNames = eqNameTemps;
+                                vm.$forceUpdate();
+                            }
                         }
                     });
-                    if(index == _data.length-1){
-                        vm.eqTypes = _data;
-                        vm.eqNames = eqNameTemps;
-                    }
                 }
             }
         });

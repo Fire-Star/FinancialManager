@@ -5,6 +5,7 @@ import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.EquipmentType;
 import cn.ejie.pocustom.EquipmentTypeCustom;
+import cn.ejie.service.EquipmentService;
 import cn.ejie.service.EquipmentTypeService;
 import cn.ejie.utils.SimpleBeanUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,6 +38,9 @@ public class EquipmentTypeController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private EquipmentService equipmentService;
+
     @RequestMapping("/showAllEquipmentType")
     public @ResponseBody List<EquipmentTypeCustom> showAllEquipmentType() throws Exception{
         try {
@@ -66,5 +70,15 @@ public class EquipmentTypeController {
             e.printStackTrace();
         }
         return count;
+    }
+
+    @RequestMapping("/equipmentType/del")
+    public void delEquipmentType(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        EquipmentTypeCustom equipmentTypeCustom = SimpleBeanUtils.
+                setMapPropertyToBean(EquipmentTypeCustom.class,request.getParameterMap());
+        String eqTypeName = equipmentTypeCustom.getEquipmentTypeName();
+        equipmentTypeService.delEquipmentType(eqTypeName);
+
+        SimpleException.sendMessage(response,objectMapper,"success","删除成功！");
     }
 }
