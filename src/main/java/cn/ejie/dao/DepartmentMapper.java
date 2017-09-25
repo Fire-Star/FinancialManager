@@ -78,4 +78,8 @@ public interface DepartmentMapper {
      * @throws Exception
      */
     public String findDepartNameByDepId(String id) throws Exception;
+
+    public void delDepartByCity(String city) throws Exception;
+
+    public void delDepartmentByDepartID(String departID) throws Exception;
 }

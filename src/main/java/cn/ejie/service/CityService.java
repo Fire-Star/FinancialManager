@@ -1,9 +1,12 @@
 package cn.ejie.service;
 
 import cn.ejie.dao.CityMapper;
+import cn.ejie.dao.DepartmentMapper;
 import cn.ejie.exception.DepartmentException;
 import cn.ejie.exception.SimpleException;
+import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.CityCustom;
+import cn.ejie.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,18 @@ public class CityService{
     private String errorType = "cityErrorType";
     @Autowired
     private CityMapper cityMapper;
+
+    @Autowired
+    private MaxValueService maxValueService;
+
+    @Autowired
+    private EquipmentService equipmentService;
+
+    @Autowired
+    private StaffService staffService;
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
 
     public List<CityCustom> findAllCitys() throws Exception{
         List<CityCustom> result = null;
@@ -39,7 +54,16 @@ public class CityService{
         if(count>0){
             throw new DepartmentException(errorType,"该城市已经存在！");
         }
+        Integer tempCityMax = Integer.parseInt(maxValueService.findValueByKey("cityMax"))+1;
+        String cityMax = tempCityMax+"";
+        cityMax = StringUtils.fillPreString(cityMax,'0',2);
+        cityCustom.setCityOtherID(cityMax);
+        System.out.println(cityCustom);
         cityMapper.addCity(cityCustom);
+        MaxValue maxValue = new MaxValue();
+        maxValue.setKey("cityMax");
+        maxValue.setValue(cityMax);
+        maxValueService.updataMaxValue(maxValue);
     }
 
     public String findCityIDByCity(String city) throws Exception{
@@ -63,5 +87,21 @@ public class CityService{
 
     public String findCityOtherIDByCityID(String cityID) throws Exception{
         return cityMapper.findCityOtherIDByCityID(cityID);
+    }
+
+    public void delCity(String city) throws Exception{
+        if(city==null || city.equals("")){
+            throw new SimpleException(errorType,"删除城市时，城市字段不能为空！");
+        }
+        String cityID = findCityIDByCity(city);
+
+        Integer staffCount = staffService.countStaffByCity(cityID);
+        Integer equipmentCount = equipmentService.countAnyEquipmentByCity(cityID);
+        System.out.println(staffCount+"--->eq="+equipmentCount);
+        if(staffCount>0 || equipmentCount>0){
+            throw new SimpleException(errorType,"不能够删除该城市，该城市下还存在员工和设备！");
+        }
+        departmentMapper.delDepartByCity(cityID);
+        cityMapper.delCity(cityID);
     }
 }

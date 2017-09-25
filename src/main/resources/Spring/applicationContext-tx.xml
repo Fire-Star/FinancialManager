@@ -25,6 +25,7 @@
         <tx:attributes>
             <!-- 设置进行事务操作的方法匹配规则 以及事务传播级别-->
             <tx:method name="insert*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="delete*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
@@ -45,7 +46,7 @@
     <!-- 第三步 配置切面 -->
     <aop:config>
         <!-- 切入点 -->
-        <aop:pointcut expression="execution(* cn.ejie.service.impl.*.*(..))" id="pointcut1"/>
+        <aop:pointcut expression="execution(* cn.ejie.service.*.*(..))" id="pointcut1"/>
         <!-- 切面 -->
         <aop:advisor advice-ref="txadvice" pointcut-ref="pointcut1"/>
     </aop:config>

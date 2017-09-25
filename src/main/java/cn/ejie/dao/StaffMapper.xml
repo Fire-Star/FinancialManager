@@ -42,4 +42,10 @@
     <select id="findStaffById" resultType="cn.ejie.pocustom.StaffCustom" >
         select id staffId ,`name` ,department dep ,`position` ,`tel` ,entry_time entryTime ,custom_message customMessages,city  from staff where  `id` = #{id}
     </select>
+    <select id="countStaffByCity" resultType="int">
+        SELECT COUNT(id) FROM staff WHERE city = #{city}
+    </select>
+    <select id="countStaffByDepart" resultType="int">
+        SELECT COUNT(id) FROM staff WHERE department = #{department}
+    </select>
 </mapper>

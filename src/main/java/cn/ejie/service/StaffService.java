@@ -105,4 +105,26 @@ public class StaffService {
         }
         return staffCustom;
     }
+
+    public Integer countStaffByCity(String city) throws Exception{
+        if(city==null || city.equals("")){
+            throw new SimpleException(errorType,"查询公司员工时，城市不能为空！");
+        }
+        Integer count = staffMapper.countStaffByCity(city);
+        if(count==null){
+            throw new SimpleException(errorType,"查询员工时，系统发生故障！");
+        }
+        return count;
+    }
+
+    public Integer countStaffByDepart(String department) throws Exception{
+        if(department == null || department.equals("")){
+            throw new SimpleException(errorType,"查询公司员工时，部门不能为空！");
+        }
+        Integer count = staffMapper.countStaffByDepart(department);
+        if(count==null){
+            throw new SimpleException(errorType,"查询员工时，系统发生故障！");
+        }
+        return count;
+    }
 }

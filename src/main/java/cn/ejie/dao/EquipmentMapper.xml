@@ -40,4 +40,10 @@
     <select id="countEquipmentByEqType" resultType="int">
         SELECT count(eq_id) FROM equipment WHERE eq_type = #{eqType}
     </select>
+    <select id="countEquipmentByDepartment" resultType="int">
+        SELECT count(eq_id) FROM equipment WHERE purchas_depart = #{department} OR belong_depart = #{department}
+    </select>
+    <select id="countAnyEquipmentByCityID" resultType="int">
+        SELECT count(eq_id) FROM equipment WHERE city = #{cityID} OR buyCity = #{cityID}
+    </select>
 </mapper>

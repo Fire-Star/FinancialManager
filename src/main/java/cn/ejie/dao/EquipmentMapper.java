@@ -27,4 +27,8 @@ public interface EquipmentMapper {
     public Integer countEquipmentByEqTypeAndEqName(EquipmentCustom equipmentCustom) throws Exception;
 
     public Integer countEquipmentByEqType(String eqType) throws Exception;
+
+    public Integer countEquipmentByDepartment(String department) throws Exception;
+
+    public Integer countAnyEquipmentByCityID(String cityID) throws Exception;
 }
