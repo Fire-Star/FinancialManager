@@ -61,6 +61,12 @@
         .col-sm-3{
             padding-left: 0px;
         }
+        .addAreaDiv{
+            padding-left: 0px;
+        }
+        .addBorRow{
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -149,7 +155,7 @@
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
     </div>
-    <!-- Modal 弹出框的结构 -->
+    <!-- 设备详情Modal-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -245,34 +251,112 @@
         </div>
     </div>
 
-    <div class="borrow-modal modal fade" id="borrowModal" tabindex="-1" role="dialog" aria-labelledby="borrowModalLabel">
+    <div class="borrow-modal modal fade" id="borrowModal" tabindex="-1" role="dialog"
+         aria-labelledby="borrowModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="borrowModalLabel">设备借调</h4>
                 </div>
-                <div class="modal-body">
-                    <row>
-                        <div class="col-sm-4">
-                            <input id="eqUsed" type="radio" name="borrowState" value="使用">使用
+                <div class="modal-body addBorRow">
+                    <div style="height: 200px">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <input id="eqUsed" type="radio" name="borrowState" value="使用">使用
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="eqNoUsed" type="radio" name="borrowState"value="闲置">闲置
+                            </div>
+                            <div class="col-sm-4">
+                                <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
+                            </div>
                         </div>
-                        <div class="col-sm-4">
-                            <input id="eqNoUsed" type="radio" name="borrowState"value="闲置">闲置
-                        </div>
-                        <div class="col-sm-4">
-                            <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
-                        </div>
-                    </row>
-                    <form id="formBorrowSubmit" class="form-horizontal">
-                        <div id="eqUsedDiv" hidden>123</div>
-                        <div id="eqNoUsedDiv" hidden>456</div>
-                        <div id="eqUnUsedDiv" hidden>789</div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                        <form id="formBorrowSubmit" class="form-horizontal">
+                            <div id="eqUsedDiv" hidden>
+                                <div class="form-group row">
+                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">使用人：</label>
+                                    <div class="col-sm-8" >
+                                        <div class="form-group form-inline from-line item-right" role="group">
+                                            <div class="btn-group ">
+                                                <select class="btn btn-default form-control select-left"
+                                                        id="eqBorrowCity"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        @change="loadBorBelongDep" v-model="eqBorCityValue">
+                                                    <option selected value="">-城市-</option>
+                                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                                </select>
+                                                <select class="btn btn-default form-control select-center"
+                                                        id="eqBorrowBelongDepart" data-toggle="tooltip"
+                                                        @change="loadBorUserName" v-model="eqBorBelongValue" data-placement="top" >
+                                                    <option selected value="">--部门--</option>
+                                                    <option v-for="(item , index) in eqBorBelong" :value="item.department">{{item.department}}</option>
+                                                </select>
+                                                <select class="btn btn-default form-control select-right"
+                                                        id="eqAddBorUsedUser" data-toggle="tooltip"
+                                                        v-model="eqBorNameValue"
+                                                        data-placement="top" >
+                                                    <option selected value="">--使用人--</option>
+                                                    <option v-for="(item , index) in eqBorName" :value="item.name">{{item.name}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
+                                    <div class="col-sm-6 addAreaDiv">
+                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUsedDetail"
+                                              name="eqAddBorUsedDetail"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="eqNoUsedDiv" hidden>
+                                <div class="form-group row">
+                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">闲置部门：</label>
+                                    <div class="col-sm-8" >
+                                        <div class="form-group form-inline from-line item-right" role="group">
+                                            <div class="btn-group ">
+                                                <select class="btn btn-default form-control select-left"
+                                                        id="eqAddBorNoUse"
+                                                        data-toggle="tooltip" data-placement="top"
+                                                        @change="loadBorNoBelongDep" v-model="eqBorNoCityValue">
+                                                    <option selected value="">-城市-</option>
+                                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                                </select>
+                                                <select class="btn btn-default form-control select-"
+                                                        id="eqAddBorNoUsedUser" data-toggle="tooltip"
+                                                        @change="loadBorUserName" v-model="eqBorNoBelongValue" data-placement="top" >
+                                                    <option selected value="">--部门--</option>
+                                                    <option v-for="(item , index) in eqBorNoBelong" :value="item.department">{{item.department}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
+                                    <div class="col-sm-6 addAreaDiv">
+                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorNoUsedDetail"
+                                              name="eqAddBorNoUsedDetail"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="eqUnUsedDiv" hidden>
+                                <div class="form-group row">
+                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
+                                    <div class="col-sm-6 addAreaDiv">
+                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUnUsedDetail"
+                                              name="eqAddBorUnUsedDetail"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">提交</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -287,7 +371,21 @@
                 </div>
                 <div class="modal-body">
                     <form id="formfixSubmit" class="form-horizontal">
-
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护时间：</label>
+                            <input type="text" id="eqAddFixDate" class="form-control,col-sm-3" name="eqAddFixDate" value="">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护类型：</label>
+                            <input type="text" id="eqAddFixType" class="form-control,col-sm-3" name="eqAddFixType">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护详情：</label>
+                            <div class="col-sm-6 addAreaDiv">
+                                <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddFixDetail"
+                                          name="eqAddFixDetail"></textarea>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -312,7 +410,17 @@
         suppliers :[],
         supplier:"",
         allState:[],
-        eqState:""
+        eqState:"",
+        //设备借调记录的数据使用
+        eqBorName:[],
+        eqBorBelong:[],
+        eqBorNameValue:"",
+        eqBorCityValue:"",
+        eqBorBelongValue:"",
+        //设备借调记录的数据闲置
+        eqBorNoBelong:[],
+        eqBorNoCityValue:"",
+        eqBorNoBelongValue:""
     };
     var vm = new Vue({
         el:'.app',
@@ -339,8 +447,39 @@
                         vm.belongDepartment = _departmentData;
                     }
                 });
-                // $('#depIDOp').attr('selected', true);
             },
+            loadBorBelongDep(){
+                $.get("../../department/findDepartment?city=" + vm.eqBorCityValue, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        vm.eqBorBelong = _departmentData;
+                    }
+                });
+            },
+            loadBorUserName(){
+                $.get("../../staff/findStaffByCity?department=" + vm.eqBorBelongValue + "&city="
+                    + vm.eqBorCityValue,function (data, status) {
+                    alert(JSON.stringify(data));
+                    console.log(data);
+                    if (status == "success") {
+                        var _userData = eval(data);
+                        console.log(_userData);
+                        vm.eqBorName = _userData;
+                    }
+                });
+            },
+            loadBorNoBelongDep(){
+                $.get("../../department/findDepartment?city=" + vm.eqBorNoCityValue, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        vm.eqBorNoBelong = _departmentData;
+                    }
+                });
+            }
         }
     });
     $(function () {
@@ -457,7 +596,7 @@
     };
     function checkDetail(suppId) {
         //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
-        alert(suppId);
+        alert("要编辑的设备ID："+suppId);
     };
     function preLoadEqName() {
         /**
@@ -468,11 +607,8 @@
             if (status == "success") {
                 var _equipmentName = eval(data);
                 console.log(_equipmentName);
-                vm.equipmentName = _equipmentName;
-                //document.getElementById("eqSubmitName").value = eqNameData;
-                //vm.eqNameValue = eqNameData;
+                vm.equipmentName = _equipmentName.data;
             }
-            alert("4"+vm.equipmentName);
         });
     };
     function preLoadDepName() {
@@ -492,7 +628,7 @@
     $(document).ready(function(){
         var equipId = $.getUrlParam('equipId');
         var param = {"equipId":equipId};
-        alert(equipId);
+        alert("页面显示之前加在数据,设备ID："+equipId);
         $.ajax({
             url: "findEquipByEquipID",
             type: 'post',
@@ -522,18 +658,9 @@
                 beDepData = data.belongDepart;
                 eqStateData = data.eqStateId;
                 eqPurDate = data.purchasTime;
-                /*vm.eqTypeValue = data.eqType;
-                preLoadEqName();
-                eqNameData = data.eqName;
-                vm.supplier = data.supplier;
-                vm.city = data.city;
-                preLoadDepName();
-                beDepData = data.belongDepart;
-                vm.eqState = data.eqStateId;
-                $('#eqSubmitDate').val(data.purchasTime);*/
             },
             fail: function (err, status) {
-                alert("741147");
+                alert("设备详情加载时获取数据失败！");
             }
         });
     });
@@ -545,6 +672,11 @@
         }
     })(jQuery);
     $('#eqSubmitDate').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
+    $('#eqAddFixDate').datepicker({
         language: 'zh-CN',
         autoclose: true,
         todayHighlight: true

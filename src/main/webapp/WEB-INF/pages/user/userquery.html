@@ -47,6 +47,19 @@
         .btn-group{
             height:5%;
         }
+        .addAreaDiv{
+            padding-left: 0px;
+        }
+        .col-sm-6{
+            padding-left: 0px;
+        }
+        .con{
+            vertical-align: middle;
+            text-align: right;
+        }
+        .col-sm-4{
+            padding-left: 0px;
+        }
     </style>
 </head>
 <body>
@@ -89,19 +102,109 @@
         </div>
     </div>
     <div id="toolbar" class="btn-group">
-        <button id="btn_result" type="button" class="btn btn-default" onclick="addUser()">
+        <button id="btn_result" type="button" class="btn btn-default" onclick="addUser()" data-toggle="modal" data-target="#userModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加管理员
         </button>
     </div>
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_user"></table>
     </div>
+    <!--添加账号modal-->
+    <div class="user-modal modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="userModalLabel">添加账号</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formAddUserSubmit" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">城市：</label>
+                            <div class="col-sm-4">
+                                <select class="btn btn-default form-control select-left" id="userAddCity"
+                                        propName="" data-toggle="tooltip" data-placement="top" v-model="addCity" >
+                                    <option selected value="" id="">--城市--</option>
+                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">账号：</label>
+                            <input type="text" id="userAddAccount" class="form-control,col-sm-3" name="userAddAccount">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">密码：</label>
+                            <div class="col-sm-6 userAddPass">
+                                <input type="text" id="userAddPass" class="form-control,col-sm-3" name="userAddPass">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--修改密码modal-->
+    <div class="user-modal modal fade" id="editPassModal" tabindex="-1" role="dialog" aria-labelledby="editPassModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="editPassModalLabel">密码重置</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="forEditPassSubmit" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">账号：</label>
+                            <input type="text" id="userEditUser" class="form-control,col-sm-3" name="userEditUser"
+                                   value="" v-model="userName" disabled="true">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">重置密码：</label>
+                            <input type="text" id="userEditPass" class="form-control,col-sm-3" name="userEditPass" value="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--删除用户modal-->
+    <div class="user-modal modal fade" id="delUserModal" tabindex="-1" role="dialog" aria-labelledby="delUserModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="delUserModalLabel">删除用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="forDelUserSubmit" class="form-horizontal">
+                        确定删除用户<{{userName}}>吗？
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
+    alert("123");
     var data = {
         citys:[],
-        city:""
+        city:"",
+        addCity:"",
+        userName:""
     };
     var vm = new Vue({
         el:'.app',
@@ -192,7 +295,6 @@
         $('#city').val("");
     };
     function addUser() {
-        alert("321321321");
     }
     function operateFormatter(value, row, index) {
         if("ROLE_ADMIN"==row.role){
@@ -202,18 +304,18 @@
             ].join('');
         }else {
             return [
-                '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;">密码重置</button>',
-                '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;">删除</button>'
+                '<button type="button" class="RoleOfA btn btn-default  btn-sm" style="margin-right:15px;" data-toggle="modal" data-target="#editPassModal">密码重置</button>',
+                '<button type="button" class="RoleOfB btn btn-default  btn-sm" style="margin-right:15px;" data-toggle="modal" data-target="#delUserModal">删除</button>'
             ].join('');
         }
     };
 
     window.operateEvents = {
         'click .RoleOfA': function (e, value, row, index) {
-            alert(row.role);
+            vm.userName = row.name;
         },
         'click .RoleOfB': function (e, value, row, index) {
-            alert(index);
+            vm.userName = row.name;
         }
     }
 
