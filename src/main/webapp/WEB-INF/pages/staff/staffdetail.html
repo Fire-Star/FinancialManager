@@ -7,6 +7,9 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-dialog.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -45,6 +48,13 @@
         }
         .btn-group{
             height:5%;
+        }
+        .con{
+            vertical-align: middle;
+            text-align: right;
+        }
+        .col-sm-4{
+            padding-left: 0px;
         }
     </style>
 </head>
@@ -93,7 +103,8 @@
 
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="data()">重置</button>
+                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
+                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
                             </div>
                         </div>
                     </div>
@@ -112,14 +123,102 @@
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_staff_eq"></table>
     </div>
+    <!-- Modal 弹出框的结构 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">员工信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formSubmit" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">员工ID：</label>
+                            <input type="text" id="staffSubmitId" class="form-control,col-sm-3" name="phone" value=""
+                                   disabled="true">
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">归属部门：</label>
+                            <div class="col-sm-5" >
+                                <div class="form-group form-inline from-line item-right" role="group">
+                                    <div class="btn-group ">
+                                        <select class="btn btn-default form-control select-left" id="staffSubmitCity"
+                                                data-toggle="tooltip" data-placement="top" v-model="city" @change="loadBelongDep">
+                                            <option selected value="" id="d">-城市-</option>
+                                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                        </select>
+                                        <select class="btn btn-default form-control select-right"
+                                                id="staffSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
+                                                data-placement="top" >
+                                            <option selected value="" id="dsf">--部门--</option>
+                                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="staffSubmitPosition">
+                                岗位：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="岗位" id="staffSubmitPosition"
+                                       name="entryTime" placeholder="选择岗位..." type="text" v-model="prePosition">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;"
+                                   for="staffSubmitTel">电话：
+                            </label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="电话" id="staffSubmitTel"
+                                       name="entryTime" placeholder="电话..." type="text" v-model="preTel">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="staffSubmitDate">
+                                签约时间：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="签约时间" id="staffSubmitDate"
+                                       name="entryTime" placeholder="选择签约时间..." type="text" v-model="preDate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
     var data = {
+        citys:[],
+        city:"",
+        belongDepartment:[],
+        beDepValue:"",
+        prePosition:"",
+        preTel:"",
+        preDate:""
     };
     var vm = new Vue({
         el:'.app',
-        data:data
+        data:data,
+        methods:{
+            loadBelongDep(){
+                $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+                    console.log(data);
+                    if (status == "success") {
+                        var _departmentData = eval(data);
+                        console.log(_departmentData);
+                        vm.belongDepartment = _departmentData;
+                    }
+                });
+            },
+        }
     });
     $(function () {
         //1.初始化Table
@@ -208,8 +307,23 @@
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
         alert(equipId);
     }
-    function dataedit() {
-        alert("修改员工信息");
+    function editData() {
+        vm.city = preStaffCity;
+        vm.beDepValue = preStaffDepartment;
+        vm.prePosition = preStaffPosition;
+        vm.preTel = preStafftel;
+        vm.preDate = preStaffDate;
+    };
+    function preLoadBelongDep() {
+        $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
+        console.log(data);
+        if (status == "success") {
+            var _departmentData = eval(data);
+            console.log(_departmentData);
+            vm.belongDepartment = _departmentData;
+        }
+    });
+    // $('#depIDOp').attr('selected', true);
     };
 
     $(document).ready(function(){
@@ -229,11 +343,29 @@
                 $('#position').val(data.position);
                 $('#tel').val(data.tel);
                 $('#entrytime').val(data.entryTime);
+                //加载员工信息修改界面默认值
+                $('#staffSubmitId').val(data.staffId);
+                preStaffCity = data.city;
+                vm.city = data.city;
+                preLoadBelongDep();
+                preStaffDepartment = data.dep;
+                preStaffPosition = data.position;
+                preStafftel = data.tel;
+                preStaffDate = data.entryTime;
             },
             fail: function (err, status) {
                 alert("获取员工详情失败");
             }
         });
+    });
+    /**
+     * 加载当前用户的所有城市
+     */
+    $.get("../../city/findAllCity",function (data, status) {
+        if(status=="success"){
+            var _cityData = eval(data);
+            vm.citys = _cityData;
+        }
     });
     (function($){
         $.getUrlParam = function(name){

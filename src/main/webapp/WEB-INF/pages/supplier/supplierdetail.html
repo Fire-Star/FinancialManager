@@ -7,6 +7,9 @@
     <script src="../../res/js/jquery-3.2.1.min.js"></script>
     <script src="../../res/js/bootstrap.min.js"></script>
     <script src="../../res/js/bootstrap-table.js"></script>
+    <script src="../../res/js/bootstrap-dialog.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.js"></script>
+    <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -41,6 +44,13 @@
         .btn-group{
             height:5%;
         }
+        .con{
+            vertical-align: middle;
+            text-align: right;
+        }
+        .col-sm-4{
+            padding-left: 0px;
+        }
     </style>
 </head>
 <body>
@@ -73,7 +83,8 @@
                             <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                         </div>
                         <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="dataEdit()">编辑</button>
+                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
+                                    data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
                         </div>
                     </div>
                 </form>
@@ -96,10 +107,73 @@
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_departments"></table>
     </div>
+    <!-- Modal 弹出框的结构 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="myModalLabel">供应商信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formSubmit" class="form-horizontal">
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">供应商ID：</label>
+                            <div class="col-sm-4">
+                                <input type="text" id="SubmitId" class="form-control form-control-x" name="phone" value="" disabled="true">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="SubmitsuppName">
+                                供应商：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="供应商" id="SubmitsuppName"
+                                       name="entryTime" placeholder="供应商..." type="text" v-model="suppName">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;"
+                                   for="suppSubmitCont">联系人：
+                            </label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="联系人" id="suppSubmitCont"
+                                       name="entryTime" placeholder="联系人..." type="text" v-model="suppCont">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;"
+                                   for="suppSubmitTel">电话：
+                            </label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="电话" id="suppSubmitTel"
+                                       name="entryTime" placeholder="电话..." type="text" v-model="suppTel">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="suppSubmitDate">
+                                签约时间：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control form-control-x" propName="签约时间" id="suppSubmitDate"
+                                       name="entryTime" placeholder="选择签约时间..." type="text" v-model="suppDate">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 <script>
     var data = {
+        suppName:"",
+        suppCont:"",
+        suppTel:"",
+        suppDate:""
     };
     var vm = new Vue({
         el:'.app',
@@ -210,8 +284,11 @@
         };
         return oInit;
     };
-    function dataEdit() {
-        alert("123");
+    function editData() {
+        vm.suppName = preSuppName;
+        vm.suppCont = preSuppCont;
+        vm.suppTel = preSuppTel;
+        vm.suppDate = preSuppDate;
     }
     $(document).ready(function(){
         var suppId = $.getUrlParam('suppId');
@@ -227,6 +304,12 @@
                 $('#suppliercontactname').val(data.contactName);
                 $('#contacttel').val(data.tel);
                 $('#time').val(data.contractTime);
+                //加载员工信息修改界面默认值
+                $('#SubmitId').val(data.id);
+                preSuppName = data.name;
+                preSuppCont = data.contactName;
+                preSuppTel = data.tel;
+                preSuppDate = data.contractTime;
             },
             fail: function (err, status) {
                 alert("741147");

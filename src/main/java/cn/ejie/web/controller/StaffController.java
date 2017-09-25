@@ -11,11 +11,13 @@ import net.sf.json.JSONArray;
 import cn.ejie.utils.SimpleBeanUtils;
 
 import net.sf.json.JSONObject;
+import org.apache.ibatis.javassist.bytecode.stackmap.BasicBlock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -207,8 +209,54 @@ public class StaffController {
             e.printStackTrace();
             throw new SimpleException(errorType,"数据库发生错误！");
         }
+
+        String department = "";
+        try {
+            department = departmentService.findDepartNameByDepId(staffCustom.getDep());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        staffCustom.setDep(department);
+        String city = "";
+        try {
+            city = cityService.findCityNameByCityID(staffCustom.getCity());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        staffCustom.setCity(city);
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(staffCustom);
+        System.out.println("jsonObject:"+jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
+    }
+    @RequestMapping("/staff/findStaffByCity")
+    public @ResponseBody List<StaffCustom> findDepartmentByCity(HttpServletRequest request) throws Exception{
+        System.out.println("借调记录界面加载可选择的使用人...");
+        String city = "";
+        String department = "";
+        String departmentId = "";
+        List<StaffCustom> list = new ArrayList<StaffCustom>();
+        city = request.getParameter("city");
+        department = request.getParameter("department");
+        try {
+            departmentId = departmentService.findDepartIDByCityStrAndDepartStr(city,department);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new SimpleException(errorType,"查询部门ID时数据库错误!");
+        }
+        if("".equals(departmentId)||departmentId == null){
+            return list;
+        }else{
+            String sql = "SELECT id as staffId,name,department as dep,position,tel,entry_time as entryTime," +
+                    "custom_message as customMessages,city FROM staff WHERE department='" + departmentId + "'";
+            try {
+                list = staffService.findBySql(sql);
+            }catch (Exception e){
+                e.printStackTrace();
+                throw new SimpleException(errorType,"查询员工时数据库错误!");
+            }
+        }
+        System.out.println(JSONArray.fromObject(list).toString());
+        return list;
     }
 }
