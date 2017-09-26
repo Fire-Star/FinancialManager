@@ -21,4 +21,13 @@
     <select id="findCityIdByUserName" resultType="java.lang.String">
         SELECT city.cityID FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
     </select>
+    <insert id="insertUser">
+        INSERT INTO user(username,password,city) VALUES(#{username},#{password},#{city})
+    </insert>
+    <update id="updateUser" parameterType="cn.ejie.pocustom.UserCustom">
+        update user set password = #{password},city = #{city} where userName=#{username}
+    </update>
+    <delete id="delUser" parameterType="String">
+        DELETE FROM user WHERE userName=#{username}
+    </delete>
 </mapper>

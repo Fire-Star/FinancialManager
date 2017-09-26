@@ -21,4 +21,10 @@ public interface UserMapper {
 
     public String findCityIdByUserName(String userName) throws Exception;
 
+    public void insertUser(UserCustom userCustom) throws Exception;
+
+    public void updateUser(UserCustom userCustom) throws Exception;
+
+    public void delUser(String userName) throws Exception;
+
 }

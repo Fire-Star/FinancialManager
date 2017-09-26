@@ -62,4 +62,28 @@ public class UserService {
         }
         return userMapper.findCityIdByUserName(userName);
     }
+
+    public void insertUser(UserCustom userCustom) throws Exception{
+        try {
+            userMapper.insertUser(userCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUser(UserCustom userCustom) throws Exception{
+        try {
+            userMapper.updateUser(userCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void delUser(String userName) throws Exception{
+        try {
+            userMapper.delUser(userName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
