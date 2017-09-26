@@ -178,6 +178,16 @@
                 </div>
             </div>
         </div>
+        <div class="content-line">
+            <div class="item-left content-item">
+                <div class="item-left item-name">
+                    <label for="buyCount">购买数量:</label>
+                </div>
+                <div class="form-group form-inline from-line item-right">
+                    <input type="number" id="buyCount" class="form-control form-control-x"  propName="购买数量" placeholder="请输入购买数量..." data-toggle="tooltip" data-placement="top" v-model="buyCount" >
+                </div>
+            </div>
+        </div>
         <br><br>
         <p class="h4 text-primary customTitle">员工自定义信息添加</p>
         <hr class="hr">
@@ -227,6 +237,7 @@
         supplier:"",
         buyPrice:"",
         customFields:[{}],
+        buyCount:"",
 
         equipmentType:"",
         equipmentName:"",
@@ -283,7 +294,8 @@
                         "supplier":this.supplier,
                         "purchasPrice":this.buyPrice,
                         "purchasTime":purchaseTime,
-                        "customMessage": _customFields
+                        "customMessage": _customFields,
+                        "buyCount": this.buyCount
                     },
                     function (data, status) {
                         if (status) {
@@ -388,7 +400,7 @@
     function tableCheck(){
         var inputObj = $('.form-control');
         var i;
-        var len = 10;
+        var len = 11;
         var flag = false;
         for(i=0 ;i < len; i++){
             if(inputObj[i].value==""){
