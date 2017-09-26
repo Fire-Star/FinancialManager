@@ -7,7 +7,7 @@
         <selectKey keyProperty="cityID" order="BEFORE" resultType="java.lang.String">
             SELECT uuid()
         </selectKey>
-        INSERT INTO city VALUES(#{cityID},#{city})
+        INSERT INTO city VALUES(#{cityID},#{city},#{cityOtherID})
     </insert>
     <select id="findAllCitys" resultType="cn.ejie.pocustom.CityCustom">
         SELECT city FROM city
@@ -24,4 +24,7 @@
     <select id="findCityOtherIDByCityID" resultType="String">
         SELECT cityOtherID FROM city WHERE cityID = #{cityID}
     </select>
+    <delete id="delCity">
+        DELETE FROM city WHERE cityID = #{city}
+    </delete>
 </mapper>

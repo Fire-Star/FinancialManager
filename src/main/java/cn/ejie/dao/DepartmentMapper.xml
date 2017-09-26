@@ -35,4 +35,10 @@
     <select id="findDepartNameByDepId" resultType="String">
         SELECT department FROM department WHERE id = #{id}
     </select>
+    <delete id="delDepartByCity">
+        DELETE department FROM department WHERE city = #{city}
+    </delete>
+    <delete id="delDepartmentByDepartID">
+        DELETE FROM department WHERE id = #{departID}
+    </delete>
 </mapper>

@@ -1,6 +1,7 @@
 package cn.ejie.web.controller;
 
 import cn.ejie.exception.SimpleException;
+import cn.ejie.po.Department;
 import cn.ejie.pocustom.DepartmentCustom;
 import cn.ejie.service.DepartmentService;
 import cn.ejie.utils.SimpleBeanUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,8 +59,26 @@ public class DepartmentController {
     }
 
     @RequestMapping("/department/showAllByCity")
-    public @ResponseBody List<DepartmentCustom> findAllDepartmentByCity(HttpServletRequest request) throws Exception{
+    public @ResponseBody Map<String,Object> findAllDepartmentByCity(HttpServletRequest request) throws Exception{
         DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
-        return  departmentService.findDepartmentByCity(departmentCustom.getCity());
+        List<DepartmentCustom> value = departmentService.findDepartmentByCity(departmentCustom.getCity());
+        String key = departmentCustom.getCity();
+        Map<String,Object> result = new HashMap<>();
+        result.put("key",key);
+        result.put("data",value);
+        return result;
+    }
+
+    @RequestMapping("/department/systemFieldManager")
+    public String systemDepartmentManager(){
+        return "/WEB-INF/pages/systemFieldManager/departmentFieldManager.html";
+    }
+
+    @RequestMapping("/department/del")
+    public void delDepartByDepartmentID(HttpServletRequest request,HttpServletResponse response) throws Exception{
+         DepartmentCustom departmentCustom =  SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
+         System.out.println(departmentCustom);
+         departmentService.delDepartByDepartment(departmentCustom);
+         SimpleException.sendMessage(response,objectMapper,"success","删除成功！");
     }
 }

@@ -25,6 +25,12 @@ public class DepartmentService {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private EquipmentService equipmentService;
+
+    @Autowired
+    private StaffService staffService;
+
     /**
      * 通过城市名称查询部门
      * @param city
@@ -126,5 +132,22 @@ public class DepartmentService {
             throw new SimpleException(errorType,"查询部门时，数据库发生错误，请报告给维修人员！");
         }
         return department;
+    }
+
+    public void delDepartByDepartment(DepartmentCustom depObject) throws Exception{
+        String departStr = depObject.getDepartment();
+        String cityStr = depObject.getCity();
+
+        String department = findDepartIDByCityStrAndDepartStr(cityStr,departStr);
+
+        if(department==null || department.equals("")){
+            throw new SimpleException(errorType,"删除城市部门时，部门字段不能为空！");
+        }
+        Integer eqConut = equipmentService.countEquipmentByDepartment(department);
+        Integer staffCount = staffService.countStaffByDepart(department);
+        if(eqConut > 0 || staffCount > 0){
+            throw new SimpleException(errorType,"该部门中存在员工或者设备，不能够删除！");
+        }
+        departmentMapper.delDepartmentByDepartID(department);
     }
 }

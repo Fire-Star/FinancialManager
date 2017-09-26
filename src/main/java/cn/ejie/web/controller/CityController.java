@@ -53,7 +53,6 @@ public class CityController {
 
     @RequestMapping("/city/findAllCity")
     public @ResponseBody List<CityCustom> findAllCitys() throws Exception{
-
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User userParam = new User();
         userParam.setUsername(userName);
@@ -68,5 +67,13 @@ public class CityController {
         cityCustom.setCity(cityService.findCityNameByCityID(user.getCity()));
         result.add(cityCustom);
         return result;
+    }
+
+    @RequestMapping("/city/del")
+    public void delCity(HttpServletRequest request,HttpServletResponse response)throws Exception{
+        CityCustom cityCustom = SimpleBeanUtils.setMapPropertyToBean(CityCustom.class,request.getParameterMap());
+        System.out.println(cityCustom);
+        cityService.delCity(cityCustom.getCity());
+        SimpleException.sendMessage(response,objectMapper,"success","删除该城市成功！");
     }
 }

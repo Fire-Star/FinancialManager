@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>设备字段维护</title>
+    <title>部门字段维护</title>
     <!-- 引入 BootStrap 全家桶 -->
     <script src="../res/js/jquery-3.2.1.min.js"></script>
     <script src="../res/js/bootstrap.min.js"></script>
@@ -61,19 +61,19 @@
         <li>
             系统字段维护<span class="divider">></span>
         </li>
-        <li class="active">设备字段添加</li>
+        <li class="active">部门字段添加</li>
     </ul><br>
-    <span class="h4 text-primary">设备基本信息字段维护</span>
+    <span class="h4 text-primary">城市部门基本信息字段维护</span>
     <hr class="hr">
-    <span class="text-primary text-order h3">设备类型/名称添加</span><button class="btn btn-sm btn-primary glyphicon glyphicon-plus addTypeBoss"></button>
+    <span class="text-primary text-order h3">城市/部门添加</span><button class="btn btn-sm btn-primary glyphicon glyphicon-plus addTypeBoss"></button>
     <div class="bottom">
-        <ul class="list" v-for="(item,index) in eqTypes">
-            <span class="btn btn-primary eqTypeButton">{{item.equipmentTypeName}}</span><button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
-            <button class="btn btn-danger btn-sm del-btn" @click="delTypeMethod(item.equipmentTypeName)">删除该类型</button>
-            <li v-for="item2 in eqNames[item.equipmentTypeName]"><span class="btn btn-info width-auto">{{item2.eqName}}</span><span class="btn btn-warning btn-sm del-btn"  @click="delNameMethod(item.equipmentTypeName,item2.eqName)">删除该名称</span></li>
-            <div><input type="text" class="form-control inline" placeholder="请输入设备名称..." :belongType="item.equipmentTypeName"><button class="btn btn-warning addNameButton" style="margin-top: -2px">新增名称</button></div>
+        <ul class="list" v-for="(item,index) in citys">
+            <span class="btn btn-primary eqTypeButton">{{item.city}}</span><button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
+            <button class="btn btn-danger btn-sm del-btn" @click="delCityMethod(item.city)">删除该城市</button>
+            <li v-for="item2 in departMents[item.city]"><span class="btn btn-info width-auto">{{item2.department}}</span><span class="btn btn-warning btn-sm del-btn"  @click="delDepartMethod(item.city,item2.department)">删除该部门</span></li>
+            <div><input type="text" class="form-control inline" placeholder="请输入部门名称..." :belongCity="item.city"><button class="btn btn-warning addDepartButton" style="margin-top: -2px">新增部门</button></div>
         </ul>
-        <div><input type="text" class="form-control inline" placeholder="请输入设备类型..." v-model="insertType"><button @click="insertTypeMethod()" class="btn btn-primary" style="margin-top: -2px">新增类型</button></div>
+        <div><input type="text" class="form-control inline" placeholder="请输入城市名称..." v-model="insertCity"><button @click="insertCityMethod()" class="btn btn-primary" style="margin-top: -2px">新增城市</button></div>
     </div>
 
     <!-- ModalButton -->
@@ -98,9 +98,9 @@
     var data = {
         modalStatus:"",
         addTypeShow:false,
-        eqTypes:[],
-        eqNames:{},
-        insertType:"",
+        citys:[],
+        departMents:{},
+        insertCity:"",
         tempType:""
     };
 
@@ -112,41 +112,44 @@
             init();
         },
         methods:{
-            insertTypeMethod(){
-                if(this.insertType==""){
-                    vm.modalStatus = "属性名称不能为空！";
-                    $('#modalButton').click();
-                    return;
-                }
-                $.get('../addEquipmentType?equipmentTypeName='+this.insertType,function (data, status) {
+            insertCityMethod(){
+                $.get('../city/add?city='+this.insertCity,function (data, status) {
                     if(status=='success'){
+                        vm.insertCity = "";
+                        console.log(data);
                         var _data = eval(data);
                         if(!_data){
-                            vm.modalStatus="系统发生错误：添加设备类型失败，请通知管理员！";
+                            vm.modalStatus="系统发生错误：添加城市失败，请通知管理员！";
                         }else if(_data.success){
                             loadData();
                             vm.modalStatus =  _data.success;
-                        }else if(_data.eqTypeError){
+                        }else if(_data.cityErrorType){
                             vm.modalStatus = _data.eqTypeError;
+                        }else{
+                            vm.modalStatus="系统发生错误：添加城市失败，请通知管理员！";
                         }
                         $('#modalButton').click();
                     }
                 });
                 this.insertType = "";
             },
-            delNameMethod(eqType,eqName){
-                console.log("删除中...："+eqType+"="+eqName);
-                $.get('../equipmentName/delName?eqTypeId='+eqType+'&eqName='+eqName,function (data, status) {
+            delDepartMethod(city,department){
+                console.log("删除中...："+city+"="+department);
+                $.get('../department/del?city='+city+'&department='+department,function (data, status) {
                     if(status=='success'){
                         var _data = eval(data);
+                        console.log(_data);
                         if(!_data){
-                            vm.modalStatus="系统发生错误：删除设备名称失败，请通知管理员！";
+                            vm.modalStatus="系统发生错误：删除部门失败，请通知管理员！";
                         }else if(_data.success){
                             vm.modalStatus =  _data.success;
-                            $('#eqFieldAdd', window.parent.document).click();
+                            $('#departAdd', window.parent.document).click();
                         }else if(_data.eqNameError) {
                             console.log(data);
                             vm.modalStatus =  _data.eqNameError;
+                        }else if(_data.errorType){
+                            console.log(data);
+                            vm.modalStatus =  _data.errorType;
                         }else{
                             console.log(data);
                             vm.modalStatus =  '发生未知错误！！请通知管理员';
@@ -154,18 +157,21 @@
                         $('#modalButton').click();
                     }
                 })
-            },delTypeMethod(eqType){//eqTypeError
-                $.get("../equipmentType/del?equipmentTypeName="+eqType,function (data, status) {
+            },delCityMethod(city){//eqTypeError
+                $.get("../city/del?city="+city,function (data, status) {
                     if(status=="success"){
                         var _data = eval(data);
+                        console.log(_data);
                         if(!_data){
-                            vm.modalStatus="系统发生错误：删除设备类型失败，请通知管理员！";
+                            vm.modalStatus="系统发生错误：删除城市失败，请通知管理员！";
                         }else if(_data.success){
                             vm.modalStatus =  _data.success;
-                            $('#eqFieldAdd', window.parent.document).click();
+                            $('#departAdd', window.parent.document).click();
                         }else if(_data.eqTypeError) {
                             console.log(data);
                             vm.modalStatus =  _data.eqTypeError;
+                        }else if(_data.cityErrorType){
+                            vm.modalStatus =  _data.cityErrorType;
                         }else{
                             console.log(data);
                             vm.modalStatus =  '发生未知错误！！请通知管理员';
@@ -193,27 +199,27 @@
             var target = $(this).parent('ul').children('li');
             $(target).slideToggle();
         });
-        $('.addNameButton').unbind("click").click(function (e) {
+        $('.addDepartButton').unbind("click").click(function (e) {
             //$(this).parent('ul').children('li').slideToggle();
             var targetInput = $(this).prev();
-            var targetType = $(targetInput).attr('belongType');
+            var targetCity = $(targetInput).attr('belongCity');
             var value = $(targetInput).val();
             if(value == ""){
                 vm.modalStatus = "属性名称不能为空！";
                 $('#modalButton').click();
                 return ;
             }
-            $.get('../addSingleEquipmentName?eqName='+value+"&eqTypeId="+targetType,function (data, status) {
+            $.get('../department/add?department='+value+"&city="+targetCity,function (data, status) {
                 if(status=="success"){
                     var _data = eval(data);
                     $(targetInput).val("");
                     if(!_data){
-                        vm.modalStatus="系统发生错误：添加设备名称失败，请通知管理员！";
+                        vm.modalStatus="系统发生错误：添加部门失败，请通知管理员！";
                     }else if(_data.success){
-                        $('#eqFieldAdd', window.parent.document).click();
+                        $('#departAdd', window.parent.document).click();
                         vm.modalStatus =  _data.success;
-                    }else if(_data.eqNameError){
-                        vm.modalStatus = _data.eqNameError;
+                    }else if(_data.errorType){
+                        vm.modalStatus = _data.errorType;
                     }
                     $('#modalButton').click();
                 }
@@ -225,22 +231,22 @@
     var count = 0;
     loadData();
     function loadData() {
-        $.get("../showAllEquipmentType",function (data,status) {
+        $.get("../city/findAllCity",function (data,status) {
             if(status=='success'){
                 var _data = eval(data);
-
+                console.log(_data);
                 //遍历eqTypes获取当前类型下的设备名称
                 count = 0;
                 for(index in _data){
 
-                    vm.tempType = _data[index].equipmentTypeName;
+                    vm.tempType = _data[index].city;
 
-                    $.get('../findAllEquipmentNameByEqTypeName?eqTypeId='+vm.tempType,function (data, status) {
+                    $.get('../department/showAllByCity?city='+vm.tempType,function (data, status) {
 
                         if('success' == status){
                             var _eqNamesData = eval(data);
                             if(!_eqNamesData){
-                                vm.modalStatus="系统发生错误：查询设备名称失败，请通知管理员！";
+                                vm.modalStatus="系统发生错误：查询城市部门失败，请通知管理员！";
                                 $('#modalButton').click();
                                 return;
                             }else {
@@ -248,8 +254,8 @@
                             }
                             ++count;
                             if(count == _data.length){
-                                vm.eqTypes = _data;
-                                vm.eqNames = eqNameTemps;
+                                vm.citys = _data;
+                                vm.departMents = eqNameTemps;
                                 vm.$forceUpdate();
                             }
                         }

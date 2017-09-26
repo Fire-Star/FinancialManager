@@ -6,6 +6,7 @@ package cn.ejie.po;
 public class City {
     private String cityID;//城市ID
     private String city;//城市
+    private String cityOtherID;//其它ID
 
     public City() {
     }
@@ -36,6 +37,15 @@ public class City {
         return "City{" +
                 "cityID='" + cityID + '\'' +
                 ", city='" + city + '\'' +
+                ", cityOtherID='" + cityOtherID + '\'' +
                 '}';
+    }
+
+    public String getCityOtherID() {
+        return cityOtherID;
+    }
+
+    public void setCityOtherID(String cityOtherID) {
+        this.cityOtherID = cityOtherID;
     }
 }

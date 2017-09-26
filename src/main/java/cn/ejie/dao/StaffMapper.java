@@ -4,6 +4,7 @@ import cn.ejie.pocustom.StaffCustom;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StaffMapper {
     /**
@@ -75,4 +76,8 @@ public interface StaffMapper {
      * @throws Exception
      */
     public StaffCustom findStaffById(String id) throws Exception;
+
+    public Integer countStaffByCity(String city) throws Exception;
+
+    public Integer countStaffByDepart(String department) throws Exception;
 }
