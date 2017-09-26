@@ -46,4 +46,12 @@ public interface SupplierMapper {
      * @throws Exception
      */
     public SupplierCustom findSupplierById(String id) throws Exception;
+
+    /**
+     *
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    public String findSupIdBySupName(String name) throws Exception;
 }

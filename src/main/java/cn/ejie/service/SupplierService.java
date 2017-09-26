@@ -66,4 +66,14 @@ public class SupplierService {
         supplierMapper.addSingleSupplier(supplierCustom);
     }
 
+    public String findSupIdBySupName(String name) throws Exception{
+        String supId = "";
+        try {
+            supId = supplierMapper.findSupIdBySupName(name);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return supId;
+    }
+
 }

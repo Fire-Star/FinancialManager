@@ -40,4 +40,14 @@ public class EquipmentStateService {
         return list;
     }
 
+    public String findStateIDByStateName(String stateName){
+        String stateId = "";
+        try {
+            stateId = equipmentStateMapper.findStateIDByStateName(stateName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return stateId;
+    }
+
 }
