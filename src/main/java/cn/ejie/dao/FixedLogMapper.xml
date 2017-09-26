@@ -15,4 +15,10 @@
     <select id="findAllByEqId" resultType="cn.ejie.pocustom.FixedLogCustom" >
         select id,fixTime,fixType,fixDetail,eqId FROM eq_fix_log WHERE eqId = #{eqId}
     </select>
+    <insert id="insertFixlog">
+        <selectKey keyProperty="fixId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO eq_fix_log VALUES(#{fixId},#{fixTime},#{fixType},#{fixDetail},#{eqId})
+    </insert>
 </mapper>

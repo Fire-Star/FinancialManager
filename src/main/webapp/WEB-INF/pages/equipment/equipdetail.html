@@ -390,7 +390,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-primary" @click="submitFixlog()">提交</button>
                 </div>
             </div>
         </div>
@@ -732,7 +732,9 @@
         $('#eqSubmitDate').val(eqPurDate);
     };
     function addFixLog() {
-        
+        $('#eqAddFixDate').val("");
+        $('#eqAddFixType').val("");
+        $('#eqAddFixDetail').val("");
     };
     function addBorrowLog() {
         
@@ -780,6 +782,30 @@
                 });
         }
         $("#myModal").modal('hide');
+    }
+    function submitFixlog() {
+        var eqID = $('#eqSubmitId').val();
+        var eqAddFixDate = $('#eqAddFixDate').val();
+        var eqAddFixType = $('#eqAddFixType').val();
+        var eqAddFixDetail = $('#eqAddFixDetail').val();
+        if(eqID==""||eqAddFixDate==""||eqAddFixType==""||eqAddFixDetail==""){
+            alert("字段不能为空！！");
+        }else {
+            $.post("../../equipFix/addEqFixLog",
+                {
+                    eqID : eqID,
+                    fixTime : eqAddFixDate,
+                    fixType : eqAddFixType,
+                    fixDetail : eqAddFixDetail
+                },
+                function(data,status) {
+                    var _data = data;
+                    if(_data!="s"){
+                        alert(_data);
+                    }
+                });
+        }
+        $("#fixModal").modal('hide');
     }
 </script>
 </html>
