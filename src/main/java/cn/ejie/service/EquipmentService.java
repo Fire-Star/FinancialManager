@@ -208,4 +208,14 @@ public class EquipmentService {
             e.printStackTrace();
         }
     }
+
+    public List<EquipmentCustom> findAllKindsEq() throws Exception{
+        List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
+        try {
+            equipmentCustomList = equipmentMapper.findAllKindsEq();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return equipmentCustomList;
+    }
 }

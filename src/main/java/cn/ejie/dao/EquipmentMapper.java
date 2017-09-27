@@ -33,4 +33,6 @@ public interface EquipmentMapper {
     public Integer countAnyEquipmentByCityID(String cityID) throws Exception;
 
     public void updateEquipment(EquipmentCustom equipmentCustom) throws Exception;
+
+    public List<EquipmentCustom> findAllKindsEq() throws Exception;
 }

@@ -431,4 +431,71 @@ public class EquipmentController {
         }
         SimpleException.sendSuccessMessage(response,objectMapper);
     }
+
+    @RequestMapping("/user/equipment/statisTable")
+    public void statisTable(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("设备统计界面，table数据加载...");
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+        UserCustom userCustom = new UserCustom();
+        try {
+            userCustom = userService.findUserByName(userDetails.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String role = userRoleService.findRoleByUserName(userCustom.getUsername());
+        String city = "";
+        try {
+            city = userService.findCityIdByUserName(userCustom.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+            city = "";
+        }
+        //searchByCityId
+        String requestCity = "";
+        if(request.getParameter("city")!=null){
+            requestCity = request.getParameter("city");
+        }
+        List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
+        List<Object> list = new ArrayList<Object>();
+        if(!"ROLE_ADMIN".equals(role) && !"".equals(city)){
+            //Admin
+
+        }else if("ROLE_ADMIN".equals(role)){
+            try{
+                equipmentCustomList = equipmentService.findAllKindsEq();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            System.out.println("equipmentCustomList:"+JSONArray.fromObject(equipmentCustomList)+" " +
+                    "num:"+equipmentCustomList.size());
+            for (int i = 0; i < equipmentCustomList.size(); i++) {
+                Map map = new HashMap();
+                map.put("index",""+i);
+                String belongCity = "";
+                try {
+                    belongCity = cityService.findCityNameByCityID(equipmentCustomList.get(i).getCity());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                map.put("city",belongCity);
+                map.put("eqType",equipmentCustomList.get(i).getEqType());
+                map.put("eqName",equipmentCustomList.get(i).getEqName());
+                map.put("eqBrand",equipmentCustomList.get(i).getBrandName());
+                map.put("eqNum","");
+                map.put("eqBeUsed","");
+                map.put("eqNoUsed","");
+                map.put("eqReject","");
+                map.put("totleValue","");
+                list.add(map);
+            }
+            JSONArray jsonArray = new JSONArray();
+            jsonArray = JSONArray.fromObject(list);
+            SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+        }else{
+            String message = "统计设备时，数据库发生错误！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+
+    }
 }

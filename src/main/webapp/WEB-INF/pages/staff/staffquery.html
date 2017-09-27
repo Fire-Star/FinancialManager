@@ -231,7 +231,8 @@
                 department: $("#department").val(),
                 position: $("#position").val(),
                 tel: $("#tel").val(),
-                entrytime: $("entrytime").val()
+                entrytime: $("#time").val(),
+                city: $('#belongCity').val()
             };
             return temp;
         };
@@ -258,7 +259,7 @@
         $('#department').val("");
         $('#position').val("");
         $('#tel').val("");
-        $('#entrytime').val("");
+        $('#time').val("");
         $('#belongCity').val("");
     };
     /**

@@ -49,4 +49,10 @@
     <update id="updateEquipment" parameterType="cn.ejie.pocustom.EquipmentCustom">
         update equipment set eq_type = #{eqType},eq_name = #{eqName},belong_depart = #{belongDepart},purchas_date = #{purchasTime},supplier = #{supplier},eq_state = #{eqStateId},city = #{city} where eq_id=#{eqId}
     </update>
+    <!--<select id="findAllKindsEq" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT MIN(eq_id) eqId,eq_type as eqType,eq_name as eqName,city FROM equipment GROUP by city
+    </select>-->
+    <select id="findAllKindsEq" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT distinct eq_type as eqType,eq_name as eqName,brand_name as brandName,city FROM equipment
+    </select>
 </mapper>
