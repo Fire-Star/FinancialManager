@@ -12,6 +12,10 @@ ul{
 p{
 	margin: 0;
 }
+a{
+	text-decoration: none;
+	color: #52647f;
+}
 .container{
 	height: 100%;
 	min-width: 1000px;
@@ -158,6 +162,7 @@ p{
 	padding: 10px;
 	box-shadow: 0 0 20px 0 #ebeef3;
 	z-index: 10000;
+	background: #fff;
 }
 .right .account-info .person-info .person-line{
 	height: 50px;
