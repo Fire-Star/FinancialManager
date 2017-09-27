@@ -12,6 +12,8 @@ $('.level2').click(function(){
 	$(this).addClass('select');
 })
 
-$('.person').click(function(){
-	$('.person-info').toggle();
-})
+$('.person').hover(function(e){
+	$('.person-info').show();
+},function(){
+	$('.person-info').hide();
+});

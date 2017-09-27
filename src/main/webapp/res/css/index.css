@@ -125,20 +125,20 @@ a{
 .right .account-info{
 	height: 80px;
 	color: #52647f;
-	position: relative;
 	box-shadow: 0 10px 20px -6px #ebeef3;
 }
 .right .account-info .person{
 	float: right;
 	height: 80px;
-	line-height: 80px;
 	margin-right: 50px;
 	cursor: pointer;
+	position: relative;
 }
 .right .account-info .person > span{
 	display: inline-block;
 	vertical-align: middle;
 	height: 80px;
+	line-height: 80px;
 	margin-right: 10px;
 	max-width: 100px;
 	overflow: hidden;
@@ -157,7 +157,7 @@ a{
 .right .account-info .person-info{
 	position: absolute;
 	top: 80px;
-	right: 25px;
+	right: -25px;
 	width: 160px;
 	padding: 10px;
 	box-shadow: 0 0 20px 0 #ebeef3;
