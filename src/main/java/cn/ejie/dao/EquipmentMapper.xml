@@ -46,4 +46,7 @@
     <select id="countAnyEquipmentByCityID" resultType="int">
         SELECT count(eq_id) FROM equipment WHERE city = #{cityID} OR buyCity = #{cityID}
     </select>
+    <update id="updateEquipment" parameterType="cn.ejie.pocustom.EquipmentCustom">
+        update equipment set eq_type = #{eqType},eq_name = #{eqName},belong_depart = #{belongDepart},purchas_date = #{purchasTime},supplier = #{supplier},eq_state = #{eqStateId},city = #{city} where eq_id=#{eqId}
+    </update>
 </mapper>

@@ -81,7 +81,6 @@ public class CityService{
         if(cityID==null || cityID.equals("")){
             throw new SimpleException(errorType,"系统发生错误：城市ID不能为空！！！");
         }
-        System.out.println(cityID);
         return cityMapper.findCityNameByCityID(cityID);
     }
 

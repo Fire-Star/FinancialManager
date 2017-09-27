@@ -36,4 +36,10 @@ public interface FixedLogMapper {
      */
     public List<FixedLogCustom> findAllByEqId(String eqId) throws Exception;
 
+    /**
+     *
+     * @throws Exception
+     */
+    public void insertFixlog(FixedLogCustom fixedLogCustom) throws Exception;
+
 }

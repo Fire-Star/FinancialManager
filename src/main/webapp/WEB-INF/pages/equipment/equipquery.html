@@ -70,7 +70,7 @@
                         <div class="row">
                             <label class="control-label col-sm-1" for="eqID">设备ID：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                                <input type="text" class="form-control" id="eqID" placeholder="ID...">
+                                <input type="text" class="form-control" id="eqID" placeholder="ID..." v-model="eqIDValue">
                             </div>
                             <label class="control-label col-sm-1" for="eqType">设备类型：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
@@ -81,14 +81,15 @@
                             </div>
                             <label class="control-label col-sm-1" for="eqName">设备名称：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                                <select class="form-control" id="eqName" propName="城市" data-toggle="tooltip" data-placement="top">
+                                <select class="form-control" id="eqName" propName="城市" data-toggle="tooltip" data-placement="top" v-model="eqNameValue">
                                     <option selected value="">---请选择设备名称---</option>
                                     <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
                                 </select>
                             </div>
                             <label class="control-label col-sm-1" for="supplier">供应商：</label>
                             <div class="col-sm-2 form-group form-inline from-line item-right">
-                                <select class="form-control form-control-x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" >
+                                <select class="form-control form-control-x" id="supplier" propName="供应商"
+                                        data-toggle="tooltip" data-placement="top" v-model="supplier">
                                     <option selected value="">---请选择供应商---</option>
                                     <option v-for="(item , index) in suppliers" :value="item.name">{{item.name}}</option>
                                 </select>
@@ -100,10 +101,11 @@
                                 <div class="form-group form-inline from-line item-right" role="group">
                                     <div class="btn-group ">
                                         <select class="btn btn-default form-control select-left" id="belongCity" @change="loadBelongDep"  propName="" data-toggle="tooltip" data-placement="top" v-model="city" >
-                                            <option selected value="" id="d">城市</option>
+                                            <option selected value="" id="d">-城市-</option>
                                             <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                         </select>
-                                        <select class="btn btn-default form-control select-right" id="belongDepart" propName="" data-toggle="tooltip" data-placement="top" >
+                                        <select class="btn btn-default form-control select-right" id="belongDepart"
+                                                propName="" data-toggle="tooltip" data-placement="top" v-model="belongDepartValue">
                                             <option selected value="" id="dsf">--部门--</option>
                                             <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
                                         </select>
@@ -112,14 +114,15 @@
                             </div>
                             <label class="control-label col-sm-1" for="eqState">当前状态：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                                <select class="form-control form-control-x" id="eqState" propName="当前状态" data-toggle="tooltip" data-placement="top" v-model="eqState" >
+                                <select class="form-control form-control-x" id="eqState" propName="当前状态" data-toggle="tooltip" data-placement="top" v-model="eqStateValue" >
                                     <option selected value="">---请选择状态---</option>
                                     <option v-for="(item , index) in allState" :value="item.state">{{item.state}}</option>
                                 </select>
                             </div>
                             <label class="control-label col-sm-1" for="time">签约时间：</label>
                             <div class="col-sm-2 form-group form-control-x form-inline from-line item-right">
-                                <input class="form-control form-control-x" propName="采购时间" id="time" name="entryTime" placeholder="选择采购时间..." type="text">
+                                <input class="form-control form-control-x" propName="采购时间" id="time"
+                                       v-model="timeValue" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
                                 <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
@@ -157,7 +160,11 @@
         city:"",
         belongDepartment:[],
         allState:[],
-        eqState:""
+        eqIDValue:"",
+        eqNameValue:"",
+        belongDepartValue:"",
+        eqStateValue:"",
+        timeValue:""
     };
     var vm = new Vue({
         el:'.app',
@@ -279,12 +286,13 @@
             var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                eqID: $("#eqID").val(),
-                eqType: $("#eqType").val(),
-                eqName: $("#eqName").val(),
-                supplier: $("#supplier").val(),
-                belongDepart: $("#belongDepart").val(),
-                eqState: $("#eqState").val(),
+                eqID: vm.eqIDValue,
+                eqType: vm.eqTypeValue,
+                eqName: vm.eqNameValue,
+                supplier: vm.supplier,
+                belongDepart: vm.belongDepartValue,
+                eqState: vm.eqStateValue,
+                city: vm.city,
                 time: $("#time").val()
             };
             //alert(params.limit);
@@ -304,13 +312,21 @@
         $('#tb_equipments').bootstrapTable('refresh');
     };
     function datareset() {
-        $("#eqID").val(""),
+       /* $("#eqID").val(""),
         $("#eqType").val(""),
         $("#eqName").val(""),
         $("#supplier").val(""),
         $("#belongDepart").val(""),
         $("#eqState").val(""),
-        $("#time").val("")
+        $("#time").val("")*/
+        vm.eqIDValue = "";
+        vm.eqTypeValue = "";
+        vm.eqNameValue = "";
+        vm.supplier = "";
+        vm.belongDepartValue = "";
+        vm.eqStateValue = "";
+        vm.city = "";
+        $("#time").val("");
     };
     function checkDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;

@@ -200,4 +200,12 @@ public class EquipmentService {
         }
         return count;
     }
+
+    public void updateEquipment(EquipmentCustom equipmentCustom) throws Exception{
+        try {
+            equipmentMapper.updateEquipment(equipmentCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

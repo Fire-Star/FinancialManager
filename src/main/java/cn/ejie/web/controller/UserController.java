@@ -131,27 +131,33 @@ public class UserController {
 
     @RequestMapping("/user/user/search")
     public void userQuery(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("user query");
+        System.out.println("账号权限界面table数据加载......");
         List<UserCustom> userList = new ArrayList<UserCustom>();
         String name = "";
-        String city = "";
+        String cityName = "";
         String sql = "";
+        String cityId = "";
         String sqltemp = "SELECT username,password,city FROM user";
 
         if(!request.getParameter("username").equals("") && request.getParameter("username")!=null){
             name = request.getParameter("username");
         }
         if(!request.getParameter("city").equals("") && request.getParameter("city")!=null){
-            city = request.getParameter("city");
+            cityName = request.getParameter("city");
         }
-        System.out.println("user:"+name+" city:"+city);
-        if (!name.equals("")||!city.equals("")){
+        System.out.println("user:"+name+" city:"+cityName);
+        if (!name.equals("")||!cityName.equals("")){
             sqltemp = sqltemp + " WHERE";
             if (!name.equals("")){
-                sqltemp = sqltemp + " username='"+ name +"'";
+                sqltemp = sqltemp + " username like '%"+ name +"%'";
             }
-            if(!city.equals("")){
-                sqltemp = sqltemp + " and city='"+ city +"'";
+            if(!cityName.equals("")){
+                try {
+                    cityId = cityService.findCityIDByCity(cityName);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                sqltemp = sqltemp + " and city='"+ cityId +"'";
             }
             if(sqltemp.contains("WHERE and")){
                 sql = sqltemp.replaceAll("WHERE and","WHERE");
@@ -169,21 +175,20 @@ public class UserController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(userList.size());
         List<Object> list = new ArrayList<>();
         for(int i = 0;i<userList.size();i++){
             Map<String,String> map = new HashMap<String,String>();
             map.put("index",i+"");
             map.put("name",userList.get(i).getUsername());
-            String cityName = "";
+            String city = "";
             try {
                 if(!"".equals(userList.get(i).getCity().toString())&&userList.get(i).getCity()!=null){
-                    cityName = cityService.findCityNameByCityID(userList.get(i).getCity().toString());
+                    city = cityService.findCityNameByCityID(userList.get(i).getCity().toString());
                 }
             }catch (Exception e){
                 e.printStackTrace();
             }
-            map.put("city",cityName);
+            map.put("city",city);
             String roleName ="";
             try {
                 roleName = userRoleService.findRoleByUserName(userList.get(i).getUsername().toString());
@@ -193,14 +198,6 @@ public class UserController {
             map.put("role",roleName);
             list.add(map);
         }
-        /*List<Object> list = new ArrayList<>();
-        for(int i=0;i<50;i++){
-            Map<String,String> map = new HashMap<String, String>();
-            map.put("index",i+"");
-            map.put("name","name"+i);
-            map.put("city","city"+i);
-            list.add(map);
-        }*/
         JSONArray jsonObject = new JSONArray();
         jsonObject = JSONArray.fromObject(list);
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
@@ -221,6 +218,106 @@ public class UserController {
         JSONObject jsonObject = JSONObject.fromObject(map);
         System.out.println(jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
+    }
+
+    @RequestMapping("/user/add")
+    public void insertUser(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("添加用户...");
+        String username = "";
+        String cityTemp = "";
+        String password = "";
+        String city = "";
+        if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
+            username = request.getParameter("userName");
+        }
+        if(!"".equals(request.getParameter("userPass"))&&request.getParameter("userPass")!=null){
+            password = request.getParameter("userPass");
+        }
+        if(!"".equals(request.getParameter("city"))&&request.getParameter("city")!=null){
+            cityTemp = request.getParameter("city");
+        }
+        UserCustom userCustom = new UserCustom();
+        try {
+            city = cityService.findCityIDByCity(cityTemp);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        userCustom.setUsername(username);
+        userCustom.setPassword(password);
+        userCustom.setCity(city);
+        UserCustom userCustom1 = null;
+        try {
+            userCustom1 = userService.findUserByName(username);
+        }catch (Exception e){
+            Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        if(userCustom1==null){
+            try {
+                userService.insertUser(userCustom);
+            }catch (Exception e){
+                Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+            SimpleException.sendSuccessMessage(response,objectMapper);
+        }else{
+            String message = "用户名已存在，请修改用户名重新添加！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
 
     }
+    @RequestMapping("/user/edit")
+    public void editUser(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("重置用户密码...");
+        String username = "";
+        String password = "";
+        if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
+            username = request.getParameter("userName");
+        }
+        if(!"".equals(request.getParameter("userPass"))&&request.getParameter("userPass")!=null){
+            password = request.getParameter("userPass");
+        }
+        UserCustom userCustom = new UserCustom();
+        try {
+            userCustom = userService.findUserByName(username);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "用户不存在，修改密码失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        userCustom.setPassword(password);
+        try {
+            userService.updateUser(userCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "在修改用户密码时，数据库发生错误，修改密码失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        SimpleException.sendSuccessMessage(response,objectMapper);
+    }
+
+    @RequestMapping("/user/del")
+    public void delUser(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("删除用户...");
+        String username = "";
+        if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
+            username = request.getParameter("userName");
+        }
+        System.out.println("username:"+username);
+        try {
+            userService.delUser(username);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "在删除用户时，数据库发生错误，删除用户失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        SimpleException.sendSuccessMessage(response,objectMapper);
+    }
+
 }

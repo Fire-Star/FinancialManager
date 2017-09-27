@@ -56,6 +56,9 @@ public class EquipmentController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private SupplierService supplierService;
+
     @RequestMapping("/equipment/add")
     public void insertSingleEquipment(EquipmentCustom equipmentCustom, HttpServletResponse response){
 
@@ -112,6 +115,7 @@ public class EquipmentController {
         String belongDepart = "";
         String eqState = "";
         String time = "";
+        String userCity = "";
         if(request.getParameter("eqID") != null){
             eqID = request.getParameter("eqID");
         }
@@ -133,7 +137,33 @@ public class EquipmentController {
         if (request.getParameter("time") != null && !"".equals(request.getParameter("time"))){
             time = StringUtils.zhDateStrToENDateStr(request.getParameter("time"));
         }
-        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
+        if (request.getParameter("city") != null && !"".equals(request.getParameter("city"))){
+            userCity = request.getParameter("city");
+        }
+        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
+                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
+        //获取设备的所属部门的ID和采购部门的ID
+        if(!"".equals(supplier)){
+            try {
+                supplier = supplierService.findSupIdBySupName(supplier);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        if(!"".equals(belongDepart)&&!"".equals(userCity)){
+            try {
+                belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        if(!"".equals(eqState)){
+            try {
+                eqState = equipmentStateService.findStateIDByStateName(eqState);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
         String sql = "";
         String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,purchas_depart as purchasDepart,belong_depart as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state as eqStateId,purchas_price as purchasPrice,custom_message as customMessage,eq_other_id as eqOtherId,city as city FROM equipment";
         if(!eqID.equals("")||!eqType.equals("")||!eqName.equals("")||!supplier.equals("")||!belongDepart.equals("")
@@ -144,7 +174,7 @@ public class EquipmentController {
                 sqltemp = sqltemp + " WHERE city='"+  city +"'";
             }
             if(!eqID.equals("")){
-                sqltemp = sqltemp + " and eq_other_id='"+eqID+"'";
+                sqltemp = sqltemp + " and eq_other_id like '%"+eqID+"%'";
             }
             if(!eqType.equals("")){
                 sqltemp = sqltemp + " and eq_type='"+eqType+"'";
@@ -287,5 +317,118 @@ public class EquipmentController {
     @RequestMapping("/user/equipment/statis")
     public String showEqStatis(){
         return "/WEB-INF/pages/equipment/equipstatis.html";
+    }
+
+    @RequestMapping("/user/equipDetail/editEqDetail")
+    public void editEqDetail(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("设备详情界面，设备信息编辑......");
+        String eqID = "";
+        String eqType = "";
+        String eqName = "";
+        String supplier = "";
+        String belongDepart = "";
+        String eqState = "";
+        String time = "";
+        String userCity = "";//cityname
+        String city = "";//cityID
+        if(request.getParameter("eqID") != null){
+            eqID = request.getParameter("eqID");
+        }
+        if(request.getParameter("eqType") != null){
+            eqType = request.getParameter("eqType");
+        }
+        if(request.getParameter("eqName") != null){
+            eqName = request.getParameter("eqName");
+        }
+        if(request.getParameter("supplier") != null){
+            supplier = request.getParameter("supplier");
+        }
+        if(request.getParameter("belongDepart") != null){
+            belongDepart = request.getParameter("belongDepart");
+        }
+        if(request.getParameter("eqState") != null){
+            eqState = request.getParameter("eqState");
+        }
+        if (request.getParameter("time") != null && !"".equals(request.getParameter("time"))){
+            if(request.getParameter("time").contains("年")){
+                time = StringUtils.zhDateStrToENDateStr(request.getParameter("time"));
+            }else{
+                time = request.getParameter("time");
+            }
+        }
+        if (request.getParameter("userCity") != null && !"".equals(request.getParameter("userCity"))){
+            userCity = request.getParameter("userCity");
+        }
+        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
+                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
+        //获取设备的所属部门的ID和采购部门的ID
+        if(!"".equals(supplier)){
+            try {
+                supplier = supplierService.findSupIdBySupName(supplier);
+            }catch (Exception e){
+                e.printStackTrace();
+                String message = "查找供应商时，数据库发生错误，修改信息失败！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }
+        if(!"".equals(belongDepart)&&!"".equals(userCity)){
+            try {
+                belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
+            }catch (Exception e){
+                e.printStackTrace();
+                String message = "查找归属部门时，数据库发生错误，修改信息失败！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }
+        if(!"".equals(eqState)){
+            try {
+                eqState = equipmentStateService.findStateIDByStateName(eqState);
+            }catch (Exception e){
+                e.printStackTrace();
+                String message = "查找设备状态时，数据库发生错误，修改信息失败！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }
+        if(!"".equals(userCity)){
+            try {
+                city = cityService.findCityIDByCity(userCity);
+            }catch (Exception e){
+                e.printStackTrace();
+                String message = "查找城市时，数据库发生错误，修改信息失败！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }
+        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ city +
+                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
+
+        EquipmentCustom equipmentCustom = new EquipmentCustom();
+        try {
+            equipmentCustom = equipmentService.findById(eqID);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "查找设备时，数据库发生错误，修改信息失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        equipmentCustom.setEqType(eqType);
+        equipmentCustom.setEqName(eqName);
+        equipmentCustom.setSupplier(supplier);
+        equipmentCustom.setCity(city);
+        equipmentCustom.setBelongDepart(belongDepart);
+        equipmentCustom.setEqStateId(eqState);
+        equipmentCustom.setPurchasTime(time);
+        try {
+            equipmentService.updateEquipment(equipmentCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "更新设备信息时，数据库发生错误，修改信息失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        SimpleException.sendSuccessMessage(response,objectMapper);
     }
 }

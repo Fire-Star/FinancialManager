@@ -59,4 +59,12 @@ public class FixedLogService {
         }
         return fixedLogCustomList;
     }
+
+    public void insertFixlog(FixedLogCustom fixedLogCustom){
+        try {
+            fixedLogMapper.insertFixlog(fixedLogCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

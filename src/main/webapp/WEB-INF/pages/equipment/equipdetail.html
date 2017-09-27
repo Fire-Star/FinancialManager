@@ -155,7 +155,7 @@
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
     </div>
-    <!-- 设备详情Modal-->
+    <!-- 编辑设备详情Modal-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -245,7 +245,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-primary" @click="submitEditEq()">提交</button>
                 </div>
             </div>
         </div>
@@ -390,7 +390,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-primary" @click="submitFixlog()">提交</button>
                 </div>
             </div>
         </div>
@@ -645,8 +645,8 @@
                 $('#time').val(data.purchasTime);
 
                 //加载设备信息修改界面默认值
-                $('#eqSubmitId').val(data.eqOtherId);
-                $('#eqSubmitOtherId').val(data.eqId);
+                $('#eqSubmitId').val(data.eqId);
+                $('#eqSubmitOtherId').val(data.eqOtherId);
                 eqTypeData = data.eqType;
                 vm.eqTypeValue = data.eqType;
                 preLoadEqName();
@@ -732,7 +732,9 @@
         $('#eqSubmitDate').val(eqPurDate);
     };
     function addFixLog() {
-        
+        $('#eqAddFixDate').val("");
+        $('#eqAddFixType').val("");
+        $('#eqAddFixDetail').val("");
     };
     function addBorrowLog() {
         
@@ -753,5 +755,57 @@
         $("#eqNoUsedDiv").hide();
         $("#eqUnUsedDiv").show();
     });
+    function submitEditEq() {
+        var eqId = $('#eqSubmitId').val();
+        var time = $('#eqSubmitDate').val();
+        if(vm.eqTypeValue==""||vm.eqNameValue==""||vm.supplier==""||vm.city==""||vm.beDepValue==""||vm.eqState==""||time==""){
+            alert("编辑设备信息时，字段不能为空！！");
+        }else {
+            $.post("../equipDetail/editEqDetail",
+                {
+                    eqID : eqId,
+                    eqType : vm.eqTypeValue,
+                    eqName : vm.eqNameValue,
+                    supplier : vm.supplier,
+                    belongDepart : vm.beDepValue,
+                    eqState : vm.eqState,
+                    time : time,
+                    userCity  : vm.city
+                },
+                function(data,status) {
+                    var _data = data;
+                    if(eval(_data)){
+                        alert(eval(_data).success);
+                    }else{
+                        alert(_data);
+                    }
+                });
+        }
+        $("#myModal").modal('hide');
+    }
+    function submitFixlog() {
+        var eqID = $('#eqSubmitId').val();
+        var eqAddFixDate = $('#eqAddFixDate').val();
+        var eqAddFixType = $('#eqAddFixType').val();
+        var eqAddFixDetail = $('#eqAddFixDetail').val();
+        if(eqID==""||eqAddFixDate==""||eqAddFixType==""||eqAddFixDetail==""){
+            alert("字段不能为空！！");
+        }else {
+            $.post("../../equipFix/addEqFixLog",
+                {
+                    eqID : eqID,
+                    fixTime : eqAddFixDate,
+                    fixType : eqAddFixType,
+                    fixDetail : eqAddFixDetail
+                },
+                function(data,status) {
+                    var _data = data;
+                    if(_data!="s"){
+                        alert(_data);
+                    }
+                });
+        }
+        $("#fixModal").modal('hide');
+    }
 </script>
 </html>

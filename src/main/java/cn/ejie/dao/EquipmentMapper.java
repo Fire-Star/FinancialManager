@@ -31,4 +31,6 @@ public interface EquipmentMapper {
     public Integer countEquipmentByDepartment(String department) throws Exception;
 
     public Integer countAnyEquipmentByCityID(String cityID) throws Exception;
+
+    public void updateEquipment(EquipmentCustom equipmentCustom) throws Exception;
 }
