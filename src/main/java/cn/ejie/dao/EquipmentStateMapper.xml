@@ -26,4 +26,7 @@
     <select id="findStateIDByStateName" resultType="String">
         SELECT eq_state_id eqStateID FROM eq_state WHERE state = #{state}
     </select>
+    <select id="findStateNameById" resultType="String">
+        SELECT state eqStateID FROM eq_state WHERE eq_state_id = #{state}
+    </select>
 </mapper>
