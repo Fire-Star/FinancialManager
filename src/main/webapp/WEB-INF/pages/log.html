@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>易捷-资产管理系统</title>
+	<link rel="stylesheet" href="../res/css/log.css">
+	<!-- 引入 BootStrap 全家桶 -->
+	<script src="../res/js/jquery-3.2.1.min.js"></script>
+	<script src="../res/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
+
+	<!-- 引入Vue.js -->
+	<script src="../res/js/vue.min.js"></script>
+</head>
+<body>
+	<div class="app">
+		<div class="log-in-container">
+			<div class="log-in-bg"></div>
+			<div class="content">
+				<div class="log-in-form">
+					<div class="user form-row">
+						<span></span>
+						<input type="text" class="user-val" type="text" placeholder="请输入用户名..." v-model="username">
+					</div>
+					<div class="password form-row">
+						<span></span>
+						<input type="password" class="password-val" placeholder="请输入密码..." v-model="password">
+					</div>
+					<div class="verify">
+						<input type="text" class="verification" placeholder="请输入验证码" v-model="verifyCode" @keydown.enter="login">
+						<img class="verify-img" :src="verifyImageLink" @click="verifyImageLink='virifyImage?time='+Date.now()"></img>
+					</div>
+					<div class="submit" @click="login">登&nbsp;&nbsp;录</div>
+				</div>
+			</div>
+		</div>
+		<button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">提示</h4>
+					</div>
+					<div class="modal-body">
+						{{modalStatus}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+    var data = {
+        verifyImageLink:"virifyImage",
+        username:"",
+        password:"",
+        verifyCode:"",
+        modalStatus:""
+    };
+    var vm = new Vue({
+        el:'.app',
+        data:data,
+        methods:{
+            login(event){
+                $.post("login",{
+                    "username":vm.username,
+                    "password":vm.password,
+                    "verifyCode":vm.verifyCode
+                }, function (data, status) {
+                    if(status=="success"){
+                        var _data = eval(data);
+                        console.log(_data);
+                        if(_data.location){
+                            window.location=_data.location;
+                        }else if(_data.msg){
+                            vm.modalStatus=_data.msg;
+                            $('#modalButton').click();
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

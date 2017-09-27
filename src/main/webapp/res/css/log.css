@@ -1,0 +1,87 @@
+html,body{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 18px;
+}
+input{
+	padding: 0;
+	border: 0;
+	outline: none;
+}
+.log-in-container{
+	box-sizing: border-box;
+	height: 100%;
+	padding-top: 350px;
+	min-width: 1000px;
+}
+.log-in-bg{
+	height: 350px;
+	margin-top: -350px;
+	background: url(../img/log-in.png) no-repeat center;
+}
+.content{
+	height: 100%;
+	overflow: hidden;
+}
+.content .log-in-form{
+	width: 410px;
+	margin: 60px auto;
+}
+.content .log-in-form .form-row{
+	height: 50px;
+	border: 1px solid #b8e2fc;
+	border-radius: 5px;
+	font-size: 0;
+	margin-bottom: 30px;
+}
+.content .log-in-form .form-row span{
+	display: inline-block;
+	width: 40px;
+	height: 100%;
+	vertical-align: middle;
+}
+.content .log-in-form .form-row.user span{
+	background: url(../img/user.png) no-repeat center;
+}
+.content .log-in-form .form-row.password span{
+	background: url(../img/password.png) no-repeat center;
+}
+.content .log-in-form .form-row input{
+	width: 360px;
+	height: 50px;
+	font-size: 18px;
+	vertical-align: middle;
+}
+.content .log-in-form .verify{
+	height: 50px;
+	font-size: 0;
+	margin-bottom: 50px;
+}
+.content .log-in-form .verify .verification{
+	width: 250px;
+	height: 50px;
+	font-size: 18px;
+	padding-left: 5px;
+	border: 1px solid #b8e2fc;
+	border-radius: 5px;
+	margin-right: 11px;
+	vertical-align: middle;	
+}
+.content .log-in-form .verify .verify-img{
+	display: inline-block;
+	width: 140px;
+	height: 50px;
+	border: 1px solid #b8e2fc;
+	border-radius: 5px;
+	vertical-align: middle;	
+}
+.content .log-in-form .submit{
+	height: 50px;
+	color: #fff;
+	font-size: 18px;
+	line-height: 50px;
+	text-align: center;
+	background: #20abff;
+	cursor: pointer;
+}

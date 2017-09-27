@@ -1,0 +1,212 @@
+html,body{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+}
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+p{
+	margin: 0;
+}
+.container{
+	height: 100%;
+	min-width: 1000px;
+	position: relative;
+}
+.container .left{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 250px;
+	height: 100%;
+	padding-top: 80px;
+	box-sizing: border-box;
+}
+.left .logo{
+	height: 80px;
+	margin-top: -80px;
+	background: url(../img/logo.png) no-repeat center;
+}
+.left .list{
+	height: 100%;
+	background: #2a3341;
+	color: #829dbf;
+	overflow: hidden;
+}
+.left .list > ul{
+	margin-top: 30px;
+}
+.left .list .level1 div{
+	height: 50px;
+	line-height: 50px;
+	padding-left: 90px;
+	border-left: 4px solid transparent;
+	cursor: pointer;
+	position: relative;
+}
+.left .list .level1 div.device{
+	background: url(../img/device.png) 50px center no-repeat;
+}
+.left .list .level1 div.staff{
+	background: url(../img/staff.png) 50px center no-repeat;
+}
+.left .list .level1 div.suppliers{
+	background: url(../img/suppliers.png) 50px center no-repeat;
+}
+.left .list .level1 div.system-filed{
+	background: url(../img/system-filed.png) 50px center no-repeat;
+}
+.left .list .level1 div.account{
+	background: url(../img/account.png) 50px center no-repeat;
+}
+.left .list .level1 div .arrow{
+	position: absolute;
+	right: 25px;
+	top: 22px;
+	width: 0;
+	height: 0;
+	border-left: 8px solid #3b4654;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+	transition: all .5s;
+	-ms-transition: all .5s;
+	-moz-transition: all .5s;
+	-webkit-transition: all .5s;
+}
+.left .list .level1 div:hover,
+.left .list .level1 div.active{
+	border-color: #acd5ef;
+	color: #fff;
+}
+.left .list .level1 div:hover .arrow{
+	border-left: 8px solid #fff;
+}
+.left .list .level1 div.active .arrow{
+	border-left: 8px solid #fff;
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	transition: all .5s;
+	-ms-transition: all .5s;
+	-moz-transition: all .5s;
+	-webkit-transition: all .5s;
+}
+.left .list .level1 ul{
+	padding-left: 50px;
+}
+.left .list .level1 ul li{
+	height: 35px;
+	line-height: 35px;
+	padding-left: 44px;
+	cursor: pointer;
+}
+.left .list .level1 ul li:last-child{
+	border-bottom: 2px solid #3b4654;
+}
+.left .list .level1 ul li:hover,
+.left .list .level1 ul li.select{
+	background: #20abff;
+	color: #fff;
+}
+.container .right{
+	height: 100%;
+	margin-left: 250px;
+	position: relative;
+}
+.right .account-info{
+	height: 80px;
+	color: #52647f;
+	position: relative;
+	box-shadow: 0 10px 20px -6px #ebeef3;
+}
+.right .account-info .person{
+	float: right;
+	height: 80px;
+	line-height: 80px;
+	margin-right: 50px;
+	cursor: pointer;
+}
+.right .account-info .person > span{
+	display: inline-block;
+	vertical-align: middle;
+	height: 80px;
+	margin-right: 10px;
+	max-width: 100px;
+	overflow: hidden;
+}
+.right .account-info .person .icon{
+	width: 30px;
+	background: url(../img/person.png) no-repeat center;
+}
+.right .account-info .person .arrow{
+	width: 0;
+	height: 0;
+	border-top: 8px solid #52647f;
+	border-left: 4px solid transparent;
+	border-right: 4px solid transparent;
+}
+.right .account-info .person-info{
+	position: absolute;
+	top: 80px;
+	right: 25px;
+	width: 160px;
+	padding: 10px;
+	box-shadow: 0 0 20px 0 #ebeef3;
+	z-index: 10000;
+}
+.right .account-info .person-info .person-line{
+	height: 50px;
+	border-bottom: 1px dashed #98a9bf;
+}
+.right .account-info .person-info .person-line:last-child{
+	border: 0;
+}
+.right .account-info .person-info .department{
+	font-size: 12px;
+	color: #98a9bf;
+	margin-top: 6px;
+}
+.right .account-info .person-info .person-line span{
+	display: inline-block;
+	height: 50px;
+	line-height: 50px;
+	vertical-align: middle;
+}
+.right .account-info .person-info .person-line .change-pwd-icon{
+	width: 14px;
+	margin-right: 10px;
+	background: url(../img/change-pwd.png) no-repeat center;
+}
+.right .account-info .person-info .person-line .log-out-icon{
+	width: 14px;
+	margin-right: 10px;
+	background: url(../img/log-out.png) no-repeat center;
+}
+.right .account-info .person-info .change-pwd,
+.right .account-info .person-info .log-out{
+	cursor: pointer;
+}
+.right .detail{
+	position: absolute;
+	left: 0;
+	top: 80px;
+	right: 0;
+	bottom: 20px;
+	overflow: hidden;
+}
+.right .footer{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;	
+	text-align: center;
+	font-size: 14px;
+	color: #829dbf;
+}

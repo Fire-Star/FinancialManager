@@ -9,6 +9,15 @@
     <script src="../res/js/bootstrap.min.js"></script>
     <script src="../res/js/bootstrap-datepicker.js"></script>
     <script src="../res/js/bootstrap-datepicker.zh-CN.js"></script>
+
+    <script src="../res/js/fileinput.min.js"></script>
+    <script src="../res/js/piexif.js" type="text/javascript"></script>
+    <script src="../res/js/sortable.min.js" type="text/javascript"></script>
+    <script src="../res/js/purify.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="../res/js/theme.min.js" type="text/javascript"></script>
+    <script src="../res/js/zh.js"></script>
+    <link rel="stylesheet" href="../res/css/fileinput.min.css" media="all" type="text/css">
     <link rel="stylesheet" href="../res/css/bootstrap.min.css"/>
 
     <!-- 引入Vue.js -->
@@ -26,7 +35,7 @@
         .btn-submit{
             width: 200px;
         }
-        .datepicker:hover , #dep ,#city{
+        .datepicker:hover,.x:hover , #dep ,#city{
             cursor: pointer;
         }
         .select-left{
@@ -55,11 +64,20 @@
 
             }
             .customTitle{
-                clear: both;
+                clear: both !important;
             }
         }
         #calender{
             cursor: pointer;
+        }
+        .borderx{
+            width: 100%;height: 38px;border-bottom: 1px solid #9d9d9d;margin: 0px 0px 35px 0px;position: relative;
+        }
+        .borderx input{
+            display: inline-block;margin-right: 10px;
+        }
+        .pibu{
+            vertical-align: bottom;position: absolute;right: 250px;
         }
     </style>
 </head>
@@ -71,17 +89,17 @@
         </li>
         <li class="active">设备添加</li>
     </ul><br>
-    <form role="form" name="satff-add-form">
         <span class="h4 text-primary">设备基本信息添加</span>
-        <hr class="hr">
-
+        <div class="borderx">
+            <button class="btn btn-success pibu">批量导入</button>
+        </div>
         <div class="content-line">
             <div class="item-left content-item">
                 <div class="item-left item-name">
                     <label for="equipmentType">设备类型：</label>
                 </div>
                 <div class="form-group form-control-x form-inline from-line item-right">
-                    <select class="form-control " propName="设备类型" id="equipmentType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
+                    <select class="form-control x" propName="设备类型" id="equipmentType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
                         <option selected value="">---请选择设备类型---</option>
                         <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
                     </select>
@@ -92,7 +110,7 @@
                     <label for="equipmentName" class="">设备名称：</label>
                 </div>
                 <div class="form-group form-control-x form-inline from-line item-right">
-                    <select class="form-control" id="equipmentName" propName="城市" data-toggle="tooltip" data-placement="top">
+                    <select class="form-control x" id="equipmentName" propName="城市" data-toggle="tooltip" data-placement="top">
                         <option selected value="">---请选择设备名称---</option>
                         <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
                     </select>
@@ -163,7 +181,7 @@
                     <label for="supplier">供应商:</label>
                 </div>
                 <div class="form-group form-inline from-line item-right">
-                    <select class="form-control form-control-x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" v-model="supplier" >
+                    <select class="form-control form-control-x x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" v-model="supplier" >
                         <option selected value="">---请选择供应商---</option>
                         <option v-for="(item , index) in autoSuppliers" :value="item.name">{{item.name}}</option>
                     </select>
@@ -200,7 +218,7 @@
             <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
         </div>
         <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
-    </form>
+
     <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
@@ -219,6 +237,7 @@
 </div>
 </body>
 <script>
+
 
     $("#equipmentType").change(function () {
         loadEqName();

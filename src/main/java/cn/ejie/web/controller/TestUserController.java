@@ -144,8 +144,4 @@ public class TestUserController {
             }
         }
     }
-    @RequestMapping("/user/index")
-    public String showMainPage(){
-        return "/WEB-INF/pages/main.html";
-    }
 }

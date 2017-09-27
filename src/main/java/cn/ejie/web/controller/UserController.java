@@ -60,9 +60,9 @@ public class UserController {
     public String loginPage(HttpServletRequest request,HttpServletResponse response) throws IOException {
         Map<String,String> message = new HashMap<>();
         if(!"anonymousUser".equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-            response.sendRedirect(request.getContextPath()+"/user/testmain");
+            response.sendRedirect(request.getContextPath()+"/user/index");
         }
-        return "/WEB-INF/pages/login.html";
+        return "/WEB-INF/pages/log.html";
     }
     @RequestMapping(value = "/user/login")
     public void login(HttpServletRequest request,HttpSession session,HttpServletResponse response,UserCustom userCustom){
@@ -95,7 +95,7 @@ public class UserController {
 
             message.clear();
             message.put("code","1");
-            message.put("location",request.getContextPath()+"/user/testmain");
+            message.put("location",request.getContextPath()+"/user/index");
 
             SimpleException.sendMessage(response,message,objectMapper);
 
@@ -206,9 +206,9 @@ public class UserController {
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 
-    @RequestMapping("/user/testmain")
-    public String testMain(){
-        return "/WEB-INF/pages/maintest.html";
+    @RequestMapping("/user/index")
+    public String main(){
+        return "/WEB-INF/pages/index.html";
     }
 
     @RequestMapping("/user/getUsername")

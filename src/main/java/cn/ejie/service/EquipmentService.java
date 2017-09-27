@@ -79,7 +79,7 @@ public class EquipmentService {
 
         int counti = iCount.intValue();
 
-        while (counti--!=0){
+        while (counti-->0){
             Integer count = equipmentMapper.countEquipmentByCity(belongCityID)+1;
             String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);//计算出设备ID
 

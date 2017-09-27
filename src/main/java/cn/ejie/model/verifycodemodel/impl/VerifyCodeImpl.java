@@ -16,7 +16,7 @@ public class VerifyCodeImpl implements VerifyCode {
     private Random random;//随机类，供以后使用
     private String orain="23456789ABCDEFGHJKLMNPQRSTUVWXYZ";//随机源字符串，这是默认的字符串，你可以配置的
     private String fonts[]={"宋体","黑体","华文楷体","微软雅黑","楷体_GB2312"};//默认的验证码字体样式，这些样式在生成验证码的每一位的时候会随机选择使用
-    private int w=107,h=42;//默认的验证码宽度和高度
+    private int w=138,h=48;//默认的验证码宽度和高度
     private Integer verifyCodeCount=5;//验证码位数，默认为5，可以配置。
     private Color backColor=Color.lightGray;//图片的背景颜色，默认为淡灰色
 

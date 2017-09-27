@@ -9,8 +9,8 @@
        http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="verifyCodeImpl" class="cn.ejie.model.verifycodemodel.impl.VerifyCodeImpl">
-        <property name="w" value="118"/>
-        <property name="h" value="33"/>
+        <property name="w" value="138"/>
+        <property name="h" value="48"/>
         <property name="random">
             <bean class="java.util.Random"></bean>
         </property>
