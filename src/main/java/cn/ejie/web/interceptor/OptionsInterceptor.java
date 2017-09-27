@@ -28,6 +28,7 @@ public class OptionsInterceptor implements HandlerInterceptor {
                              Object handler) throws Exception {
         System.out.println("请求路径为-------->"+request.getRequestURI());
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+
         System.out.println("ContextPath-------->"+request.getContextPath());
         if(((request.getContextPath()+"/user/loginPage").equals(request.getRequestURI())||
                 (request.getContextPath()+"/user/virifyImage").equals(request.getRequestURI())||
@@ -35,6 +36,7 @@ public class OptionsInterceptor implements HandlerInterceptor {
                 &&"anonymousUser".equals(userName)){
             return true;
         }
+
         if("anonymousUser".equals(userName)){
             response.sendRedirect(request.getContextPath()+"/user/loginPage");
             return false;
