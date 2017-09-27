@@ -117,7 +117,7 @@ public class VerifyCodeImpl implements VerifyCode {
     private void setLine(Graphics2D graphics2d){
         int y1,y2;
 
-        for(int i=1;i<=8;i++){
+        for(int i=1;i<=6;i++){
             int temp=getH()/3;//获取到1/3
             y1=random.nextInt(getH());
             y2=random.nextInt(getH());
