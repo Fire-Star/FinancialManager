@@ -28,4 +28,11 @@ public interface EquipmentBorrowMapper {
      * @throws Exception
      */
     public List<EquipmentBorrowCustom> findAllByUserId(String userId) throws Exception;
+
+    /**
+     *
+     * @param equipmentBorrowCustom
+     * @throws Exception
+     */
+    public void insertEqBorrowLog(EquipmentBorrowCustom equipmentBorrowCustom) throws Exception;
 }

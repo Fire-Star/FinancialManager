@@ -7,6 +7,7 @@ public class EquipmentBorrow {
     private String useBy;
     private String doTime;
     private String useByDepart;
+    private String borDetail;
 
     @Override
     public String toString() {
@@ -17,6 +18,7 @@ public class EquipmentBorrow {
                 ", useBy='" + useBy + '\'' +
                 ", doTime='" + doTime + '\'' +
                 ", useByDepart='" + useByDepart + '\'' +
+                ", borDetail='" + borDetail + '\'' +
                 '}';
     }
 
@@ -66,5 +68,13 @@ public class EquipmentBorrow {
 
     public void setUseByDepart(String useByDepart) {
         this.useByDepart = useByDepart;
+    }
+
+    public String getBorDetail() {
+        return borDetail;
+    }
+
+    public void setBorDetail(String borDetail) {
+        this.borDetail = borDetail;
     }
 }

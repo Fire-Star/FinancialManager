@@ -67,6 +67,11 @@
         .addBorRow{
             padding-top: 20px;
         }
+        .borDiv{
+            height: 100%;
+            width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -272,6 +277,7 @@
                                 <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
                             </div>
                         </div>
+                        <div class="borDiv">
                         <form id="formBorrowSubmit" class="form-horizontal">
                             <div id="eqUsedDiv" hidden>
                                 <div class="form-group row">
@@ -297,7 +303,8 @@
                                                         v-model="eqBorNameValue"
                                                         data-placement="top" >
                                                     <option selected value="">--使用人--</option>
-                                                    <option v-for="(item , index) in eqBorName" :value="item.name">{{item.name}}</option>
+                                                    <option v-for="(item , index) in eqBorName" :value="item.staffId">
+                                                        {{item.name}}</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -307,7 +314,7 @@
                                     <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
                                     <div class="col-sm-6 addAreaDiv">
                                     <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUsedDetail"
-                                              name="eqAddBorUsedDetail"></textarea>
+                                              name="eqAddBorUsedDetail" v-model="eqBorDetailValue"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -325,8 +332,7 @@
                                                     <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                                 </select>
                                                 <select class="btn btn-default form-control select-"
-                                                        id="eqAddBorNoUsedUser" data-toggle="tooltip"
-                                                        @change="loadBorUserName" v-model="eqBorNoBelongValue" data-placement="top" >
+                                                        id="eqAddBorNoUsedUser" data-toggle="tooltip" v-model="eqBorNoBelongValue" data-placement="top" >
                                                     <option selected value="">--部门--</option>
                                                     <option v-for="(item , index) in eqBorNoBelong" :value="item.department">{{item.department}}</option>
                                                 </select>
@@ -338,7 +344,7 @@
                                     <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
                                     <div class="col-sm-6 addAreaDiv">
                                     <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorNoUsedDetail"
-                                              name="eqAddBorNoUsedDetail"></textarea>
+                                              name="eqAddBorNoUsedDetail" v-model="eqBorNoDetailValue"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -347,15 +353,16 @@
                                     <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
                                     <div class="col-sm-6 addAreaDiv">
                                     <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUnUsedDetail"
-                                              name="eqAddBorUnUsedDetail"></textarea>
+                                              name="eqAddBorUnUsedDetail" v-model="eqBorUnDetailValue"></textarea>
                                     </div>
                                 </div>
                             </div>
                         </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">提交</button>
+                        <button type="button" class="btn btn-primary" @click="submitBorlog()">提交</button>
                     </div>
                 </div>
             </div>
@@ -417,10 +424,14 @@
         eqBorNameValue:"",
         eqBorCityValue:"",
         eqBorBelongValue:"",
+        eqBorDetailValue:"",
         //设备借调记录的数据闲置
         eqBorNoBelong:[],
         eqBorNoCityValue:"",
-        eqBorNoBelongValue:""
+        eqBorNoBelongValue:"",
+        eqBorNoDetailValue:"",
+        //
+        eqBorUnDetailValue:""
     };
     var vm = new Vue({
         el:'.app',
@@ -459,16 +470,21 @@
                 });
             },
             loadBorUserName(){
-                $.get("../../staff/findStaffByCity?department=" + vm.eqBorBelongValue + "&city="
-                    + vm.eqBorCityValue,function (data, status) {
-                    alert(JSON.stringify(data));
-                    console.log(data);
-                    if (status == "success") {
-                        var _userData = eval(data);
-                        console.log(_userData);
-                        vm.eqBorName = _userData;
-                    }
-                });
+                if( vm.eqBorBelongValue!=""&&vm.eqBorCityValue!=""){
+                    $.get("../../staff/findStaffByCity?department=" + vm.eqBorBelongValue + "&city="
+                        + vm.eqBorCityValue,function (data, status) {
+                        alert(JSON.stringify(data));
+                        console.log(data);
+                        if (status == "success") {
+                            var _userData = eval(data);
+                            console.log(_userData);
+                            vm.eqBorName = _userData;
+                        }
+                    });
+                }else {
+                    //alert();
+                }
+
             },
             loadBorNoBelongDep(){
                 $.get("../../department/findDepartment?city=" + vm.eqBorNoCityValue, function (data, status) {
@@ -658,6 +674,18 @@
                 beDepData = data.belongDepart;
                 eqStateData = data.eqStateId;
                 eqPurDate = data.purchasTime;
+                //预制设备使用状态
+                if(data.eqStateId == "使用"){
+                    $('#eqUsed').attr("disabled",true);
+                }
+                if(data.eqStateId == "闲置"){
+                    $('#eqNoUsed').attr("disabled",true);
+                }
+                if(data.eqStateId == "报废"){
+                    $('#eqUsed').attr("disabled",true);
+                    $('#eqNoUsed').attr("disabled",true);
+                    $('#eqUnUsed').attr("disabled",true);
+                }
             },
             fail: function (err, status) {
                 alert("设备详情加载时获取数据失败！");
@@ -737,7 +765,18 @@
         $('#eqAddFixDetail').val("");
     };
     function addBorrowLog() {
-        
+        vm.eqBorNameValue="";
+        vm.eqBorCityValue="";
+        vm.eqBorBelongValue="";
+        vm.eqBorDetailValue="";
+        vm.eqBorName="";
+        vm.eqBorBelong="";
+        vm.eqBorNoBelong="";
+        vm.eqBorNoBelong="";
+        vm.eqBorNoCityValue="";
+        vm.eqBorNoBelongValue="";
+        vm.eqBorNoDetailValue="";
+        vm.eqBorUnDetailValue="";
     };
     //给radio绑定点击事件
     $("#eqUsed").bind("click", function(event) {
@@ -806,6 +845,81 @@
                 });
         }
         $("#fixModal").modal('hide');
+    }
+    function submitBorlog() {
+        var val=$('input:radio[name="borrowState"]:checked').val();
+        if(val==null){
+            alert("没有选中状态，请重新选择！");
+        }else{
+            alert(val);
+            var eqID = $('#eqSubmitId').val();
+            if(val=="使用"){
+                if(eqID==""||vm.eqBorCityValue==""||vm.eqBorBelongValue==""||vm.eqBorNameValue==""||vm.eqBorDetailValue=="") {
+                    alert("字段不能为空！！");
+                    return;
+                }else{
+                    $.post("../../equipBor/addEqBorLog",
+                        {
+                            eqID : eqID,
+                            eqState:val,
+                            eqBorCity : vm.eqBorCityValue,
+                            eqBorBelong : vm.eqBorBelongValue,
+                            eqBorName : vm.eqBorNameValue,
+                            eqBorDetail: vm.eqBorDetailValue
+                        },
+                        function(data,status) {
+                            var _data = data;
+                            if(_data!="s"){
+                                alert(_data);
+                            }
+                        });
+                }
+            }else if(val=="闲置"){
+                if(eqID==""||vm.eqBorNoCityValue==""||vm.eqBorNoBelongValue==""||vm.eqBorNoNameValue==""||vm.eqBorNoDetailValue=="") {
+                    alert("字段不能为空！！");
+                }else{
+                    $.post("../../equipBor/addEqBorLog",
+                        {
+                            eqID : eqID,
+                            eqState:val,
+                            eqBorNoCity : vm.eqBorNoCityValue,
+                            eqBorNoBelong : vm.eqBorNoBelongValue,
+                            eqBorNoDetail: vm.eqBorNoDetailValue
+                        },
+                        function(data,status) {
+                            var _data = data;
+                            if(_data!="s"){
+                                alert(_data);
+                            }
+                        });
+                }
+            }else if(val=="报废"){
+                if(eqID==""||vm.eqBorUnDetailValue=="") {
+                    alert("字段不能为空！！");
+                }else{
+                    $.post("../../equipBor/addEqBorLog",
+                        {
+                            eqID : eqID,
+                            eqState:val,
+                            eqBorUnDetail : vm.eqBorUnDetailValue
+                        },
+                        function(data,status) {
+                            var _data = data;
+                            if(_data!="s"){
+                                alert(_data);
+                            }
+                        });
+                }
+            }else {
+                alert("选择的设备状态不对，请重新选择！");
+            }
+            $("#borrowModal").modal('hide');
+            checkDetail(eqID);
+        }
+    }
+    function checkDetail(equipId) {
+        window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
+        alert(equipId);
     }
 </script>
 </html>

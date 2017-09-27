@@ -47,4 +47,13 @@ public class EquipmentBorrowService {
         }
         return equipmentBorrowCustomList;
     }
+
+    public void insertEqBorrowLog(EquipmentBorrowCustom equipmentBorrowCustom) throws Exception{
+        try {
+            equipmentBorrowMapper.insertEqBorrowLog(equipmentBorrowCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            new SimpleException("borrowLogErrorType","数据库插入借出记录时出现错误");
+        }
+    }
 }
