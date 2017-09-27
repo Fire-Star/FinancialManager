@@ -1,5 +1,6 @@
 package cn.ejie.web.interceptor;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,6 +27,11 @@ public class OptionsInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         System.out.println("请求路径为-------->"+request.getRequestURI());
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if("anonymousUser".equals(userName)){
+            response.sendRedirect(request.getContextPath()+"/user/loginPage");
+            return false;
+        }
         return true;
     }
 
