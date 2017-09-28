@@ -26,18 +26,16 @@ public class OptionsInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
-        System.out.println("请求路径为-------->"+request.getRequestURI());
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        System.out.println("ContextPath-------->"+request.getContextPath());
-        if(((request.getContextPath()+"/user/loginPage").equals(request.getRequestURI())||
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        if(((request.getContextPath()+"/user/loginPage").equals(request.getRequestURI())||//登录时，不会拦截的网页
                 (request.getContextPath()+"/user/virifyImage").equals(request.getRequestURI())||
                 (request.getContextPath()+"/user/login").equals(request.getRequestURI()))
                 &&"anonymousUser".equals(userName)){
             return true;
         }
 
-        if("anonymousUser".equals(userName)){
+        if("anonymousUser".equals(userName)){//如果登录状态失效，就会跳转到登录页面。
             response.sendRedirect(request.getContextPath()+"/user/loginPage");
             return false;
         }

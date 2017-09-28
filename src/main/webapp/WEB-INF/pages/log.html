@@ -13,6 +13,11 @@
 	<script src="../res/js/vue.min.js"></script>
 </head>
 <body>
+	<script>
+		if(window.parent.document.getElementById("iframeContent")){
+			window.parent.location=window.parent.location;
+		}
+	</script>
 	<div class="app">
 		<div class="log-in-container">
 			<div class="log-in-bg"></div>
