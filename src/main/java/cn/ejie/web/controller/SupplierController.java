@@ -276,4 +276,49 @@ public class SupplierController {
         System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
+
+    @RequestMapping("/supplier/editSupDetail")
+    public void editSupDetail(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("编辑运营商详细信息......");
+        String supId = "";
+        String supName = "";
+        String supCont = "";
+        String supTel = "";
+        String supDate = "";
+        if(!"".equals(request.getParameter("supId"))&&request.getParameter("supId")!=null){
+            supId = request.getParameter("supId");
+        }
+        if(!"".equals(request.getParameter("supName"))&&request.getParameter("supName")!=null){
+            supName = request.getParameter("supName");
+        }
+        if(!"".equals(request.getParameter("supCont"))&&request.getParameter("supCont")!=null){
+            supCont = request.getParameter("supCont");
+        }
+        if(!"".equals(request.getParameter("supTel"))&&request.getParameter("supTel")!=null){
+            supTel = request.getParameter("supTel");
+        }
+        if(!"".equals(request.getParameter("supDate"))&&request.getParameter("supDate")!=null){
+            if(request.getParameter("supDate").contains("年")){
+                supDate = StringUtils.zhDateStrToENDateStr(request.getParameter("supDate"));
+            }else{
+                supDate = request.getParameter("supDate");
+            }
+        }
+        System.out.println("supId:"+supId+" supName:"+supName+" supCont:"+supCont+" supTel:"+supTel+" supDate:"+supDate);
+        SupplierCustom supplierCustom = new SupplierCustom();
+        try {
+            supplierCustom = supplierService.findSupplierById(supId);
+            supplierCustom.setName(supName);
+            supplierCustom.setContactName(supCont);
+            supplierCustom.setTel(supTel);
+            supplierCustom.setContractTime(supDate);
+            supplierService.updateSup(supplierCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "更新运营商详情时，数据库发生错误，修改信息失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        SimpleException.sendSuccessMessage(response,objectMapper);
+    }
 }

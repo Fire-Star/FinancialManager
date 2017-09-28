@@ -70,4 +70,11 @@ public interface SupplierMapper {
      * @throws Exception
      */
     public Double sumTotalMoney(String supName) throws Exception;
+
+    /**
+     *
+     * @param supplierCustom
+     * @throws Exception
+     */
+    public void updateSup(SupplierCustom supplierCustom) throws Exception;
 }

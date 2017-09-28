@@ -33,4 +33,7 @@
     <select id="sumTotalMoney" parameterType="String" resultType="java.lang.Double">
         select COALESCE(sum(purchas_price),0) from equipment where supplier = #{supName}
     </select>
+    <update id="updateSup" parameterType="cn.ejie.pocustom.SupplierCustom">
+        update supplier set name = #{name},contact_name = #{contactName},tel = #{tel},contract_time = #{contractTime} where id=#{id}
+    </update>
 </mapper>

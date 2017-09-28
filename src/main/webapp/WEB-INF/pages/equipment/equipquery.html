@@ -184,7 +184,7 @@
             },
             loadDep() {
                 $.get("../department/findDepartment", function (data, status) {
-                    alert("loadDep");
+                    //alert("loadDep");
                 });
                 //$('#depIDOp').attr('selected', true);
             },
@@ -330,7 +330,7 @@
     };
     function checkDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-        alert(equipId);
+        //alert(equipId);
     }
     /**
      * 加载当前用户的所有设备类型
