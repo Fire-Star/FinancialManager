@@ -585,7 +585,14 @@ public class EquipmentController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            insertXslEquipment(fileName);
+
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
+    }
+
+    private void insertXslEquipment(String fileName) {
+
     }
 }
