@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <title>员工添加</title>
     <!-- 引入 BootStrap 全家桶 -->
     <script src="../res/js/jquery-3.2.1.min.js"></script>
@@ -79,6 +80,15 @@
         .pibu{
             vertical-align: bottom;position: absolute;right: 250px;
         }
+        .eqUpButton{
+            width: 280px !important;
+        }
+        .file-up-in:hover{
+            cursor: pointer;
+        }
+        #fileSource{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -91,8 +101,32 @@
     </ul><br>
         <span class="h4 text-primary">设备基本信息添加</span>
         <div class="borderx">
-            <button class="btn btn-success pibu">批量导入</button>
+            <button class="btn btn-success pibu" data-toggle="modal" data-target="#pibudialog">批量导入</button>
         </div>
+    <div class="modal fade" id="pibudialog" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">批量导入</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="fileUpload">
+                        <input type="file" id="fileSource">
+                    </form>
+                    <div class="input-group">
+                        <input type="text" class="form-control file-up-in" id="fileSource-show" readonly placeholder="请选择文件..." @click="choseFile()">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button" @click="uploadFileAction()">上传并插入</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
         <div class="content-line">
             <div class="item-left content-item">
                 <div class="item-left item-name">
@@ -237,8 +271,14 @@
 </div>
 </body>
 <script>
+    $("#fileSource")[0].onchange = function() {
+        alert(document.getElementById("fileSource").value);
+        document.getElementById("fileSource-show").value = document.getElementById("fileSource").value;
+    }
 
-
+    function choseFile() {
+        $("#fileSource").click();
+    }
     $("#equipmentType").change(function () {
         loadEqName();
     });
@@ -445,5 +485,42 @@
         autoclose: true,
         todayHighlight: true
     });
+</script>
+
+<script>
+    $("input[type=file]").change(function(e){
+        var path = e.target.value;
+        var lastIndex = path.lastIndexOf('\\')+1;
+        var value = path.substring(lastIndex);
+        $('#fileSource-show')[0].value = value;
+    });
+
+    function uploadFileAction() {
+        if($('#fileSource-show')[0].value==""){
+            vm.modalStatus = '请选择文件！';
+            $('#modalButton').click();
+            return;
+        }
+        // 创建
+        var form_data = new FormData();
+        // 获取文件
+        var file_data = $("#fileSource").prop("files")[0];
+        // 把所以表单信息
+        form_data.append("eqXsl", file_data);
+        $.ajax({
+            type: "POST",
+            url: "upload",
+            processData: false,  // 注意：让jQuery不要处理数据
+            contentType: false,  // 注意：让jQuery不要设置contentType
+            data: form_data,
+            success: function(data){//成功方法
+
+                alert(data);
+
+            },error:function(){//请求失败方法
+                alert("系统繁忙,请稍后再试！");
+            }
+        });
+    }
 </script>
 </html>
