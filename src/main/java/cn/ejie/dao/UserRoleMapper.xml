@@ -9,4 +9,17 @@
     <select id="findRoleByUserName" resultType="java.lang.String">
         SELECT role.rname FROM user_role,role WHERE role.`rid`=user_role.`rid` AND user_role.username = #{username}
     </select>
+    <insert id="insertUserRole" parameterType="cn.ejie.pocustom.UserRoleCustom">
+        <selectKey keyProperty="userId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        <!--<selectKey keyProperty="roleId" order="BEFORE" resultType="java.lang.String">
+            SELECT rid FROM role WHERE rname = #{roleId}
+        </selectKey>-->
+        INSERT INTO user_role(urid,username,rid) VALUES(#{userId},#{userName},(SELECT rid FROM role  WHERE role.rname =
+        #{roleId}) )
+    </insert>
+    <delete id="deluserRoleByUserName" parameterType="String">
+        DELETE FROM user_role WHERE userName=#{username}
+    </delete>
 </mapper>
