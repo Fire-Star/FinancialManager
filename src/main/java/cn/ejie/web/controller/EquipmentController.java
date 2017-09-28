@@ -505,45 +505,6 @@ public class EquipmentController {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-    @RequestMapping("/equipment/upload")
-    public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
-        if(!file.isEmpty()) {
-            //获取文件类型
-            String contentType = file.getContentType();
-
-            System.out.println("contentType="+contentType);
-
-            if(!contentType.equals("")) {
-                //可以对文件类型进行检查
-            }
-            //获取input域的name属性
-            String name = file.getName();
-            System.out.println("name="+name);
-            //获取文件名，带扩展名
-            String originFileName = file.getOriginalFilename();
-            System.out.println("originFileName"+originFileName);
-            //获取文件扩展名
-            String extension = originFileName.substring(originFileName.lastIndexOf("."));
-            System.out.println(extension);
-            //获取文件大小，单位字节
-            long site = file.getSize();
-            System.out.println("size="+site);
-            if(site > MAX_FILE_SISE) {
-                //可以对文件大小进行检查
-            }
-            //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
-            //不推荐这么写，这里只是举例子，这么写会有并发问题
-            //应该采用一定的算法生成独一无二的的文件名
-            String fileName = UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
-            try {
-                file.transferTo(new File(fileName));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            SimpleException.sendSuccessMessage(response,objectMapper);
-        }
-
         for (int i = 0; i < equipmentCustomList.size(); i++) {
             Map map = new HashMap();
             map.put("index",""+i);
@@ -587,6 +548,44 @@ public class EquipmentController {
         jsonArray = JSONArray.fromObject(list);
         System.out.println("查询统计数据："+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
 
+    @RequestMapping("/equipment/upload")
+    public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
+        if(!file.isEmpty()) {
+            //获取文件类型
+            String contentType = file.getContentType();
+
+            System.out.println("contentType="+contentType);
+
+            if(!contentType.equals("")) {
+                //可以对文件类型进行检查
+            }
+            //获取input域的name属性
+            String name = file.getName();
+            System.out.println("name="+name);
+            //获取文件名，带扩展名
+            String originFileName = file.getOriginalFilename();
+            System.out.println("originFileName"+originFileName);
+            //获取文件扩展名
+            String extension = originFileName.substring(originFileName.lastIndexOf("."));
+            System.out.println(extension);
+            //获取文件大小，单位字节
+            long site = file.getSize();
+            System.out.println("size="+site);
+            if(site > MAX_FILE_SISE) {
+                //可以对文件大小进行检查
+            }
+            //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
+            //不推荐这么写，这里只是举例子，这么写会有并发问题
+            //应该采用一定的算法生成独一无二的的文件名
+            String fileName = UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+            try {
+                file.transferTo(new File(fileName));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            SimpleException.sendSuccessMessage(response,objectMapper);
+        }
     }
 }
