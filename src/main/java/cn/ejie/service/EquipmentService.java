@@ -4,13 +4,11 @@ import cn.ejie.dao.EquipmentMapper;
 import cn.ejie.dao.EquipmentStateMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
-import cn.ejie.po.Staff;
 import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.nio.cs.ext.EUC_CN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -217,5 +215,45 @@ public class EquipmentService {
             e.printStackTrace();
         }
         return equipmentCustomList;
+    }
+
+    public List<EquipmentCustom> findAllKindsEqByCityId(String cityId) throws Exception{
+        List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
+        try {
+            equipmentCustomList = equipmentMapper.findAllKindsEqByCityId(cityId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return equipmentCustomList;
+    }
+
+    public Integer countEqForStatis(String eqName,String brand,String cityId) throws Exception{
+        Integer num = 0;
+        try {
+            num = equipmentMapper.countEqForStatis(eqName,brand,cityId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return num;
+    }
+
+    public Double sumEqMoneyForStatis(String eqName,String brand,String cityId) throws Exception{
+        Double sum = 0.0;
+        try {
+            sum = equipmentMapper.sumEqMoneyForStatis(eqName,brand,cityId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sum;
+    }
+
+    public Integer countEqForStatisByState(String eqName,String brand,String cityId,String stateId) throws Exception{
+        Integer num = 0;
+        try {
+            num = equipmentMapper.countEqForStatisByState(eqName,brand,cityId,stateId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return num;
     }
 }
