@@ -40,10 +40,10 @@
             width: 100%;
         }
         .tablecontent_borrow{
-            height: 30%;
+            height: 40%;
         }
         .tablecontent_fix{
-            height: 30%;
+            height: 20%;
         }
         .bootstrap-table{
             height: 100%;
@@ -114,9 +114,9 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="time">签约时间:</label>
+                            <label class="control-label col-sm-1" for="time">购买时间：</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
+                                <input type="text" class="form-control" id="time" placeholder="购买时间..." readonly="enable">
                             </div>
                             <div class="col-sm-1" style="text-align:left;">
                                 <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
@@ -241,7 +241,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">签约时间：</label>
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">购买时间：</label>
                             <div class="col-sm-3">
                                 <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
@@ -543,7 +543,7 @@
                     field: 'userName',
                     title: '使用人',
                     formatter:function(value,row,index) {
-                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\'' + row.userName + '\')">' + value + '</a> ';
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\'' + row.userId + '\')">' + value + '</a> ';
                         return e;
                     }
                 }, {
@@ -610,15 +610,14 @@
         };
         return oInit;
     };
-    function checkDetail(suppId) {
-        //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
-        alert("要编辑的设备ID："+suppId);
+    function checkDetail(staffId) {
+        window.parent.document.getElementById('iframeContent').src="staff/detail?staffId="+staffId;
     };
     function preLoadEqName() {
         /**
          * 页面加载之前加载设备名称选项
          */
-        alert("现在在执行加载name");
+        //alert("现在在执行加载name");
         $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
             if (status == "success") {
                 var _equipmentName = eval(data);
@@ -644,7 +643,7 @@
     $(document).ready(function(){
         var equipId = $.getUrlParam('equipId');
         var param = {"equipId":equipId};
-        alert("页面显示之前加在数据,设备ID："+equipId);
+        //alert("页面显示之前加在数据,设备ID："+equipId);
         $.ajax({
             url: "findEquipByEquipID",
             type: 'post',
@@ -852,7 +851,7 @@
         if(val==null){
             alert("没有选中状态，请重新选择！");
         }else{
-            alert(val);
+            //alert(val);
             var eqID = $('#eqSubmitId').val();
             if(val=="使用"){
                 if(eqID==""||vm.eqBorCityValue==""||vm.eqBorBelongValue==""||vm.eqBorNameValue==""||vm.eqBorDetailValue=="") {
@@ -915,12 +914,11 @@
                 alert("选择的设备状态不对，请重新选择！");
             }
             $("#borrowModal").modal('hide');
-            checkDetail(eqID);
+            checkDetailEqDetail(eqID);
         }
     }
-    function checkDetail(equipId) {
+    function checkDetailEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-        alert(equipId);
     }
 </script>
 </html>

@@ -81,6 +81,7 @@ public class EquipmentBorrowController {
                 }
             }
             map.put("userName",userName);
+            map.put("userId",equipmentBorrowCustomList.get(i).getUseBy());
             String position = "";
             if(!"".equals(equipmentBorrowCustomList.get(i).getUseByDepart())){
                 try {

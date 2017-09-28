@@ -449,58 +449,61 @@ public class EquipmentController {
             e.printStackTrace();
         }
         String role = userRoleService.findRoleByUserName(userCustom.getUsername());
-        String city = "";
+        String cityId = "";
         try {
-            city = userService.findCityIdByUserName(userCustom.getUsername());
+            cityId = userService.findCityIdByUserName(userCustom.getUsername());
         }catch (Exception e){
             e.printStackTrace();
-            city = "";
+            cityId = "";
         }
         //searchByCityId
         String requestCity = "";
+        String reQuestCityId = "";
         if(request.getParameter("city")!=null){
             requestCity = request.getParameter("city");
         }
         List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
         List<Object> list = new ArrayList<Object>();
-        if(!"ROLE_ADMIN".equals(role) && !"".equals(city)){
-            //Admin
-
-        }else if("ROLE_ADMIN".equals(role)){
-            try{
-                equipmentCustomList = equipmentService.findAllKindsEq();
-            }catch (Exception e){
-                e.printStackTrace();
+        //获取状态ID
+        String eqBeUsed = "";
+        String eqNoUsed = "";
+        String eqReject = "";
+        try {
+            if(!"".equals(requestCity)&&requestCity!=null){
+                reQuestCityId = cityService.findCityIDByCity(requestCity);
             }
-            System.out.println("equipmentCustomList:"+JSONArray.fromObject(equipmentCustomList)+" " +
-                    "num:"+equipmentCustomList.size());
-            for (int i = 0; i < equipmentCustomList.size(); i++) {
-                Map map = new HashMap();
-                map.put("index",""+i);
-                String belongCity = "";
-                try {
-                    belongCity = cityService.findCityNameByCityID(equipmentCustomList.get(i).getCity());
-                }catch (Exception e){
-                    e.printStackTrace();
+            eqBeUsed = equipmentStateService.findStateIDByStateName("使用");
+            eqNoUsed = equipmentStateService.findStateIDByStateName("闲置");
+            eqReject = equipmentStateService.findStateIDByStateName("报废");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("cityId:"+cityId+" requestCity:"+requestCity+"reQuestCityId:"+reQuestCityId);
+        try{
+            if(!"ROLE_ADMIN".equals(role) && !"".equals(cityId)){
+                equipmentCustomList = equipmentService.findAllKindsEqByCityId(cityId);
+                System.out.println("普通用户");
+            }else if("ROLE_ADMIN".equals(role)){
+                //Admin
+                if(!"".equals(reQuestCityId)&&reQuestCityId!=null){
+                    equipmentCustomList = equipmentService.findAllKindsEqByCityId(reQuestCityId);
+                    System.out.println("查询的城市："+requestCity);
+                }else if("".equals(requestCity)){
+                    equipmentCustomList = equipmentService.findAllKindsEq();
+                    System.out.println("查询全部");
+                }else {
+                    String message = "统计设备时，数据库发生错误！";
+                    SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                    return;
                 }
-                map.put("city",belongCity);
-                map.put("eqType",equipmentCustomList.get(i).getEqType());
-                map.put("eqName",equipmentCustomList.get(i).getEqName());
-                map.put("eqBrand",equipmentCustomList.get(i).getBrandName());
-                map.put("eqNum","");
-                map.put("eqBeUsed","");
-                map.put("eqNoUsed","");
-                map.put("eqReject","");
-                map.put("totleValue","");
-                list.add(map);
+                System.out.println("管理员");
+            }else{
+                String message = "统计设备时，数据库发生错误！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
             }
-            JSONArray jsonArray = new JSONArray();
-            jsonArray = JSONArray.fromObject(list);
-            SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
-        }else{
-            String message = "统计设备时，数据库发生错误！";
-            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
-            return;
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
     @RequestMapping("/equipment/upload")
@@ -540,5 +543,50 @@ public class EquipmentController {
             }
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
+
+        for (int i = 0; i < equipmentCustomList.size(); i++) {
+            Map map = new HashMap();
+            map.put("index",""+i);
+            String belongCity = "";
+            int eqNum = 0;
+            String belongCityId = equipmentCustomList.get(i).getCity();
+            String eqTypeValue = equipmentCustomList.get(i).getEqType();
+            String eqNameValue = equipmentCustomList.get(i).getEqName();
+            String eqBrandValue = equipmentCustomList.get(i).getBrandName();
+            int eqBeUsedNum = 0;
+            int eqNoUsedNum = 0;
+            int eqRejectNum = 0;
+            Double totleValue = 0.0;
+            try {
+                belongCity = cityService.findCityNameByCityID(belongCityId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("city",belongCity);
+            map.put("eqType",eqTypeValue);
+            map.put("eqName",eqNameValue);
+            map.put("eqBrand",eqBrandValue);
+
+            try {
+                eqNum = equipmentService.countEqForStatis(eqNameValue,eqBrandValue,belongCityId);
+                eqBeUsedNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqBeUsed);
+                eqNoUsedNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqNoUsed);
+                eqRejectNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqReject);
+                totleValue = equipmentService.sumEqMoneyForStatis(eqNameValue,eqBrandValue,belongCityId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("eqNum",eqNum+"");
+            map.put("eqBeUsed",eqBeUsedNum+"");
+            map.put("eqNoUsed",eqNoUsedNum+"");
+            map.put("eqReject",eqRejectNum+"");
+            map.put("totleValue",totleValue+"");
+            list.add(map);
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.fromObject(list);
+        System.out.println("查询统计数据："+jsonArray.toString());
+        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+
     }
 }

@@ -302,7 +302,6 @@
     };
     function checkDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-        alert(equipId);
     }
     function editData() {
         vm.city = preStaffCity;
@@ -324,10 +323,9 @@
     };
 
     $(document).ready(function(){
-        alert("员工详情界面数据预加载");
+        //alert("员工详情界面数据预加载");
         var staffId = $.getUrlParam('staffId');
         var param = {"staffId":staffId};
-        alert(staffId);
         $.ajax({
             url: "findStaffByStaffID",
             type: 'post',

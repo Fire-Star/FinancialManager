@@ -96,4 +96,12 @@ public class SupplierService {
         return total;
     }
 
+    public void updateSup(SupplierCustom supplierCustom) throws Exception{
+        try {
+            supplierMapper.updateSup(supplierCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
