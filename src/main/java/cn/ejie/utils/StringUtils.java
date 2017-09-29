@@ -9,7 +9,27 @@ import java.util.Date;
 public class StringUtils {
     private static SimpleDateFormat enDateFormate = new SimpleDateFormat("yyyy-MM-dd");
     private static SimpleDateFormat zhDateFormate = new SimpleDateFormat("yyyy年MM月dd日");
+    private static SimpleDateFormat normalFormate = new SimpleDateFormat("yyyy-MM-dd");
 
+    public static String getNormalTime(Date date){
+        return normalFormate.format(date);
+    }
+    public static boolean isNormalTime(String time){
+        try {
+            normalFormate.parse(time);
+        } catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
+    public static Date paseNormalTime(String time){
+        try {
+            return normalFormate.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /**
      * 对字符串通过指定字符串填充到指定长度！
      * @param origin
@@ -48,6 +68,18 @@ public class StringUtils {
         return targetDateStr;
     }
 
+    public static String enDateStrToZHDateStr(String enDateStr){
+        Date date = null;
+        String targetDateStr = null;
+        try {
+            date = enDateFormate.parse(enDateStr);
+            targetDateStr = zhDateFormate.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return targetDateStr;
+    }
+
     /**
      * 计算与参数时间与现在所差的月数
      *
@@ -73,6 +105,16 @@ public class StringUtils {
         result = (c1.get(Calendar.YEAR) - c2.get(Calendar.YEAR)) * 12 + c1.get(Calendar.MONTH) - c2.get(Calendar.MONTH);
 
         return result;
-
+    }
+    public static String getStrPreNum(String str){
+        StringBuilder resultNum = new StringBuilder();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            if(!Character.isDigit(str.charAt(i))){
+                break;
+            }
+            resultNum.append(str.charAt(i));
+        }
+        return resultNum.toString();
     }
 }

@@ -1,10 +1,12 @@
 package cn.ejie.service;
 
 import cn.ejie.dao.EquipmentMapper;
+import cn.ejie.dao.EquipmentNameMapper;
 import cn.ejie.dao.EquipmentStateMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentCustom;
+import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
@@ -12,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -21,11 +24,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -52,11 +54,18 @@ public class EquipmentService {
     @Autowired
     private EquipmentTypeService equipmentTypeService;
 
+    @Autowired
+    private SupplierService supplierService;
+
+    @Autowired
+    private EquipmentNameService equipmentNameService;
+
+    @Autowired
+    private EquipmentNameMapper equipmentNameMapper;
+
     private String errorType = "errorType";
 
     public void insertSingleEquipment(EquipmentCustom equipmentCustom) throws Exception{
-        System.out.println(equipmentCustom);
-        System.out.println(equipmentCustom.getBuyCount());
         BeanPropertyValidateUtils.validateIsEmptyProperty(equipmentCustom);//验证Bean属性是否为空！！！
         String countStr = equipmentCustom.getBuyCount();
 
@@ -67,6 +76,25 @@ public class EquipmentService {
             }
         }
         Integer iCount = Integer.parseInt(countStr);
+
+        String supplier = equipmentCustom.getSupplier();//供应商数据校验
+        String supplierID = supplierService.findSupIdBySupName(supplier);
+        if(supplierID == null){
+            throw new SimpleException(errorType,"设备供应商不存在！");
+        }
+        String eqType = equipmentCustom.getEqType();//设备类型数据校验
+        String eqTypeID = equipmentTypeService.findEquipmentTypeIDByTypeName(eqType);
+        if(eqTypeID == null){
+            throw new SimpleException(errorType,"设备类型不存在！");
+        }
+        String eqName = equipmentCustom.getEqName();
+        EquipmentNameCustom equipmentNameCustom = new EquipmentNameCustom();
+        equipmentNameCustom.setEqTypeId(eqTypeID);
+        equipmentNameCustom.setEqName(eqName);
+        Integer eqNameCount = equipmentNameService.findEquipmentNameCountByEquipmentNameAndType(equipmentNameCustom);
+        if(eqNameCount <= 0){
+            throw new SimpleException(errorType,"设备名称不存在！");
+        }
 
         String stateID = equipmentStateMapper.findStateIDByStateName(inserState);//查找ID并设置ID
         equipmentCustom.setEqStateId(stateID);
@@ -317,14 +345,16 @@ public class EquipmentService {
      * @param fileName
      */
     private void insertXslEquipment(String fileName) throws Exception{
-        boolean bRow = true,bCell = true;
+        List<EquipmentCustom> allEquipments = new LinkedList<>();
         try {
-            InputStream inputStream = new FileInputStream(fileName);//根据文件绝对路径
-            XSSFWorkbook wb = new XSSFWorkbook(inputStream);
-            int sheetCount = wb.getNumberOfSheets();//获取xls中的Sheet页数
+            XSSFWorkbook wb = new XSSFWorkbook(fileName);
+            int sheetCount = 1;//获取xls中的Sheet页数
             for (int sheet = 0; sheet < sheetCount; sheet++) {
-                XSSFSheet tempSheet = wb.getSheetAt(sheet);//tempSheet不可能为null
-                int rowCount = tempSheet.getLastRowNum();//获取当前Sheet页中包括的行数
+                XSSFSheet tempSheet = wb.getSheetAt(sheet);
+                if(tempSheet == null){
+                    throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
+                }
+                int rowCount = tempSheet.getLastRowNum()+1;//获取当前Sheet页中包括的行数
                 for (int row = 0; row < rowCount; row++) {
                     XSSFRow tempRow = tempSheet.getRow(row);//获取当前页中的每一行
                     if(row == 0 && tempRow != null){
@@ -352,43 +382,120 @@ public class EquipmentService {
                         if(tempCell == null){//当前单元格也可能为null，因为可以在excell中被删除。
                             continue;
                         }
-                        String fieldValue = getCellData(tempCell);
                         int index = cell-2;//获取下标
+                        if(index>=eqCellName.length){
+                            break;
+                        }
                         String fieldName = eqCellName[index];//获取列名
+                        String fieldValue = "";
+                        if(fieldName.equals("purchasTime")){
+                            Date tempDate = tempCell.getDateCellValue();
+                            if(tempDate == null){
+                                String time = tempCell.toString();
+                                if(time == null || time.equals("")){
+                                    continue;
+                                }else if(StringUtils.isNormalTime(time)){
+                                    tempDate = StringUtils.paseNormalTime(time);
+                                    fieldValue = StringUtils.getNormalTime(tempDate);
+                                    SimpleBeanUtils.setTargetFieldValue(tempEquipment,fieldName,fieldValue);//设置属性值
+                                }
+                                continue;
+                            }
+                            fieldValue = StringUtils.getNormalTime(tempDate);
+                        } else {
+                            fieldValue = tempCell.toString();
+                        }
                         SimpleBeanUtils.setTargetFieldValue(tempEquipment,fieldName,fieldValue);//设置属性值
                     }
-                    System.out.println(tempEquipment);
+                    tempEquipment.setX(row);
+                    tempEquipment.setY(14);
+                    allEquipments.add(tempEquipment);
                 }
             }
+            wb.close();//关闭流，释放资源
+
+            List<EquipmentCustom> errorEquipments = filterEquipmentDateAndInsert(allEquipments);
+
+            XSSFWorkbook wb2 = new XSSFWorkbook(fileName);
+            XSSFSheet sheet = wb2.getSheetAt(0);
+            sheet.getRow(1).createCell(14).setCellValue("错误信息");
+            if(sheet == null){
+                throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
+            }
+            for (EquipmentCustom equipmentCustom : allEquipments) {
+                String errorMessage = equipmentCustom.getMessage();
+                if(errorMessage == null || errorMessage.equals("")){
+                    errorMessage = "";
+                }
+                int x = equipmentCustom.getX();
+                int y = equipmentCustom.getY();
+
+                XSSFRow row = sheet.getRow(x);
+                XSSFCell cell = row.createCell(y);
+                cell.setCellValue(errorMessage);
+            }
+            OutputStream outputStream = new FileOutputStream("K:\\文件上传\\xxxxxxxxxx.xlsx");
+            wb2.write(outputStream);
+            wb2.close();
+            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
             throw new SimpleException(errorType,e.getMessage());
         }
     }
+    private List<EquipmentCustom> filterEquipmentDateAndInsert(List<EquipmentCustom> allEquipments) throws SimpleException {
+        List<EquipmentCustom> errorEquipments = new LinkedList<>();//错误的设备内容
 
-    public String getCellData(XSSFCell targetCell){
-        int type = targetCell.getCellType();
-        String value = "";//如果没有获取到数据就为 空字符串
-        switch (type){
-            case XSSFCell.CELL_TYPE_NUMERIC: // 0 当该单元格数据为数字的时候
-                value = String.valueOf(targetCell.getNumericCellValue());
-                break;
-            case XSSFCell.CELL_TYPE_STRING: // 1 当该单元格数据为字符串的时候
-                value = targetCell.getStringCellValue();
-                break;
-            case XSSFCell.CELL_TYPE_FORMULA: // 2 当该单元格数据为公式的时候
-                value = targetCell.getCellFormula();
-                break;
-            case XSSFCell.CELL_TYPE_BLANK: // 3 当该单元格数据为空的时候
-                break;
-            case XSSFCell.CELL_TYPE_BOOLEAN: // 4 当该单元格数据为布尔值的时候
-                value = String.valueOf(targetCell.getBooleanCellValue());
-                break;
-            case XSSFCell.CELL_TYPE_ERROR: // 5 当该单元格数据 ERROR 的时候,(故障)
-                value = "ERROR";
-                break;
+        for (EquipmentCustom allEquipment : allEquipments) {
+            String buyCount = allEquipment.getBuyCount();
+            if(buyCount == null || buyCount.equals("")){
+                allEquipment.setBuyCount("1");
+            }
+            buyCount = StringUtils.getStrPreNum(buyCount);
+            if(buyCount.equals("")){
+                buyCount = "1";
+            }
+            String time = allEquipment.getPurchasTime();
+            if(time == null || time.equals("")){
+                allEquipment.setMessage("采购时间不能为空！");
+                continue;
+            }
+            allEquipment.setBuyCount(buyCount);
+            allEquipment.setPurchasTime(StringUtils.enDateStrToZHDateStr(allEquipment.getPurchasTime()));
+            String eqState = allEquipment.getEqStateId();
+            String city = allEquipment.getCity();
+            String buyCity = allEquipment.getBuyCity();
+
+            if(eqState == null || eqState.equals("")){
+                eqState = "闲置";
+            }
+            String eqStateID = equipmentStateMapper.findStateIDByStateName(eqState);
+            if(eqStateID == null){
+                allEquipment.setMessage("设备状态错误！");
+                continue;
+            }
+
+            if(city == null || city.equals("")){
+                allEquipment.setMessage("设备归属城市不能为空！");
+                continue;
+            }
+
+            if(buyCity == null || buyCity.equals("")){
+                allEquipment.setMessage("设备采购城市不能为空！");
+                continue;
+            }
+            try {
+                insertSingleEquipment(allEquipment);
+                System.out.println(allEquipment);
+            }catch (Exception e){
+                String errorMeaasge = e.getMessage();
+                if(e instanceof SimpleException){
+                    errorMeaasge = ((SimpleException)e).getErrorMessage();
+                }
+                allEquipment.setMessage(errorMeaasge);
+            }
         }
-
-        return value;
+        return errorEquipments;
     }
+
 }

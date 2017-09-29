@@ -12,6 +12,35 @@ public class EquipmentCustom extends Equipment{
      */
     private String buyCount;//购买数量
 
+    private int x; //插入数据时的坐标x
+    private int y; //插入数据时的坐标y
+    private String message;//未插入的错误信息
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
     public String getBuyCount() {
         return buyCount;
     }
@@ -24,6 +53,9 @@ public class EquipmentCustom extends Equipment{
     public String toString() {
         return super.toString()+"EquipmentCustom{" +
                 "buyCount='" + buyCount + '\'' +
+                ", x=" + x +
+                ", y=" + y +
+                ", message='" + message + '\'' +
                 '}';
     }
 }
