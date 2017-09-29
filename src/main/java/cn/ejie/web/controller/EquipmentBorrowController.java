@@ -3,8 +3,10 @@ package cn.ejie.web.controller;
 import cn.ejie.dao.EquipmentBorrowMapper;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.Department;
+import cn.ejie.pocustom.DepartmentCustom;
 import cn.ejie.pocustom.EquipmentBorrowCustom;
 import cn.ejie.pocustom.EquipmentCustom;
+import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.lang.model.element.NestingKind;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DateFormat;
@@ -42,31 +45,58 @@ public class EquipmentBorrowController {
 
     @RequestMapping("/borrow/serch")
     public void borrowLogSerch(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("维修记录查询......");
         String eqId = "";
         if(request.getParameter("equipId") != null){
             eqId = request.getParameter("equipId");
         }
-        System.out.println("维修记录查询by eqid:"+eqId);
-
         List<EquipmentBorrowCustom> equipmentBorrowCustomList = new ArrayList<EquipmentBorrowCustom>();
         try {
             equipmentBorrowCustomList = equipmentBorrowService.findBorrowByEqId(eqId);
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("borrow:::::"+equipmentBorrowCustomList.size()+"       "+JSONArray.fromObject(equipmentBorrowCustomList).toString());
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < equipmentBorrowCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String, String>();
             map.put("index",i+"");
-            map.put("status",equipmentBorrowCustomList.get(i).getState());
-            map.put("userName",equipmentBorrowCustomList.get(i).getUseBy());
+            //状态名称获取
+            String stateName = "";
+            if (!"".equals(equipmentBorrowCustomList.get(i).getState())){
+                try {
+                    stateName = equipmentStateService.findStateNameById(equipmentBorrowCustomList.get(i).getState());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            map.put("status",stateName);
+            String userName = "";
+            StaffCustom staffCustom = new StaffCustom();
+            if (!"".equals(equipmentBorrowCustomList.get(i).getUseBy())) {
+                try {
+                    staffCustom = staffService.findStaffById(equipmentBorrowCustomList.get(i).getUseBy());
+                    userName = staffCustom.getName();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            map.put("userName",userName);
+            map.put("userId",equipmentBorrowCustomList.get(i).getUseBy());
+            String position = "";
+            if(!"".equals(equipmentBorrowCustomList.get(i).getUseByDepart())){
+                try {
+                    position = departmentService.findDepartmentById(equipmentBorrowCustomList.get(i).getUseByDepart());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
             map.put("operatorTime",equipmentBorrowCustomList.get(i).getDoTime());
-            map.put("position",equipmentBorrowCustomList.get(i).getUseByDepart());
+            map.put("position",position);
             list.add(map);
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
+        System.out.println("jsonArray:"+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 
@@ -101,8 +131,8 @@ public class EquipmentBorrowController {
             String eqId = "";
             String eqName = "";
             if(!"".equals(equipmentCustomList.get(i).getEqId())){
-                eqId = equipmentCustomList.get(i).getEqId().substring(0,6);
-                eqName = equipmentCustomList.get(i).getEqId().substring(6);
+                eqId = equipmentCustomList.get(i).getEqId().substring(0,8);
+                eqName = equipmentCustomList.get(i).getEqId().substring(8);
             }
             map.put("eqId",equipmentCustomList.get(i).getUseByDepart());
             map.put("eqOtherID",eqId);

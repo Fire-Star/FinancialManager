@@ -2,6 +2,7 @@ package cn.ejie.service;
 
 import cn.ejie.dao.UserRoleMapper;
 import cn.ejie.pocustom.UserCustom;
+import cn.ejie.pocustom.UserRoleCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,19 @@ public class UserRoleService {
         return roleName;
     }
 
+    public void insertUserRole(UserRoleCustom userRoleCustom)throws Exception{
+        try {
+            userRoleMapper.insertUserRole(userRoleCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deluserRoleByUserName(String userName) throws Exception{
+        try {
+            userRoleMapper.deluserRoleByUserName(userName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

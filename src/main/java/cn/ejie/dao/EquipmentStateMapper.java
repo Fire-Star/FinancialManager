@@ -17,4 +17,6 @@ public interface EquipmentStateMapper {
     List<EquipmentStateCustom> search();
 
     String findStateIDByStateName(String state);
+
+    String findStateNameById(String id);
 }

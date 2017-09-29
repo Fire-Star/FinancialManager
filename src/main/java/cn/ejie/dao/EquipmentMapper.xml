@@ -49,4 +49,25 @@
     <update id="updateEquipment" parameterType="cn.ejie.pocustom.EquipmentCustom">
         update equipment set eq_type = #{eqType},eq_name = #{eqName},belong_depart = #{belongDepart},purchas_date = #{purchasTime},supplier = #{supplier},eq_state = #{eqStateId},city = #{city} where eq_id=#{eqId}
     </update>
+    <!--<select id="findAllKindsEq" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT MIN(eq_id) eqId,eq_type as eqType,eq_name as eqName,city FROM equipment GROUP by city
+    </select>-->
+    <select id="findAllKindsEq" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT distinct eq_type as eqType,eq_name as eqName,brand_name as brandName,city FROM equipment
+    </select>
+    <select id="findAllKindsEqByCityId" resultType="cn.ejie.pocustom.EquipmentCustom">
+        SELECT distinct eq_type as eqType,eq_name as eqName,brand_name as brandName,city FROM equipment WHERE city =
+        #{cytyId}
+    </select>
+    <select id="countEqForStatis" resultType="int">
+        SELECT count(*) FROM equipment WHERE eq_name = #{arg0} AND brand_name = #{arg1} AND city = #{arg2}
+    </select>
+    <select id="sumEqMoneyForStatis" resultType="java.lang.Double">
+        select COALESCE(sum(purchas_price),0) from equipment where eq_name = #{arg0} AND brand_name = #{arg1} AND city
+         = #{arg2}
+    </select>
+    <select id="countEqForStatisByState" resultType="int">
+        SELECT count(*) FROM equipment WHERE eq_name = #{arg0} AND brand_name = #{arg1} AND city = #{arg2} AND
+        eq_state = #{arg3}
+    </select>
 </mapper>

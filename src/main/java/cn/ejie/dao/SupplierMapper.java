@@ -54,4 +54,27 @@ public interface SupplierMapper {
      * @throws Exception
      */
     public String findSupIdBySupName(String name) throws Exception;
+
+    /**
+     *
+     * @param supName
+     * @return
+     * @throws Exception
+     */
+    public int countEqNumBySupName(String supName) throws Exception;
+
+    /**
+     *
+     * @param supName
+     * @return
+     * @throws Exception
+     */
+    public Double sumTotalMoney(String supName) throws Exception;
+
+    /**
+     *
+     * @param supplierCustom
+     * @throws Exception
+     */
+    public void updateSup(SupplierCustom supplierCustom) throws Exception;
 }

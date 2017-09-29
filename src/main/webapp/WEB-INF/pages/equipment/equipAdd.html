@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <title>员工添加</title>
     <!-- 引入 BootStrap 全家桶 -->
     <script src="../res/js/jquery-3.2.1.min.js"></script>
@@ -72,6 +73,15 @@
             padding: 7px 0;
             text-align: right;
         }
+        .eqUpButton{
+            width: 280px !important;
+        }
+        .file-up-in:hover{
+            cursor: pointer;
+        }
+        #fileSource{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -79,11 +89,33 @@
         <div class="supplier-head">设备管理 > 新增设备信息</div>
         <div class="borderx">
             <span>设备基本信息添加</span>
-            <button class="btn btn-success pibu col-sm-1">批量导入</button>
+            <button class="btn btn-success pibu col-sm-1" data-toggle="modal" data-target="#pibudialog">批量导入</button>
         </div>
-        <!-- <div class="form-horizontal"> -->
-            <div class="row">
-            <!-- <div class="item-left content-item"> -->
+        <div class="modal fade" id="pibudialog" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel">批量导入</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="fileUpload">
+                            <input type="file" id="fileSource">
+                        </form>
+                        <div class="input-group">
+                            <input type="text" class="form-control file-up-in" id="fileSource-show" readonly placeholder="请选择文件..." @click="choseFile()">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" @click="uploadFileAction()">上传并导入</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="row">
                 <label class="control-label col-md-1 col-sm-2 col-xs-2" for="equipmentType">设备类型：</label>
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control x" propName="设备类型" id="equipmentType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
@@ -91,32 +123,18 @@
                         <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
                     </select>
                 </div>
-                <!-- </div> -->
-                <!-- <div class="item-right content-item"> -->
-                    <!-- <div class="item-left item-name"> -->
                 <label for="equipmentName" class="control-label col-md-1 col-sm-2 col-xs-2">设备名称：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control x" id="equipmentName" propName="城市" data-toggle="tooltip" data-placement="top">
                         <option selected value="">---请选择设备名称---</option>
                         <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
                     </select>
                 </div>
-                <!-- </div>
-            </div> -->
-            <!-- <div class="content-line customTitle">
-                <div class="item-left content-item">
-                    <div class="item-left item-name"> -->
                 <label for="pingpaiName" class="control-label col-md-1 col-sm-2 col-xs-2">品牌名称：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4" >
                     <input class="form-control form-control-x" propName="品牌名称" id="pingpaiName" name="pingpaiName" v-model="pingpaiName" placeholder="输入品牌名称..." type="text">
                 </div>
-                <!-- </div> -->
-               <!--  <div class="item-right content-item">
-                    <div class="item-left item-name"> -->
                 <label for="x"  class="control-label col-md-1 col-sm-2 col-xs-2">采购部门：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4 form-inline" role="group">
                     <div class="btn-group" style="width: 100%">
                         <select class="btn btn-default form-control select-left" v-model="buyCity" @change="loadBuyDep" propName="品牌名称" data-toggle="tooltip" data-placement="top"  style="width: 50%">
@@ -129,14 +147,7 @@
                         </select>
                     </div>
                 </div>
-                <!-- </div>
-            </div> -->
-          <!--   <div class="content-line customTitle">
-                <div class="item-left content-item">
-                    <div class="item-left item-name"> -->
                 <label for="d" class="control-label col-md-1 col-sm-2 col-xs-2">归属部门：</label>
-                <!-- </div> -->
-                <!-- <div class="form-group form-inline from-line item-right" > -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4 form-inline" role="group">
                     <div class="btn-group" style="width: 100%">
                         <select class="btn btn-default form-control select-left" id="x" v-model="belongCity" @change="loadBelongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top"  style="width: 50%">
@@ -149,50 +160,26 @@
                         </select>
                     </div>
                 </div>
-                <!-- </div> -->
-                <!-- </div> -->
-                <!-- <div class="item-right content-item">
-                    <div class="item-left item-name"> -->
                 <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">采购时间：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input class="form-control form-control-x" propName="采购时间" id="calender" name="entryTime" placeholder="选择采购时间..." type="text">
                 </div>
-                <!-- </div> -->
-            <!-- </div>
-            <div class="content-line">
-                <div class="item-left content-item">
-                    <div class="item-left item-name"> -->
                 <label for="supplier" class="control-label col-md-1 col-sm-2 col-xs-2">供应商：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control form-control-x x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" v-model="supplier" >
                         <option selected value="">---请选择供应商---</option>
                         <option v-for="(item , index) in autoSuppliers" :value="item.name">{{item.name}}</option>
                     </select>
                 </div>
-                <!-- </div>
-                <div class="item-right content-item">
-                    <div class="item-left item-name"> -->
                 <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">采购价格：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input class="form-control form-control-x" propName="采购价格" id="price" v-model="buyPrice" name="entryTime" placeholder="输入采购价格..." type="text">
                 </div>
-                <!-- </div>
-            </div>
-            <div class="content-line">
-                <div class="item-left content-item">
-                    <div class="item-left item-name"> -->
                 <label for="buyCount" class="control-label col-md-1 col-sm-2 col-xs-2">购买数量：</label>
-                <!-- </div> -->
                 <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input type="number" id="buyCount" class="form-control form-control-x"  propName="购买数量" placeholder="请输入购买数量..." data-toggle="tooltip" data-placement="top" v-model="buyCount" >
                 </div>
-                <!-- </div> -->
             </div>
-        <!-- </div> -->
-        
         <br><br>
         <p class="customTitle">员工自定义信息添加</p>
         <hr class="hr">
@@ -234,8 +221,14 @@
 </div>
 </body>
 <script>
+    $("#fileSource")[0].onchange = function() {
+        alert(document.getElementById("fileSource").value);
+        document.getElementById("fileSource-show").value = document.getElementById("fileSource").value;
+    }
 
-
+    function choseFile() {
+        $("#fileSource").click();
+    }
     $("#equipmentType").change(function () {
         loadEqName();
     });
@@ -442,5 +435,40 @@
         autoclose: true,
         todayHighlight: true
     });
+</script>
+
+<script>
+    $("input[type=file]").change(function(e){
+        var path = e.target.value;
+        var lastIndex = path.lastIndexOf('\\')+1;
+        var value = path.substring(lastIndex);
+        $('#fileSource-show')[0].value = value;
+    });
+
+    function uploadFileAction() {
+        if($('#fileSource-show')[0].value==""){
+            vm.modalStatus = '请选择文件！';
+            $('#modalButton').click();
+            return;
+        }
+        // 创建
+        var form_data = new FormData();
+        // 获取文件
+        var file_data = $("#fileSource").prop("files")[0];
+        // 把所以表单信息
+        form_data.append("eqXsl", file_data);
+        $.ajax({
+            type: "POST",
+            url: "upload",
+            processData: false,  // 注意：让jQuery不要处理数据
+            contentType: false,  // 注意：让jQuery不要设置contentType
+            data: form_data,
+            success: function(data){//成功方法
+                alert(data);
+            },error:function(){//请求失败方法
+                alert("系统繁忙,请稍后再试！");
+            }
+        });
+    }
 </script>
 </html>

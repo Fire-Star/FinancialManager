@@ -11,17 +11,24 @@ import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -362,7 +369,7 @@ public class EquipmentController {
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
                 " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
         //获取设备的所属部门的ID和采购部门的ID
-        if(!"".equals(supplier)){
+       /* if(!"".equals(supplier)){
             try {
                 supplier = supplierService.findSupIdBySupName(supplier);
             }catch (Exception e){
@@ -371,7 +378,7 @@ public class EquipmentController {
                 SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
                 return;
             }
-        }
+        }*/
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
@@ -430,5 +437,125 @@ public class EquipmentController {
             return;
         }
         SimpleException.sendSuccessMessage(response,objectMapper);
+    }
+
+    @RequestMapping("/user/equipment/statisTable")
+    public void statisTable(HttpServletResponse response,HttpServletRequest request){
+        System.out.println("设备统计界面，table数据加载...");
+        UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
+        UserCustom userCustom = new UserCustom();
+        try {
+            userCustom = userService.findUserByName(userDetails.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        String role = userRoleService.findRoleByUserName(userCustom.getUsername());
+        String cityId = "";
+        try {
+            cityId = userService.findCityIdByUserName(userCustom.getUsername());
+        }catch (Exception e){
+            e.printStackTrace();
+            cityId = "";
+        }
+        //searchByCityId
+        String requestCity = "";
+        String reQuestCityId = "";
+        if(request.getParameter("city")!=null){
+            requestCity = request.getParameter("city");
+        }
+        List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
+        List<Object> list = new ArrayList<Object>();
+        //获取状态ID
+        String eqBeUsed = "";
+        String eqNoUsed = "";
+        String eqReject = "";
+        try {
+            if(!"".equals(requestCity)&&requestCity!=null){
+                reQuestCityId = cityService.findCityIDByCity(requestCity);
+            }
+            eqBeUsed = equipmentStateService.findStateIDByStateName("使用");
+            eqNoUsed = equipmentStateService.findStateIDByStateName("闲置");
+            eqReject = equipmentStateService.findStateIDByStateName("报废");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("cityId:"+cityId+" requestCity:"+requestCity+"reQuestCityId:"+reQuestCityId);
+        try{
+            if(!"ROLE_ADMIN".equals(role) && !"".equals(cityId)){
+                equipmentCustomList = equipmentService.findAllKindsEqByCityId(cityId);
+                System.out.println("普通用户");
+            }else if("ROLE_ADMIN".equals(role)){
+                //Admin
+                if(!"".equals(reQuestCityId)&&reQuestCityId!=null){
+                    equipmentCustomList = equipmentService.findAllKindsEqByCityId(reQuestCityId);
+                    System.out.println("查询的城市："+requestCity);
+                }else if("".equals(requestCity)){
+                    equipmentCustomList = equipmentService.findAllKindsEq();
+                    System.out.println("查询全部");
+                }else {
+                    String message = "统计设备时，数据库发生错误！";
+                    SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                    return;
+                }
+                System.out.println("管理员");
+            }else{
+                String message = "统计设备时，数据库发生错误！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        for (int i = 0; i < equipmentCustomList.size(); i++) {
+            Map map = new HashMap();
+            map.put("index",""+i);
+            String belongCity = "";
+            int eqNum = 0;
+            String belongCityId = equipmentCustomList.get(i).getCity();
+            String eqTypeValue = equipmentCustomList.get(i).getEqType();
+            String eqNameValue = equipmentCustomList.get(i).getEqName();
+            String eqBrandValue = equipmentCustomList.get(i).getBrandName();
+            int eqBeUsedNum = 0;
+            int eqNoUsedNum = 0;
+            int eqRejectNum = 0;
+            Double totleValue = 0.0;
+            try {
+                belongCity = cityService.findCityNameByCityID(belongCityId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("city",belongCity);
+            map.put("eqType",eqTypeValue);
+            map.put("eqName",eqNameValue);
+            map.put("eqBrand",eqBrandValue);
+
+            try {
+                eqNum = equipmentService.countEqForStatis(eqNameValue,eqBrandValue,belongCityId);
+                eqBeUsedNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqBeUsed);
+                eqNoUsedNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqNoUsed);
+                eqRejectNum = equipmentService.countEqForStatisByState(eqNameValue,eqBrandValue,belongCityId, eqReject);
+                totleValue = equipmentService.sumEqMoneyForStatis(eqNameValue,eqBrandValue,belongCityId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            map.put("eqNum",eqNum+"");
+            map.put("eqBeUsed",eqBeUsedNum+"");
+            map.put("eqNoUsed",eqNoUsedNum+"");
+            map.put("eqReject",eqRejectNum+"");
+            map.put("totleValue",totleValue+"");
+            list.add(map);
+        }
+        JSONArray jsonArray = new JSONArray();
+        jsonArray = JSONArray.fromObject(list);
+        System.out.println("查询统计数据："+jsonArray.toString());
+        SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+
+    @RequestMapping("/equipment/upload")
+    public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
+        if(!file.isEmpty()) {
+            equipmentService.uploadFile(file);
+            SimpleException.sendSuccessMessage(response,objectMapper);
+        }
     }
 }

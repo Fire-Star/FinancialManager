@@ -5,6 +5,7 @@ import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.pocustom.UserCustom;
 import cn.ejie.service.*;
 
+import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 
@@ -95,6 +96,8 @@ public class StaffController {
         String position = "";
         String tel = "";
         String entrytime = "";
+        String belongCity = "";
+        String depName = "";
         String sqltemp = "SELECT id as staffId,name,department as dep,position,tel,entry_time as entryTime,custom_message as customMessages,city FROM staff";
         if(request.getParameter("name")!= null){
             name = request.getParameter("name");
@@ -102,17 +105,27 @@ public class StaffController {
         if(request.getParameter("department")!= null){
             dep = request.getParameter("department");
         }
+        if(request.getParameter("city")!=null){
+            belongCity = request.getParameter("city");
+        }
+        if(!"".equals(dep)&&!"".equals(belongCity)){
+            try {
+                depName = departmentService.findDepartIDByCityStrAndDepartStr(belongCity,dep);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        System.out.println("depName:"+depName);
         if(request.getParameter("position")!= null){
             position = request.getParameter("position");
         }
         if(request.getParameter("tel")!= null){
             tel = request.getParameter("tel");
         }
-        if(request.getParameter("entrytime")!= null){
-            entrytime = request.getParameter("entrytime");
+        if(request.getParameter("entrytime")!= null&&!"".equals(request.getParameter("entrytime"))){
+            entrytime = StringUtils.zhDateStrToENDateStr(request.getParameter("entrytime"));
         }
-
-        if(!name.equals("")||!dep.equals("")||!position.equals("")||!tel.equals("")||!entrytime.equals("")
+        if(!name.equals("")||!depName.equals("")||!position.equals("")||!tel.equals("")||!entrytime.equals("")
                 ||!"ROLE_ADMIN".equals(role)){
             if("ROLE_ADMIN".equals(role)||"".equals(city)) {
                 sqltemp = sqltemp + " WHERE";
@@ -120,16 +133,16 @@ public class StaffController {
                 sqltemp = sqltemp + " WHERE city='"+  city +"'";
             }
             if(!name.equals("")){
-                sqltemp = sqltemp + " and name='"+name+"'";
+                sqltemp = sqltemp + " and name like '%"+name+"%'";
             }
-            if(!dep.equals("")){
-                sqltemp = sqltemp + " and department='"+dep+"'";
+            if(!depName.equals("")){
+                sqltemp = sqltemp + " and department='"+depName+"'";
             }
             if(!position.equals("")){
-                sqltemp = sqltemp + " and position='"+position+"'";
+                sqltemp = sqltemp + " and position like'%"+position+"%'";
             }
             if(!tel.equals("")){
-                sqltemp = sqltemp + " and tel='"+tel+"'";
+                sqltemp = sqltemp + " and tel like'%"+tel+"%'";
             }
             if(!entrytime.equals("")){
                 sqltemp = sqltemp + " and entry_time='"+entrytime+"'";
@@ -151,7 +164,7 @@ public class StaffController {
             e.printStackTrace();
             throw new SimpleException(errorType,"数据库发生错误！");
         }
-
+        System.out.println(JSONArray.fromObject(staffCustomList).toString());
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < staffCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String,String>();

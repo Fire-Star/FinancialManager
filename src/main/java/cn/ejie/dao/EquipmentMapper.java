@@ -1,6 +1,7 @@
 package cn.ejie.dao;
 
 import cn.ejie.pocustom.EquipmentCustom;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,4 +34,14 @@ public interface EquipmentMapper {
     public Integer countAnyEquipmentByCityID(String cityID) throws Exception;
 
     public void updateEquipment(EquipmentCustom equipmentCustom) throws Exception;
+
+    public List<EquipmentCustom> findAllKindsEq() throws Exception;
+
+    public List<EquipmentCustom> findAllKindsEqByCityId(String city) throws Exception;
+
+    public Integer countEqForStatis(String eqName,String brand,String cityId) throws Exception;
+
+    public Double sumEqMoneyForStatis(String eqName,String brand,String cityId) throws Exception;
+
+    public Integer countEqForStatisByState(String eqName,String brand,String cityId,String stateId) throws Exception;
 }

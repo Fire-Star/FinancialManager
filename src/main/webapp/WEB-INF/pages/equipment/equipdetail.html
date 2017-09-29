@@ -49,21 +49,8 @@
             margin-bottom: 20px;
         }
         .tablecontent_borrow{
-            /*height: 30%;*/
             margin-bottom: 50px;
         }
-       /* .tablecontent_fix{
-            height: 30%;
-        }*/
-        /*.bootstrap-table{
-            height: 100%;
-        }
-        .bootstrap-table.fixed-table-container{
-            height: 85%;
-        }
-        .btn-group{
-            height:5%;
-        }*/
         .con{
             /*vertical-align: middle;*/
             text-align: right;
@@ -124,7 +111,7 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
                             </div>
-                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">签约时间： </label>
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">购买时间： </label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
@@ -256,8 +243,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+<<<<<<< HEAD
                             <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitDate">签约时间：</label>
                             <div class="col-sm-7 col-xs-7">
+=======
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">购买时间：</label>
+                            <div class="col-sm-3">
+>>>>>>> 76b2f1b1d511e048fd7e80fb9b603f8076edee5b
                                 <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
                         </div>
@@ -568,7 +560,7 @@
                     field: 'userName',
                     title: '使用人',
                     formatter:function(value,row,index) {
-                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\'' + row.userName + '\')">' + value + '</a> ';
+                        var e = '<a href="#" mce_href="#" onclick="checkDetail(\'' + row.userId + '\')">' + value + '</a> ';
                         return e;
                     }
                 }, {
@@ -635,15 +627,14 @@
         };
         return oInit;
     };
-    function checkDetail(suppId) {
-        //window.parent.document.getElementById('iframeContent').src="staff/detail?suppId="+suppId;
-        alert("要编辑的设备ID："+suppId);
+    function checkDetail(staffId) {
+        window.parent.document.getElementById('iframeContent').src="staff/detail?staffId="+staffId;
     };
     function preLoadEqName() {
         /**
          * 页面加载之前加载设备名称选项
          */
-        alert("现在在执行加载name");
+        //alert("现在在执行加载name");
         $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
             if (status == "success") {
                 var _equipmentName = eval(data);
@@ -669,7 +660,7 @@
     $(document).ready(function(){
         var equipId = $.getUrlParam('equipId');
         var param = {"equipId":equipId};
-        alert("页面显示之前加在数据,设备ID："+equipId);
+        //alert("页面显示之前加在数据,设备ID："+equipId);
         $.ajax({
             url: "findEquipByEquipID",
             type: 'post',
@@ -838,6 +829,7 @@
                 },
                 function(data,status) {
                     var _data = data;
+                    checkDetailEqDetail(eqId);
                     if(eval(_data)){
                         alert(eval(_data).success);
                     }else{
@@ -866,6 +858,7 @@
                     var _data = data;
                     if(_data!="s"){
                         alert(_data);
+                        $('#tb_equipment_fix').bootstrapTable('refresh');
                     }
                 });
         }
@@ -876,7 +869,7 @@
         if(val==null){
             alert("没有选中状态，请重新选择！");
         }else{
-            alert(val);
+            //alert(val);
             var eqID = $('#eqSubmitId').val();
             if(val=="使用"){
                 if(eqID==""||vm.eqBorCityValue==""||vm.eqBorBelongValue==""||vm.eqBorNameValue==""||vm.eqBorDetailValue=="") {
@@ -894,7 +887,8 @@
                         },
                         function(data,status) {
                             var _data = data;
-                            if(_data!="s"){
+                            if(_data!=""){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -914,6 +908,7 @@
                         function(data,status) {
                             var _data = data;
                             if(_data!="s"){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -931,6 +926,7 @@
                         function(data,status) {
                             var _data = data;
                             if(_data!="s"){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -939,12 +935,10 @@
                 alert("选择的设备状态不对，请重新选择！");
             }
             $("#borrowModal").modal('hide');
-            checkDetail(eqID);
         }
     }
-    function checkDetail(equipId) {
+    function checkDetailEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-        alert(equipId);
     }
 </script>
 </html>

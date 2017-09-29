@@ -39,6 +39,7 @@ cn\ejie\utils\StringUtils.class
 cn\ejie\pocustom\CityCustom.class
 cn\ejie\pocustom\EquipmentBorrowCustom.class
 cn\ejie\utils\BeanPropertyValidateUtils.class
+cn\ejie\pocustom\UserRoleCustom.class
 cn\ejie\exception\FixedLogException.class
 cn\ejie\po\VerifyMessage.class
 cn\ejie\po\MaxValue.class
@@ -81,6 +82,7 @@ cn\ejie\web\controller\TestUserController.class
 cn\ejie\dao\CityMapper.class
 cn\ejie\web\controller\EquipmentTypeController.class
 cn\ejie\service\DepartmentService.class
+cn\ejie\po\UserRole.class
 cn\ejie\dao\RoleMapper.class
 cn\ejie\service\MaxValueService.class
 cn\ejie\po\City.class

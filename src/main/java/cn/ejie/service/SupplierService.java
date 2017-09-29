@@ -76,4 +76,32 @@ public class SupplierService {
         return supId;
     }
 
+    public int countEqNumBySupName(String supName){
+        int count = 0;
+        try {
+            count = supplierMapper.countEqNumBySupName(supName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public Double sumTotalMoney(String supName){
+        Double total = 0.0;
+        try {
+            total = supplierMapper.sumTotalMoney(supName);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public void updateSup(SupplierCustom supplierCustom) throws Exception{
+        try {
+            supplierMapper.updateSup(supplierCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

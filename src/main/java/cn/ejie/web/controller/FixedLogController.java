@@ -26,11 +26,11 @@ public class FixedLogController {
 
     @RequestMapping("/eqfix/query")
     public void findFixedLog(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("借出记录查询......");
         String eqId = "";
         if(request.getParameter("equipId") != null){
             eqId = request.getParameter("equipId");
         }
-        System.out.println("借出记录查询by eqid:"+eqId);
         List<FixedLogCustom> fixedLogCustomList = new ArrayList<FixedLogCustom>();
         try {
             fixedLogCustomList = fixedLogService.findAllByEqId(eqId);
@@ -47,18 +47,9 @@ public class FixedLogController {
             map.put("fixDetail",fixedLogCustomList.get(i).getFixDetail());
             list.add(map);
         }
-
-       /* List<Object> list = new ArrayList<Object>();
-        for (int i = 0; i < 50; i++) {
-            Map<String,String> map = new HashMap<String,String>();
-            map.put("index",i+"");
-            map.put("fixTime",i+"status");
-            map.put("fixType",i+"userName");
-            map.put("fixDetail",i+"operatorTime");
-            list.add(map);
-        }*/
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
+        System.out.println("jsonArray:"+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
     @RequestMapping("/equipFix/addEqFixLog")

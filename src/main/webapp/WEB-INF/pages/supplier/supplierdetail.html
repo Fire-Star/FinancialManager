@@ -87,8 +87,6 @@
                                 <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
                             </div>
-                        </div>
-                        
                     </div>
                 </form>
             </div>
@@ -123,48 +121,48 @@
                         <div class="form-group row">
                             <label class="item-left col-sm-6 con" style="padding-left: 20px;">供应商ID：</label>
                             <div class="col-sm-4">
-                                <input type="text" id="SubmitId" class="form-control form-control-x" name="phone" value="" disabled="true">
+                                <input type="text" id="submitSupId" class="form-control form-control-x" name="phone"
+                                       value="" disabled="true">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="SubmitsuppName">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="submitSupName">
                                 供应商：</label>
                             <div class="col-sm-4">
-                                <input class="form-control form-control-x" propName="供应商" id="SubmitsuppName"
-                                       name="entryTime" placeholder="供应商..." type="text" v-model="suppName">
+                                <input class="form-control form-control-x" propName="供应商" id="submitSupName"
+                                       name="entryTime" placeholder="供应商..." type="text" v-model="supName">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="item-left col-sm-6 con" style="padding-left: 20px;"
-                                   for="suppSubmitCont">联系人：
+                                   for="supSubmitCont">联系人：
                             </label>
                             <div class="col-sm-4">
-                                <input class="form-control form-control-x" propName="联系人" id="suppSubmitCont"
-                                       name="entryTime" placeholder="联系人..." type="text" v-model="suppCont">
+                                <input class="form-control form-control-x" propName="联系人" id="supSubmitCont"
+                                       name="entryTime" placeholder="联系人..." type="text" v-model="supCont">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;"
-                                   for="suppSubmitTel">电话：
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="supSubmitTel">电话：
                             </label>
                             <div class="col-sm-4">
-                                <input class="form-control form-control-x" propName="电话" id="suppSubmitTel"
-                                       name="entryTime" placeholder="电话..." type="text" v-model="suppTel">
+                                <input class="form-control form-control-x" propName="电话" id="supSubmitTel"
+                                       name="entryTime" placeholder="电话..." type="text" v-model="supTel">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="suppSubmitDate">
+                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="supSubmitDate">
                                 签约时间：</label>
                             <div class="col-sm-4">
-                                <input class="form-control form-control-x" propName="签约时间" id="suppSubmitDate"
-                                       name="entryTime" placeholder="选择签约时间..." type="text" v-model="suppDate">
+                                <input class="form-control form-control-x" propName="签约时间" id="supSubmitDate"
+                                       name="entryTime" placeholder="选择签约时间..." type="text" v-model="supDate">
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-primary" @click="submitEditSup()">提交</button>
                 </div>
             </div>
         </div>
@@ -173,10 +171,10 @@
 </body>
 <script>
     var data = {
-        suppName:"",
-        suppCont:"",
-        suppTel:"",
-        suppDate:""
+        supName:"",
+        supCont:"",
+        supTel:"",
+        supDate:""
     };
     var vm = new Vue({
         el:'.app',
@@ -207,8 +205,8 @@
                 queryParams: oTableInit.queryParams,//传递参数（*）
                 sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
                 pageNumber:1,                       //初始化加载第一页，默认第一页
-                pageSize: 10,                       //每页的记录行数（*）
-                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                pageSize: 8,                       //每页的记录行数（*）
+                pageList: [8, 25, 50, 100],        //可供选择的每页的行数（*）
                 // search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
                 strictSearch: true,
                 showColumns: true,                  //是否显示所有的列
@@ -288,10 +286,10 @@
         return oInit;
     };
     function editData() {
-        vm.suppName = preSuppName;
-        vm.suppCont = preSuppCont;
-        vm.suppTel = preSuppTel;
-        vm.suppDate = preSuppDate;
+        vm.supName = preSupName;
+        vm.supCont = preSupCont;
+        vm.supTel = preSupTel;
+        vm.supDate = preSupDate;
     }
     $(document).ready(function(){
         var suppId = $.getUrlParam('suppId');
@@ -308,14 +306,14 @@
                 $('#contacttel').val(data.tel);
                 $('#time').val(data.contractTime);
                 //加载员工信息修改界面默认值
-                $('#SubmitId').val(data.id);
-                preSuppName = data.name;
-                preSuppCont = data.contactName;
-                preSuppTel = data.tel;
-                preSuppDate = data.contractTime;
+                $('#submitSupId').val(data.id);
+                preSupName = data.name;
+                preSupCont = data.contactName;
+                preSupTel = data.tel;
+                preSupDate = data.contractTime;
             },
             fail: function (err, status) {
-                alert("741147");
+                //alert("741147");
             }
         });
     });
@@ -328,8 +326,39 @@
     })(jQuery);
     function checkToEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-        alert(equipId);
+       // alert(equipId);
     }
-
+    function submitEditSup() {
+        var supIdValue = $('#submitSupId').val();
+        var supNameValue = vm.supName;
+        var supContValue = vm.supCont;
+        var suptelValue = vm.supTel;
+        var supDateValue = vm.supDate;
+        if(supIdValue==""||supNameValue==""||supContValue==""||suptelValue==""||supDateValue==""){
+            alert("编辑设备信息时，字段不能为空！！");
+        }else {
+            $.post("../../supplier/editSupDetail",
+                {
+                    supId : supIdValue,
+                    supName : supNameValue,
+                    supCont : supContValue,
+                    supTel : suptelValue,
+                    supDate : supDateValue
+                },
+                function(data,status) {
+                    var _data = data;
+                    if(eval(_data)){
+                        alert(eval(_data).success);
+                    }else{
+                        alert(_data);
+                    }
+                });
+        }
+        $("#suppliername").val(vm.supName);
+        $("#suppliercontactname").val(vm.supCont);
+        $("#contacttel").val(vm.supTel);
+        $("#time").val(vm.supDate);
+        $("#myModal").modal('hide');
+    }
 </script>
 </html>

@@ -132,12 +132,14 @@ public class SupplierController {
         if(request.getParameter("contacttel") != null ){
             contacttel = request.getParameter("contacttel");
         }
-        if(request.getParameter("time") != null ){
-            time = request.getParameter("time");
+        if(request.getParameter("time") != null && !"".equals(request.getParameter("time"))){
+            time = StringUtils.zhDateStrToENDateStr(request.getParameter("time"));
         }
         System.out.println("limit:"+limit+"   "+"offset:"+offset+"   "+"suppliername:"+suppliername+"   "+"suppliercontactname:"+suppliercontactname+"   "+"contacttel:"+contacttel+"   "+"time:"+time+"   ");
         String sql = "";
-        String sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier";
+        //String sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier";
+        String sqltemp = "SELECT id,`name`, adtitude, address, contact_name contactName, tel, business, contract_time" +
+                " contractTime, custom_message customMessage FROM supplier";
         if(!suppliername.equals("")||!suppliercontactname.equals("")||!contacttel.equals("")||!time.equals("")){
             sqltemp = sqltemp + " WHERE";
         }
@@ -145,10 +147,10 @@ public class SupplierController {
             sqltemp = sqltemp + " name= '" + suppliername +"'";
         }
         if(!suppliercontactname.equals("")){
-            sqltemp = sqltemp + " and contact_name='" + suppliercontactname +"'";
+            sqltemp = sqltemp + " and contact_name like'%" + suppliercontactname +"%'";
         }
         if(!contacttel.equals("")){
-            sqltemp = sqltemp + " and tel='" + contacttel +"'";
+            sqltemp = sqltemp + " and tel like'%" + contacttel +"%'";
         }
         if(!time.equals("")){
             sqltemp = sqltemp + " and contract_time='" + time +"'";
@@ -171,7 +173,7 @@ public class SupplierController {
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
             return;
         }
-       // SimpleException.sendSuccessMessage(response,objectMapper);
+        System.out.println("listSupplier:"+JSONArray.fromObject(listSupplier).toString());
         List<Object> list = new ArrayList<Object>();
         for(int i=0;i<listSupplier.size();i++){
             Map<String, Object> mapp = new HashMap<String, Object>();
@@ -180,8 +182,20 @@ public class SupplierController {
             mapp.put("contactName",listSupplier.get(i).getContactName());
             mapp.put("tel",listSupplier.get(i).getTel());
             mapp.put("business",listSupplier.get(i).getBusiness());
-            mapp.put("count","151545");
-            mapp.put("money","21321");
+            int supNum = 0;
+            try {
+                supNum = supplierService.countEqNumBySupName(listSupplier.get(i).getName());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            mapp.put("count",supNum+"");
+            Double money = 0.0;
+            try {
+                money = supplierService.sumTotalMoney(listSupplier.get(i).getName());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            mapp.put("money",""+money);
             mapp.put("id",listSupplier.get(i).getId());
             list.add(mapp);
         }
@@ -261,5 +275,50 @@ public class SupplierController {
         jsonArray = JSONArray.fromObject(list);
         System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+
+    @RequestMapping("/supplier/editSupDetail")
+    public void editSupDetail(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("编辑运营商详细信息......");
+        String supId = "";
+        String supName = "";
+        String supCont = "";
+        String supTel = "";
+        String supDate = "";
+        if(!"".equals(request.getParameter("supId"))&&request.getParameter("supId")!=null){
+            supId = request.getParameter("supId");
+        }
+        if(!"".equals(request.getParameter("supName"))&&request.getParameter("supName")!=null){
+            supName = request.getParameter("supName");
+        }
+        if(!"".equals(request.getParameter("supCont"))&&request.getParameter("supCont")!=null){
+            supCont = request.getParameter("supCont");
+        }
+        if(!"".equals(request.getParameter("supTel"))&&request.getParameter("supTel")!=null){
+            supTel = request.getParameter("supTel");
+        }
+        if(!"".equals(request.getParameter("supDate"))&&request.getParameter("supDate")!=null){
+            if(request.getParameter("supDate").contains("年")){
+                supDate = StringUtils.zhDateStrToENDateStr(request.getParameter("supDate"));
+            }else{
+                supDate = request.getParameter("supDate");
+            }
+        }
+        System.out.println("supId:"+supId+" supName:"+supName+" supCont:"+supCont+" supTel:"+supTel+" supDate:"+supDate);
+        SupplierCustom supplierCustom = new SupplierCustom();
+        try {
+            supplierCustom = supplierService.findSupplierById(supId);
+            supplierCustom.setName(supName);
+            supplierCustom.setContactName(supCont);
+            supplierCustom.setTel(supTel);
+            supplierCustom.setContractTime(supDate);
+            supplierService.updateSup(supplierCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "更新运营商详情时，数据库发生错误，修改信息失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        SimpleException.sendSuccessMessage(response,objectMapper);
     }
 }

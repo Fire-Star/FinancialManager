@@ -3,6 +3,7 @@ package cn.ejie.web.controller;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.VerifyMessage;
 import cn.ejie.pocustom.UserCustom;
+import cn.ejie.pocustom.UserRoleCustom;
 import cn.ejie.service.CityService;
 import cn.ejie.service.UserRoleService;
 import cn.ejie.service.UserService;
@@ -205,7 +206,7 @@ public class UserController {
 
     @RequestMapping("/user/index")
     public String main(){
-        return "/WEB-INF/pages/index.html";
+        return "/WEB-INF/pages/index.jsp";
     }
 
     @RequestMapping("/user/getUsername")
@@ -237,11 +238,14 @@ public class UserController {
             cityTemp = request.getParameter("city");
         }
         UserCustom userCustom = new UserCustom();
+        UserRoleCustom userRoleCustom = new UserRoleCustom();
         try {
             city = cityService.findCityIDByCity(cityTemp);
         }catch (Exception e){
             e.printStackTrace();
         }
+        userRoleCustom.setUserName(username);
+        userRoleCustom.setRoleId("ROLE_USER");
         userCustom.setUsername(username);
         userCustom.setPassword(password);
         userCustom.setCity(city);
@@ -256,6 +260,7 @@ public class UserController {
         if(userCustom1==null){
             try {
                 userService.insertUser(userCustom);
+                userRoleService.insertUserRole(userRoleCustom);
             }catch (Exception e){
                 Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
                 SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
@@ -310,6 +315,7 @@ public class UserController {
         }
         System.out.println("username:"+username);
         try {
+            userRoleService.deluserRoleByUserName(username);
             userService.delUser(username);
         }catch (Exception e){
             e.printStackTrace();
