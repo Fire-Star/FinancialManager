@@ -16,39 +16,34 @@
     <script src="../../res/js/vue.min.js"></script>
     <style>
         body,html{
-            height: 100%;background-color: #f1f1f1;
+            height: 100%;
+            overflow: auto;
+        }
+        p{
+            margin: 0 !important;
         }
         .container {
             width: 100%;
             height: 100%;
         }
-        .app{
-            height: 100%;
-        }
         .supplier-head{
-            height: 10%;
+            height: 50px;
+            line-height: 50px;
         }
         .panel-body{
             padding:0px;
-            height: 30%;
-        }
-        .tablecontent{
-            height: 55%;
         }
         .row{
+            margin: 0;
+            padding-top: 10px;
             width: 100%;
         }
-        .bootstrap-table{
-            height: 100%;
+        .row .control-label{
+            padding: 7px 0 0 7px;
+            text-align: right;
         }
-        .bootstrap-table.fixed-table-container{
-            height: 85%;
-        }
-        .btn-group{
-            height:5%;
-        }
-        .row{
-            padding-top: 10px;
+        .row .form-control{
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -64,34 +59,35 @@
                 </div>
                 <div class="panel-body">
                     <form id="formSearch" class="form-horizontal">
-                        <div class="form-group" style="margin-top:15px">
+                        <div class="form-group" style="margin:15px 0;">
                             <div class="row">
-                                <label class="control-label col-sm-1" for="suppliername">供应商：</label>
-                                <div class="col-sm-2 form-inline from-line item-right">
+                                <label class="control-label col-lg-1 col-md-1 col-sm-2 col-xs-2" for="suppliername">供应商：</label>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                                     <select class="form-control form-control-x" id="suppliername" propName="供应商" data-toggle="tooltip" data-placement="top">
                                         <option selected value="">---请选择供应商---</option>
                                         <option v-for="(item , index) in suppliers" :value="item.name">{{item.name}}</option>
                                     </select>
                                 </div>
-                                <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
-                                <div class="col-sm-2">
+                                <label class="control-label col-lg-1 col-md-1 col-sm-2 col-xs-2" for="suppliercontactname">联系人：</label>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                                     <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人...">
                                 </div>
-                                <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
-                                <div class="col-sm-2">
+                                <label class="control-label col-lg-1 col-md-1 col-sm-2 col-xs-2" for="contacttel">联系电话：</label>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                                     <input type="text" class="form-control" id="contacttel" placeholder="电话...">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label class="control-label col-sm-1" for="time">签约时间:</label>
-                                <div class="col-sm-2">
+                           <!--  </div>
+                            <div class="row"> -->
+                                <label class="control-label col-lg-1 col-md-1 col-sm-2 col-xs-2" for="time">签约时间:</label>
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
                                     <input type="text" class="form-control" id="time" placeholder="签约时间...">
                                 </div>
-                                <div class="col-sm-1" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
+                                <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2"></div>
+                                <div class=" col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                                    <button type="button" style="width: 100%" id="btn_query" class="btn btn-primary" onclick="datasearch()">查询</button>
                                 </div>
-                                <div class="col-sm-1" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
+                                <div class=" col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                                    <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary" onclick="datareset()">重置</button>
                                 </div>
                             </div>
                         </div>

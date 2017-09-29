@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.UserMapper">
+    <select id="findUserByUsername" resultType="cn.ejie.po.User">
+        SELECT username,password,city FROM `user` WHERE username = #{username}
+    </select>
+    <select id="findAll" resultType="cn.ejie.pocustom.UserCustom">
+        SELECT username,password,city FROM user
+    </select>
+    <select id="findBySql" resultType="cn.ejie.pocustom.UserCustom" parameterType="String">
+        ${value}
+    </select>
+    <select id="findUserByName" resultType="cn.ejie.pocustom.UserCustom">
+        SELECT username,password,city FROM `user` WHERE username = #{username}
+    </select>
+    <select id="findCityByUserName" resultType="java.lang.String">
+        SELECT city.city FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
+    </select>
+    <select id="findCityIdByUserName" resultType="java.lang.String">
+        SELECT city.cityID FROM city,`user` WHERE `user`.city = city.cityID AND `user`.username= #{username}
+    </select>
+    <insert id="insertUser">
+        INSERT INTO user(username,password,city) VALUES(#{username},#{password},#{city})
+    </insert>
+    <update id="updateUser" parameterType="cn.ejie.pocustom.UserCustom">
+        update user set password = #{password},city = #{city} where userName=#{username}
+    </update>
+    <delete id="delUser" parameterType="String">
+        DELETE FROM user WHERE userName=#{username}
+    </delete>
+</mapper>

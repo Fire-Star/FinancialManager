@@ -15,37 +15,59 @@
     <script src="../res/js/vue.min.js"></script>
     <style>
         html,body{
-            height: 100%;width: 100%;padding: 0px;
+            height: 100%;
+            padding: 0px;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        .supplier-head{
+            height: 50px;
+            line-height: 50px;
+        }
+        .title{
+            height: 38px;
+            font-size: 21px;
         }
         .hr{
-            border: none;border-bottom: 1px solid #9d9d9d;
+            margin-top: 0;
+            border-bottom: 1px solid #9d9d9d;
         }
         .text-order{
-            vertical-align: middle;margin-right: 21px;    margin-left: 10px;
-        }
-        .bottom{
-            width: 600px;
+            vertical-align: middle;
+            margin-right: 21px;
+            margin-left: 10px;
         }
         .list{
-            margin-top: 2px;  list-style: none;margin-bottom: 0px;
+            margin: 10px;
+            list-style: none;
         }
-        .list>li{
-            margin-left: 30px;line-height: 30px;margin-top: 1px;width: 280px;text-align: left;
+        .list > li{
+            margin: 5px 30px;
+            width: 280px;
+            text-align: left;
         }
-        .list>span{
-            width: 156px!important;margin-right: 3px;margin-top: 1px;
+        .list > span{
+            width: 156px !important;
+            margin-right: 3px;
+            margin-top: 1px;
         }
-        .list> div > input{
-            width: 126px;margin-left: 30px;margin-top: 3px;margin-right: 5px;
+        .list > div > input{
+            width: 156px;
+            margin: 5px 5px 0 30px;
         }
         .bottom > div > input{
-            margin-top: 4px; margin-left: 40px; width: 157px; margin-right: 3px;
+            margin-left: 10px;
+            margin-right: 3px;
+            width: 157px;
         }
         .inline{
             display: inline-block;
         }
         .width-auto{
-            width: 154px !important; margin-right: 3px;
+            width: 154px !important;
+            margin-right: 3px;
         }
         .list > li ,.list > div ,.bottom > div{
             display: none;
@@ -57,23 +79,28 @@
 </head>
 <body>
 <div class="app container-fluid width-100per top-content">
-    <ul class="breadcrumb">
-        <li>
-            系统字段维护<span class="divider">></span>
-        </li>
-        <li class="active">设备字段添加</li>
-    </ul><br>
-    <span class="h4 text-primary">设备基本信息字段维护</span>
+    <div class="supplier-head">系统字段维护 > 设备字段添加</div>
+    <div class="title">设备基本信息字段维护</div>
     <hr class="hr">
     <span class="text-primary text-order h3">设备类型/名称添加</span><button class="btn btn-sm btn-primary glyphicon glyphicon-plus addTypeBoss"></button>
     <div class="bottom">
         <ul class="list" v-for="(item,index) in eqTypes">
-            <span class="btn btn-primary eqTypeButton">{{item.equipmentTypeName}}</span><button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
+            <span class="btn btn-primary eqTypeButton">{{item.equipmentTypeName}}</span>
+            <button class="btn btn-sm btn-success glyphicon glyphicon-plus addTypeButton"></button>
             <button class="btn btn-danger btn-sm del-btn" @click="delTypeMethod(item.equipmentTypeName)">删除该类型</button>
-            <li v-for="item2 in eqNames[item.equipmentTypeName]"><span class="btn btn-info width-auto">{{item2.eqName}}</span><span class="btn btn-warning btn-sm del-btn"  @click="delNameMethod(item.equipmentTypeName,item2.eqName)">删除该名称</span></li>
-            <div><input type="text" class="form-control inline" placeholder="请输入设备名称..." :belongType="item.equipmentTypeName"><button class="btn btn-warning addNameButton" style="margin-top: -2px">新增名称</button></div>
+            <li v-for="item2 in eqNames[item.equipmentTypeName]">
+                <span class="btn btn-info width-auto">{{item2.eqName}}</span>
+                <span class="btn btn-warning btn-sm del-btn"  @click="delNameMethod(item.equipmentTypeName,item2.eqName)">删除该名称</span>
+            </li>
+            <div>
+                <input type="text" class="form-control inline" placeholder="请输入设备名称..." :belongType="item.equipmentTypeName">
+                <button class="btn btn-warning addNameButton" style="margin-top: -2px">新增名称</button>
+            </div>
         </ul>
-        <div><input type="text" class="form-control inline" placeholder="请输入设备类型..." v-model="insertType"><button @click="insertTypeMethod()" class="btn btn-primary" style="margin-top: -2px">新增类型</button></div>
+        <div>
+            <input type="text" class="form-control inline" placeholder="请输入设备类型..." v-model="insertType">
+            <button @click="insertTypeMethod()" class="btn btn-primary" style="margin-top: -2px">新增类型</button>
+        </div>
     </div>
 
     <!-- ModalButton -->

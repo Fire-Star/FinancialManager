@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.EquipmentBorrowMapper">
+    <!--<select id="findBorrowByEqId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
+        SELECT borrow_id as borrowId,eq_id as eqId,eq_state.state as state,staff.name as useBy,do_time as
+        doTime,concat(city.city,department.department) as useByDepart,detail as borDetail FROM
+        eq_borrow_log,eq_state,staff,city,
+        department WHERE department.city = city.cityID AND department.id = eq_borrow_log.use_by_depart AND staff.id = eq_borrow_log.use_by AND eq_borrow_log.state = eq_state.eq_state_id AND eq_id = #{id}
+    </select>-->
+    <select id="findBorrowByEqId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
+        SELECT borrow_id as borrowId,eq_id as eqId,state,use_by as useBy,do_time as
+        doTime,use_by_depart as useByDepart,detail as borDetail FROM eq_borrow_log WHERE eq_id = #{id}
+    </select>
+    <select id="countAllByUser" resultType="java.lang.Integer">
+        select count(*) from eq_borrow_log WHERE use_by = #{userId}
+    </select>
+    <select id="findAllByUserId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
+        SELECT borrow_id as borrowId,concat(equipment.eq_other_id,equipment.eq_name) as eqId,eq_borrow_log.eq_id as useByDepart,eq_state.state as state,do_time as doTime FROM eq_borrow_log,eq_state,equipment WHERE eq_borrow_log.state = eq_state.eq_state_id AND equipment.eq_id = eq_borrow_log.eq_id AND use_by = #{userId}
+    </select>
+    <insert id="insertEqBorrowLog">
+        <selectKey keyProperty="borrowId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO eq_borrow_log
+        VALUES(#{borrowId},#{eqId},#{state},#{useBy},#{doTime},#{useByDepart},#{borDetail})
+    </insert>
+</mapper>

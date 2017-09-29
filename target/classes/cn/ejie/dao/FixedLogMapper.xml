@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.FixedLogMapper">
+    <select id="findAll" resultType="cn.ejie.pocustom.FixedLogCustom">
+        SELECT id,fixTime,fixType,fixDetail,eqId FROM eq_fix_log
+    </select>
+    <select id="findBySql" parameterType="String" resultType="cn.ejie.pocustom.FixedLogCustom">
+        ${value}
+    </select>
+    <select id="countByEqId" resultType="java.lang.Integer" >
+        select count(*) from eq_fix_log WHERE eqId = #{eqId}
+    </select>
+    <select id="findAllByEqId" resultType="cn.ejie.pocustom.FixedLogCustom" >
+        select id,fixTime,fixType,fixDetail,eqId FROM eq_fix_log WHERE eqId = #{eqId}
+    </select>
+    <insert id="insertFixlog">
+        <selectKey keyProperty="fixId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO eq_fix_log VALUES(#{fixId},#{fixTime},#{fixType},#{fixDetail},#{eqId})
+    </insert>
+</mapper>

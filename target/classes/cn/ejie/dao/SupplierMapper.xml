@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.SupplierMapper">
+    <select id="findAllSupplier" resultType="cn.ejie.pocustom.SupplierCustom">
+        SELECT id,`name`, adtitude, address, contact_name contactName,
+         tel, business, contract_time contractTime, custom_message customMessage FROM supplier
+    </select>
+    <select id="hasSupplierByName" resultType="java.lang.Integer">
+        SELECT count(id) FROM supplier WHERE `name`=#{name}
+    </select>
+    <select id="findSupplierBySql" resultType="cn.ejie.pocustom.SupplierCustom" parameterType="String">
+        ${value}
+    </select>
+    <insert id="addSingleSupplier">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO supplier(id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message)
+        VALUES (#{id},#{name},#{adtitude},#{address},#{contactName},#{tel},#{business},#{contractTime},
+        #{customMessage})
+    </insert>
+    <select id="findSupplierById" resultType="cn.ejie.pocustom.SupplierCustom">
+        SELECT id,`name`,adtitude,address,contact_name as contactName,tel,business,contract_time as contractTime,custom_message FROM supplier WHERE id =#{id}
+    </select>
+    <select id="findSupIdBySupName" resultType="String">
+        SELECT id FROM supplier WHERE name =#{name}
+    </select>
+    <select id="countEqNumBySupName" resultType="java.lang.Integer" >
+        select count(*) from equipment WHERE supplier = #{supName}
+    </select>
+    <select id="sumTotalMoney" parameterType="String" resultType="java.lang.Double">
+        select COALESCE(sum(purchas_price),0) from equipment where supplier = #{supName}
+    </select>
+    <update id="updateSup" parameterType="cn.ejie.pocustom.SupplierCustom">
+        update supplier set name = #{name},contact_name = #{contactName},tel = #{tel},contract_time = #{contractTime} where id=#{id}
+    </update>
+</mapper>

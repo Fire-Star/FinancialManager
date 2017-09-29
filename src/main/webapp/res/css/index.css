@@ -125,7 +125,7 @@ a{
 .right .account-info{
 	height: 80px;
 	color: #52647f;
-	box-shadow: 0 10px 20px -6px #ebeef3;
+	box-shadow: 0 10px 20px -10px #ebeef3;
 }
 .right .account-info .person{
 	float: right;
@@ -199,7 +199,7 @@ a{
 .right .detail{
 	position: absolute;
 	left: 0;
-	top: 80px;
+	top: 90px;
 	right: 0;
 	bottom: 20px;
 	overflow: hidden;
