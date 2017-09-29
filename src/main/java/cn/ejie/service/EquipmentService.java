@@ -5,6 +5,7 @@ import cn.ejie.dao.EquipmentNameMapper;
 import cn.ejie.dao.EquipmentStateMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
+import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
@@ -21,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +38,9 @@ import java.util.List;
 @Service
 public class EquipmentService {
     private static final String inserState = "闲置";
-    private static final String UPLOAD_DIR = "K:\\文件上传\\";
+    private static final String BASE_PATH = "K:\\文件上传\\";
+    private static final String UPLOAD_DIR = BASE_PATH;
+    private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
     private static final long MAX_FILE_SISE = 61440; //为 60 MB
 
     @Autowired
@@ -62,6 +66,9 @@ public class EquipmentService {
 
     @Autowired
     private EquipmentNameMapper equipmentNameMapper;
+
+    @Autowired
+    private MaxValueService maxValueService;
 
     private String errorType = "errorType";
 
@@ -416,33 +423,78 @@ public class EquipmentService {
 
             List<EquipmentCustom> errorEquipments = filterEquipmentDateAndInsert(allEquipments);
 
-            XSSFWorkbook wb2 = new XSSFWorkbook(fileName);
+            XSSFWorkbook wb2 = new XSSFWorkbook(EQ_MODEL_FILE);
             XSSFSheet sheet = wb2.getSheetAt(0);
-            sheet.getRow(1).createCell(14).setCellValue("错误信息");
             if(sheet == null){
                 throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
             }
-            for (EquipmentCustom equipmentCustom : allEquipments) {
+            int len = allEquipments.size();
+            boolean hasError = false;
+            for (int i = 0; i < len; i++) {
+                EquipmentCustom equipmentCustom = allEquipments.get(i);
+                int curRow = i+2;
+                int start = i+1;
                 String errorMessage = equipmentCustom.getMessage();
-                if(errorMessage == null || errorMessage.equals("")){
-                    errorMessage = "";
+                if(errorMessage != null && !errorMessage.equals("")){
+                    hasError = true;
+                    insertErrorEqToExcel(equipmentCustom,sheet,curRow,start);
                 }
-                int x = equipmentCustom.getX();
-                int y = equipmentCustom.getY();
-
-                XSSFRow row = sheet.getRow(x);
-                XSSFCell cell = row.createCell(y);
-                cell.setCellValue(errorMessage);
             }
-            OutputStream outputStream = new FileOutputStream("K:\\文件上传\\xxxxxxxxxx.xlsx");
-            wb2.write(outputStream);
+            //只要插入信息之后，不管插入的设备信息是否有错，我都会删除上一个错误文件。
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+            String errorFileNamePro = null;
+            try {
+                errorFileNamePro = maxValueService.findValueByKey(userName);
+            }catch (Exception e){}
+            if(errorFileNamePro!=null&&!errorFileNamePro.equals("")){
+                File file = new File(BASE_PATH+errorFileNamePro);
+                file.delete();
+            }
+
+            String errorFileName = "";//同时也会修改数据库中当前用户错误文件为空！
+            if(hasError){
+                errorFileName = "新设备未插入"+new Date().getTime()+".xlsx";
+
+                OutputStream outputStream = new FileOutputStream(BASE_PATH+errorFileName);
+                wb2.write(outputStream);
+                outputStream.close();
+            }
+            MaxValue maxValue = new MaxValue();//将当前的错误excel名称持久化！，可能为空也可能不为空！也就是是否错误！
+            maxValue.setKey(userName);
+            maxValue.setValue(errorFileName);
+            if(errorFileNamePro == null){
+                maxValueService.insertMaxValue(maxValue);
+            }else{
+                maxValueService.updataMaxValue(maxValue);
+            }
             wb2.close();
-            outputStream.close();
+            if(hasError){
+                throw new SimpleException("hasInsertError","要插入文件中，由于设备信息不全，少量或大量设备未插入，请下载为插入设备信息，修改后重新上传！");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new SimpleException(errorType,e.getMessage());
         }
     }
+
+    private void insertErrorEqToExcel(EquipmentCustom equipmentCustom, XSSFSheet sheet, int curRow, int start) {
+        XSSFRow xssfRow = sheet.createRow(curRow);
+        xssfRow.createCell(1).setCellValue(start);
+        xssfRow.createCell(2).setCellValue(equipmentCustom.getEqType());
+        xssfRow.createCell(3).setCellValue(equipmentCustom.getEqName());
+        xssfRow.createCell(4).setCellValue(equipmentCustom.getBrandName());
+        xssfRow.createCell(5).setCellValue(equipmentCustom.getSupplier());
+        xssfRow.createCell(6).setCellValue(equipmentCustom.getBuyCity());
+        xssfRow.createCell(7).setCellValue(equipmentCustom.getPurchasDepart());
+        xssfRow.createCell(8).setCellValue(equipmentCustom.getCity());
+        xssfRow.createCell(9).setCellValue(equipmentCustom.getBelongDepart());
+        xssfRow.createCell(10).setCellValue(equipmentCustom.getEqStateId());
+        xssfRow.createCell(11).setCellValue(equipmentCustom.getPurchasPrice());
+        xssfRow.createCell(12).setCellValue(equipmentCustom.getPurchasTime());
+        xssfRow.createCell(13).setCellValue(equipmentCustom.getBuyCount());
+        xssfRow.createCell(14).setCellValue(equipmentCustom.getMessage());
+    }
+
     private List<EquipmentCustom> filterEquipmentDateAndInsert(List<EquipmentCustom> allEquipments) throws SimpleException {
         List<EquipmentCustom> errorEquipments = new LinkedList<>();//错误的设备内容
 
@@ -486,7 +538,7 @@ public class EquipmentService {
             }
             try {
                 insertSingleEquipment(allEquipment);
-                System.out.println(allEquipment);
+                allEquipment.setMessage("");//没有错误信息表示该条数据已经插入数据库。
             }catch (Exception e){
                 String errorMeaasge = e.getMessage();
                 if(e instanceof SimpleException){

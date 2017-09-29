@@ -6,7 +6,10 @@
     <select id="findValueByKey" resultType="String">
         SELECT `value` FROM `maxvalue` WHERE `key` = #{key}
     </select>
-    <insert id="updataMaxValue">
+    <update id="updataMaxValue">
         UPDATE `maxvalue` SET `value` = #{value} WHERE `key` = #{key}
+    </update>
+    <insert id="insertMaxValue">
+        INSERT INTO `maxvalue` VALUES(#{key},#{value})
     </insert>
 </mapper>

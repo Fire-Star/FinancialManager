@@ -109,7 +109,8 @@
                             </span>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" >
+                        <button class="btn btn-warning" v-if="showDownloadError">下载未导入设备信息</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -255,7 +256,8 @@
         citys:[],
         buyDepartments:[],
         belongDepartment:[],
-        autoSuppliers:[]
+        autoSuppliers:[],
+        showDownloadError:false
     };
 
     var vm = new Vue({
@@ -464,7 +466,21 @@
             contentType: false,  // 注意：让jQuery不要设置contentType
             data: form_data,
             success: function(data){//成功方法
-                alert(data);
+                var _data = eval(data);
+                if(!_data){
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }else if(_data.hasInsertError){
+                    vm.modalStatus = _data.hasInsertError;
+                    $('#modalButton').click();
+                    vm.showDownloadError = true;
+                }else if(_data.errorType){
+                    vm.modalStatus = _data.errorType;
+                    $('#modalButton').click();
+                }else{
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }
             },error:function(){//请求失败方法
                 alert("系统繁忙,请稍后再试！");
             }
