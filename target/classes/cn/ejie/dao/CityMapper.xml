@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.CityMapper">
+    <insert id="addCity">
+        <selectKey keyProperty="cityID" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO city VALUES(#{cityID},#{city},#{cityOtherID})
+    </insert>
+    <select id="findAllCitys" resultType="cn.ejie.pocustom.CityCustom">
+        SELECT city FROM city
+    </select>
+    <select id="hasCity" resultType="java.lang.Integer">
+        SELECT count(cityID) FROM city WHERE city = #{city}
+    </select>
+    <select id="findCityIDByCity" resultType="java.lang.String">
+        SELECT cityID FROM city WHERE city = #{city}
+    </select>
+    <select id="findCityNameByCityID" resultType="java.lang.String">
+        SELECT city FROM city WHERE cityID = #{cityId}
+    </select>
+    <select id="findCityOtherIDByCityID" resultType="String">
+        SELECT cityOtherID FROM city WHERE cityID = #{cityID}
+    </select>
+    <delete id="delCity">
+        DELETE FROM city WHERE cityID = #{city}
+    </delete>
+</mapper>

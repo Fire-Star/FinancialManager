@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.DepartmentMapper">
+    <insert id="addDepartment">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO department VALUES(#{id},#{city},#{department})
+    </insert>
+    <!-- 查找每个城市的Department -->
+    <select id="findDepartmentByCity" resultType="cn.ejie.pocustom.DepartmentCustom">
+        SELECT department FROM department WHERE city = #{city}
+    </select>
+    <select id="hasDepartment" resultType="java.lang.Integer">
+        SELECT count(id) FROM department WHERE city = #{city} and department = #{department}
+    </select>
+    <select id="findDepartmentIDByDepNameAndCity" resultType="String">
+        SELECT id FROM department WHERE department = #{dep} AND city = #{city}
+    </select>
+    <select id="findCityIdByDepartmentId" resultType="String">
+        SELECT city FROM department WHERE id = #{id}
+    </select>
+
+    <select id="findAllDepartment" resultType="cn.ejie.pocustom.DepartmentCustom">
+        SELECT department FROM department
+    </select>
+    <select id="findDepartIDByCityIDAndDepartStr" resultType="String">
+        SELECT id FROM department WHERE city = #{cityID} AND department = #{departStr}
+    </select>
+    <select id="findDepartmentById" resultType="String">
+        SELECT concat(city.city,department.department) FROM department,city WHERE department.city = city.cityID AND department.id = #{id}
+    </select>
+    <select id="findDepartNameByDepId" resultType="String">
+        SELECT department FROM department WHERE id = #{id}
+    </select>
+    <delete id="delDepartByCity">
+        DELETE department FROM department WHERE city = #{city}
+    </delete>
+    <delete id="delDepartmentByDepartID">
+        DELETE FROM department WHERE id = #{departID}
+    </delete>
+</mapper>

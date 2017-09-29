@@ -17,46 +17,45 @@
     <script src="../../res/js/vue.min.js"></script>
     <style>
         body,html{
-            height: 100%;background-color: #f1f1f1;
+            height: 100%;
+            overflow: auto;
+        }
+        p{
+            margin: 0 !important;
         }
         .container {
             width: 100%;
             height: 100%;
         }
-        .app{
-            height: 100%;
-        }
         .supplier-head{
-            height: 7%;
+            height: 50px;
+            line-height: 50px;
         }
         .panel-body{
             padding:0px;
         }
-        .tablecontent{
-            height: 65%;
+        .row{
+            margin: 0;
+            padding-top: 10px;
+            width: 100%;
         }
-        .bootstrap-table{
-            height: 100%;
+        .supplier-row .control-label{
+            padding: 7px 0 0 7px;
+            text-align: right;
         }
-        .bootstrap-table.fixed-table-container{
-            height: 85%;
-        }
-        .btn-group{
-            height:5%;
+        .supplier-row .form-control{
+            margin-bottom: 20px;
         }
         .con{
             vertical-align: middle;
             text-align: right;
-        }
-        .col-sm-4{
-            padding-left: 0px;
         }
     </style>
 </head>
 <body>
 <div class="app container">
     <div class="supplier-head">
-        供应商管理 > 供应商信息
+        供应商管理 > 供应商查询 > 供应商信息
     </div>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
@@ -65,27 +64,31 @@
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
-                        <label class="control-label col-sm-1" for="suppliername">供应商：</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="suppliername" placeholder="供应商..." readonly="enable">
+                    <div class="form-group" style="margin:15px 0;">
+                        <div class="row supplier-row">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="suppliername">供应商：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" id="suppliername" placeholder="供应商..." readonly="enable">
+                            </div>
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="suppliercontactname">联系人：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人..." readonly="enable">
+                            </div>
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="contacttel">联系电话：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" id="contacttel" placeholder="电话..." readonly="enable">
+                            </div>
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">签约时间:</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
+                            </div>
+                            <div class="col-md-1 col-sm-2 col-xs-2"></div>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
+                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                            </div>
                         </div>
-                        <label class="control-label col-sm-1" for="suppliercontactname">联系人：</label>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="suppliercontactname" placeholder="联系人..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="contacttel">联系电话：</label>
-                        <div class="col-sm-1">
-                            <input type="text" class="form-control" id="contacttel" placeholder="电话..." readonly="enable">
-                        </div>
-                        <label class="control-label col-sm-1" for="time">签约时间:</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
-                        </div>
-                        <div class="col-sm-1" style="text-align:left;">
-                            <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
-                                    data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
-                        </div>
+                        
                     </div>
                 </form>
             </div>

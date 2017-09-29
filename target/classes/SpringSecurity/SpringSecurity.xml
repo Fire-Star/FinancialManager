@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 配置不过滤的资源（静态资源及登录相关） -->
+    <security:http pattern="/**/*.css" security="none"></security:http>
+    <security:http pattern="/**/*.jpg" security="none"></security:http>
+    <security:http pattern="/**/*.jpeg" security="none"></security:http>
+    <security:http pattern="/**/*.gif" security="none"></security:http>
+    <security:http pattern="/**/*.png" security="none"></security:http>
+    <security:http pattern="/**/*.js" security="none"></security:http>
+
+    <security:http pattern="/login.jsp" security="none"></security:http>
+    <!-- 这里必须要让index.jsp过滤，否则对于不同权限显示不同资源会没有效果！！！ -->
+    <!--<security:http pattern="/index.jsp" security="none"></security:http>-->
+    <security:http pattern="/getCode" security="none" /><!-- 不过滤验证码 -->
+
+
+    <security:http pattern="/test/**" security="none"></security:http><!-- 不过滤测试内容 -->
+
+    <!-- 要让页面的不同权限显示不同内容，你需要写上这个 -->
+    <bean id="webexpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
+
+    <!-- 配置资源权限信息 -->
+    <security:http auto-config="true" use-expressions="true">
+        <!-- 定义记住我功能，通过user-service-ref指定将要使用的UserDetailsService-->
+        <!--<security:remember-me key="elim" user-service-ref="customUserService"/>-->
+        <security:form-login login-page="/user/loginPage" authentication-failure-url="/user/loginPage" default-target-url="/index.jsp"/>
+        <security:custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
+
+        <!-- 配置登出 -->
+        <!-- 有时候，你会发现，就算重启了 Tomcat ，session 也不会过期，那么你需要配置退出时，session 过期。 -->
+        <!-- 删除JSESSIONID是为了防止，浏览器用一个JSESSIONID进行两次登录！ -->
+        <security:logout logout-url="/logoutSecurity" invalidate-session="true" delete-cookies="JSESSIONID"/>
+        <!-- 在配置登出时，如果不把 csrf 设置为 true 的话，那么登出时的链接将会发生 404 错误。 -->
+        <security:csrf disabled="true"/>
+
+        <!-- session-fixation-protection="newSession" 防止被固定Session攻击，原理：在登录成功后重新为用户创建一个Session -->
+        <security:session-management session-fixation-protection="newSession">
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>
+
+        <!--解决iframe拒绝添加 -->
+        <security:headers>
+            <security:frame-options policy="SAMEORIGIN"/>
+        </security:headers>
+    </security:http>
+
+    <!-- 配置用户角色信息 -->
+    <security:authentication-manager alias="authenticationManagerw">
+        <security:authentication-provider user-service-ref="customUserService">
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean id="MyaccessManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <constructor-arg name="decisionVoters">
+            <list>
+                <ref bean="roleVoter"/>
+                <ref bean="authVoter"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter">
+        <property name="rolePrefix" value="ROLE_"/>
+    </bean>
+
+    <bean id="authVoter" class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+
+    <bean id="securityMetadataSource" class="cn.ejie.springsecurity.model.URLFilterInvocationSecurityMetadataSource" />
+    
+    <!-- 数据库管理url -->
+    <bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+        <property name="accessDecisionManager" ref="MyaccessManager"></property>
+        <property name="authenticationManager" ref="authenticationManagerw"></property>
+        <property name="securityMetadataSource" ref="securityMetadataSource"></property>
+    </bean>
+
+</beans>

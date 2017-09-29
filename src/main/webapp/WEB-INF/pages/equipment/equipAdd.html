@@ -24,200 +24,197 @@
     <script src="../res/js/vue.min.js"></script>
     <style>
         html,body{
-            height: 100%;width: 100%;padding: 0px;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        p{
+            margin: 0;
+            padding: 0;
+        }
+        .supplier-head{
+            height: 50px;
+            line-height: 50px;
         }
         .hr{
-            border: none;border-bottom: 1px solid #9d9d9d;
-        }
-        .form-control-x{
-            width: 186px !important;
+            margin-top: 0;
+            border-bottom: 1px solid #9d9d9d;
         }
         .btn-submit{
             width: 200px;
         }
-        .datepicker:hover,.x:hover , #dep ,#city{
-            cursor: pointer;
-        }
-        .select-left{
-            width: 76px !important;
-        }
-        .select-right{
-            width: 110px !important;
-        }
-        @media (min-width: 768px) {
-            .from-line{
-                margin-bottom: 40px;
-            }
-            .item-left{
-                float: left;
-            }
-            .item-right{
-                float: right;
-            }
-            .content-line{
-                width: 700px;height: 30px;position: relative;
-            }
-            .content-item{
-                display: inline-block;width: 280px;position: relative;
-            }
-            .item-name{
-
-            }
-            .customTitle{
-                clear: both !important;
-            }
-        }
+        .datepicker:hover,
+        .x:hover, 
+        #dep,
+        #city,
         #calender{
             cursor: pointer;
         }
         .borderx{
-            width: 100%;height: 38px;border-bottom: 1px solid #9d9d9d;margin: 0px 0px 35px 0px;position: relative;
+            height: 38px;
+            line-height: 38px;
+            border-bottom: 1px solid #9d9d9d;   
+            margin: 10px 0px 35px 0px;
+            position: relative;
         }
-        .borderx input{
-            display: inline-block;margin-right: 10px;
+        .borderx span,
+        .customTitle{
+            display: inline-block;
+            height: 38px;
+            font-size: 21px;
         }
         .pibu{
-            vertical-align: bottom;position: absolute;right: 250px;
+            position: absolute;
+            right: 10px;
+            top: 0;
+        }
+        .row .control-label{
+            padding: 7px 0;
+            text-align: right;
         }
     </style>
 </head>
 <body>
 <div class="app container-fluid width-100per top-content">
-    <ul class="breadcrumb">
-        <li>
-            设备管理<span class="divider">></span>
-        </li>
-        <li class="active">设备添加</li>
-    </ul><br>
-        <span class="h4 text-primary">设备基本信息添加</span>
+        <div class="supplier-head">设备管理 > 新增设备信息</div>
         <div class="borderx">
-            <button class="btn btn-success pibu">批量导入</button>
+            <span>设备基本信息添加</span>
+            <button class="btn btn-success pibu col-sm-1">批量导入</button>
         </div>
-        <div class="content-line">
-            <div class="item-left content-item">
-                <div class="item-left item-name">
-                    <label for="equipmentType">设备类型：</label>
-                </div>
-                <div class="form-group form-control-x form-inline from-line item-right">
+        <!-- <div class="form-horizontal"> -->
+            <div class="row">
+            <!-- <div class="item-left content-item"> -->
+                <label class="control-label col-md-1 col-sm-2 col-xs-2" for="equipmentType">设备类型：</label>
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control x" propName="设备类型" id="equipmentType" @change="loadEqName" data-toggle="tooltip" data-placement="top"  v-model="eqTypeValue" placeholder="请输入设备类型..." >
                         <option selected value="">---请选择设备类型---</option>
                         <option v-for="(item , index) in equipmentType" :value="item.equipmentTypeName">{{item.equipmentTypeName}}</option>
                     </select>
                 </div>
-            </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name">
-                    <label for="equipmentName" class="">设备名称：</label>
-                </div>
-                <div class="form-group form-control-x form-inline from-line item-right">
+                <!-- </div> -->
+                <!-- <div class="item-right content-item"> -->
+                    <!-- <div class="item-left item-name"> -->
+                <label for="equipmentName" class="control-label col-md-1 col-sm-2 col-xs-2">设备名称：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control x" id="equipmentName" propName="城市" data-toggle="tooltip" data-placement="top">
                         <option selected value="">---请选择设备名称---</option>
                         <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
                     </select>
                 </div>
-            </div>
-        </div>
-        <div class="content-line customTitle">
-            <div class="item-left content-item">
-                <div class="item-left item-name">
-                    <label for="pingpaiName">品牌名称：</label>
-                </div>
-                <div class="form-group form-inline from-line item-right" >
+                <!-- </div>
+            </div> -->
+            <!-- <div class="content-line customTitle">
+                <div class="item-left content-item">
+                    <div class="item-left item-name"> -->
+                <label for="pingpaiName" class="control-label col-md-1 col-sm-2 col-xs-2">品牌名称：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4" >
                     <input class="form-control form-control-x" propName="品牌名称" id="pingpaiName" name="pingpaiName" v-model="pingpaiName" placeholder="输入品牌名称..." type="text">
                 </div>
-            </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name">
-                    <label for="x" class="">采购部门：</label>
-                </div>
-                <div class="form-group form-inline from-line item-right" role="group">
-                <div class="btn-group">
-                    <select class="btn btn-default form-control select-left" v-model="buyCity" @change="loadBuyDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                        <option selected value="" id="">城市</option>
-                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                    </select>
-                    <select class="btn btn-default form-control select-right" propName="采购部门" id="buyDep" data-toggle="tooltip" data-placement="top" >
-                        <option selected value="" id="fd">--部门--</option>
-                        <option v-for="(item , index) in buyDepartments" :value="item.department">{{item.department}}</option>
-                    </select>
-                </div>
-
-            </div>
-            </div>
-        </div>
-        <div class="content-line customTitle">
-            <div class="item-left content-item">
-                <div class="item-left item-name">
-                    <label for="d">归属部门：</label>
-                </div>
-                <div class="form-group form-inline from-line item-right" >
-                    <div class="form-group form-inline from-line item-right" role="group">
-                        <div class="btn-group">
-                            <select class="btn btn-default form-control select-left" id="x" v-model="belongCity" @change="loadBelongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                                <option selected value="" id="d">城市</option>
-                                <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                            </select>
-                            <select class="btn btn-default form-control select-right" id="belongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top" >
-                                <option selected value="" id="dsf">--部门--</option>
-                                <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
-                            </select>
-                        </div>
-
+                <!-- </div> -->
+               <!--  <div class="item-right content-item">
+                    <div class="item-left item-name"> -->
+                <label for="x"  class="control-label col-md-1 col-sm-2 col-xs-2">采购部门：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4 form-inline" role="group">
+                    <div class="btn-group" style="width: 100%">
+                        <select class="btn btn-default form-control select-left" v-model="buyCity" @change="loadBuyDep" propName="品牌名称" data-toggle="tooltip" data-placement="top"  style="width: 50%">
+                            <option selected value="" id="">城市</option>
+                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                        </select>
+                        <select class="btn btn-default form-control select-right" propName="采购部门" id="buyDep" data-toggle="tooltip" data-placement="top"  style="width: 50%">
+                            <option selected value="" id="fd">--部门--</option>
+                            <option v-for="(item , index) in buyDepartments" :value="item.department">{{item.department}}</option>
+                        </select>
                     </div>
                 </div>
-            </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name">
-                    <label for="calender">采购时间:</label>
+                <!-- </div>
+            </div> -->
+          <!--   <div class="content-line customTitle">
+                <div class="item-left content-item">
+                    <div class="item-left item-name"> -->
+                <label for="d" class="control-label col-md-1 col-sm-2 col-xs-2">归属部门：</label>
+                <!-- </div> -->
+                <!-- <div class="form-group form-inline from-line item-right" > -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4 form-inline" role="group">
+                    <div class="btn-group" style="width: 100%">
+                        <select class="btn btn-default form-control select-left" id="x" v-model="belongCity" @change="loadBelongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top"  style="width: 50%">
+                            <option selected value="" id="d">城市</option>
+                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                        </select>
+                        <select class="btn btn-default form-control select-right" id="belongDep" propName="品牌名称" data-toggle="tooltip" data-placement="top"  style="width: 50%">
+                            <option selected value="" id="dsf">--部门--</option>
+                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group form-inline from-line item-right">
+                <!-- </div> -->
+                <!-- </div> -->
+                <!-- <div class="item-right content-item">
+                    <div class="item-left item-name"> -->
+                <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">采购时间：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input class="form-control form-control-x" propName="采购时间" id="calender" name="entryTime" placeholder="选择采购时间..." type="text">
                 </div>
-            </div>
-        </div>
-        <div class="content-line">
-            <div class="item-left content-item">
-                <div class="item-left item-name">
-                    <label for="supplier">供应商:</label>
-                </div>
-                <div class="form-group form-inline from-line item-right">
+                <!-- </div> -->
+            <!-- </div>
+            <div class="content-line">
+                <div class="item-left content-item">
+                    <div class="item-left item-name"> -->
+                <label for="supplier" class="control-label col-md-1 col-sm-2 col-xs-2">供应商：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <select class="form-control form-control-x x" id="supplier" propName="供应商" data-toggle="tooltip" data-placement="top" v-model="supplier" >
                         <option selected value="">---请选择供应商---</option>
                         <option v-for="(item , index) in autoSuppliers" :value="item.name">{{item.name}}</option>
                     </select>
                 </div>
-            </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name">
-                    <label for="calender">采购价格:</label>
-                </div>
-                <div class="form-group form-inline from-line item-right">
+                <!-- </div>
+                <div class="item-right content-item">
+                    <div class="item-left item-name"> -->
+                <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">采购价格：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input class="form-control form-control-x" propName="采购价格" id="price" v-model="buyPrice" name="entryTime" placeholder="输入采购价格..." type="text">
                 </div>
+                <!-- </div>
             </div>
-        </div>
-        <div class="content-line">
-            <div class="item-left content-item">
-                <div class="item-left item-name">
-                    <label for="buyCount">购买数量:</label>
-                </div>
-                <div class="form-group form-inline from-line item-right">
+            <div class="content-line">
+                <div class="item-left content-item">
+                    <div class="item-left item-name"> -->
+                <label for="buyCount" class="control-label col-md-1 col-sm-2 col-xs-2">购买数量：</label>
+                <!-- </div> -->
+                <div class="form-group col-md-3 col-sm-4 col-xs-4">
                     <input type="number" id="buyCount" class="form-control form-control-x"  propName="购买数量" placeholder="请输入购买数量..." data-toggle="tooltip" data-placement="top" v-model="buyCount" >
                 </div>
+                <!-- </div> -->
             </div>
-        </div>
+        <!-- </div> -->
+        
         <br><br>
-        <p class="h4 text-primary customTitle">员工自定义信息添加</p>
+        <p class="customTitle">员工自定义信息添加</p>
         <hr class="hr">
         <input type="hidden" name="customKey">
         <input type="hidden" name="customValue">
-        <div class="form-group form-inline" v-for="(item,index) in customFields">
-            <input type="text" class="form-control form-control-x" v-model="customFields[index].key" placeholder="自定义属性">
-            <input type="text" class="form-control form-control-x" v-model="customFields[index].value" placeholder="属性值">
-            <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
-            <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
+        <div class="form-group form-inline row" v-for="(item,index) in customFields">
+            <div class="col-md-2 col-sm-2 col-xs-2"></div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <input type="text" style="width: 100%" class="form-control form-control-x" v-model="customFields[index].key" placeholder="自定义属性">
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <input type="text" style="width: 100%" class="form-control form-control-x" v-model="customFields[index].value" placeholder="属性值">
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
+                <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
+            </div>
         </div>
-        <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+        <div class="col-sm-12 col-xs-12" style="text-align: center;margin-top: 50px;">
+            <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+        </div>
+        
 
     <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
     <!-- Modal -->

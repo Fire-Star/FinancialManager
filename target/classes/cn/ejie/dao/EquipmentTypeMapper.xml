@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ejie.dao.EquipmentTypeMapper">
+    <insert id="insertSingleEquipmentType">
+        <selectKey keyProperty="equipmentTypeId" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO eq_type(eq_type_id,eq_type_name,eq_type_other_id) VALUES(#{equipmentTypeId},#{equipmentTypeName},#{eqTypeOtherId})
+    </insert>
+    <select id="showAllEquipmentType" resultType="cn.ejie.pocustom.EquipmentTypeCustom">
+        SELECT eq_type_name equipmentTypeName,eq_type_other_id eqTypeOtherId FROM eq_type
+    </select>
+    <select id="findEquipmentTypeCount" resultType="java.lang.Integer">
+        SELECT count(eq_type_id) FROM eq_type
+    </select>
+    <select id="findEquipmentTypeCountByTypeName" resultType="java.lang.Integer">
+        SELECT COUNT(eq_type_name) FROM eq_type WHERE eq_type_name = #{equipmentTypeName}
+    </select>
+    <select id="findEquipmentTypeIDByTypeName" resultType="java.lang.String">
+        SELECT eq_type_id FROM eq_type WHERE eq_type_name = #{equipmentTypeName}
+    </select>
+    <select id="findEquipmentTypeOtherIDByTypeName" resultType="String">
+        SELECT eq_type_other_id FROM eq_type WHERE eq_type_name = #{equipmentTypeName}
+    </select>
+    <delete id="delEqTypeByEqTypeName">
+        DELETE FROM eq_type WHERE eq_type_name = #{eqTypeName}
+    </delete>
+</mapper>
