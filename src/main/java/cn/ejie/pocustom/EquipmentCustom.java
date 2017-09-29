@@ -19,4 +19,11 @@ public class EquipmentCustom extends Equipment{
     public void setBuyCount(String buyCount) {
         this.buyCount = buyCount;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+"EquipmentCustom{" +
+                "buyCount='" + buyCount + '\'' +
+                '}';
+    }
 }

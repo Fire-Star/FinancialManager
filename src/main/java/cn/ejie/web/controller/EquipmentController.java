@@ -11,6 +11,11 @@ import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -23,8 +28,7 @@ import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -34,9 +38,6 @@ import java.util.*;
  */
 @Controller
 public class EquipmentController {
-
-    private static final String UPLOAD_DIR = "K:\\文件上传\\";
-    private static final long MAX_FILE_SISE = 61440; //为 60 MB
 
     @Autowired
     private EquipmentService equipmentService;
@@ -553,46 +554,8 @@ public class EquipmentController {
     @RequestMapping("/equipment/upload")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
-            //获取文件类型
-            String contentType = file.getContentType();
-
-            System.out.println("contentType="+contentType);
-
-            if(!contentType.equals("")) {
-                //可以对文件类型进行检查
-            }
-            //获取input域的name属性
-            String name = file.getName();
-            System.out.println("name="+name);
-            //获取文件名，带扩展名
-            String originFileName = file.getOriginalFilename();
-            System.out.println("originFileName"+originFileName);
-            //获取文件扩展名
-            String extension = originFileName.substring(originFileName.lastIndexOf("."));
-            System.out.println(extension);
-            //获取文件大小，单位字节
-            long site = file.getSize();
-            System.out.println("size="+site);
-            if(site > MAX_FILE_SISE) {
-                //可以对文件大小进行检查
-            }
-            //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
-            //不推荐这么写，这里只是举例子，这么写会有并发问题
-            //应该采用一定的算法生成独一无二的的文件名
-            String fileName = UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
-            try {
-                file.transferTo(new File(fileName));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            insertXslEquipment(fileName);
-
+            equipmentService.uploadFile(file);
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
-    }
-
-    private void insertXslEquipment(String fileName) {
-
     }
 }
