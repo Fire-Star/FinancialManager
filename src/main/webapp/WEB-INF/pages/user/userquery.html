@@ -231,6 +231,7 @@
                         },
                         function(data,status){
                             var _data = data;
+                            updateIframe();
                             if(eval(_data)){
                                 alert(eval(_data).success);
                             }else{
@@ -238,7 +239,6 @@
                             }
                         });
                 }
-                $('#tb_user').bootstrapTable('refresh');
                 $("#userModal").modal('hide');
             },
             submitEditPass(){
@@ -252,6 +252,7 @@
                         },
                         function(data,status){
                             var _data = data;
+                            updateIframe();
                             if(eval(_data)){
                                 alert(eval(_data).success);
                             }else{
@@ -259,7 +260,6 @@
                             }
                         });
                 }
-                $('#tb_user').bootstrapTable('refresh');
                 $("#editPassModal").modal('hide');
                 vm.editPass = "";
             },
@@ -273,6 +273,7 @@
                         },
                         function(data,status){
                             var _data = data;
+                            updateIframe();
                             if(eval(_data)){
                                 alert(eval(_data).success);
                             }else{
@@ -280,7 +281,6 @@
                             }
                         });
                 }
-                $('#tb_user').bootstrapTable('refresh');
                 $("#delUserModal").modal('hide');
             }
         }
@@ -407,6 +407,9 @@
         vm.addCity="";
         vm.addUser="";
         vm.addPass="";
+    }
+    function updateIframe() {
+        window.parent.document.getElementById('iframeContent').src="../user/user/query";
     }
 
 </script>
