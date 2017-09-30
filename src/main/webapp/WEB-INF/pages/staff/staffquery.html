@@ -9,6 +9,8 @@
     <script src="../../res/js/bootstrap-table.js"></script>
     <script src="../../res/js/bootstrap-datepicker.js"></script>
     <script src="../../res/js/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="../../res/js/bootstrap-table-export.js"></script>
+    <script src="../../res/js/tableExport.js"></script>
     <link rel="stylesheet" href="../../res/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../../res/css/bootstrap-table.css"/>
 
@@ -106,12 +108,13 @@
         </div>
     </div>
     <div id="toolbar" class="btn-group">
-        <button id="btn_result" type="button" class="btn btn-default">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>导出结果
-        </button>
-        <button id="btn_print" type="button" class="btn btn-default">
-            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>打印
-        </button>
+        <select class="form-control form-control-x" id="exportSelected" propName="请选择导出方式..." data-toggle="tooltip"
+                data-placement="top" v-model="exportTypeValue">
+            <option selected value="">--请选择导出方式--</option>
+            <option value="all">导出全部</option>
+            <option value="basic">导出当前页</option>
+            <option value="selected">导出选中项</option>
+        </select>
     </div>
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_staff"></table>
@@ -125,7 +128,8 @@
     var data = {
         citys : [],
         city : "",
-        departments : []
+        departments : [],
+        exportTypeValue:""
     };
     var vm = new Vue({
         el:'.app',
@@ -154,6 +158,11 @@
         oTable.Init();
         //2.初始化Button的点击事件
         var oButtonInit = new ButtonInit();
+        $("#exportSelected").change(function () {
+            $('#tb_staff').bootstrapTable('refreshOptions', {
+                exportDataType: vm.exportTypeValue
+            });
+        });
         oButtonInit.Init();
     });
     var TableInit = function () {
@@ -168,8 +177,8 @@
                 striped: true,                      //是否显示行间隔色
                 // cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                 pagination: true,                   //是否显示分页（*）
-                // sortable: false,                     //是否启用排序
-                // sortOrder: "asc",                   //排序方式
+                sortable: true,                     //是否启用排序
+                sortOrder: "desc",                   //排序方式
                 queryParams: oTableInit.queryParams,//传递参数（*）
                 sidePagination: "client",           //分页方式：client客户端分页，server服务端分页（*）
                 pageNumber:1,                       //初始化加载第一页，默认第一页
@@ -186,6 +195,8 @@
                 showToggle:true,                    //是否显示详细视图和列表视图的切换按钮
                 cardView: false,                    //是否显示详细视图
                 detailView: false,                   //是否显示父子表
+                showExport: true,                     //是否显示导出
+                exportDataType: "all",              //basic', 'all', 'selected'.
                 columns: [{
                     checkbox: true
                 }, {
