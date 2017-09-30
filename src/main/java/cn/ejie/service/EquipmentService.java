@@ -1,16 +1,35 @@
 package cn.ejie.service;
 
 import cn.ejie.dao.EquipmentMapper;
+import cn.ejie.dao.EquipmentNameMapper;
 import cn.ejie.dao.EquipmentStateMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
+import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.EquipmentCustom;
+import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,6 +38,10 @@ import java.util.List;
 @Service
 public class EquipmentService {
     private static final String inserState = "闲置";
+    private static final String BASE_PATH = "K:\\文件上传\\";
+    private static final String UPLOAD_DIR = BASE_PATH;
+    private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
+    private static final long MAX_FILE_SISE = 61440; //为 60 MB
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -35,11 +58,21 @@ public class EquipmentService {
     @Autowired
     private EquipmentTypeService equipmentTypeService;
 
+    @Autowired
+    private SupplierService supplierService;
+
+    @Autowired
+    private EquipmentNameService equipmentNameService;
+
+    @Autowired
+    private EquipmentNameMapper equipmentNameMapper;
+
+    @Autowired
+    private MaxValueService maxValueService;
+
     private String errorType = "errorType";
 
     public void insertSingleEquipment(EquipmentCustom equipmentCustom) throws Exception{
-        System.out.println(equipmentCustom);
-        System.out.println(equipmentCustom.getBuyCount());
         BeanPropertyValidateUtils.validateIsEmptyProperty(equipmentCustom);//验证Bean属性是否为空！！！
         String countStr = equipmentCustom.getBuyCount();
 
@@ -50,6 +83,25 @@ public class EquipmentService {
             }
         }
         Integer iCount = Integer.parseInt(countStr);
+
+        String supplier = equipmentCustom.getSupplier();//供应商数据校验
+        String supplierID = supplierService.findSupIdBySupName(supplier);
+        if(supplierID == null){
+            throw new SimpleException(errorType,"设备供应商不存在！");
+        }
+        String eqType = equipmentCustom.getEqType();//设备类型数据校验
+        String eqTypeID = equipmentTypeService.findEquipmentTypeIDByTypeName(eqType);
+        if(eqTypeID == null){
+            throw new SimpleException(errorType,"设备类型不存在！");
+        }
+        String eqName = equipmentCustom.getEqName();
+        EquipmentNameCustom equipmentNameCustom = new EquipmentNameCustom();
+        equipmentNameCustom.setEqTypeId(eqTypeID);
+        equipmentNameCustom.setEqName(eqName);
+        Integer eqNameCount = equipmentNameService.findEquipmentNameCountByEquipmentNameAndType(equipmentNameCustom);
+        if(eqNameCount <= 0){
+            throw new SimpleException(errorType,"设备名称不存在！");
+        }
 
         String stateID = equipmentStateMapper.findStateIDByStateName(inserState);//查找ID并设置ID
         equipmentCustom.setEqStateId(stateID);
@@ -256,4 +308,246 @@ public class EquipmentService {
         }
         return num;
     }
+
+    public void uploadFile(MultipartFile file) throws Exception {
+        //获取文件类型
+        String contentType = file.getContentType();
+
+        System.out.println("contentType="+contentType);
+
+        if(!contentType.equals("")) {
+            //可以对文件类型进行检查
+        }
+        //获取input域的name属性
+        String name = file.getName();
+        System.out.println("name="+name);
+        //获取文件名，带扩展名
+        String originFileName = file.getOriginalFilename();
+        System.out.println("originFileName"+originFileName);
+        //获取文件扩展名
+        String extension = originFileName.substring(originFileName.lastIndexOf("."));
+        System.out.println(extension);
+        //获取文件大小，单位字节
+        long site = file.getSize();
+        System.out.println("size="+site);
+        if(site > MAX_FILE_SISE) {
+            //可以对文件大小进行检查
+        }
+        //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
+        //不推荐这么写，这里只是举例子，这么写会有并发问题
+        //应该采用一定的算法生成独一无二的的文件名
+        String fileName = UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        try {
+            file.transferTo(new File(fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("fileName--------->"+fileName);
+        insertXslEquipment(fileName);
+    }
+
+    private String[] eqCellName = {"eqType","eqName","brandName","supplier","buyCity","purchasDepart","city","belongDepart","eqStateId","purchasPrice","purchasTime","buyCount"};
+    /**
+     * 对于excel的要求，第一行必须是列头
+     * @param fileName
+     */
+    private void insertXslEquipment(String fileName) throws Exception{
+        List<EquipmentCustom> allEquipments = new LinkedList<>();
+        try {
+            XSSFWorkbook wb = new XSSFWorkbook(fileName);
+            int sheetCount = 1;//获取xls中的Sheet页数
+            for (int sheet = 0; sheet < sheetCount; sheet++) {
+                XSSFSheet tempSheet = wb.getSheetAt(sheet);
+                if(tempSheet == null){
+                    throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
+                }
+                int rowCount = tempSheet.getLastRowNum()+1;//获取当前Sheet页中包括的行数
+                for (int row = 0; row < rowCount; row++) {
+                    XSSFRow tempRow = tempSheet.getRow(row);//获取当前页中的每一行
+                    if(row == 0 && tempRow != null){
+                        throw new SimpleException(errorType,"excel格式错误，excel第一行必须曾经未加入过数据，并且现在为空。解决方式为：新插入行，删除旧行，请修改文件后再上传！");
+                    }
+                    if(row == 1 && tempRow == null){
+                        throw new SimpleException(errorType,"第二行必须为要插入数据的标题，不能为空！");
+                    }else if(row == 1 && tempRow != null){
+                        continue;
+                    }
+                    if(tempRow == null){//每一行都可能为null，因为在xls中可以删除当前行。
+                        continue;
+                    }
+                    EquipmentCustom tempEquipment = new EquipmentCustom();//创建一个容器用来装载数据
+
+                    int cellCount = tempRow.getLastCellNum();//获取列数
+                    for (int cell = 0; cell < cellCount; cell++) {
+                        XSSFCell tempCell = tempRow.getCell(cell);
+                        if(cell == 0 && tempCell != null){
+                            throw new SimpleException(errorType,"excel格式错误，excel第一列必须未加入过数据，并且现在为空。解决方式为：新插入列，删除旧列，请修改文件后再上传！");
+                        }
+                        if(cell == 1){
+                            continue;
+                        }
+                        if(tempCell == null){//当前单元格也可能为null，因为可以在excell中被删除。
+                            continue;
+                        }
+                        int index = cell-2;//获取下标
+                        if(index>=eqCellName.length){
+                            break;
+                        }
+                        String fieldName = eqCellName[index];//获取列名
+                        String fieldValue = "";
+                        if(fieldName.equals("purchasTime")){
+                            Date tempDate = tempCell.getDateCellValue();
+                            if(tempDate == null){
+                                String time = tempCell.toString();
+                                if(time == null || time.equals("")){
+                                    continue;
+                                }else if(StringUtils.isNormalTime(time)){
+                                    tempDate = StringUtils.paseNormalTime(time);
+                                    fieldValue = StringUtils.getNormalTime(tempDate);
+                                    SimpleBeanUtils.setTargetFieldValue(tempEquipment,fieldName,fieldValue);//设置属性值
+                                }
+                                continue;
+                            }
+                            fieldValue = StringUtils.getNormalTime(tempDate);
+                        } else {
+                            fieldValue = tempCell.toString();
+                        }
+                        SimpleBeanUtils.setTargetFieldValue(tempEquipment,fieldName,fieldValue);//设置属性值
+                    }
+                    tempEquipment.setX(row);
+                    tempEquipment.setY(14);
+                    allEquipments.add(tempEquipment);
+                }
+            }
+            wb.close();//关闭流，释放资源
+
+            List<EquipmentCustom> errorEquipments = filterEquipmentDateAndInsert(allEquipments);
+
+            XSSFWorkbook wb2 = new XSSFWorkbook(EQ_MODEL_FILE);
+            XSSFSheet sheet = wb2.getSheetAt(0);
+            if(sheet == null){
+                throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
+            }
+            int len = allEquipments.size();
+            boolean hasError = false;
+            for (int i = 0; i < len; i++) {
+                EquipmentCustom equipmentCustom = allEquipments.get(i);
+                int curRow = i+2;
+                int start = i+1;
+                String errorMessage = equipmentCustom.getMessage();
+                if(errorMessage != null && !errorMessage.equals("")){
+                    hasError = true;
+                    insertErrorEqToExcel(equipmentCustom,sheet,curRow,start);
+                }
+            }
+            //只要插入信息之后，不管插入的设备信息是否有错，我都会删除上一个错误文件。
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+            String errorFileNamePro = null;
+            try {
+                errorFileNamePro = maxValueService.findValueByKey(userName);
+            }catch (Exception e){}
+            if(errorFileNamePro!=null&&!errorFileNamePro.equals("")){
+                File file = new File(BASE_PATH+errorFileNamePro);
+                file.delete();
+            }
+
+            String errorFileName = "";//同时也会修改数据库中当前用户错误文件为空！
+            if(hasError){
+                errorFileName = "新设备未插入"+new Date().getTime()+".xlsx";
+
+                OutputStream outputStream = new FileOutputStream(BASE_PATH+errorFileName);
+                wb2.write(outputStream);
+                outputStream.close();
+            }
+            MaxValue maxValue = new MaxValue();//将当前的错误excel名称持久化！，可能为空也可能不为空！也就是是否错误！
+            maxValue.setKey(userName);
+            maxValue.setValue(errorFileName);
+            if(errorFileNamePro == null){
+                maxValueService.insertMaxValue(maxValue);
+            }else{
+                maxValueService.updataMaxValue(maxValue);
+            }
+            wb2.close();
+            if(hasError){
+                throw new SimpleException("hasInsertError","要插入文件中，由于设备信息不全，少量或大量设备未插入，请下载为插入设备信息，修改后重新上传！");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new SimpleException(errorType,e.getMessage());
+        }
+    }
+
+    private void insertErrorEqToExcel(EquipmentCustom equipmentCustom, XSSFSheet sheet, int curRow, int start) {
+        XSSFRow xssfRow = sheet.createRow(curRow);
+        xssfRow.createCell(1).setCellValue(start);
+        xssfRow.createCell(2).setCellValue(equipmentCustom.getEqType());
+        xssfRow.createCell(3).setCellValue(equipmentCustom.getEqName());
+        xssfRow.createCell(4).setCellValue(equipmentCustom.getBrandName());
+        xssfRow.createCell(5).setCellValue(equipmentCustom.getSupplier());
+        xssfRow.createCell(6).setCellValue(equipmentCustom.getBuyCity());
+        xssfRow.createCell(7).setCellValue(equipmentCustom.getPurchasDepart());
+        xssfRow.createCell(8).setCellValue(equipmentCustom.getCity());
+        xssfRow.createCell(9).setCellValue(equipmentCustom.getBelongDepart());
+        xssfRow.createCell(10).setCellValue(equipmentCustom.getEqStateId());
+        xssfRow.createCell(11).setCellValue(equipmentCustom.getPurchasPrice());
+        xssfRow.createCell(12).setCellValue(equipmentCustom.getPurchasTime());
+        xssfRow.createCell(13).setCellValue(equipmentCustom.getBuyCount());
+        xssfRow.createCell(14).setCellValue(equipmentCustom.getMessage());
+    }
+
+    private List<EquipmentCustom> filterEquipmentDateAndInsert(List<EquipmentCustom> allEquipments) throws SimpleException {
+        List<EquipmentCustom> errorEquipments = new LinkedList<>();//错误的设备内容
+
+        for (EquipmentCustom allEquipment : allEquipments) {
+            String buyCount = allEquipment.getBuyCount();
+            if(buyCount == null || buyCount.equals("")){
+                allEquipment.setBuyCount("1");
+            }
+            buyCount = StringUtils.getStrPreNum(buyCount);
+            if(buyCount.equals("")){
+                buyCount = "1";
+            }
+            String time = allEquipment.getPurchasTime();
+            if(time == null || time.equals("")){
+                allEquipment.setMessage("采购时间不能为空！");
+                continue;
+            }
+            allEquipment.setBuyCount(buyCount);
+            allEquipment.setPurchasTime(StringUtils.enDateStrToZHDateStr(allEquipment.getPurchasTime()));
+            String eqState = allEquipment.getEqStateId();
+            String city = allEquipment.getCity();
+            String buyCity = allEquipment.getBuyCity();
+
+            if(eqState == null || eqState.equals("")){
+                eqState = "闲置";
+            }
+            String eqStateID = equipmentStateMapper.findStateIDByStateName(eqState);
+            if(eqStateID == null){
+                allEquipment.setMessage("设备状态错误！");
+                continue;
+            }
+
+            if(city == null || city.equals("")){
+                allEquipment.setMessage("设备归属城市不能为空！");
+                continue;
+            }
+
+            if(buyCity == null || buyCity.equals("")){
+                allEquipment.setMessage("设备采购城市不能为空！");
+                continue;
+            }
+            try {
+                insertSingleEquipment(allEquipment);
+                allEquipment.setMessage("");//没有错误信息表示该条数据已经插入数据库。
+            }catch (Exception e){
+                String errorMeaasge = e.getMessage();
+                if(e instanceof SimpleException){
+                    errorMeaasge = ((SimpleException)e).getErrorMessage();
+                }
+                allEquipment.setMessage(errorMeaasge);
+            }
+        }
+        return errorEquipments;
+    }
+
 }

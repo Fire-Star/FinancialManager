@@ -206,7 +206,7 @@ public class UserController {
 
     @RequestMapping("/user/index")
     public String main(){
-        return "/WEB-INF/pages/index.html";
+        return "/WEB-INF/pages/index.jsp";
     }
 
     @RequestMapping("/user/getUsername")

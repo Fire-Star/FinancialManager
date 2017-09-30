@@ -1,7 +1,6 @@
 package cn.ejie.utils;
 
 import org.apache.commons.beanutils.BeanUtils;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
@@ -22,5 +21,15 @@ public class SimpleBeanUtils {
             e.printStackTrace();
         }
         return targetObject;
+    }
+
+    public static void setTargetFieldValue(Object targetObject, String fieldName, String fieldValue){
+        try {
+            BeanUtils.setProperty(targetObject,fieldName,fieldValue);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

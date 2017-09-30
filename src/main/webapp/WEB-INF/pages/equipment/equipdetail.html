@@ -19,48 +19,45 @@
     <script src="../../res/js/vue.min.js"></script>
     <style>
         body,html{
-            height: 100%;background-color: #f1f1f1;
+            height: 100%;
+            /*background-color: #f1f1f1;*/
+        }
+        p{
+            margin: 0 !important;
         }
         .container {
             width: 100%;
             height: 100%;
         }
-        .app{
-            height: 100%;
-        }
         .supplier-head{
-            height: 10%;
+            height: 50px;
+            line-height: 50px;
         }
         .panel-body{
             padding:0px;
-            height: 30%;
+            /*height: 30%;*/
         }
         .row{
             padding-top: 10px;
+            margin: 0;
             width: 100%;
         }
+        #formSearch .control-label{
+            padding: 7px 0 0 7px;
+        }
+        #formSearch .form-control{
+            margin-bottom: 20px;
+        }
         .tablecontent_borrow{
-            height: 40%;
-        }
-        .tablecontent_fix{
-            height: 20%;
-        }
-        .bootstrap-table{
-            height: 100%;
-        }
-        .bootstrap-table.fixed-table-container{
-            height: 85%;
-        }
-        .btn-group{
-            height:5%;
+            margin-bottom: 50px;
         }
         .con{
-            vertical-align: middle;
+            /*vertical-align: middle;*/
             text-align: right;
         }
-        .col-sm-3{
+        /*.col-sm-3{
             padding-left: 0px;
-        }
+        }*/
         .addAreaDiv{
             padding-left: 0px;
         }
@@ -86,40 +83,41 @@
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
-                    <div class="form-group" style="margin-top:15px">
+                    <div class="form-group" style="margin:15px 0;">
                         <div class="row">
-                            <label class="control-label col-sm-1" for="eqID">设备ID：</label>
-                            <div class="col-sm-2">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="eqID">设备ID：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqID" placeholder="ID..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="eqType">设备类型：</label>
-                            <div class="col-sm-2">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="eqType">设备类型：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqType" placeholder="类型..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="eqName">设备名称：</label>
-                            <div class="col-sm-2">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="eqName">设备名称：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqName" placeholder="名称..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="supplier">供应商：</label>
-                            <div class="col-sm-2">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="supplier">供应商：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="supplier" placeholder="供应商..." readonly="enable">
                             </div>
-                        </div>
-                        <div class="row">
-                            <label class="control-label col-sm-1" for="belongDepart">归属部门：</label>
-                            <div class="col-sm-2">
+                        <!-- </div>
+                        <div class="row"> -->
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="belongDepart">归属部门：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="belongDepart" placeholder="部门..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="eqState">当前状态：</label>
-                            <div class="col-sm-2">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="eqState">当前状态：</label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
                             </div>
-                            <label class="control-label col-sm-1" for="time">购买时间：</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="time" placeholder="购买时间..." readonly="enable">
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">购买时间： </label>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
-                            <div class="col-sm-1" style="text-align:left;">
-                                <button type="button" style="margin-left:50px" id="btn_clear" class="btn btn-primary"
+                            <div class="col-md-1 col-sm-2 col-xs-2"></div>
+                            <div class="col-md-2 col-sm-4 col-xs-4">
+                                <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
                             </div>
                         </div>
@@ -128,34 +126,34 @@
             </div>
         </div>
     </div>
-    <div id="borrow_toolbar" class="btn-group">
-        <row>
-            <div class="col-sm-6">
-                <p><h4>设备借调记录</h4></p>
-            </div>
-            <div class="col-sm-3">
+    <div id="borrow_toolbar">
+        <!-- <row> -->
+            <!-- <div class="col-sm-6"> -->
+                <span style="font-size: 21px;">设备借调记录</span>
+            <!-- </div> -->
+            <!-- <div class="col-sm-3"> -->
                 <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addBorrowLog()"
                         data-toggle="modal" data-target="#borrowModal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加借调记录
                 </button>
-            </div>
-        </row>
+            <!-- </div> -->
+        <!-- </row> -->
     </div>
     <div class="tablecontent_borrow">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_borrow"></table>
     </div>
-    <div id="fix_toolbar" class="btn-group">
-        <row>
-            <div class="col-sm-6">
-                <p><h4>设备维护记录</h4></p>
-            </div>
-            <div class="col-sm-3">
+    <div id="fix_toolbar">
+        <!-- <row> -->
+            <!-- <div class="col-sm-6"> -->
+                <span style="font-size: 21px;">设备维护记录</span>
+            <!-- </div>
+            <div class="col-sm-3"> -->
                 <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addFixLog()"
                         data-toggle="modal" data-target="#fixModal">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加维护记录
                 </button>
-            </div>
-        </row>
+            <!-- </div> -->
+        <!-- </row> -->
     </div>
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
@@ -171,18 +169,22 @@
                 <div class="modal-body">
                     <form id="formSubmit" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">设备ID：</label>
-                            <input type="text" id="eqSubmitId" class="form-control,col-sm-3" name="phone" value=""
-                                   disabled="true">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">设备ID：</label>
+                            <div class="col-sm-7 col-xs-7">
+                                <input type="text" id="eqSubmitId" class="form-control" name="phone" value="" disabled="true">
+                            </div>
+                            
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">设备其他ID：</label>
-                            <input type="text" id="eqSubmitOtherId" class="form-control,col-sm-3" name="phone"
-                                   value="" disabled="true">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">设备其他ID：</label>
+                            <div class="col-sm-7 col-xs-7">
+                                <input type="text" id="eqSubmitOtherId" class="form-control" name="phone" value="" disabled="true">
+                            </div>
+                            
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitType">设备类型：</label>
-                            <div class="col-sm-3">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitType">设备类型：</label>
+                            <div class="col-sm-7 col-xs-7">
                                 <select class="form-control" propName="设备类型" id="eqSubmitType" @change="loadEqName" v-model="eqTypeValue"
                                         data-toggle="tooltip" data-placement="top">
                                     <option selected value="">---请选择设备类型---</option>
@@ -191,8 +193,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitName">设备名称：</label>
-                            <div class="col-sm-3">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitName">设备名称：</label>
+                            <div class="col-sm-7 col-xs-7">
                                 <select class="form-control" propName="设备名称" id="eqSubmitName" v-model="eqNameValue" data-toggle="tooltip" data-placement="top">
                                     <option selected value="">---请选择设备名称---</option>
                                     <option v-for="(item , index) in equipmentName" :value="item.eqName">{{item.eqName}}</option>
@@ -200,8 +202,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitSupplier">供应商：</label>
-                            <div class="col-sm-3">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitSupplier">供应商：</label>
+                            <div class="col-sm-7 col-xs-7">
                                 <select class="form-control" propName="供应商" id="eqSubmitSupplier" v-model="supplier"
                                         data-toggle="tooltip" data-placement="top">
                                     <option selected value="">---请选择设供应商---</option>
@@ -210,19 +212,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">归属部门：</label>
-                            <div class="col-sm-4" >
-                                <div class="form-group form-inline from-line item-right" role="group">
-                                    <div class="btn-group ">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">归属部门：</label>
+                            <div class="col-sm-7 col-xs-7" >
+                                <div class="form-inline" role="group">
+                                    <div class="btn-group" style="width: 100%">
                                         <select class="btn btn-default form-control select-left" id="eqSubmitCity"
                                                 data-toggle="tooltip" data-placement="top" @change="loadBelongDep"
-                                                v-model="city">
+                                                v-model="city" style="width: 50%">
                                             <option selected value="" id="d">-城市-</option>
                                             <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                         </select>
                                         <select class="btn btn-default form-control select-right"
                                                 id="eqSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
-                                                data-placement="top" >
+                                                data-placement="top" style="width: 50%">
                                             <option selected value="" id="dsf">--部门--</option>
                                             <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
                                         </select>
@@ -231,8 +233,8 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitState">当前状态：</label>
-                            <div class="col-sm-3">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitState">当前状态：</label>
+                            <div class="col-sm-7 col-xs-7">
                                 <select class="form-control" propName="设备状态" id="eqSubmitState" v-model="eqState"
                                         data-toggle="tooltip" data-placement="top">
                                     <option selected value="">---请选择设备状态---</option>
@@ -241,8 +243,13 @@
                             </div>
                         </div>
                         <div class="form-group row">
+<<<<<<< HEAD
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitDate">签约时间：</label>
+                            <div class="col-sm-7 col-xs-7">
+=======
                             <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">购买时间：</label>
                             <div class="col-sm-3">
+>>>>>>> 76b2f1b1d511e048fd7e80fb9b603f8076edee5b
                                 <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
                         </div>
@@ -267,38 +274,44 @@
                 <div class="modal-body addBorRow">
                     <div style="height: 200px">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <input id="eqUsed" type="radio" name="borrowState" value="使用">使用
+                            <div class="col-sm-4 col-xs-4">
+                                <label class="radio-inline">
+                                    <input id="eqUsed" type="radio" name="borrowState" value="使用">使用
+                                </label>
                             </div>
-                            <div class="col-sm-4">
-                                <input id="eqNoUsed" type="radio" name="borrowState"value="闲置">闲置
+                            <div class="col-sm-4 col-xs-4">
+                                <label class="radio-inline">
+                                    <input id="eqNoUsed" type="radio" name="borrowState" value="闲置">闲置
+                                </label>
                             </div>
-                            <div class="col-sm-4">
-                                <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
+                            <div class="col-sm-4 col-xs-4">
+                                <label class="radio-inline">
+                                    <input id="eqUnUsed" type="radio" name="borrowState" value="报废">报废
+                                </label>
                             </div>
                         </div>
                         <div class="borDiv">
                         <form id="formBorrowSubmit" class="form-horizontal">
                             <div id="eqUsedDiv" hidden>
                                 <div class="form-group row">
-                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">使用人：</label>
-                                    <div class="col-sm-8" >
+                                    <label class="control-label item-left col-sm-3 col-xs-3 con">使用人：</label>
+                                    <div class="col-sm-8 col-xs-8">
                                         <div class="form-group form-inline from-line item-right" role="group">
-                                            <div class="btn-group ">
-                                                <select class="btn btn-default form-control select-left"
+                                            <div class="btn-group">
+                                                <select class="btn btn-default select-left"
                                                         id="eqBorrowCity"
                                                         data-toggle="tooltip" data-placement="top"
                                                         @change="loadBorBelongDep" v-model="eqBorCityValue">
                                                     <option selected value="">-城市-</option>
                                                     <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                                 </select>
-                                                <select class="btn btn-default form-control select-center"
+                                                <select class="btn btn-default select-center"
                                                         id="eqBorrowBelongDepart" data-toggle="tooltip"
                                                         @change="loadBorUserName" v-model="eqBorBelongValue" data-placement="top" >
                                                     <option selected value="">--部门--</option>
                                                     <option v-for="(item , index) in eqBorBelong" :value="item.department">{{item.department}}</option>
                                                 </select>
-                                                <select class="btn btn-default form-control select-right"
+                                                <select class="btn btn-default select-right"
                                                         id="eqAddBorUsedUser" data-toggle="tooltip"
                                                         v-model="eqBorNameValue"
                                                         data-placement="top" >
@@ -311,27 +324,27 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
-                                    <div class="col-sm-6 addAreaDiv">
-                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUsedDetail"
+                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                    <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorUsedDetail"
                                               name="eqAddBorUsedDetail" v-model="eqBorDetailValue"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <div id="eqNoUsedDiv" hidden>
                                 <div class="form-group row">
-                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">闲置部门：</label>
-                                    <div class="col-sm-8" >
+                                    <label class="control-label item-left col-sm-3 col-xs-3 con">闲置部门：</label>
+                                    <div class="col-sm-8 col-xs-8">
                                         <div class="form-group form-inline from-line item-right" role="group">
-                                            <div class="btn-group ">
-                                                <select class="btn btn-default form-control select-left"
+                                            <div class="btn-group">
+                                                <select class="btn btn-default select-left"
                                                         id="eqAddBorNoUse"
                                                         data-toggle="tooltip" data-placement="top"
                                                         @change="loadBorNoBelongDep" v-model="eqBorNoCityValue">
                                                     <option selected value="">-城市-</option>
                                                     <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
                                                 </select>
-                                                <select class="btn btn-default form-control select-"
+                                                <select class="btn btn-default select-"
                                                         id="eqAddBorNoUsedUser" data-toggle="tooltip" v-model="eqBorNoBelongValue" data-placement="top" >
                                                     <option selected value="">--部门--</option>
                                                     <option v-for="(item , index) in eqBorNoBelong" :value="item.department">{{item.department}}</option>
@@ -341,18 +354,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
-                                    <div class="col-sm-6 addAreaDiv">
-                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorNoUsedDetail"
+                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                    <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorNoUsedDetail"
                                               name="eqAddBorNoUsedDetail" v-model="eqBorNoDetailValue"></textarea>
                                     </div>
                                 </div>
                             </div>
-                            <div id="eqUnUsedDiv" hidden>
+                            <div id="eqUnUsedDiv" hidden style="margin-top: 35px;">
                                 <div class="form-group row">
-                                    <label class="item-left col-sm-4 con" style="padding-left: 20px;">备注：</label>
-                                    <div class="col-sm-6 addAreaDiv">
-                                    <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddBorUnUsedDetail"
+                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                    <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorUnUsedDetail"
                                               name="eqAddBorUnUsedDetail" v-model="eqBorUnDetailValue"></textarea>
                                     </div>
                                 </div>
@@ -379,17 +392,21 @@
                 <div class="modal-body">
                     <form id="formfixSubmit" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护时间：</label>
-                            <input type="text" id="eqAddFixDate" class="form-control,col-sm-3" name="eqAddFixDate" value="">
+                            <label class="item-left col-sm-3 col-xs-3 con" style="padding-left: 20px;">维护时间：</label>
+                            <div class="col-sm-8 col-xs-8">
+                                <input type="text" id="eqAddFixDate" class="form-control" name="eqAddFixDate" value="">
+                            </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护类型：</label>
-                            <input type="text" id="eqAddFixType" class="form-control,col-sm-3" name="eqAddFixType">
+                            <label class="item-left col-sm-3 col-xs-3 con" style="padding-left: 20px;">维护类型：</label>
+                            <div class="col-sm-8 col-xs-8">
+                                <input type="text" id="eqAddFixType" class="form-control" name="eqAddFixType">
+                            </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 con" style="padding-left: 20px;">维护详情：</label>
-                            <div class="col-sm-6 addAreaDiv">
-                                <textarea class="form-control col-sm-6 addAreaDiv" rows="3" id="eqAddFixDetail"
+                            <label class="item-left col-sm-3 col-xs-3 con" style="padding-left: 20px;">维护详情：</label>
+                            <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                <textarea class="form-control addAreaDiv" rows="3" id="eqAddFixDetail"
                                           name="eqAddFixDetail"></textarea>
                             </div>
                         </div>
@@ -816,6 +833,7 @@
                 },
                 function(data,status) {
                     var _data = data;
+                    checkDetailEqDetail(eqId);
                     if(eval(_data)){
                         alert(eval(_data).success);
                     }else{
@@ -873,7 +891,8 @@
                         },
                         function(data,status) {
                             var _data = data;
-                            if(_data!="s"){
+                            if(_data!=""){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -893,6 +912,7 @@
                         function(data,status) {
                             var _data = data;
                             if(_data!="s"){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -910,6 +930,7 @@
                         function(data,status) {
                             var _data = data;
                             if(_data!="s"){
+                                checkDetailEqDetail(eqID);
                                 alert(_data);
                             }
                         });
@@ -918,7 +939,6 @@
                 alert("选择的设备状态不对，请重新选择！");
             }
             $("#borrowModal").modal('hide');
-            checkDetailEqDetail(eqID);
         }
     }
     function checkDetailEqDetail(equipId) {

@@ -11,17 +11,24 @@ import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.View;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -362,7 +369,7 @@ public class EquipmentController {
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
                 " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
         //获取设备的所属部门的ID和采购部门的ID
-        if(!"".equals(supplier)){
+       /* if(!"".equals(supplier)){
             try {
                 supplier = supplierService.findSupIdBySupName(supplier);
             }catch (Exception e){
@@ -371,7 +378,7 @@ public class EquipmentController {
                 SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
                 return;
             }
-        }
+        }*/
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
@@ -542,5 +549,13 @@ public class EquipmentController {
         jsonArray = JSONArray.fromObject(list);
         System.out.println("查询统计数据："+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
+    }
+
+    @RequestMapping("/equipment/upload")
+    public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
+        if(!file.isEmpty()) {
+            equipmentService.uploadFile(file);
+            SimpleException.sendSuccessMessage(response,objectMapper);
+        }
     }
 }

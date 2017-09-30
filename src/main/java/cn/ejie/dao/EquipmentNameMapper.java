@@ -35,4 +35,6 @@ public interface EquipmentNameMapper {
     public void delEquipmentName(EquipmentNameCustom equipmentNameCustom) throws Exception;
 
     public void delEquipmentNameByEqType(String eqType) throws Exception;
+
+    public String findEquipmentNameIDByEquipmentName(String eqName) throws Exception;
 }

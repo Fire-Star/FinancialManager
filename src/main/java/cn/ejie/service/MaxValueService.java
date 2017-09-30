@@ -30,4 +30,9 @@ public class MaxValueService {
         BeanPropertyValidateUtils.validateIsEmptyProperty(maxValue);
         maxValueMapper.updataMaxValue(maxValue);
     }
+
+    public void insertMaxValue(MaxValue maxValue) throws Exception{
+        BeanPropertyValidateUtils.validateIsEmptyProperty(maxValue);
+        maxValueMapper.insertMaxValue(maxValue);
+    }
 }
