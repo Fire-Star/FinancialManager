@@ -11,12 +11,17 @@ import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -557,5 +562,21 @@ public class EquipmentController {
             equipmentService.uploadFile(file);
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
+    }
+
+    @RequestMapping("/equipment/downloadErrorExcel")
+    public ResponseEntity<byte[]> sendErrorEqExcel() throws Exception{
+        File file = equipmentService.getErrorExcel();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", new String("新设备未插入.xlsx".getBytes("UTF-8"),"iso-8859-1"));
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping("/equipment/hasErrorFile")
+    public void hasErrorExcelFile(HttpServletResponse response) throws Exception{
+        boolean hasErrorFile = equipmentService.hasErrorExcelFile();
+        SimpleException.sendMessage(response,objectMapper,"hasErrorFile",hasErrorFile? "1":"0");
     }
 }

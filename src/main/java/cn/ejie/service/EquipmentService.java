@@ -17,15 +17,16 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +39,7 @@ import java.util.List;
 @Service
 public class EquipmentService {
     private static final String inserState = "闲置";
-    private static final String BASE_PATH = "K:\\文件上传\\";
+    public static final String BASE_PATH = "K:\\文件上传\\";
     private static final String UPLOAD_DIR = BASE_PATH;
     private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
     private static final long MAX_FILE_SISE = 61440; //为 60 MB
@@ -347,6 +348,7 @@ public class EquipmentService {
     }
 
     private String[] eqCellName = {"eqType","eqName","brandName","supplier","buyCity","purchasDepart","city","belongDepart","eqStateId","purchasPrice","purchasTime","buyCount"};
+    private String[] eqCellTitleName ={"序列号","设备类型","设备名称","品牌","供应商","采购城市","采购部门","归属城市","归属部门","状态","采购价格","采购时间","备注","错误信息"};
     /**
      * 对于excel的要求，第一行必须是列头
      * @param fileName
@@ -396,16 +398,18 @@ public class EquipmentService {
                         String fieldName = eqCellName[index];//获取列名
                         String fieldValue = "";
                         if(fieldName.equals("purchasTime")){
-                            Date tempDate = tempCell.getDateCellValue();
+                            Date tempDate = null;
+                            try {
+                                tempDate = tempCell.getDateCellValue();
+                            }catch (Exception e){
+                                    String time = tempCell.toString();
+                                    if(time == null || time.equals("")){
+                                        continue;
+                                    }else if(StringUtils.isNormalTime(time)){
+                                        tempDate = StringUtils.paseNormalTime(time);
+                                    }
+                            }
                             if(tempDate == null){
-                                String time = tempCell.toString();
-                                if(time == null || time.equals("")){
-                                    continue;
-                                }else if(StringUtils.isNormalTime(time)){
-                                    tempDate = StringUtils.paseNormalTime(time);
-                                    fieldValue = StringUtils.getNormalTime(tempDate);
-                                    SimpleBeanUtils.setTargetFieldValue(tempEquipment,fieldName,fieldValue);//设置属性值
-                                }
                                 continue;
                             }
                             fieldValue = StringUtils.getNormalTime(tempDate);
@@ -423,21 +427,46 @@ public class EquipmentService {
 
             List<EquipmentCustom> errorEquipments = filterEquipmentDateAndInsert(allEquipments);
 
-            XSSFWorkbook wb2 = new XSSFWorkbook(EQ_MODEL_FILE);
-            XSSFSheet sheet = wb2.getSheetAt(0);
+            XSSFWorkbook wb2 = new XSSFWorkbook();
+            XSSFSheet sheet = wb2.createSheet("设备信息 ");
+
+            XSSFRow rowTitle = sheet.createRow(1);
+            int titleCount = eqCellTitleName.length;
+            CellStyle cellStyle = wb2.createCellStyle();
+            cellStyle.setFillBackgroundColor(IndexedColors.ROYAL_BLUE.getIndex());
+            cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+            cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+            cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+            cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
+            cellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+            for (int title = 0; title < titleCount; title++) {
+                sheet.autoSizeColumn(title+1);//设置水平自适应宽度
+                XSSFCell cell = rowTitle.createCell(title+1);
+                cell.setCellValue(eqCellTitleName[title]);
+                cell.setCellStyle(cellStyle);
+            }
             if(sheet == null){
                 throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
             }
             int len = allEquipments.size();
             boolean hasError = false;
+            System.out.println("--------len="+len);
+            int index = 0;
             for (int i = 0; i < len; i++) {
                 EquipmentCustom equipmentCustom = allEquipments.get(i);
-                int curRow = i+2;
-                int start = i+1;
+                if(i==0){
+                    System.out.println(equipmentCustom);
+                }
+
                 String errorMessage = equipmentCustom.getMessage();
                 if(errorMessage != null && !errorMessage.equals("")){
                     hasError = true;
-                    insertErrorEqToExcel(equipmentCustom,sheet,curRow,start);
+                    if(equipmentCustom.getPurchasTime()!=null&&!equipmentCustom.getPurchasTime().equals("")&&StringUtils.isZhDateFormate(equipmentCustom.getPurchasTime())){
+                        equipmentCustom.setPurchasTime(StringUtils.zhDateStrToENDateStr(equipmentCustom.getPurchasTime()));
+                    }
+                    insertErrorEqToExcel(equipmentCustom,sheet,index+2,index+1);
+                    index++;
                 }
             }
             //只要插入信息之后，不管插入的设备信息是否有错，我都会删除上一个错误文件。
@@ -446,12 +475,12 @@ public class EquipmentService {
             try {
                 errorFileNamePro = maxValueService.findValueByKey(userName);
             }catch (Exception e){}
-            if(errorFileNamePro!=null&&!errorFileNamePro.equals("")){
+            if(errorFileNamePro!=null&&!errorFileNamePro.equals("")&&!errorFileNamePro.equals("1")){
                 File file = new File(BASE_PATH+errorFileNamePro);
                 file.delete();
             }
 
-            String errorFileName = "";//同时也会修改数据库中当前用户错误文件为空！
+            String errorFileName = "1";//同时也会修改数据库中当前用户错误文件为空！
             if(hasError){
                 errorFileName = "新设备未插入"+new Date().getTime()+".xlsx";
 
@@ -538,7 +567,8 @@ public class EquipmentService {
             }
             try {
                 insertSingleEquipment(allEquipment);
-                allEquipment.setMessage("");//没有错误信息表示该条数据已经插入数据库。
+                allEquipment.setMessage(null);//没有错误信息表示该条数据已经插入数据库。
+                System.out.println("------------>插入成功一条！");
             }catch (Exception e){
                 String errorMeaasge = e.getMessage();
                 if(e instanceof SimpleException){
@@ -550,4 +580,31 @@ public class EquipmentService {
         return errorEquipments;
     }
 
+    public File getErrorExcel() throws Exception {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String fileName = maxValueService.findValueByKey(username);
+        if(fileName == null || fileName.equals("")){
+            throw new SimpleException(errorType,"当前用户没有未导入的设备信息！");
+        }
+        File file = null;
+        try {
+            file = new File(BASE_PATH+fileName);
+        }catch (Exception e){
+            throw new SimpleException(errorType,"系统发生错误：获取错误文件失败，请联系管理员该BUG！");
+        }
+        return file;
+    }
+
+    public boolean hasErrorExcelFile() throws Exception{
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String fileName = null;
+        try {
+            fileName = maxValueService.findValueByKey(username);
+        }catch (Exception e){}
+
+        if(fileName == null || fileName.equals("") || fileName.equals("1")){
+            return false;
+        }
+        return true;
+    }
 }

@@ -22,6 +22,14 @@ public class StringUtils {
         }
         return true;
     }
+    public static boolean isZhDateFormate(String time){
+        try {
+            zhDateFormate.parse(time);
+        }catch (ParseException e) {
+            return false;
+        }
+        return true;
+    }
     public static Date paseNormalTime(String time){
         try {
             return normalFormate.parse(time);
