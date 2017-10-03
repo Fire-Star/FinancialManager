@@ -129,7 +129,8 @@ public class EquipmentService {
         String eqTypeOtherId = equipmentTypeService.findEquipmentTypeOtherIDByTypeName(equipmentCustom.getEqType());//查找出设备类型ID
 
         int counti = iCount.intValue();
-
+        int countSuccessi = counti;
+        List<EquipmentCustom> insertSuccessFile = new LinkedList<>();
         while (counti-->0){
             Integer count = equipmentMapper.countEquipmentByCity(belongCityID)+1;
             String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);//计算出设备ID
@@ -138,6 +139,31 @@ public class EquipmentService {
             equipmentMapper.insertSingleEquipment(equipmentCustom);
             System.out.println("插入1");
         }
+        String buyCityID = equipmentCustom.getBuyCity();
+        String buyDepID = equipmentCustom.getPurchasDepart();
+        String belongCityIDx = equipmentCustom.getCity();
+        String belongDepartIDx = equipmentCustom.getBelongDepart();
+        String stateIDx = equipmentCustom.getEqStateId();
+
+        String buyCityStr = cityService.findCityNameByCityID(buyCityID);
+        String buyDepStr = departmentService.findDepartNameByDepId(buyDepID);
+        String belongCityStr = cityService.findCityNameByCityID(belongCityIDx);
+        String belongDepartStr = departmentService.findDepartNameByDepId(belongDepartIDx);
+        String stateStr = equipmentStateMapper.findStateNameById(stateIDx);
+
+        equipmentCustom.setBuyCity(buyCityStr);
+        equipmentCustom.setPurchasDepart(buyDepStr);
+        equipmentCustom.setCity(belongCityStr);
+        equipmentCustom.setBelongDepart(belongDepartStr);
+        equipmentCustom.setEqStateId(stateStr);
+
+        equipmentCustom.setBuyCount("1台");
+
+        while (countSuccessi-->0){
+            insertSuccessFile.add(equipmentCustom);
+        }
+
+        createInsertEqSuccessExcel(insertSuccessFile);
     }
 
     public List<EquipmentCustom> findAllBySql(String sql) throws Exception{
@@ -453,6 +479,8 @@ public class EquipmentService {
             boolean hasError = false;
             System.out.println("--------len="+len);
             int index = 0;
+            List<EquipmentCustom> insertSuccess = new LinkedList<>();
+
             for (int i = 0; i < len; i++) {
                 EquipmentCustom equipmentCustom = allEquipments.get(i);
                 if(i==0){
@@ -467,8 +495,11 @@ public class EquipmentService {
                     }
                     insertErrorEqToExcel(equipmentCustom,sheet,index+2,index+1);
                     index++;
+                }else{
+                    insertSuccess.add(equipmentCustom);
                 }
             }
+            createInsertEqSuccessExcel(insertSuccess);
             //只要插入信息之后，不管插入的设备信息是否有错，我都会删除上一个错误文件。
             String userName = SecurityContextHolder.getContext().getAuthentication().getName();
             String errorFileNamePro = null;
@@ -504,6 +535,74 @@ public class EquipmentService {
             e.printStackTrace();
             throw new SimpleException(errorType,e.getMessage());
         }
+    }
+
+    private void createInsertEqSuccessExcel(List<EquipmentCustom> insertSuccess) throws Exception {
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("设备添加成功列表");
+        XSSFRow rowTitle = sheet.createRow(1);
+
+        int titleCount = eqCellTitleName.length;
+        CellStyle cellStyle = wb.createCellStyle();
+        cellStyle.setFillBackgroundColor(IndexedColors.ROYAL_BLUE.getIndex());
+        cellStyle.setBorderTop(XSSFCellStyle.BORDER_THIN);
+        cellStyle.setBorderBottom(XSSFCellStyle.BORDER_THIN);
+        cellStyle.setBorderLeft(XSSFCellStyle.BORDER_THIN);
+        cellStyle.setBorderRight(XSSFCellStyle.BORDER_THIN);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+
+        for (int title = 0; title < titleCount-1; title++) {
+            sheet.autoSizeColumn(title+1);//设置水平自适应宽度
+            XSSFCell cell = rowTitle.createCell(title+1);
+            cell.setCellValue(eqCellTitleName[title]);
+            cell.setCellStyle(cellStyle);
+        }
+        int len = insertSuccess.size();
+        boolean bInsertSuccess = false;
+        for (int i = 0; i < len; i++) {
+            bInsertSuccess = true;
+
+            EquipmentCustom equipmentCustom = insertSuccess.get(i);
+
+            insertErrorEqToExcel(equipmentCustom,sheet,i+2,i+1);
+        }
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String eqSuccessValue = null;
+        try {
+            eqSuccessValue = maxValueService.findValueByKey(userName+"-eqsuccess");
+        } catch (Exception e) {
+            MaxValue value = new MaxValue();
+            value.setKey(userName+"-eqsuccess");
+            value.setValue("1");
+            maxValueService.insertMaxValue(value);
+        }
+        String eqSuccessFileName = "插入成功设备名单"+new Date().getTime()+".xlsx";
+        if(eqSuccessValue != null && !eqSuccessValue.equals("") && !eqSuccessValue.equals("1")){
+            File file = new File(BASE_PATH+eqSuccessFileName);
+            file.delete();
+        }
+        eqSuccessValue = eqSuccessFileName;
+        OutputStream outputStream = new FileOutputStream(BASE_PATH+eqSuccessFileName);
+        wb.write(outputStream);
+        outputStream.close();
+        wb.close();
+        MaxValue value = new MaxValue();
+        value.setKey(userName+"-eqsuccess");
+        value.setValue(eqSuccessValue);
+        maxValueService.updataMaxValue(value);
+
+        try {
+            maxValueService.findValueByKey(userName+"-eqsuccessState");
+        } catch (Exception e) {
+            MaxValue valueState = new MaxValue();
+            valueState.setKey(userName+"-eqsuccessState");
+            valueState.setValue("1");
+            maxValueService.insertMaxValue(valueState);
+        }
+        MaxValue valueState = new MaxValue();
+        valueState.setKey(userName+"-eqsuccessState");
+        valueState.setValue(bInsertSuccess+"");
+        maxValueService.updataMaxValue(valueState);
     }
 
     private void insertErrorEqToExcel(EquipmentCustom equipmentCustom, XSSFSheet sheet, int curRow, int start) {
@@ -606,5 +705,20 @@ public class EquipmentService {
             return false;
         }
         return true;
+    }
+
+    public boolean hasEqInsertSuccessExcelFile() throws Exception{
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String state = maxValueService.findValueByKey(userName+"-eqsuccessState");
+        if(state.equals("true")){
+            return true;
+        }
+        return false;
+    }
+
+    public File getEqInsertSuccessFile() throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String fileName = maxValueService.findValueByKey(userName+"-eqsuccess");
+        return new File(BASE_PATH+fileName);
     }
 }

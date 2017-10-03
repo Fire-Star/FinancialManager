@@ -283,7 +283,7 @@ public class EquipmentController {
 
     @RequestMapping("/equipment/addPage")
     public String equipAdd(){
-        return "/WEB-INF/pages/equipment/equipAdd.html";
+        return "/WEB-INF/pages/equipment/equipAdd.jsp";
     }
 
     @RequestMapping("/user/equip/findEquipByEquipID")
@@ -578,5 +578,21 @@ public class EquipmentController {
     public void hasErrorExcelFile(HttpServletResponse response) throws Exception{
         boolean hasErrorFile = equipmentService.hasErrorExcelFile();
         SimpleException.sendMessage(response,objectMapper,"hasErrorFile",hasErrorFile? "1":"0");
+    }
+
+    @RequestMapping("/equipment/hasEqSuccessFile")
+    public void hasEqInsertSuccessExcelFile(HttpServletResponse response) throws Exception{
+        boolean state = equipmentService.hasEqInsertSuccessExcelFile();
+        SimpleException.sendMessage(response,objectMapper,"hasInsertEqSuccessFile",state? "1":"0");
+    }
+
+    @RequestMapping("/equipment/downloadEqInsertSuccessFile")
+    public ResponseEntity<byte[]> sendEqInsertSuccessExcel() throws Exception{
+        File file = equipmentService.getEqInsertSuccessFile();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", new String("插入成功设备列表.xlsx".getBytes("UTF-8"),"iso-8859-1"));
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
+                headers, HttpStatus.CREATED);
     }
 }
