@@ -10,7 +10,9 @@ import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,5 +128,41 @@ public class StaffService {
             throw new SimpleException(errorType,"查询员工时，系统发生故障！");
         }
         return count;
+    }
+
+    public void uploadFile(MultipartFile file) throws Exception {
+        //获取文件类型
+        String contentType = file.getContentType();
+
+        System.out.println("contentType="+contentType);
+
+        if(!contentType.equals("")) {
+            //可以对文件类型进行检查
+        }
+        //获取input域的name属性
+        String name = file.getName();
+        System.out.println("name="+name);
+        //获取文件名，带扩展名
+        String originFileName = file.getOriginalFilename();
+        System.out.println("originFileName"+originFileName);
+        //获取文件扩展名
+        String extension = originFileName.substring(originFileName.lastIndexOf("."));
+        System.out.println(extension);
+        //获取文件大小，单位字节
+        long site = file.getSize();
+        System.out.println("size="+site);
+        if(site > EquipmentService.MAX_FILE_SISE) {
+            //可以对文件大小进行检查
+        }
+        //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
+        //不推荐这么写，这里只是举例子，这么写会有并发问题
+        //应该采用一定的算法生成独一无二的的文件名
+        String fileName = EquipmentService.UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        try {
+            file.transferTo(new File(fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("fileName--------->"+fileName);
     }
 }

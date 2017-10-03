@@ -236,19 +236,15 @@
 </body>
 <script>
     <security:authorize access="hasAnyRole('ROLE_ADMIN')">
-    $("#fileSource")[0].onchange = function() {
-        alert(document.getElementById("fileSource").value);
-        document.getElementById("fileSource-show").value = document.getElementById("fileSource").value;
-    }
-    </security:authorize>
 
     function choseFile() {
         $("#fileSource").click();
     }
+    </security:authorize>
+
     $("#equipmentType").change(function () {
         loadEqName();
     });
-
 
     var data = {
         eqTypeValue:"",

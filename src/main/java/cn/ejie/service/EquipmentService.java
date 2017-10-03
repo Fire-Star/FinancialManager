@@ -15,6 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.NotOfficeXmlFileException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -40,9 +41,9 @@ import java.util.List;
 public class EquipmentService {
     private static final String inserState = "闲置";
     public static final String BASE_PATH = "K:\\文件上传\\";
-    private static final String UPLOAD_DIR = BASE_PATH;
+    public static final String UPLOAD_DIR = BASE_PATH;
     private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
-    private static final long MAX_FILE_SISE = 61440; //为 60 MB
+    public static final long MAX_FILE_SISE = 61440; //为 60 MB
 
     @Autowired
     private EquipmentMapper equipmentMapper;
@@ -382,7 +383,12 @@ public class EquipmentService {
     private void insertXslEquipment(String fileName) throws Exception{
         List<EquipmentCustom> allEquipments = new LinkedList<>();
         try {
-            XSSFWorkbook wb = new XSSFWorkbook(fileName);
+            XSSFWorkbook wb = null;
+            try{
+                wb = new XSSFWorkbook(fileName);
+            }catch (Exception e){
+                throw new SimpleException(errorType,"你上传的文件不符合系统要求，请重新上传！");
+            }
             int sheetCount = 1;//获取xls中的Sheet页数
             for (int sheet = 0; sheet < sheetCount; sheet++) {
                 XSSFSheet tempSheet = wb.getSheetAt(sheet);
