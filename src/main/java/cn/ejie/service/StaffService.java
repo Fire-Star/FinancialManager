@@ -1,22 +1,25 @@
 package cn.ejie.service;
 
-import cn.ejie.dao.CityMapper;
 import cn.ejie.dao.DepartmentMapper;
 import cn.ejie.dao.StaffMapper;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.exception.StaffException;
+import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class StaffService {
@@ -28,6 +31,9 @@ public class StaffService {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private MaxValueService maxValueService;
 
     private String errorType="staffError";
 
@@ -154,9 +160,13 @@ public class StaffService {
         if(site > EquipmentService.MAX_FILE_SISE) {
             //可以对文件大小进行检查
         }
+        if(!".xlsx".equals(extension)){
+            throw new SimpleException(errorType,"上传文件类型错误，必须为xlsx格式！");
+        }
         //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
         //不推荐这么写，这里只是举例子，这么写会有并发问题
         //应该采用一定的算法生成独一无二的的文件名
+        originFileName = originFileName.substring(0,originFileName.lastIndexOf("."));
         String fileName = EquipmentService.UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
         try {
             file.transferTo(new File(fileName));
@@ -164,5 +174,66 @@ public class StaffService {
             e.printStackTrace();
         }
         System.out.println("fileName--------->"+fileName);
+        insertStaff(fileName);
+    }
+
+    private void insertStaff(String fileAbsPath) throws Exception {
+        String fileName = fileAbsPath.substring(fileAbsPath.lastIndexOf("\\")+1);
+        System.out.println(fileName);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String findValueFileName = null;
+        try {
+            findValueFileName = maxValueService.findValueByKey(userName+"-staff");
+        } catch (Exception e) {}
+        if(findValueFileName == null){
+            MaxValue maxValue = new MaxValue();
+            maxValue.setKey(userName+"-staff");
+            maxValue.setValue("1");
+            maxValueService.insertMaxValue(maxValue);
+        }
+        //不管是否为 null ，都会更新数据库的上传文件名称，但是不包含路径。
+        MaxValue updateParam = new MaxValue();
+        updateParam.setKey(userName+"-staff");
+        updateParam.setValue(fileName);
+        maxValueService.updataMaxValue(updateParam);
+
+        //删除之前的文件，保留现在的文件！
+        if(!findValueFileName.equals("1")){
+            File proFile = new File(EquipmentService.BASE_PATH+findValueFileName);
+            proFile.delete();
+        }
+        List<StaffCustom> staffCustomList = analisTargetFile(fileName);
+    }
+
+    private List<StaffCustom> analisTargetFile(String fileName) throws SimpleException {
+        List<StaffCustom> allStaff = new LinkedList<>();
+        XSSFWorkbook wb = null;
+        try {
+            wb = new XSSFWorkbook(EquipmentService.BASE_PATH+"");
+        } catch (IOException e) {
+            throw new SimpleException(errorType,"你上传的文件格式有误，请重新上传！");
+        }
+        XSSFSheet sheet = wb.getSheetAt(0);
+        if(sheet == null){
+            throw new SimpleException(errorType,"excel没有Sheet！");
+        }
+        int startIndexRow = 1;
+        int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
+        for (int rowCount = startIndexRow; rowCount < lastIndexRow; rowCount++) {
+            XSSFRow tempRow = sheet.getRow(rowCount);
+            if(tempRow == null){
+                continue;
+            }
+            int lastIndexCell = tempRow.getLastCellNum();
+            for (int cellCount = 0; cellCount < lastIndexCell; cellCount++) {
+                XSSFCell tempCell = tempRow.getCell(cellCount);
+                if(tempCell == null){
+                    continue;
+                }
+                System.out.print(tempCell.toString());
+            }
+            System.out.println();
+        }
+        return allStaff;
     }
 }

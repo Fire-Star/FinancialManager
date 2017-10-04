@@ -355,21 +355,48 @@ public class EquipmentService {
         //获取文件扩展名
         String extension = originFileName.substring(originFileName.lastIndexOf("."));
         System.out.println(extension);
+        if(!".xlsx".equals(extension)){
+            throw new SimpleException(errorType,"上传文件类型错误，必须为xlsx格式！");
+        }
         //获取文件大小，单位字节
         long site = file.getSize();
         System.out.println("size="+site);
         if(site > MAX_FILE_SISE) {
             //可以对文件大小进行检查
         }
+
         //构造文件上传后的文件绝对路径，这里取系统时间戳＋文件名作为文件名
         //不推荐这么写，这里只是举例子，这么写会有并发问题
         //应该采用一定的算法生成独一无二的的文件名
-        String fileName = UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        originFileName = originFileName.substring(0,originFileName.lastIndexOf("."));
+        String fileSimpleName = originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        String fileName = UPLOAD_DIR + fileSimpleName;
         try {
             file.transferTo(new File(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        String findValueFileName = null;
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            findValueFileName = maxValueService.findValueByKey(userName+"-eqTargetSource");
+        } catch (Exception e) {}
+        if(findValueFileName == null){
+            MaxValue maxValue = new MaxValue();
+            maxValue.setKey(userName+"-eqTargetSource");
+            maxValue.setValue("1");
+            maxValueService.insertMaxValue(maxValue);
+        }else if(!findValueFileName.equals("")&&!findValueFileName.equals("1")){
+            File targetFileSource = new File(BASE_PATH+findValueFileName);
+            targetFileSource.delete();
+        }
+        //不管是否为 null ，都会更新数据库的上传文件名称，但是不包含路径。
+        MaxValue updateParam = new MaxValue();
+        updateParam.setKey(userName+"-eqTargetSource");
+        updateParam.setValue(fileSimpleName);
+        maxValueService.updataMaxValue(updateParam);
+
         System.out.println("fileName--------->"+fileName);
         insertXslEquipment(fileName);
     }
@@ -584,7 +611,7 @@ public class EquipmentService {
         }
         String eqSuccessFileName = "插入成功设备名单"+new Date().getTime()+".xlsx";
         if(eqSuccessValue != null && !eqSuccessValue.equals("") && !eqSuccessValue.equals("1")){
-            File file = new File(BASE_PATH+eqSuccessFileName);
+            File file = new File(BASE_PATH+eqSuccessValue);
             file.delete();
         }
         eqSuccessValue = eqSuccessFileName;
