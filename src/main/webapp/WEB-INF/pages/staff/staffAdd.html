@@ -377,7 +377,7 @@
                     vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();
                 }else if(_data.staffError){
-                    vm.modalStatus = _data.errorType;
+                    vm.modalStatus = _data.staffError;
                     $('#modalButton').click();
                 }else if(_data.hasInsertError){
                     vm.modalStatus = _data.hasInsertError;

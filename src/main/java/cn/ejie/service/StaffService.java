@@ -7,6 +7,7 @@ import cn.ejie.exception.StaffException;
 import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -204,12 +205,14 @@ public class StaffService {
         }
         List<StaffCustom> staffCustomList = analisTargetFile(fileName);
     }
+    private String [] titleNameStr = {"姓名","城市","部门","岗位","联系电话","入职时间"};
+    private String [] titleNamePro = {"name","city","dep","position","tel","entryTime"};
 
     private List<StaffCustom> analisTargetFile(String fileName) throws SimpleException {
         List<StaffCustom> allStaff = new LinkedList<>();
         XSSFWorkbook wb = null;
         try {
-            wb = new XSSFWorkbook(EquipmentService.BASE_PATH+"");
+            wb = new XSSFWorkbook(EquipmentService.BASE_PATH+fileName);
         } catch (IOException e) {
             throw new SimpleException(errorType,"你上传的文件格式有误，请重新上传！");
         }
@@ -217,21 +220,54 @@ public class StaffService {
         if(sheet == null){
             throw new SimpleException(errorType,"excel没有Sheet！");
         }
-        int startIndexRow = 1;
+        int startIndexRow = 2;
         int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
+        String tempPosition = "";
         for (int rowCount = startIndexRow; rowCount < lastIndexRow; rowCount++) {
             XSSFRow tempRow = sheet.getRow(rowCount);
             if(tempRow == null){
                 continue;
             }
             int lastIndexCell = tempRow.getLastCellNum();
-            for (int cellCount = 0; cellCount < lastIndexCell; cellCount++) {
+            StaffCustom tempStaff = new StaffCustom();//创建单个员工数据容器。
+            for (int cellCount = 2; cellCount < lastIndexCell; cellCount++) {
                 XSSFCell tempCell = tempRow.getCell(cellCount);
                 if(tempCell == null){
                     continue;
                 }
-                System.out.print(tempCell.toString());
+                String tempValue = tempCell.toString();
+                if(titleNamePro.length<=cellCount-2){
+                    break;
+                }
+
+                if(titleNamePro[cellCount-2].equals("dep") && tempValue != null){
+                    if(!tempValue.equals("")){
+                        tempPosition = tempValue;
+                    }else{
+                        tempValue = tempPosition;
+                    }
+                }
+                if(cellCount == 6){
+                    try {
+                        tempValue = StringUtils.numberToStr(tempCell);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new SimpleException(errorType,"电话号码格式错误！");
+                    }
+                }
+
+                if(cellCount == 7){
+                    Date tempDate = StringUtils.getExcelTime(tempCell);
+                    if(tempDate != null){
+                        tempValue = StringUtils.getNormalTime(tempDate);
+                    }
+                }
+                String fileNamePro = titleNamePro[cellCount-2];
+                SimpleBeanUtils.setTargetFieldValue(tempStaff,fileNamePro,tempValue);
             }
+            allStaff.add(tempStaff);
+
+            System.out.println(tempStaff);
             System.out.println();
         }
         return allStaff;

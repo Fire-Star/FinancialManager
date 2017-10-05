@@ -1,5 +1,8 @@
 package cn.ejie.utils;
 
+import org.apache.poi.ss.usermodel.Cell;
+
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -124,5 +127,44 @@ public class StringUtils {
             resultNum.append(str.charAt(i));
         }
         return resultNum.toString();
+    }
+    public static Date getExcelTime(Cell targetCell){
+        Date tempDate = null;
+        try {
+            tempDate = targetCell.getDateCellValue();
+        }catch (Exception e){
+            String time = targetCell.toString();
+            if(time == null || time.equals("")){
+                return null;
+            }else if(StringUtils.isNormalTime(time)){
+                tempDate = StringUtils.paseNormalTime(time);
+            }
+        }
+        return tempDate;
+    }
+
+    public static String numberToStr(Cell cell) throws Exception{
+        String tempValue = cell.toString();
+        int targetIndex = tempValue.lastIndexOf("\n");
+        if(targetIndex == -1){
+            BigDecimal bd = new BigDecimal(tempValue);
+            tempValue = bd.toPlainString();
+        }else{
+            String targetValueStr[] = tempValue.split("\n");
+            tempValue = arrayStrToStr(targetValueStr,";");
+        }
+        return tempValue;
+    }
+
+    public static String arrayStrToStr(String target[],String splitBy){
+        StringBuilder str = new StringBuilder();
+        for (String s : target) {
+            if(s.equals("")){
+                continue;
+            }
+            str.append(s);
+            str.append(splitBy);
+        }
+        return str.toString();
     }
 }
