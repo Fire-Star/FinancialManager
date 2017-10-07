@@ -20,7 +20,7 @@ public class Supplier {
     private String tel;//联系电话
     @BeanPropertyErrorType(value = "supplierBusinessError",propertyName = "提供商主营业务")
     private String business;//主营业务
-    @BeanPropertyErrorType(value = "supplierContractTimeError",propertyName = "提供商签约时间")
+    //@BeanPropertyErrorType(value = "supplierContractTimeError",propertyName = "提供商签约时间")
     private String contractTime;//签约时间
     private String customMessage;//自定义信息
 

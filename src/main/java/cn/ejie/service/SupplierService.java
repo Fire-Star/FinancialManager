@@ -6,12 +6,20 @@ import cn.ejie.exception.SupplierException;
 import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.SimpleBeanUtils;
+import cn.ejie.utils.StringUtils;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -143,7 +151,7 @@ public class SupplierService {
         //应该采用一定的算法生成独一无二的的文件名
         originFileName = originFileName.substring(0,originFileName.lastIndexOf("."));
         String fileSimpleName = originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
-        String fileName = EquipmentService.UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        String fileName = EquipmentService.UPLOAD_DIR + fileSimpleName;
         try {
             file.transferTo(new File(fileName));
         } catch (Exception e) {
@@ -169,6 +177,64 @@ public class SupplierService {
         updateParam.setKey(userName+"-SupplierTargetSource");
         updateParam.setValue(fileSimpleName);
         maxValueService.updataMaxValue(updateParam);
+
+        insertSuppliers(fileName);
     }
 
+    private void insertSuppliers(String fileName) throws Exception {
+        analisTargetFile(fileName);
+    }
+
+    private String [] titleNamePro = {"name","adtitude","address","contactName","tel","business"};
+    private List<SupplierCustom> analisTargetFile(String fileName) throws Exception {
+        List<SupplierCustom> allStaff = new LinkedList<>();
+        XSSFWorkbook wb = null;
+        try {
+            wb = new XSSFWorkbook(fileName);
+        } catch (IOException e) {
+            throw new SimpleException(errorType,"你上传的文件格式有误，请重新上传！");
+        }
+        XSSFSheet sheet = wb.getSheetAt(0);
+        if(sheet == null){
+            throw new SimpleException(errorType,"excel没有Sheet！");
+        }
+        int startIndexRow = 2;
+        int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
+        for (int rowCount = startIndexRow; rowCount < lastIndexRow; rowCount++) {
+            XSSFRow tempRow = sheet.getRow(rowCount);
+            if(tempRow == null){
+                continue;
+            }
+            int lastIndexCell = tempRow.getLastCellNum();
+            SupplierCustom tempStaff = new SupplierCustom();//创建单个员工数据容器。
+            for (int cellCount = 2; cellCount < lastIndexCell; cellCount++) {
+                if(cellCount-2>=titleNamePro.length){
+                    break;
+                }
+                XSSFCell tempCell = tempRow.getCell(cellCount);
+                if(tempCell == null){
+                    continue;
+                }
+                String tempValue = tempCell.toString();
+                if(titleNamePro.length<=cellCount-2){
+                    break;
+                }
+
+                if(cellCount == 6){
+                    try {
+                        tempValue = StringUtils.numberToStr(tempCell);
+                    } catch (Exception e) {
+                        throw new SimpleException(errorType,"电话号码格式错误！");
+                    }
+                }
+                String fileNamePro = titleNamePro[cellCount-2];
+                tempValue = tempValue.trim();
+                SimpleBeanUtils.setTargetFieldValue(tempStaff,fileNamePro,tempValue);
+            }
+            allStaff.add(tempStaff);
+            System.out.println(tempStaff);
+        }
+        wb.close();
+        return allStaff;
+    }
 }

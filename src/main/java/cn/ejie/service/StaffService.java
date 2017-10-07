@@ -194,7 +194,7 @@ public class StaffService {
         //应该采用一定的算法生成独一无二的的文件名
         originFileName = originFileName.substring(0,originFileName.lastIndexOf("."));
         String fileSimpleName = originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
-        String fileName = EquipmentService.UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
+        String fileName = EquipmentService.UPLOAD_DIR + fileSimpleName;
         try {
             file.transferTo(new File(fileName));
         } catch (Exception e) {
