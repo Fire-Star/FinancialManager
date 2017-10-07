@@ -35,4 +35,25 @@ public class MaxValueService {
         BeanPropertyValidateUtils.validateIsEmptyProperty(maxValue);
         maxValueMapper.insertMaxValue(maxValue);
     }
+
+    public void updateState(String stateName,String stateValue) throws Exception {
+        String findResult = null;
+        boolean isInsert = false;
+        try {
+            findResult = this.findValueByKey(stateName);
+        } catch (Exception e) {
+            MaxValue maxValue = new MaxValue();
+            maxValue.setKey(stateName);
+            maxValue.setValue(stateValue);
+            this.insertMaxValue(maxValue);
+            isInsert = true;
+        }
+        if(!isInsert){
+            MaxValue maxValue = new MaxValue();
+            maxValue.setKey(stateName);
+            maxValue.setValue(stateValue);
+            this.updataMaxValue(maxValue);
+        }
+
+    }
 }

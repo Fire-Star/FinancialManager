@@ -7,6 +7,7 @@ import cn.ejie.exception.StaffException;
 import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -36,6 +37,9 @@ public class StaffService {
     @Autowired
     private MaxValueService maxValueService;
 
+    @Autowired
+    private DepartmentService departmentService;
+
     private String errorType="staffError";
 
     /**
@@ -45,11 +49,16 @@ public class StaffService {
      */
     public void addSingleStaff(StaffCustom staffCustom) throws Exception{
         BeanPropertyValidateUtils.validateIsEmptyProperty(staffCustom);//验证前台传输过来的关键字段属性是否为空。
+        String city = staffCustom.getCity();
+        String dep = staffCustom.getDep();
+
         String tel = staffCustom.getTel();
-        if(tel.length()!=11){
-            throw new StaffException(errorType,"电话号码必须为11位！");
+        boolean isPiInsert = staffCustom.isPiInsert();
+        if(!isPiInsert){
+            if(tel.length()!=11){
+                throw new StaffException(errorType,"电话号码必须为11位！");
+            }
         }
-        System.out.println(staffCustom);
 
         String cityID = cityService.findCityIDByCity(staffCustom.getCity());
         staffCustom.setCity(cityID);
@@ -60,7 +69,7 @@ public class StaffService {
         String depId = departmentMapper.findDepartmentIDByDepNameAndCity(params);
 
         if(depId==null){
-            throw new StaffException(errorType,staffCustom.getDep()+" 部门不存在！");
+            throw new StaffException(errorType,"该城市下部门 "+staffCustom.getDep()+" 不存在，请联系管理员维护系统字段！");
         }
         staffCustom.setDep(depId);
         System.out.println(staffCustom);
@@ -69,17 +78,33 @@ public class StaffService {
             throw new StaffException(errorType,"该员工已经存在，你可以通过 员工所属部门、姓名、电话号码 判断该员工是否存在！");
         }
 
-        String cityId = departmentMapper.findCityIdByDepartmentId(depId);
-        staffCustom.setCity(cityId);
+        if(!isPiInsert){
+            staffCustom.setEntryTime(StringUtils.zhDateStrToENDateStr(staffCustom.getEntryTime()));
+        }
 
-        staffCustom.setEntryTime(StringUtils.zhDateStrToENDateStr(staffCustom.getEntryTime()));
         try {
-            System.out.println(staffCustom);
             staffMapper.insert(staffCustom);
         }catch (Exception e){
             throw new SimpleException(errorType,"数据库发生错误！");
         }
+        if(!isPiInsert){
+            String [] titleSuccessNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间"};
+            String fileSuccessName = "员工导入成功列表.xlsx";
+            List<StaffCustom> insertData = new LinkedList<>();
 
+            staffCustom.setCity(city);
+            staffCustom.setDep(dep);
+
+            insertData.add(staffCustom);
+
+            createStaffExcel(insertData,fileSuccessName,"导入成功员工列表",titleSuccessNameStr,false);//创建导入成功excel列表
+
+            String fileErrorName = "1";
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+
+            changeState(userName+"-staffSuccessExcel",fileSuccessName);
+            changeState(userName+"-staffErrorExcel",fileErrorName);
+        }
     }
 
     public List<StaffCustom> findAll() throws Exception{
@@ -174,7 +199,6 @@ public class StaffService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("fileName--------->"+fileName);
         insertStaff(fileName);
     }
 
@@ -204,8 +228,110 @@ public class StaffService {
             proFile.delete();
         }
         List<StaffCustom> staffCustomList = analisTargetFile(fileName);
+
+        List<StaffCustom> insertSuccessList = new LinkedList<>();
+        List<StaffCustom> insertErrorList = new LinkedList<>();
+        boolean hasError = false;
+        boolean hasSuccess = false;
+        for (StaffCustom staffCustom : staffCustomList) {
+            String city = staffCustom.getCity();
+            String dep = staffCustom.getDep();
+
+            try {
+                insertSingleStaff(staffCustom);
+                insertSuccessList.add(staffCustom);
+                hasSuccess = true;
+            }catch (Exception e){
+                hasError = true;
+                insertErrorList.add(staffCustom);
+                if(e instanceof SimpleException){
+                    String errorMessage = ((SimpleException)e).getErrorMessage();
+                    staffCustom.setErrorMessage(errorMessage);
+                }
+            }
+            staffCustom.setCity(city);
+            staffCustom.setDep(dep);
+        }
+        String [] titleSuccessNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间"};
+        String [] titleErrorNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间","错误信息"};
+        String fileSuccessName = "员工导入成功列表.xlsx";
+        String fileErrorName = "员工导入失败列表.xlsx";
+        createStaffExcel(insertSuccessList,fileSuccessName,"导入成功员工列表",titleSuccessNameStr,false);//创建导入成功excel列表
+        createStaffExcel(insertErrorList,fileErrorName,"导入失败员工列表",titleErrorNameStr,true);//创建导入失败excel列表
+
+        if(!hasError){
+            fileErrorName = "1";
+        }
+        if(!hasSuccess){
+            fileSuccessName = "1";
+        }
+        changeState(userName+"-staffSuccessExcel",fileSuccessName);
+        changeState(userName+"-staffErrorExcel",fileErrorName);
+
+        if(hasError){
+            throw new SimpleException(errorType,"还有一些或者很多员工没有导入，请下载未导入员工信息，更正后重新导入！");
+        }
     }
-    private String [] titleNameStr = {"姓名","城市","部门","岗位","联系电话","入职时间"};
+
+    private void changeState(String key, String fileSuccessName) throws Exception {
+        maxValueService.updateState(key,fileSuccessName);
+    }
+
+    public String getState(String key) throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String result = maxValueService.findValueByKey(userName+key);
+        if(result.equals("1")){
+            throw new SimpleException(errorType,"没有发现你要下载的文件！");
+        }
+        return result;
+    }
+
+    public boolean findState(String key) throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String successState = maxValueService.findValueByKey(userName+key);
+        if(successState.equals("1")){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasSuccessFile() throws Exception {
+        return findState("-staffSuccessExcel");
+    }
+    public boolean hasErrorFile() throws Exception{
+        return findState("-staffErrorExcel");
+    }
+
+    private void createStaffExcel(List<StaffCustom> insertSuccessList,String fileName,String sheetName,String []titleName,boolean hasErrorMessage) throws Exception {
+        List<List<String>> data = new LinkedList<>();
+        for (StaffCustom staffCustom : insertSuccessList) {
+            String name = staffCustom.getName();
+            String city = staffCustom.getCity();
+            String dep = staffCustom.getDep();
+            String position = staffCustom.getPosition();
+            String tel = staffCustom.getTel();
+            String entryTime = staffCustom.getEntryTime();
+
+            List<String> tempItemData = new LinkedList<>();
+            tempItemData.add(name);
+            tempItemData.add(city);
+            tempItemData.add(dep);
+            tempItemData.add(position);
+            tempItemData.add(tel);
+            tempItemData.add(entryTime);
+            if(hasErrorMessage){
+                tempItemData.add(staffCustom.getErrorMessage());
+            }
+            data.add(tempItemData);
+        }
+        ExcelUtils.createExcel(EquipmentService.BASE_PATH,fileName,data,sheetName,titleName);
+    }
+
+    private void insertSingleStaff(StaffCustom staffCustom) throws Exception {
+        staffCustom.setPiInsert(true);
+        addSingleStaff(staffCustom);
+    }
+
     private String [] titleNamePro = {"name","city","dep","position","tel","entryTime"};
 
     private List<StaffCustom> analisTargetFile(String fileName) throws SimpleException {
@@ -231,6 +357,9 @@ public class StaffService {
             int lastIndexCell = tempRow.getLastCellNum();
             StaffCustom tempStaff = new StaffCustom();//创建单个员工数据容器。
             for (int cellCount = 2; cellCount < lastIndexCell; cellCount++) {
+                if(cellCount-2>=titleNamePro.length){
+                    break;
+                }
                 XSSFCell tempCell = tempRow.getCell(cellCount);
                 if(tempCell == null){
                     continue;
@@ -266,9 +395,6 @@ public class StaffService {
                 SimpleBeanUtils.setTargetFieldValue(tempStaff,fileNamePro,tempValue);
             }
             allStaff.add(tempStaff);
-
-            System.out.println(tempStaff);
-            System.out.println();
         }
         return allStaff;
     }

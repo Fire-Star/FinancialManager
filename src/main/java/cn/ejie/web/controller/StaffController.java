@@ -12,8 +12,13 @@ import net.sf.json.JSONArray;
 import cn.ejie.utils.SimpleBeanUtils;
 
 import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.javassist.bytecode.stackmap.BasicBlock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -281,5 +287,49 @@ public class StaffController {
             staffService.uploadFile(file);
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
+    }
+
+    @RequestMapping("/staff/hasSuccessFile")
+    public void hasSuccessFile(HttpServletResponse response) throws Exception {
+        boolean hasSuccessFile = staffService.hasSuccessFile();
+        SimpleException.sendMessage(response,objectMapper,"state",hasSuccessFile+"");
+    }
+
+    @RequestMapping("/staff/downloadSuccessFile")
+    public ResponseEntity<byte[]> sendSuccessExcel() throws Exception{
+
+        String fileName = staffService.getState("-staffSuccessExcel");
+        File file = new File(EquipmentService.BASE_PATH+fileName);
+
+        return getResponseEntity(fileName,file);
+    }
+
+    public ResponseEntity<byte[]> getResponseEntity(String fileName,File file) throws Exception{
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", new String(fileName.getBytes("UTF-8"),"iso-8859-1"));
+        ResponseEntity<byte[]> responseEntity = null;
+        try {
+            responseEntity = new ResponseEntity(FileUtils.readFileToByteArray(file),
+                    headers, HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new SimpleException("errorType","系统发生错误：要下载的文件不存在！");
+        }
+        return responseEntity;
+    }
+
+    @RequestMapping("/staff/hasErrorFile")
+    public void hasErrorFile(HttpServletResponse response) throws Exception {
+        boolean hasErrorFile = staffService.hasErrorFile();
+        SimpleException.sendMessage(response,objectMapper,"state",hasErrorFile+"");
+    }
+
+    @RequestMapping("/staff/downloadErrorFile")
+    public ResponseEntity<byte[]> sendErrorExcel() throws Exception{
+
+        String fileName = staffService.getState("-staffErrorExcel");
+        File file = new File(EquipmentService.BASE_PATH+fileName);
+
+        return getResponseEntity(fileName,file);
     }
 }

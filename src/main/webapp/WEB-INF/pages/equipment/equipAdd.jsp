@@ -187,7 +187,7 @@
     </div>
     <div class="col-sm-12 col-xs-12" style="text-align: center;margin-top: 50px;">
         <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
-        <a class="btn btn-warning" href="downloadEqInsertSuccessFile" v-if="showDownloadSuccessEqFile">下载插入成功设备列表</a>
+        <a class="btn btn-success" href="downloadEqInsertSuccessFile" v-if="showDownloadSuccessEqFile">下载插入成功设备列表</a>
     </div>
     <security:authorize access="hasAnyRole('ROLE_ADMIN')">
         <div class="modal fade" id="pibudialog" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">

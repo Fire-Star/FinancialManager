@@ -147,8 +147,12 @@ public class StringUtils {
         String tempValue = cell.toString();
         int targetIndex = tempValue.lastIndexOf("\n");
         if(targetIndex == -1){
-            BigDecimal bd = new BigDecimal(tempValue);
-            tempValue = bd.toPlainString();
+            try {
+                BigDecimal bd = new BigDecimal(tempValue);
+                tempValue = bd.toPlainString();
+            }catch (Exception e){
+                tempValue = cell.toString();
+            }
         }else{
             String targetValueStr[] = tempValue.split("\n");
             tempValue = arrayStrToStr(targetValueStr,";");

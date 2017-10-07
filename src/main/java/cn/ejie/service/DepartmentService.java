@@ -66,7 +66,7 @@ public class DepartmentService {
             throw new SimpleException(errorType,"查找城市ID发生错误！");
         }
         if(departID == null){
-            throw new SimpleException(errorType,"通过城市和部门查找城市ID时，系统发生错误！");
+            throw new SimpleException(errorType,"该城市下的部门不存在！");
         }
 
         return departID;

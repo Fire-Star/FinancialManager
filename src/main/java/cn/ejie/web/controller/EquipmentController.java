@@ -566,12 +566,19 @@ public class EquipmentController {
 
     @RequestMapping("/equipment/downloadErrorExcel")
     public ResponseEntity<byte[]> sendErrorEqExcel() throws Exception{
+
         File file = equipmentService.getErrorExcel();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", new String("新设备未插入.xlsx".getBytes("UTF-8"),"iso-8859-1"));
-        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file),
-                headers, HttpStatus.CREATED);
+        ResponseEntity<byte[]> responseEntity = null;
+        try {
+            responseEntity = new ResponseEntity(FileUtils.readFileToByteArray(file),
+                    headers, HttpStatus.CREATED);
+        }catch (Exception e){
+            throw new SimpleException("errorType","系统发生错误：要下载的文件不存在！");
+        }
+        return responseEntity;
     }
 
     @RequestMapping("/equipment/hasErrorFile")
