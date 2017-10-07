@@ -521,7 +521,6 @@ public class EquipmentService {
             }
             int len = allEquipments.size();
             boolean hasError = false;
-            System.out.println("--------len="+len);
             int index = 0;
             List<EquipmentCustom> insertSuccess = new LinkedList<>();
 
@@ -711,7 +710,6 @@ public class EquipmentService {
             try {
                 insertSingleEquipment(allEquipment);
                 allEquipment.setMessage(null);//没有错误信息表示该条数据已经插入数据库。
-                System.out.println("------------>插入成功一条！");
             }catch (Exception e){
                 String errorMeaasge = e.getMessage();
                 if(e instanceof SimpleException){

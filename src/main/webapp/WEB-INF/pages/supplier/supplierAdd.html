@@ -262,6 +262,7 @@
                         "customMessage":_customFields
                     },
                     function(data,status){
+                        refreshDownloadExcelState();
                         if(status){
                             console.log(data);
                             var _data = eval(data);
@@ -276,7 +277,6 @@
                         }
                     });
                 $btn.button('reset');
-                refreshDownloadExcelState();
             }
         }
     });
