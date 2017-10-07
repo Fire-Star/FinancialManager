@@ -89,4 +89,17 @@ public class ExcelUtils {
         }
         return result;
     }
+
+    public static void valatileExcelTitle(Row titleRow,String errorType,String []titleNameStr,String type) throws Exception {
+        for (int titleItemCount = 0; titleItemCount < titleNameStr.length; titleItemCount++) {
+            Cell itemTitleCell = titleRow.getCell(titleItemCount+1);
+            if(itemTitleCell == null){
+                throw new SimpleException(errorType,"上传文件内容格式错误：第二行第 "+(titleItemCount+1)+" 列标题不能为空！请修正文件后再尝试上传导入！");
+            }
+            String value = itemTitleCell.toString();
+            if(!value.equals(titleNameStr[titleItemCount])){
+                throw new SimpleException(errorType,"上传文件内容格式错误：第二行第 "+(titleItemCount+1)+" 列标题必须为："+type+"的 “"+titleNameStr[titleItemCount]+"” ，请修正文件后再尝试上传导入！");
+            }
+        }
+    }
 }

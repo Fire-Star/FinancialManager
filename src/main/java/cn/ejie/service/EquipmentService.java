@@ -9,6 +9,7 @@ import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -21,6 +22,7 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -403,6 +405,8 @@ public class EquipmentService {
 
     private String[] eqCellName = {"eqType","eqName","brandName","supplier","buyCity","purchasDepart","city","belongDepart","eqStateId","purchasPrice","purchasTime","buyCount"};
     private String[] eqCellTitleName ={"序列号","设备类型","设备名称","品牌","供应商","采购城市","采购部门","归属城市","归属部门","状态","采购价格","采购时间","备注","错误信息"};
+    private String[] titleSuccessNameStr = {"序列号","设备类型","设备名称","品牌","供应商","采购城市","采购部门","归属城市","归属部门","状态","采购价格","采购时间","备注"};
+
     /**
      * 对于excel的要求，第一行必须是列头
      * @param fileName
@@ -422,6 +426,13 @@ public class EquipmentService {
                 if(tempSheet == null){
                     throw new SimpleException(errorType,"excel内容错误，不存在数据表！");
                 }
+
+                Row titleRow = tempSheet.getRow(1);
+                if(titleRow==null){
+                    throw new SimpleException(errorType,"设备信息不满足要求，第二行必须为标题！");
+                }
+                ExcelUtils.valatileExcelTitle(titleRow,errorType,titleSuccessNameStr,"设备");
+
                 int rowCount = tempSheet.getLastRowNum()+1;//获取当前Sheet页中包括的行数
                 for (int row = 0; row < rowCount; row++) {
                     XSSFRow tempRow = tempSheet.getRow(row);//获取当前页中的每一行

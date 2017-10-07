@@ -10,6 +10,7 @@ import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -223,7 +224,7 @@ public class StaffService {
 
         insertStaff(fileName);
     }
-
+    String [] titleSuccessNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间"};
     private void insertStaff(String fileAbsPath) throws Exception {
         String fileName = fileAbsPath.substring(fileAbsPath.lastIndexOf("\\")+1);
         System.out.println(fileName);
@@ -274,7 +275,7 @@ public class StaffService {
             staffCustom.setCity(city);
             staffCustom.setDep(dep);
         }
-        String [] titleSuccessNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间"};
+
         String [] titleErrorNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间","错误信息"};
         String fileSuccessName = "员工导入成功列表.xlsx";
         String fileErrorName = "员工导入失败列表.xlsx";
@@ -368,6 +369,13 @@ public class StaffService {
         if(sheet == null){
             throw new SimpleException(errorType,"excel没有Sheet！");
         }
+
+        Row titleRow = sheet.getRow(1);
+        if(titleRow==null){
+            throw new SimpleException(errorType,"员工信息不满足要求，第二行必须为标题！");
+        }
+        ExcelUtils.valatileExcelTitle(titleRow,errorType,titleSuccessNameStr,"员工");
+
         int startIndexRow = 2;
         int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
         String tempPosition = "";

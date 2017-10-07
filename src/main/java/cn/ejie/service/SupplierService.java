@@ -9,6 +9,8 @@ import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -251,6 +253,10 @@ public class SupplierService {
         }
         updataErrorState(userName,errorFileName);
         updataSuccessState(userName,successFileName);
+
+        if(hasError){
+            throw new SimpleException(errorType,"上传供应商信息文件中有一些或很多未成功导入，请下载未导入供应商信息，修正后重新导入！");
+        }
     }
 
     public boolean hasSuccessFile() throws Exception {
@@ -300,6 +306,12 @@ public class SupplierService {
         if(sheet == null){
             throw new SimpleException(errorType,"excel没有Sheet！");
         }
+
+        Row titleRow = sheet.getRow(1);
+        if(titleRow==null){
+            throw new SimpleException(errorType,"上传文件内容格式错误：供应商信息不满足要求，第二行必须为标题！");
+        }
+        ExcelUtils.valatileExcelTitle(titleRow,errorType,successTitleNameStr,"供应商");
         int startIndexRow = 2;
         int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
         for (int rowCount = startIndexRow; rowCount < lastIndexRow; rowCount++) {
