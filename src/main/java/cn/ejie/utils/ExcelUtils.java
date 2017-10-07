@@ -8,6 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ExcelUtils {
@@ -51,5 +53,40 @@ public class ExcelUtils {
             throw new SimpleException("errorType","创建Excel失败！");
         }
         wb.close();
+    }
+
+    public static List<List<String>> objectProToStrList(List<?> insertData,String [] objectProName){
+        //你害怕时间从你的指尖逝去，所以你不敢敲代码太入迷.
+        List<List<String>> result = new LinkedList<>();
+        for (Object tempInsert : insertData) {
+            Class tempClazz = tempInsert.getClass();
+            List<String> tempItem = new LinkedList<>();
+
+            for (String tempPro : objectProName) {
+                try {
+                    Field tempField = getTargetField(tempPro,tempClazz);
+                    tempField.setAccessible(true);
+                    String tempProValue = (String) tempField.get(tempInsert);
+                    tempItem.add(tempProValue);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+            result.add(tempItem);
+        }
+        return result;
+    }
+
+    public static Field getTargetField(String fieldName,Class targetClazz){
+        Field result = null;
+        while (targetClazz != null){
+            try {
+                result = targetClazz.getDeclaredField(fieldName);
+                return result;
+            } catch (NoSuchFieldException e) {
+                targetClazz = targetClazz.getSuperclass();
+            }
+        }
+        return result;
     }
 }

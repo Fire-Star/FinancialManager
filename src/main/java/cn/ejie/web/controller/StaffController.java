@@ -5,6 +5,7 @@ import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.pocustom.UserCustom;
 import cn.ejie.service.*;
 
+import cn.ejie.utils.DownloadUtils;
 import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
@@ -301,21 +302,7 @@ public class StaffController {
         String fileName = staffService.getState("-staffSuccessExcel");
         File file = new File(EquipmentService.BASE_PATH+fileName);
 
-        return getResponseEntity(fileName,file);
-    }
-
-    public ResponseEntity<byte[]> getResponseEntity(String fileName,File file) throws Exception{
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("attachment", new String(fileName.getBytes("UTF-8"),"iso-8859-1"));
-        ResponseEntity<byte[]> responseEntity = null;
-        try {
-            responseEntity = new ResponseEntity(FileUtils.readFileToByteArray(file),
-                    headers, HttpStatus.CREATED);
-        }catch (Exception e){
-            throw new SimpleException("errorType","系统发生错误：要下载的文件不存在！");
-        }
-        return responseEntity;
+        return DownloadUtils.getResponseEntity(fileName,file);
     }
 
     @RequestMapping("/staff/hasErrorFile")
@@ -330,6 +317,6 @@ public class StaffController {
         String fileName = staffService.getState("-staffErrorExcel");
         File file = new File(EquipmentService.BASE_PATH+fileName);
 
-        return getResponseEntity(fileName,file);
+        return DownloadUtils.getResponseEntity(fileName,file);
     }
 }

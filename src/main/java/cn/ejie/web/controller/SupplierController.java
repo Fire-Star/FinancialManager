@@ -7,12 +7,14 @@ import cn.ejie.pocustom.EquipmentCustom;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.pocustom.UserCustom;
 import cn.ejie.service.*;
+import cn.ejie.utils.DownloadUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.util.*;
 
 @Controller
@@ -330,5 +333,35 @@ public class SupplierController {
             supplierService.uploadFile(file);
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
+    }
+
+    @RequestMapping("/supplier/downloadSuccessFile")
+    public ResponseEntity<byte[]> sendSuccessExcel() throws Exception{
+
+        String fileName = supplierService.getState("-SupplierSuccessFile");
+        File file = new File(EquipmentService.BASE_PATH+fileName);
+
+        return DownloadUtils.getResponseEntity(fileName,file);
+    }
+
+    @RequestMapping("/supplier/downloadErrorFile")
+    public ResponseEntity<byte[]> sendErrorExcel() throws Exception{
+
+        String fileName = supplierService.getState("-SupplierErrorFile");
+        File file = new File(EquipmentService.BASE_PATH+fileName);
+
+        return DownloadUtils.getResponseEntity(fileName,file);
+    }
+
+    @RequestMapping("/supplier/hasErrorFile")
+    public void hasErrorFile(HttpServletResponse response) throws Exception {
+        boolean result = supplierService.hasErrorFile();
+        SimpleException.sendMessage(response,objectMapper,"state",result+"");
+    }
+
+    @RequestMapping("/supplier/hasSuccessFile")
+    public void hasSuccessFile(HttpServletResponse response) throws Exception {
+        boolean result = supplierService.hasSuccessFile();
+        SimpleException.sendMessage(response,objectMapper,"state",result+"");
     }
 }

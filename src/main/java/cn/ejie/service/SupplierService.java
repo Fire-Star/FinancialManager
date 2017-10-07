@@ -6,6 +6,7 @@ import cn.ejie.exception.SupplierException;
 import cn.ejie.po.MaxValue;
 import cn.ejie.pocustom.SupplierCustom;
 import cn.ejie.utils.BeanPropertyValidateUtils;
+import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -35,6 +36,11 @@ public class SupplierService {
 
     @Autowired
     private MaxValueService maxValueService;
+
+    private String [] titleNamePro = {"name","adtitude","address","contactName","tel","business"};
+    private String [] titleErrorNamePro = {"name","adtitude","address","contactName","tel","business","errroMessage"};
+    private String [] successTitleNameStr = {"序列号","名称","资质","地址","联系人","联系电话","主营业务"};
+    private String [] errorTitleNameStr = {"序列号","名称","资质","地址","联系人","联系电话","主营业务","错误信息"};
 
     public List<SupplierCustom> findAllSupplier() throws Exception{
         List<SupplierCustom> supplierCustoms = null;
@@ -79,6 +85,22 @@ public class SupplierService {
             throw new SupplierException("supplierNameError","当前提供商已经存在！");
         }
         supplierMapper.addSingleSupplier(supplierCustom);
+
+        if(!supplierCustom.isPiDao()){
+
+            String successFileName = "供应商成功导入列表.xlsx";
+            String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+
+            updataErrorState(userName,"1");
+            updataSuccessState(userName,successFileName);
+
+            List<SupplierCustom> supplierCustoms = new LinkedList<>();
+            supplierCustoms.add(supplierCustom);
+
+            List<List<String>> successData = ExcelUtils.objectProToStrList(supplierCustoms,titleNamePro);
+
+            ExcelUtils.createExcel(EquipmentService.BASE_PATH,successFileName,successData,"供应商导入成功列表",successTitleNameStr);
+        }
     }
 
     public String findSupIdBySupName(String name) throws Exception{
@@ -182,10 +204,90 @@ public class SupplierService {
     }
 
     private void insertSuppliers(String fileName) throws Exception {
-        analisTargetFile(fileName);
+        List<SupplierCustom> supplierCustoms = analisTargetFile(fileName);
+        //你为什么写个简单的代码都会觉得麻烦？？？？
+        //你真的很low！！！
+        //no home ， only yourself , stand up！！！
+
+        //在我的脑海里，突然明白了犯贱这个词，但是你的所作所为，为什么只有原谅这个词？？？
+        boolean isInsert = false;
+        List<SupplierCustom> successInsert = new LinkedList<>();
+        List<SupplierCustom> errorInsert = new LinkedList<>();
+
+        boolean hasSuccess = false;
+        boolean hasError = false;
+
+        for (SupplierCustom supplierCustom : supplierCustoms) {
+            supplierCustom.setPiDao(true);
+            try {
+                addSingleSupplier(supplierCustom);
+                successInsert.add(supplierCustom);
+                hasSuccess = true;
+            }catch (Exception e){
+                hasError = true;
+                errorInsert.add(supplierCustom);
+                if(e instanceof SimpleException){
+                    String errorMessage = ((SimpleException)e).getErrorMessage();
+                    supplierCustom.setErrroMessage(errorMessage);
+                }
+            }
+        }
+
+        List<List<String>> successData = ExcelUtils.objectProToStrList(successInsert,titleNamePro);
+        List<List<String>> errorData = ExcelUtils.objectProToStrList(errorInsert,titleErrorNamePro);
+        String successFileName = "供应商成功导入列表.xlsx";
+        String errorFileName = "供应商失败导入列表.xlsx";
+
+        ExcelUtils.createExcel(EquipmentService.BASE_PATH,successFileName,successData,"供应商导入成功列表",successTitleNameStr);
+        ExcelUtils.createExcel(EquipmentService.BASE_PATH,errorFileName,errorData,"供应商导入失败列表",errorTitleNameStr);
+
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+
+        if(!hasError){
+            errorFileName = "1";
+        }
+        if(!hasSuccess){
+            successFileName = "1";
+        }
+        updataErrorState(userName,errorFileName);
+        updataSuccessState(userName,successFileName);
     }
 
-    private String [] titleNamePro = {"name","adtitude","address","contactName","tel","business"};
+    public boolean hasSuccessFile() throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String result = maxValueService.findValueByKey(userName+"-SupplierSuccessFile");
+        if(result.equals("1")){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean hasErrorFile() throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();//获取当前用户的用户名
+        String result = maxValueService.findValueByKey(userName+"-SupplierErrorFile");
+        if(result.equals("1")){
+            return false;
+        }
+        return true;
+    }
+
+    public String getState(String key) throws Exception {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        String result = maxValueService.findValueByKey(userName+key);
+        if(result.equals("1")){
+            throw new SimpleException(errorType,"没有发现你要下载的文件！");
+        }
+        return result;
+    }
+
+    public void updataSuccessState(String userName,String value) throws Exception {
+        maxValueService.updateState(userName+"-SupplierSuccessFile",value);
+    }
+
+    public void updataErrorState(String userName,String value) throws Exception {
+        maxValueService.updateState(userName+"-SupplierErrorFile",value);
+    }
+
     private List<SupplierCustom> analisTargetFile(String fileName) throws Exception {
         List<SupplierCustom> allStaff = new LinkedList<>();
         XSSFWorkbook wb = null;
@@ -232,7 +334,6 @@ public class SupplierService {
                 SimpleBeanUtils.setTargetFieldValue(tempStaff,fileNamePro,tempValue);
             }
             allStaff.add(tempStaff);
-            System.out.println(tempStaff);
         }
         wb.close();
         return allStaff;

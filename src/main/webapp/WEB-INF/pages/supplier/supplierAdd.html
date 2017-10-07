@@ -156,7 +156,7 @@
         </div>
         <div class="col-sm-12 col-xs-12" style="text-align: center;margin-top: 50px;">
             <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
-            <a class="btn btn-success">下载插入成功供应商列表</a>
+            <a href="downloadSuccessFile" class="btn btn-success" v-if="hasSuccessFile">下载插入成功供应商列表</a>
         </div>
         <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
 
@@ -179,7 +179,7 @@
                         </div>
                     </div>
                     <div class="modal-footer" >
-                        <a class="btn btn-warning">下载未导入供应商信息</a>
+                        <a href="downloadErrorFile" class="btn btn-warning" v-if="hasErrorFile">下载未导入供应商信息</a>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -217,7 +217,9 @@
             supplierContactNameError:"",supplierTelError:"",supplierBusinessError:""
         },
         isError:[],
-        modalStatus:""
+        modalStatus:"",
+        hasErrorFile:false,
+        hasSuccessFile:false
     };
     var vm = new Vue({
         el:'.app',
@@ -274,6 +276,7 @@
                         }
                     });
                 $btn.button('reset');
+                refreshDownloadExcelState();
             }
         }
     });
@@ -344,7 +347,7 @@
         form_data.append("eqXsl", file_data);
         $.ajax({
             type: "POST",
-            url: "upload",
+            url: "upload?time="+new Date().getTime(),
             processData: false,  // 注意：让jQuery不要处理数据
             contentType: false,  // 注意：让jQuery不要设置contentType
             data: form_data,
@@ -353,8 +356,8 @@
                 if(!_data){
                     vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();
-                }else if(_data.staffError){
-                    vm.modalStatus = _data.staffError;
+                }else if(_data.supplierErrorType){
+                    vm.modalStatus = _data.supplierErrorType;
                     $('#modalButton').click();
                 }else if(_data.hasInsertError){
                     vm.modalStatus = _data.hasInsertError;
@@ -376,7 +379,60 @@
                 alert("系统繁忙,请稍后再试！");
             }
         });
+        refreshDownloadExcelState();
     }
-
+    refreshDownloadExcelState();
+    function refreshDownloadExcelState() {
+        $.get("hasErrorFile",function (data, status) {
+            if(status == "success"){
+                var _data = eval(data);
+                console.log(_data);
+                if(!_data){
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }else if(_data.state){
+                    if(_data.state=="true"){
+                        vm.hasErrorFile = true;
+                    }else {
+                        vm.hasErrorFile = false;
+                    }
+                }else if(_data.supplierErrorType){
+                    vm.modalStatus = _data.supplierErrorType;
+                    $('#modalButton').click();
+                }else if(_data.errorType){
+                    vm.modalStatus = _data.errorType;
+                    $('#modalButton').click();
+                }else{
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }
+            }
+        });
+        $.get("hasSuccessFile",function (data, status) {
+            if(status == "success"){
+                var _data = eval(data);
+                console.log(_data);
+                if(!_data){
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }else if(_data.state){
+                    if(_data.state=="true"){
+                        vm.hasSuccessFile = true;
+                    }else{
+                        vm.hasSuccessFile = false;
+                    }
+                }else if(_data.supplierErrorType){
+                    vm.modalStatus = _data.supplierErrorType;
+                    $('#modalButton').click();
+                }else if(_data.errorType){
+                    vm.modalStatus = _data.errorType;
+                    $('#modalButton').click();
+                }else{
+                    vm.modalStatus = '发生未知错误，请联系管理员！';
+                    $('#modalButton').click();
+                }
+            }
+        });
+    }
 </script>
 </html>
