@@ -193,12 +193,34 @@ public class StaffService {
         //不推荐这么写，这里只是举例子，这么写会有并发问题
         //应该采用一定的算法生成独一无二的的文件名
         originFileName = originFileName.substring(0,originFileName.lastIndexOf("."));
+        String fileSimpleName = originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
         String fileName = EquipmentService.UPLOAD_DIR + originFileName+"-"+String.valueOf(System.currentTimeMillis()) + extension;
         try {
             file.transferTo(new File(fileName));
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        String findValueFileName = null;
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        try {
+            findValueFileName = maxValueService.findValueByKey(userName+"-StaffTargetSource");
+        } catch (Exception e) {}
+        if(findValueFileName == null){
+            MaxValue maxValue = new MaxValue();
+            maxValue.setKey(userName+"-StaffTargetSource");
+            maxValue.setValue("1");
+            maxValueService.insertMaxValue(maxValue);
+        }else if(!findValueFileName.equals("")&&!findValueFileName.equals("1")){
+            File targetFileSource = new File(EquipmentService.BASE_PATH+findValueFileName);
+            targetFileSource.delete();
+        }
+        //不管是否为 null ，都会更新数据库的上传文件名称，但是不包含路径。
+        MaxValue updateParam = new MaxValue();
+        updateParam.setKey(userName+"-SupplierTargetSource");
+        updateParam.setValue(fileSimpleName);
+        maxValueService.updataMaxValue(updateParam);
+
         insertStaff(fileName);
     }
 
@@ -334,7 +356,7 @@ public class StaffService {
 
     private String [] titleNamePro = {"name","city","dep","position","tel","entryTime"};
 
-    private List<StaffCustom> analisTargetFile(String fileName) throws SimpleException {
+    private List<StaffCustom> analisTargetFile(String fileName) throws Exception {
         List<StaffCustom> allStaff = new LinkedList<>();
         XSSFWorkbook wb = null;
         try {
@@ -396,6 +418,7 @@ public class StaffService {
             }
             allStaff.add(tempStaff);
         }
+        wb.close();
         return allStaff;
     }
 }

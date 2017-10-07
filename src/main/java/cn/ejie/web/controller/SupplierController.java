@@ -17,7 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -320,5 +322,13 @@ public class SupplierController {
             return;
         }
         SimpleException.sendSuccessMessage(response,objectMapper);
+    }
+
+    @RequestMapping("/supplier/upload")
+    public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file, HttpServletResponse response) throws Exception{
+        if(!file.isEmpty()) {
+            supplierService.uploadFile(file);
+            SimpleException.sendSuccessMessage(response,objectMapper);
+        }
     }
 }

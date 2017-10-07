@@ -174,7 +174,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control file-up-in" id="fileSource-show" readonly placeholder="请选择文件..." @click="choseFile()">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">上传并导入</button><!-- @click="uploadFileAction()" -->
+                                <button class="btn btn-primary" type="button" @click="uploadFileAction()">上传并导入</button>
                         </span>
                         </div>
                     </div>
@@ -284,6 +284,9 @@
         var len = 7;
         var flag = false;
         for(i=0 ;i < len; i++){
+            if(i == 1 ){
+                continue;
+            }
             if(inputObj[i].value==""){
                 vm.isError[i]=true;
                 flag = true;
@@ -374,52 +377,6 @@
             }
         });
     }
-    /*refreshDownloadExcelState();
-    function refreshDownloadExcelState() {
-        $.get("hasErrorFile",function (data, status) {
-            if(status == "success"){
-                var _data = eval(data);
-                console.log(_data);
-                if(!_data){
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
-                    $('#modalButton').click();
-                }else if(_data.state){
-                    if(_data.state=="true"){
-                        vm.hasErrorExcel = true;
-                    }else{
-                        vm.hasErrorExcel = false;
-                    }
-                }else if(_data.errorType){
-                    vm.modalStatus = _data.errorType;
-                    $('#modalButton').click();
-                }else{
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
-                    $('#modalButton').click();
-                }
-            }
-        });
-        $.get("hasSuccessFile",function (data, status) {
-            if(status == "success"){
-                var _data = eval(data);
-                console.log(_data);
-                if(!_data){
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
-                    $('#modalButton').click();
-                }else if(_data.state){
-                    if(_data.state=="true"){
-                        vm.hasSuccessExcel = true;
-                    }else{
-                        vm.hasSuccessExcel = false;
-                    }
-                }else if(_data.errorType){
-                    vm.modalStatus = _data.errorType;
-                    $('#modalButton').click();
-                }else{
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
-                    $('#modalButton').click();
-                }
-            }
-        });
-    }*/
+
 </script>
 </html>

@@ -10,7 +10,7 @@ public class Supplier {
     private String id;//提供商ID
     @BeanPropertyErrorType(value = "supplierNameError",propertyName = "提供商名称")
     private String name;//提供商名称
-    @BeanPropertyErrorType(value = "supplierAdtitudeError",propertyName = "提供商资质")
+    //@BeanPropertyErrorType(value = "supplierAdtitudeError",propertyName = "提供商资质")
     private String adtitude;//资质
     @BeanPropertyErrorType(value = "supplierAddressError",propertyName = "提供商地址")
     private String address;//提供商地址
