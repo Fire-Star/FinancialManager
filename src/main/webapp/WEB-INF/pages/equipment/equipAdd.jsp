@@ -527,9 +527,6 @@
             }else if(_data.errorType){
                 vm.modalStatus = _data.errorType;
                 $('#modalButton').click();
-            }else{
-                vm.modalStatus = '发生未知错误，请联系管理员！';
-                $('#modalButton').click();
             }
         }
     });
@@ -551,9 +548,6 @@
                     }
                 }else if(_data.errorType){
                     vm.modalStatus = _data.errorType;
-                    $('#modalButton').click();
-                }else{
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();
                 }
             }
