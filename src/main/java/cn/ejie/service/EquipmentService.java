@@ -135,11 +135,21 @@ public class EquipmentService {
         int countSuccessi = counti;
         List<EquipmentCustom> insertSuccessFile = new LinkedList<>();
         while (counti-->0){
-            Integer count = equipmentMapper.countEquipmentByCity(belongCityID)+1;
-            String eqOtherIdAfter = StringUtils.fillPreString(count.toString(),'0',4);//计算出设备ID
+            String eqMaxValue = null;
+            try {
+                eqMaxValue = String.valueOf((Integer.parseInt(maxValueService.findValueByKey("EqMaxValue"))+1));
+            }catch (Exception e){
+                if(eqMaxValue == null){
+                    maxValueService.updateState("EqMaxValue","1");
+                    eqMaxValue = "1";
+                }
+            }
+
+            String eqOtherIdAfter = StringUtils.fillPreString(eqMaxValue,'0',4);//计算出设备ID
 
             equipmentCustom.setEqOtherId(cityOtherID+eqTypeOtherId+eqOtherIdAfter);
             equipmentMapper.insertSingleEquipment(equipmentCustom);
+            maxValueService.updateState("EqMaxValue",eqMaxValue);
             System.out.println("插入1");
         }
         String buyCityID = equipmentCustom.getBuyCity();

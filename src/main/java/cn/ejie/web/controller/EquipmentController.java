@@ -154,14 +154,6 @@ public class EquipmentController {
         }
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
                 " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
-        //获取设备的所属部门的ID和采购部门的ID
-        if(!"".equals(supplier)){
-            try {
-                supplier = supplierService.findSupIdBySupName(supplier);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-        }
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
