@@ -54,16 +54,17 @@ public class CityService{
         if(count>0){
             throw new DepartmentException(errorType,"该城市已经存在！");
         }
-        Integer tempCityMax = Integer.parseInt(maxValueService.findValueByKey("cityMax"))+1;
-        String cityMax = tempCityMax+"";
+        String cityMax = null;
+        try {
+            cityMax = String.valueOf(Integer.parseInt(maxValueService.findValueByKey("cityMax"))+1);
+        }catch (Exception e){
+            maxValueService.updateState("cityMax","1");
+            cityMax = "1";
+        }
         cityMax = StringUtils.fillPreString(cityMax,'0',2);
         cityCustom.setCityOtherID(cityMax);
-        System.out.println(cityCustom);
         cityMapper.addCity(cityCustom);
-        MaxValue maxValue = new MaxValue();
-        maxValue.setKey("cityMax");
-        maxValue.setValue(cityMax);
-        maxValueService.updataMaxValue(maxValue);
+        maxValueService.updateState("cityMax",cityMax);
     }
 
     public String findCityIDByCity(String city) throws Exception{

@@ -50,7 +50,7 @@ public class StringUtils {
      */
     public static String fillPreString(String origin,char fillCharacter,int allLength){
         int originLen = origin.length();
-        if(originLen==allLength){
+        if(originLen>=allLength){
             return origin;
         }
         int willFillLen = allLength-originLen;
