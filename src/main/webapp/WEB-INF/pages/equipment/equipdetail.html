@@ -44,6 +44,10 @@
         }
         #formSearch .control-label{
             padding: 7px 0 0 7px;
+            text-align: right;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
         #formSearch .form-control{
             margin-bottom: 20px;
@@ -78,8 +82,10 @@
     </div>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">设备信息</p></strong>
+                <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
+                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -101,8 +107,6 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="supplier" placeholder="供应商..." readonly="enable">
                             </div>
-                        <!-- </div>
-                        <div class="row"> -->
                             <label class="control-label col-md-1 col-sm-2 col-xs-2" for="belongDepart">归属部门：</label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="belongDepart" placeholder="部门..." readonly="enable">
@@ -111,14 +115,17 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="eqState" placeholder="状态..." readonly="enable">
                             </div>
-                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">购买时间： </label>
+                            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="time">购买时间：</label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
-                            <div class="col-md-1 col-sm-2 col-xs-2"></div>
-                            <div class="col-md-2 col-sm-4 col-xs-4">
-                                <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
-                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                        </div>
+                        <div class="row custom">
+                            <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="item in custom">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-4" :title="item.key">{{item.key + "："}}</label>
+                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" class="form-control" :value="item.value">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,33 +134,21 @@
         </div>
     </div>
     <div id="borrow_toolbar">
-        <!-- <row> -->
-            <!-- <div class="col-sm-6"> -->
-                <span style="font-size: 21px;">设备借调记录</span>
-            <!-- </div> -->
-            <!-- <div class="col-sm-3"> -->
-                <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addBorrowLog()"
-                        data-toggle="modal" data-target="#borrowModal">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加借调记录
-                </button>
-            <!-- </div> -->
-        <!-- </row> -->
+        <span style="font-size: 21px;">设备借调记录</span>
+        <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addBorrowLog()"
+                data-toggle="modal" data-target="#borrowModal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加借调记录
+        </button>
     </div>
     <div class="tablecontent_borrow">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_borrow"></table>
     </div>
     <div id="fix_toolbar">
-        <!-- <row> -->
-            <!-- <div class="col-sm-6"> -->
-                <span style="font-size: 21px;">设备维护记录</span>
-            <!-- </div>
-            <div class="col-sm-3"> -->
-                <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addFixLog()"
-                        data-toggle="modal" data-target="#fixModal">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加维护记录
-                </button>
-            <!-- </div> -->
-        <!-- </row> -->
+        <span style="font-size: 21px;">设备维护记录</span>
+        <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addFixLog()"
+                data-toggle="modal" data-target="#fixModal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加维护记录
+        </button>
     </div>
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
@@ -166,7 +161,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myModalLabel">设备信息修改</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="height: 385px;overflow-y: auto;">
                     <form id="formSubmit" class="form-horizontal">
                         <div class="form-group row">
                             <label class="control-label item-left col-sm-4 col-xs-4 con">设备ID：</label>
@@ -243,14 +238,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
-<<<<<<< HEAD
-                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitDate">签约时间：</label>
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitDate">购买时间：</label>
                             <div class="col-sm-7 col-xs-7">
-=======
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="eqSubmitDate">购买时间：</label>
-                            <div class="col-sm-3">
->>>>>>> 76b2f1b1d511e048fd7e80fb9b603f8076edee5b
-                                <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
+                                <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">  
+                            </div>
+                        </div>
+                        <div class="form-group row" v-for="item in custom">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">{{item.key + "："}}</label>
+                            <div class="col-sm-7 col-xs-7">
+                                <input class="form-control form-control-x" :value="item.value" type="text">  
                             </div>
                         </div>
                     </form>
@@ -448,7 +444,8 @@
         eqBorNoBelongValue:"",
         eqBorNoDetailValue:"",
         //
-        eqBorUnDetailValue:""
+        eqBorUnDetailValue:"",
+        custom:[]
     };
     var vm = new Vue({
         el:'.app',

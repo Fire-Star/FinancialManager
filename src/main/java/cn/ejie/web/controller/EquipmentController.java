@@ -198,13 +198,14 @@ public class EquipmentController {
             if(!time.equals("")){
                 sqltemp = sqltemp + " and purchas_date='"+time+"'";
             }
+            sqltemp = sqltemp + " order by eq_other_id desc";
             if(sqltemp.contains("WHERE and")){
                 sql = sqltemp.replaceAll("WHERE and","WHERE");
             }else{
                 sql = sqltemp;
             }
         }else {
-            sql = sqltemp;
+            sql = sqltemp + " order by eq_other_id desc";
         }
         System.out.println("sql:"+sql);
         List<EquipmentCustom> listequip = new ArrayList<EquipmentCustom>();
@@ -312,6 +313,22 @@ public class EquipmentController {
         }catch (Exception e){
             Map<String,String> message = SimpleException.getMapMessage(new HashMap<>(),e);
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+        }
+        String customMessage = "";
+        List<Object> messageObject = new ArrayList<Object>();
+        if(!"".equals(equipmentCustom.getCustomMessage())&&equipmentCustom.getCustomMessage()!=null){
+            customMessage = equipmentCustom.getCustomMessage();
+            String[] message = customMessage.split(";");
+            for (int i = 0; i < message.length; i++) {
+                Map map = new HashMap();
+                String[] detail = message[i].split("=");
+                map.put(detail[0],detail[1]);
+                messageObject.add(map);
+            }
+            JSONArray jsonMessage = new JSONArray();
+            jsonMessage = JSONArray.fromObject(messageObject);
+            equipmentCustom.setCustomMessage(jsonMessage.toString());
+            System.out.println("自定义信息："+jsonMessage.toString());
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(equipmentCustom);

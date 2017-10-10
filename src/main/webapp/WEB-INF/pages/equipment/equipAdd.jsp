@@ -99,7 +99,7 @@
     <div class="borderx">
         <span>设备基本信息添加</span>
         <security:authorize access="hasAnyRole('ROLE_ADMIN')">
-        <button class="btn btn-success pibu col-sm-1" data-toggle="modal" data-target="#pibudialog">批量导入</button>
+        <button class="btn btn-success pibu col-md-1 col-sm-2" data-toggle="modal" data-target="#pibudialog">批量导入</button>
         </security:authorize>
     </div>
     <div class="row">
@@ -527,9 +527,6 @@
             }else if(_data.errorType){
                 vm.modalStatus = _data.errorType;
                 $('#modalButton').click();
-            }else{
-                vm.modalStatus = '发生未知错误，请联系管理员！';
-                $('#modalButton').click();
             }
         }
     });
@@ -551,9 +548,6 @@
                     }
                 }else if(_data.errorType){
                     vm.modalStatus = _data.errorType;
-                    $('#modalButton').click();
-                }else{
-                    vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();
                 }
             }

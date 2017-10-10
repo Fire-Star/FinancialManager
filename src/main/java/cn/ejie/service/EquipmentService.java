@@ -42,7 +42,7 @@ import java.util.List;
 @Service
 public class EquipmentService {
     private static final String inserState = "闲置";
-    public static final String BASE_PATH = "K:\\文件上传\\";
+    public static final String BASE_PATH = "D:\\文件上传\\";
     public static final String UPLOAD_DIR = BASE_PATH;
     private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
     public static final long MAX_FILE_SISE = 61440; //为 60 MB
