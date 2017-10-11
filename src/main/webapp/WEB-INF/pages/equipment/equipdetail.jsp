@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:50
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,8 +94,10 @@
         <div class="panel panel-default">
             <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">设备信息</p></strong>
+                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                 <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                </security:authorize>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -136,20 +147,24 @@
     </div>
     <div id="borrow_toolbar">
         <span style="font-size: 21px;">设备借调记录</span>
+        <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
         <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addBorrowLog()"
                 data-toggle="modal" data-target="#borrowModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加借调记录
         </button>
+        </security:authorize>
     </div>
     <div class="tablecontent_borrow">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_borrow"></table>
     </div>
     <div id="fix_toolbar">
         <span style="font-size: 21px;">设备维护记录</span>
+        <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
         <button type="button" class="btn btn-default" style="margin-left:50px" onclick = "addFixLog()"
                 data-toggle="modal" data-target="#fixModal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加维护记录
         </button>
+        </security:authorize>
     </div>
     <div class="tablecontent_fix">
         <table class="bootstrap-table fixed-table-container" id="tb_equipment_fix"></table>
@@ -169,14 +184,14 @@
                             <div class="col-sm-7 col-xs-7">
                                 <input type="text" id="eqSubmitId" class="form-control" name="phone" value="" disabled="true">
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
                             <label class="control-label item-left col-sm-4 col-xs-4 con">设备其他ID：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input type="text" id="eqSubmitOtherId" class="form-control" name="phone" value="" disabled="true">
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
                             <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitType">设备类型：</label>
@@ -241,13 +256,17 @@
                         <div class="form-group row">
                             <label class="control-label item-left col-sm-4 col-xs-4 con" for="eqSubmitDate">购买时间：</label>
                             <div class="col-sm-7 col-xs-7">
-                                <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">  
+                                <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">
                             </div>
                         </div>
                         <div class="form-group row" v-for="(value,key) in custom">
                             <label class="control-label item-left col-sm-4 col-xs-4 con">{{key + "："}}</label>
                             <div class="col-sm-7 col-xs-7">
+<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/equipment/equipdetail.html
                                 <input class="form-control form-control-x" v-model="custom[key]" type="text">  
+=======
+                                <input class="form-control form-control-x" :value="item.value" type="text">
+>>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/equipment/equipdetail.jsp
                             </div>
                         </div>
                     </form>
@@ -288,86 +307,86 @@
                             </div>
                         </div>
                         <div class="borDiv">
-                        <form id="formBorrowSubmit" class="form-horizontal">
-                            <div id="eqUsedDiv" hidden>
-                                <div class="form-group row">
-                                    <label class="control-label item-left col-sm-3 col-xs-3 con">使用人：</label>
-                                    <div class="col-sm-8 col-xs-8">
-                                        <div class="form-group form-inline from-line item-right" role="group">
-                                            <div class="btn-group">
-                                                <select class="btn btn-default select-left"
-                                                        id="eqBorrowCity"
-                                                        data-toggle="tooltip" data-placement="top"
-                                                        @change="loadBorBelongDep" v-model="eqBorCityValue">
-                                                    <option selected value="">-城市-</option>
-                                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                                                </select>
-                                                <select class="btn btn-default select-center"
-                                                        id="eqBorrowBelongDepart" data-toggle="tooltip"
-                                                        @change="loadBorUserName" v-model="eqBorBelongValue" data-placement="top" >
-                                                    <option selected value="">--部门--</option>
-                                                    <option v-for="(item , index) in eqBorBelong" :value="item.department">{{item.department}}</option>
-                                                </select>
-                                                <select class="btn btn-default select-right"
-                                                        id="eqAddBorUsedUser" data-toggle="tooltip"
-                                                        v-model="eqBorNameValue"
-                                                        data-placement="top" >
-                                                    <option selected value="">--使用人--</option>
-                                                    <option v-for="(item , index) in eqBorName" :value="item.staffId">
-                                                        {{item.name}}</option>
-                                                </select>
+                            <form id="formBorrowSubmit" class="form-horizontal">
+                                <div id="eqUsedDiv" hidden>
+                                    <div class="form-group row">
+                                        <label class="control-label item-left col-sm-3 col-xs-3 con">使用人：</label>
+                                        <div class="col-sm-8 col-xs-8">
+                                            <div class="form-group form-inline from-line item-right" role="group">
+                                                <div class="btn-group">
+                                                    <select class="btn btn-default select-left"
+                                                            id="eqBorrowCity"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            @change="loadBorBelongDep" v-model="eqBorCityValue">
+                                                        <option selected value="">-城市-</option>
+                                                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                                    </select>
+                                                    <select class="btn btn-default select-center"
+                                                            id="eqBorrowBelongDepart" data-toggle="tooltip"
+                                                            @change="loadBorUserName" v-model="eqBorBelongValue" data-placement="top" >
+                                                        <option selected value="">--部门--</option>
+                                                        <option v-for="(item , index) in eqBorBelong" :value="item.department">{{item.department}}</option>
+                                                    </select>
+                                                    <select class="btn btn-default select-right"
+                                                            id="eqAddBorUsedUser" data-toggle="tooltip"
+                                                            v-model="eqBorNameValue"
+                                                            data-placement="top" >
+                                                        <option selected value="">--使用人--</option>
+                                                        <option v-for="(item , index) in eqBorName" :value="item.staffId">
+                                                            {{item.name}}</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
-                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                    <div class="form-group row">
+                                        <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                        <div class="col-sm-8 col-xs-8 addAreaDiv">
                                     <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorUsedDetail"
                                               name="eqAddBorUsedDetail" v-model="eqBorDetailValue"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="eqNoUsedDiv" hidden>
-                                <div class="form-group row">
-                                    <label class="control-label item-left col-sm-3 col-xs-3 con">闲置部门：</label>
-                                    <div class="col-sm-8 col-xs-8">
-                                        <div class="form-group form-inline from-line item-right" role="group">
-                                            <div class="btn-group">
-                                                <select class="btn btn-default select-left"
-                                                        id="eqAddBorNoUse"
-                                                        data-toggle="tooltip" data-placement="top"
-                                                        @change="loadBorNoBelongDep" v-model="eqBorNoCityValue">
-                                                    <option selected value="">-城市-</option>
-                                                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                                                </select>
-                                                <select class="btn btn-default select-"
-                                                        id="eqAddBorNoUsedUser" data-toggle="tooltip" v-model="eqBorNoBelongValue" data-placement="top" >
-                                                    <option selected value="">--部门--</option>
-                                                    <option v-for="(item , index) in eqBorNoBelong" :value="item.department">{{item.department}}</option>
-                                                </select>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
-                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                <div id="eqNoUsedDiv" hidden>
+                                    <div class="form-group row">
+                                        <label class="control-label item-left col-sm-3 col-xs-3 con">闲置部门：</label>
+                                        <div class="col-sm-8 col-xs-8">
+                                            <div class="form-group form-inline from-line item-right" role="group">
+                                                <div class="btn-group">
+                                                    <select class="btn btn-default select-left"
+                                                            id="eqAddBorNoUse"
+                                                            data-toggle="tooltip" data-placement="top"
+                                                            @change="loadBorNoBelongDep" v-model="eqBorNoCityValue">
+                                                        <option selected value="">-城市-</option>
+                                                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                                    </select>
+                                                    <select class="btn btn-default select-"
+                                                            id="eqAddBorNoUsedUser" data-toggle="tooltip" v-model="eqBorNoBelongValue" data-placement="top" >
+                                                        <option selected value="">--部门--</option>
+                                                        <option v-for="(item , index) in eqBorNoBelong" :value="item.department">{{item.department}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                        <div class="col-sm-8 col-xs-8 addAreaDiv">
                                     <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorNoUsedDetail"
                                               name="eqAddBorNoUsedDetail" v-model="eqBorNoDetailValue"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div id="eqUnUsedDiv" hidden style="margin-top: 35px;">
-                                <div class="form-group row">
-                                    <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
-                                    <div class="col-sm-8 col-xs-8 addAreaDiv">
+                                <div id="eqUnUsedDiv" hidden style="margin-top: 35px;">
+                                    <div class="form-group row">
+                                        <label class="item-left col-sm-3 col-xs-3 con">备注：</label>
+                                        <div class="col-sm-8 col-xs-8 addAreaDiv">
                                     <textarea class="form-control addAreaDiv" rows="3" id="eqAddBorUnUsedDetail"
                                               name="eqAddBorUnUsedDetail" v-model="eqBorUnDetailValue"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
                     <div class="modal-footer">

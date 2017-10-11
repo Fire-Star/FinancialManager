@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:33
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,67 +79,69 @@
     <div class="supplier-head">员工管理 > 新增员工信息</div>
     <div class="borderx">
         <span class="title">员工基本信息添加</span>
+        <security:authorize access="hasAnyRole('ROLE_ADMIN')">
         <button class="btn btn-success pibu col-sm-1" data-toggle="modal" data-target="#pibudialog">批量导入</button>
+        </security:authorize>
     </div>
     <div class="row">
-    <!-- <div class="content-line">
-        <div class="item-left content-item">
-            <div class="item-left item-name"> -->
-            <label class="control-label col-md-1 col-sm-2 col-xs-2" for="staffName">姓名：</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                <input type="text" class="form-control " propName="员工姓名" id="staffName" data-toggle="tooltip" data-placement="top"  v-model="name" placeholder="请输入员工姓名...">
-            </div>
+        <!-- <div class="content-line">
+            <div class="item-left content-item">
+                <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="staffName">姓名：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" class="form-control " propName="员工姓名" id="staffName" data-toggle="tooltip" data-placement="top"  v-model="name" placeholder="请输入员工姓名...">
+        </div>
         <!-- </div>
         <div class="item-right content-item">
             <div class="item-left item-name"> -->
-            <label for="city" class="control-label col-md-1 col-sm-2 col-xs-2">城市：</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                <select class="form-control" id="city" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
-                    <option selected value="">---请选择城市---</option>
-                    <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                </select>
-            </div>
+        <label for="city" class="control-label col-md-1 col-sm-2 col-xs-2">城市：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <select class="form-control" id="city" propName="城市" @change="loadDep" data-toggle="tooltip" data-placement="top" v-model="city" >
+                <option selected value="">---请选择城市---</option>
+                <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+            </select>
+        </div>
         <!-- </div>
     </div>
     <div class="content-line customTitle">
         <div class="item-left content-item">
             <div class="item-left item-name"> -->
-            <label for="dep" class="control-label col-md-1 col-sm-2 col-xs-2">部门：</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4" >
-                <select class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" >
-                    <option selected value="" id="depIDOp">--请选择员工部门--</option>
-                    <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
-                </select>
-            </div>
+        <label for="dep" class="control-label col-md-1 col-sm-2 col-xs-2">部门：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4" >
+            <select class="form-control" v-model="dep" id="dep" propName="部门" data-toggle="tooltip" data-placement="top" >
+                <option selected value="" id="depIDOp">--请选择员工部门--</option>
+                <option v-for="(item , index) in departments" :value="item.department">{{item.department}}</option>
+            </select>
+        </div>
         <!-- </div>
         <div class="item-right content-item">
             <div class="item-left item-name"> -->
-            <label for="position" class="control-label col-md-1 col-sm-2 col-xs-2">岗位：</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                <input type="text" v-model="position" class="form-control" id="position" propName="岗位" data-toggle="tooltip" data-placement="top" placeholder="请输入员工岗位...">
-            </div>
+        <label for="position" class="control-label col-md-1 col-sm-2 col-xs-2">岗位：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" v-model="position" class="form-control" id="position" propName="岗位" data-toggle="tooltip" data-placement="top" placeholder="请输入员工岗位...">
+        </div>
         <!-- </div>
     </div>
     <div class="content-line customTitle">
         <div class="item-left content-item">
             <div class="item-left item-name"> -->
-            <label for="tel" class="control-label col-md-1 col-sm-2 col-xs-2">联系电话：</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4" >
-                <input type="number" checked class="form-control" v-model="tel" id="tel" propName="员工联系电话" data-toggle="tooltip" data-placement="top" placeholder="请输入员工联系电话...">
-            </div>
+        <label for="tel" class="control-label col-md-1 col-sm-2 col-xs-2">联系电话：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4" >
+            <input type="number" checked class="form-control" v-model="tel" id="tel" propName="员工联系电话" data-toggle="tooltip" data-placement="top" placeholder="请输入员工联系电话...">
+        </div>
         <!-- </div>
         <div class="item-right content-item">
             <div class="item-left item-name"> -->
-            <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">入职时间:</label>
-            <!-- </div> -->
-            <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                <input class="form-control" propName="员工入职时间" id="calender" name="entryTime" placeholder="选择员工入职时间..." type="text">
-            </div>
+        <label for="calender" class="control-label col-md-1 col-sm-2 col-xs-2">入职时间:</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input class="form-control" propName="员工入职时间" id="calender" name="entryTime" placeholder="选择员工入职时间..." type="text">
+        </div>
         <!-- </div> -->
     </div>
     <div class="title">员工自定义信息添加</div>
@@ -288,9 +299,9 @@
                             vm.departments=_departmentData;
                         }
                     }
-            });
+                });
                 $('#depIDOp').attr('selected',true);
-    }}
+            }}
     });
     /**
      * 加载城市选项

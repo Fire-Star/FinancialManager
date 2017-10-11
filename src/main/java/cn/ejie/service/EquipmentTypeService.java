@@ -27,6 +27,9 @@ public class EquipmentTypeService {
     @Autowired
     private EquipmentNameService equipmentNameService;
 
+    @Autowired
+    private MaxValueService maxValueService;
+
     /**
      * 查询所有设备类型
      * @return
@@ -49,13 +52,22 @@ public class EquipmentTypeService {
             throw new EquipmentException(errorType,"该设备类型已经存在！");
         }
 
-        Integer nowCount = equipmentTypeMapper.findEquipmentTypeCount();
-        String eqTypeOherId = StringUtils.fillPreString(nowCount.toString(),'0',2);
+        String eqTypeCount = null;
+        try {
+            eqTypeCount = String.valueOf(Integer.parseInt(maxValueService.findValueByKey("EqTypeMax"))+1);
+        }catch (Exception e){
+            if(eqTypeCount == null){
+                maxValueService.updateState("EqTypeMax","1");
+                eqTypeCount = "1";
+            }
+        }
+        String eqTypeOherId = StringUtils.fillPreString(eqTypeCount.toString(),'0',2);
 
         System.out.println(eqTypeOherId);
 
         equipmentTypeCustom.setEqTypeOtherId(eqTypeOherId);
         equipmentTypeMapper.insertSingleEquipmentType(equipmentTypeCustom);
+        maxValueService.updateState("EqTypeMax",eqTypeCount);
     }
 
     public Integer findEquipmentTypeCountByTypeName(String equipmentTypeName) throws Exception {

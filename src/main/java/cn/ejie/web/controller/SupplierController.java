@@ -81,7 +81,7 @@ public class SupplierController {
 
     @RequestMapping("/supplier/addPage")
     public String addSupplier(){
-        return "/WEB-INF/pages/supplier/supplierAdd.html";
+        return "/WEB-INF/pages/supplier/supplierAdd.jsp";
     }
     @RequestMapping("/user/supplier/query")
     public String testSupplierquery(){
@@ -89,7 +89,7 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/detail")
     public String searchSupplierDetail() throws Exception{
-        return "/WEB-INF/pages/supplier/supplierdetail.html";
+        return "/WEB-INF/pages/supplier/supplierdetail.jsp";
     }
     @RequestMapping("/user/supplier/findSuppBySuppID")
     public  void findSuppBySuppID(HttpServletResponse response,HttpServletRequest request) throws Exception{

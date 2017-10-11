@@ -72,7 +72,7 @@ public class StaffController {
 
     @RequestMapping("/staff/addPage")
     public String staffAddPage(){
-        return "/WEB-INF/pages/staff/staffAdd.html";
+        return "/WEB-INF/pages/staff/staffAdd.jsp";
     }
 
     @RequestMapping("/user/staff/query")
@@ -214,7 +214,7 @@ public class StaffController {
     }
     @RequestMapping("/user/staff/detail")
     public String searchStaffDetail(){
-        return "/WEB-INF/pages/staff/staffdetail.html";
+        return "/WEB-INF/pages/staff/staffdetail.jsp";
     }
     @RequestMapping("/user/staff/findStaffByStaffID")
     public void findStaffByStaffID (HttpServletRequest request,HttpServletResponse response) throws Exception{

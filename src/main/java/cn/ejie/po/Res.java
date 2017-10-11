@@ -1,5 +1,7 @@
 package cn.ejie.po;
 
+import cn.ejie.annotations.BeanPropertyErrorType;
+
 /**
  * Created by Administrator on 2017/8/10.
  */
@@ -8,7 +10,9 @@ public class Res {
      * 这个是资源类
      */
     private String res_id;
+    @BeanPropertyErrorType(propertyName = "资源链接地址")
     private String res_url;
+    @BeanPropertyErrorType(propertyName = "资源链接地址权限描述")
     private String res_description;
 
     public Res() {

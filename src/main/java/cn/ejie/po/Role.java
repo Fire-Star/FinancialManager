@@ -1,5 +1,7 @@
 package cn.ejie.po;
 
+import cn.ejie.annotations.BeanPropertyErrorType;
+
 /**
  * Created by Administrator on 2017/8/9.
  */
@@ -9,8 +11,10 @@ public class Role {
     /**
      * 角色名称，常常是权限名称。
      */
+    @BeanPropertyErrorType(propertyName = "角色名称")
     private String rname;
     //权限描述
+    @BeanPropertyErrorType(propertyName = "角色描述")
     private String rdescription;
 
     public Role() {

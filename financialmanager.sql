@@ -29,8 +29,6 @@ CREATE TABLE `city` (
 
 /*Data for the table `city` */
 
-insert  into `city`(`cityID`,`city`,`cityOtherID`) values ('2d709c68-87da-11e7-b0f8-708bcd7b61ba','成都','01'),('d8a616e6-87da-11e7-b0f8-708bcd7b61ba','上海','02'),('dc2d387e-87da-11e7-b0f8-708bcd7b61ba','重庆','03'),('e17edb43-a422-11e7-9463-1cb72c2f3c53','厦门','13');
-
 /*Table structure for table `department` */
 
 DROP TABLE IF EXISTS `department`;
@@ -45,8 +43,6 @@ CREATE TABLE `department` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `department` */
-
-insert  into `department`(`id`,`city`,`department`) values ('01599550-87de-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba','车贷一部'),('b86b45ba-87de-11e7-b0f8-708bcd7b61ba','dc2d387e-87da-11e7-b0f8-708bcd7b61ba','房贷一部'),('c0d2cdbd-87de-11e7-b0f8-708bcd7b61ba','dc2d387e-87da-11e7-b0f8-708bcd7b61ba','房贷二部'),('c4b92431-87de-11e7-b0f8-708bcd7b61ba','dc2d387e-87da-11e7-b0f8-708bcd7b61ba','房贷三部'),('cba0a8d7-87de-11e7-b0f8-708bcd7b61ba','d8a616e6-87da-11e7-b0f8-708bcd7b61ba','房贷一部'),('ceec0a07-87de-11e7-b0f8-708bcd7b61ba','d8a616e6-87da-11e7-b0f8-708bcd7b61ba','房贷二部'),('e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba','技术部'),('e9b06ca1-a422-11e7-9463-1cb72c2f3c53','e17edb43-a422-11e7-9463-1cb72c2f3c53','技术部'),('ee9ff826-a422-11e7-9463-1cb72c2f3c53','e17edb43-a422-11e7-9463-1cb72c2f3c53','财务部'),('f0a8c045-87dd-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba','财务部');
 
 /*Table structure for table `eq_borrow_log` */
 
@@ -101,8 +97,6 @@ CREATE TABLE `eq_name` (
 
 /*Data for the table `eq_name` */
 
-insert  into `eq_name`(`eq_name_id`,`eq_name`,`eq_type_id`) values ('52bfbe2f-87b3-11e7-b0f8-708bcd7b61ba','台式电脑','fb8ca8f8-86e7-11e7-afa6-708bcd7b61ba'),('69df5c8f-87b3-11e7-b0f8-708bcd7b61ba','打印机','fb8ca8f8-86e7-11e7-afa6-708bcd7b61ba'),('74234779-87b3-11e7-b0f8-708bcd7b61ba','路由器','f832f659-86e7-11e7-afa6-708bcd7b61ba'),('78abeb6d-87b3-11e7-b0f8-708bcd7b61ba','交换机','f832f659-86e7-11e7-afa6-708bcd7b61ba'),('7c8651a2-87b3-11e7-b0f8-708bcd7b61ba','服务器','f832f659-86e7-11e7-afa6-708bcd7b61ba'),('837525e6-87b3-11e7-b0f8-708bcd7b61ba','内存条','f292d64a-86e7-11e7-afa6-708bcd7b61ba'),('898f1aab-87b3-11e7-b0f8-708bcd7b61ba','硬盘','f292d64a-86e7-11e7-afa6-708bcd7b61ba'),('e9947697-87b3-11e7-b0f8-708bcd7b61ba','笔记本电脑','fb8ca8f8-86e7-11e7-afa6-708bcd7b61ba'),('ee0ce648-9f6a-11e7-baa9-1cb72c2f3c53','光驱','f292d64a-86e7-11e7-afa6-708bcd7b61ba');
-
 /*Table structure for table `eq_starff` */
 
 DROP TABLE IF EXISTS `eq_starff`;
@@ -148,8 +142,6 @@ CREATE TABLE `eq_type` (
 
 /*Data for the table `eq_type` */
 
-insert  into `eq_type`(`eq_type_id`,`eq_type_name`,`eq_type_other_id`) values ('f292d64a-86e7-11e7-afa6-708bcd7b61ba','配件','01'),('f832f659-86e7-11e7-afa6-708bcd7b61ba','机房设备','02'),('fb8ca8f8-86e7-11e7-afa6-708bcd7b61ba','办公设备','03');
-
 /*Table structure for table `equipment` */
 
 DROP TABLE IF EXISTS `equipment`;
@@ -182,21 +174,17 @@ CREATE TABLE `equipment` (
 
 /*Data for the table `equipment` */
 
-insert  into `equipment`(`eq_id`,`eq_type`,`eq_name`,`brand_name`,`purchas_depart`,`belong_depart`,`purchas_date`,`supplier`,`eq_state`,`purchas_price`,`custom_message`,`eq_other_id`,`city`,`buyCity`) values ('0b61f283-a353-11e7-9463-1cb72c2f3c53','配件','硬盘','三星 G5','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-09-28','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',299,'','01010018','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('1cee0a8e-a262-11e7-9463-1cb72c2f3c53','机房设备','服务器','HP高性能服务器','f0a8c045-87dd-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-09-30','盐市口联想直营中心','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',300000,'','01020005','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('5e6ecfc6-a263-11e7-9463-1cb72c2f3c53','办公设备','笔记本电脑','HP高性能电脑','01599550-87de-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-10-05','盐市口联想直营中心','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',6999,'','01030006','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('5e6f4cf7-a263-11e7-9463-1cb72c2f3c53','办公设备','笔记本电脑','HP高性能电脑','01599550-87de-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-10-05','盐市口联想直营中心','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',6999,'','01030007','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('61239edd-a263-11e7-9463-1cb72c2f3c53','办公设备','笔记本电脑','HP高性能电脑','01599550-87de-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-10-05','盐市口联想直营中心','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',6999,'','01030008','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('6123e1a9-a263-11e7-9463-1cb72c2f3c53','办公设备','笔记本电脑','HP高性能电脑','01599550-87de-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-10-05','盐市口联想直营中心','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',6999,'','01030009','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('78be93f4-9c39-11e7-94cf-1cb72c2f3c53','配件','内存条','骇客神条 8G','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-09-28','金士顿','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',299,'','01010001','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('83f84b94-a261-11e7-9463-1cb72c2f3c53','配件','光驱','日本进口光驱','66b6e22a-a258-11e7-9463-1cb72c2f3c53','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-09-24','金士顿','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',1999,'','01010004','2d709c68-87da-11e7-b0f8-708bcd7b61ba','b15a4782-a1dc-11e7-9463-1cb72c2f3c53'),('a5003049-9c39-11e7-94cf-1cb72c2f3c53','配件','硬盘','HyperX Fury 发烧级固态硬盘','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-09-28','金士顿','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',755,'','01010002','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('b9eb25ef-9c39-11e7-94cf-1cb72c2f3c53','办公设备','笔记本电脑','华硕笔记本 W550JK','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','2017-08-28','华硕','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',4299,'','01030003','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('d5185932-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020010','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('d51936b5-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020011','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('d519b402-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020012','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('d51a2e17-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020013','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('e362121a-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020014','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('e3627688-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020015','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('e362bb3f-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020016','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('e3634553-a263-11e7-9463-1cb72c2f3c53','机房设备','路由器','TP-Link 302','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','01599550-87de-11e7-b0f8-708bcd7b61ba','2017-10-04','小米','d5a39eff-9acf-11e7-94cf-1cb72c2f3c53',199,'','01020017','2d709c68-87da-11e7-b0f8-708bcd7b61ba','2d709c68-87da-11e7-b0f8-708bcd7b61ba');
-
 /*Table structure for table `maxvalue` */
 
 DROP TABLE IF EXISTS `maxvalue`;
 
 CREATE TABLE `maxvalue` (
   `key` char(36) NOT NULL COMMENT 'key',
-  `value` char(36) NOT NULL COMMENT 'value',
+  `value` varchar(1024) NOT NULL COMMENT 'value',
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `maxvalue` */
-
-insert  into `maxvalue`(`key`,`value`) values ('cityMax','13');
 
 /*Table structure for table `res` */
 
@@ -211,7 +199,7 @@ CREATE TABLE `res` (
 
 /*Data for the table `res` */
 
-insert  into `res`(`res_id`,`res_url`,`res_description`) values ('1664ccf8-7d91-11e7-8499-708bcd7b61ba','/user.jsp','这是普通用户和管理员才能够访问的页面'),('2299841d-9918-11e7-94cf-1cb72c2f3c53','/user/index','主界面'),('2b4718af-7d91-11e7-8499-708bcd7b61ba','/admin.jsp','这是管理员才能够访问的页面'),('3433fbb9-a42e-11e7-9463-1cb72c2f3c53','/equipment/fieldManagerPage','这是管理员才能访问的页面'),('84c67ba4-a42e-11e7-9463-1cb72c2f3c53','/department/systemFieldManager','这是管理员才能访问的页面'),('ae52e885-a42e-11e7-9463-1cb72c2f3c53','/user/user/query','这是管理员才能访问的页面');
+insert  into `res`(`res_id`,`res_url`,`res_description`) values ('1237f174-ae37-11e7-a820-1cb72c2f3c53','/department/add','只有普通用户和管理员能够访问的页面'),('1664ccf8-7d91-11e7-8499-708bcd7b61ba','/user.jsp','这是普通用户和管理员才能够访问的页面'),('222e939d-ae37-11e7-a820-1cb72c2f3c53','/addEquipmentType','只有管理员能够访问的页面'),('2299841d-9918-11e7-94cf-1cb72c2f3c53','/user/index','主界面'),('2b4718af-7d91-11e7-8499-708bcd7b61ba','/admin.jsp','这是管理员才能够访问的页面'),('3433fbb9-a42e-11e7-9463-1cb72c2f3c53','/equipment/fieldManagerPage','这是管理员才能访问的页面'),('418646a1-ae37-11e7-a820-1cb72c2f3c53','/addSingleEquipmentName','只有管理员能够访问的页面'),('6d03b934-a5b4-11e7-9463-1cb72c2f3c53','/equipment/upload','用户管理员才可以做批量上传导入'),('7d167fbc-ae37-11e7-a820-1cb72c2f3c53','/equipment/add','只有普通用户和管理员能够访问的页面'),('84c67ba4-a42e-11e7-9463-1cb72c2f3c53','/department/systemFieldManager','这是管理员才能访问的页面'),('92251d08-ae37-11e7-a820-1cb72c2f3c53','/staff/add','只有普通用户和管理员能够访问的页面'),('a6a4c45b-ae37-11e7-a820-1cb72c2f3c53','/supplier/add','只有普通用户和管理员能够访问的页面'),('ae52e885-a42e-11e7-9463-1cb72c2f3c53','/user/user/query','这是管理员才能访问的页面'),('c5c3406a-ae37-11e7-a820-1cb72c2f3c53','/staff/upload','只有管理员能够访问的页面'),('d6ae9901-ae37-11e7-a820-1cb72c2f3c53','/supplier/upload','只有管理员能够访问的页面'),('e7427251-ae30-11e7-a820-1cb72c2f3c53','/equipment/addPage','只有普通用户和管理员能够访问的页面'),('f274a6a7-ae30-11e7-a820-1cb72c2f3c53','/staff/addPage','只有普通用户和管理员能够访问的页面'),('fa3e289b-ae30-11e7-a820-1cb72c2f3c53','/supplier/addPage','只有普通用户和管理员能够访问的页面'),('fcbd0638-ae36-11e7-a820-1cb72c2f3c53','/city/add','只有普通用户和管理员能够访问的页面');
 
 /*Table structure for table `res_role` */
 
@@ -230,7 +218,7 @@ CREATE TABLE `res_role` (
 
 /*Data for the table `res_role` */
 
-insert  into `res_role`(`res_r_id`,`res_id`,`r_id`) values ('021f83c3-a42f-11e7-9463-1cb72c2f3c53','ae52e885-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('0d3842b8-7d92-11e7-8499-708bcd7b61ba','1664ccf8-7d91-11e7-8499-708bcd7b61ba','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('1c08f2a2-7d92-11e7-8499-708bcd7b61ba','2b4718af-7d91-11e7-8499-708bcd7b61ba','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('4574debb-9918-11e7-94cf-1cb72c2f3c53','2299841d-9918-11e7-94cf-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('7b974d03-9918-11e7-94cf-1cb72c2f3c53','2299841d-9918-11e7-94cf-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('ec3434ed-7d91-11e7-8499-708bcd7b61ba','1664ccf8-7d91-11e7-8499-708bcd7b61ba','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('f3d8959f-a42e-11e7-9463-1cb72c2f3c53','3433fbb9-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('fd83357e-a42e-11e7-9463-1cb72c2f3c53','84c67ba4-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba');
+insert  into `res_role`(`res_r_id`,`res_id`,`r_id`) values ('00cb24ba-ae37-11e7-a820-1cb72c2f3c53','fcbd0638-ae36-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('021f83c3-a42f-11e7-9463-1cb72c2f3c53','ae52e885-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('0d3842b8-7d92-11e7-8499-708bcd7b61ba','1664ccf8-7d91-11e7-8499-708bcd7b61ba','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('1599e6ef-ae37-11e7-a820-1cb72c2f3c53','1237f174-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('1c08f2a2-7d92-11e7-8499-708bcd7b61ba','2b4718af-7d91-11e7-8499-708bcd7b61ba','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('3125909c-ae37-11e7-a820-1cb72c2f3c53','222e939d-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('43d49b00-a5b5-11e7-9463-1cb72c2f3c53','6d03b934-a5b4-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('4574debb-9918-11e7-94cf-1cb72c2f3c53','2299841d-9918-11e7-94cf-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('4a02881b-ae37-11e7-a820-1cb72c2f3c53','418646a1-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('7b974d03-9918-11e7-94cf-1cb72c2f3c53','2299841d-9918-11e7-94cf-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('80ce1bc6-ae37-11e7-a820-1cb72c2f3c53','7d167fbc-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('85f41553-ae37-11e7-a820-1cb72c2f3c53','7d167fbc-ae37-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('8b0d21f4-ae31-11e7-a820-1cb72c2f3c53','e7427251-ae30-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('94f160da-ae37-11e7-a820-1cb72c2f3c53','92251d08-ae37-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('9757dc33-ae31-11e7-a820-1cb72c2f3c53','e7427251-ae30-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('9a417d8a-ae37-11e7-a820-1cb72c2f3c53','92251d08-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('a17ade8e-ae31-11e7-a820-1cb72c2f3c53','f274a6a7-ae30-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('a80a3655-ae31-11e7-a820-1cb72c2f3c53','f274a6a7-ae30-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('a8b086c1-ae37-11e7-a820-1cb72c2f3c53','a6a4c45b-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('ade68b24-ae37-11e7-a820-1cb72c2f3c53','a6a4c45b-ae37-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('b229e3b8-ae31-11e7-a820-1cb72c2f3c53','fa3e289b-ae30-11e7-a820-1cb72c2f3c53','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('b83e17fe-ae31-11e7-a820-1cb72c2f3c53','fa3e289b-ae30-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('c83189a6-ae37-11e7-a820-1cb72c2f3c53','c5c3406a-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('d8c72335-ae37-11e7-a820-1cb72c2f3c53','d6ae9901-ae37-11e7-a820-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('ec3434ed-7d91-11e7-8499-708bcd7b61ba','1664ccf8-7d91-11e7-8499-708bcd7b61ba','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('f23db5cd-ae34-11e7-a820-1cb72c2f3c53','2299841d-9918-11e7-94cf-1cb72c2f3c53','aa66ea09-ae2f-11e7-a820-1cb72c2f3c53'),('f3d8959f-a42e-11e7-9463-1cb72c2f3c53','3433fbb9-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('fd83357e-a42e-11e7-9463-1cb72c2f3c53','84c67ba4-a42e-11e7-9463-1cb72c2f3c53','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba');
 
 /*Table structure for table `role` */
 
@@ -245,7 +233,7 @@ CREATE TABLE `role` (
 
 /*Data for the table `role` */
 
-insert  into `role`(`rid`,`rname`,`rdescription`) values ('967bafbc-7cda-11e7-9bb7-708bcd7b61ba','ROLE_USER','普通登录账户'),('d0a93949-7ce2-11e7-9bb7-708bcd7b61ba','ROLE_ADMIN','管理员账户');
+insert  into `role`(`rid`,`rname`,`rdescription`) values ('967bafbc-7cda-11e7-9bb7-708bcd7b61ba','ROLE_USER','普通登录账户'),('aa66ea09-ae2f-11e7-a820-1cb72c2f3c53','ROLE_ONLY_SHOW','在网页中只有浏览权限'),('d0a93949-7ce2-11e7-9bb7-708bcd7b61ba','ROLE_ADMIN','管理员账户');
 
 /*Table structure for table `staff` */
 
@@ -256,7 +244,7 @@ CREATE TABLE `staff` (
   `name` varchar(30) NOT NULL COMMENT '姓名',
   `department` char(36) NOT NULL COMMENT '部门',
   `position` varchar(50) NOT NULL COMMENT '岗位',
-  `tel` char(11) NOT NULL COMMENT '联系电话',
+  `tel` char(255) NOT NULL COMMENT '联系电话',
   `entry_time` date NOT NULL COMMENT '入职时间',
   `custom_message` varchar(1024) DEFAULT NULL COMMENT '自定义信息',
   `city` char(36) NOT NULL,
@@ -264,8 +252,6 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `staff` */
-
-insert  into `staff`(`id`,`name`,`department`,`position`,`tel`,`entry_time`,`custom_message`,`city`) values ('54ed41d8-98f1-11e7-94cf-1cb72c2f3c53','小雷','c0d2cdbd-87de-11e7-b0f8-708bcd7b61ba','Java开发工程师','18382949078','2017-09-21','','dc2d387e-87da-11e7-b0f8-708bcd7b61ba'),('66002c6c-98f4-11e7-94cf-1cb72c2f3c53','Joy','e8a049e3-87dc-11e7-b0f8-708bcd7b61ba','安卓开发高级工程师','18280469370','2017-09-19','性别=女;','2d709c68-87da-11e7-b0f8-708bcd7b61ba');
 
 /*Table structure for table `supplier` */
 
@@ -277,16 +263,14 @@ CREATE TABLE `supplier` (
   `adtitude` char(30) NOT NULL COMMENT '资质',
   `address` varchar(300) NOT NULL COMMENT '地址',
   `contact_name` char(20) NOT NULL COMMENT '联系人',
-  `tel` char(11) NOT NULL COMMENT '联系电话',
+  `tel` char(255) NOT NULL COMMENT '联系电话',
   `business` varchar(300) NOT NULL COMMENT '主营业务',
-  `contract_time` date NOT NULL COMMENT '签约时间',
+  `contract_time` date DEFAULT NULL COMMENT '签约时间',
   `custom_message` varchar(1024) DEFAULT NULL COMMENT '自定义信息',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `supplier` */
-
-insert  into `supplier`(`id`,`name`,`adtitude`,`address`,`contact_name`,`tel`,`business`,`contract_time`,`custom_message`) values ('041ca1ee-9bb8-11e7-94cf-1cb72c2f3c53','华硕','上市公司','北京市武城区','华天','19625846536','专业高性能笔记本','2017-04-29',''),('5fd908ce-986b-11e7-94cf-1cb72c2f3c53','小米','上市','北京市','雷军','18382949075','卖手机','2017-09-14',''),('7564f680-9b51-11e7-94cf-1cb72c2f3c53','金士顿','上市','北京市内城','HyperX','18382909576','存储介质','2015-06-12',''),('e7fa854a-88ad-11e7-8254-708bcd7b61ba','盐市口联想直营中心','已上市','成都市锦江区大业路6号上普财富中心16F03室公司','李四','13822223333','联想电脑全系列产品','2017-05-09',NULL);
 
 /*Table structure for table `user` */
 
@@ -301,7 +285,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`username`,`password`,`city`) values ('Admin','123456',''),('MoonFollow','123456','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('xiamen','123456','e17edb43-a422-11e7-9463-1cb72c2f3c53');
+insert  into `user`(`username`,`password`,`city`) values ('Admin','123456',''),('FireLang','123456','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('MoonFollow','123456','2d709c68-87da-11e7-b0f8-708bcd7b61ba');
 
 /*Table structure for table `user_role` */
 
@@ -320,7 +304,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`urid`,`username`,`rid`) values ('09d079b7-7ce3-11e7-9bb7-708bcd7b61ba','Admin','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('3417eeaf-7ce2-11e7-9bb7-708bcd7b61ba','MoonFollow','967bafbc-7cda-11e7-9bb7-708bcd7b61ba');
+insert  into `user_role`(`urid`,`username`,`rid`) values ('09d079b7-7ce3-11e7-9bb7-708bcd7b61ba','Admin','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('3417eeaf-7ce2-11e7-9bb7-708bcd7b61ba','MoonFollow','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('515ea6aa-ae32-11e7-a820-1cb72c2f3c53','FireLang','aa66ea09-ae2f-11e7-a820-1cb72c2f3c53');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
