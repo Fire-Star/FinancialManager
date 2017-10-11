@@ -6,4 +6,13 @@
     <select id="findAllRolesByRes" resultType="cn.ejie.po.Role">
         SELECT role.rname FROM `res`,`role`,`res_role` WHERE res.res_id=res_role.res_id and role.rid = res_role.r_id and res.res_url=#{res_url}
     </select>
+    <insert id="addResAndRole">
+        <selectKey keyProperty="res_r_id" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO `res_role` VALUES(#{res_r_id},#{res_id},#{r_id})
+    </insert>
+    <select id="findResRoleIDByResIDAndRoleID" resultType="String">
+        SELECT res_r_id FROM `res_role` WHERE res_id = #{res_id} AND r_id = #{r_id}
+    </select>
 </mapper>

@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:35
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,141 +75,143 @@
     </style>
 </head>
 <body>
-    <div class="app container-fluid width-100per top-content">
-        <div class="supplier-head">供应商管理 > 新增供应商信息</div>
-        <div class="borderx">
-            <span class="title">供应商基本信息添加</span>
-            <button class="btn btn-success pibu col-sm-1" data-toggle="modal" data-target="#pibudialog">批量导入</button>
-        </div>
-        <div class="row">
+<div class="app container-fluid width-100per top-content">
+    <div class="supplier-head">供应商管理 > 新增供应商信息</div>
+    <div class="borderx">
+        <span class="title">供应商基本信息添加</span>
+        <security:authorize access="hasAnyRole('ROLE_ADMIN')">
+        <button class="btn btn-success pibu col-sm-1" data-toggle="modal" data-target="#pibudialog">批量导入</button>
+        </security:authorize>
+    </div>
+    <div class="row">
         <!-- <div class="content-line">
             <div class="item-left content-item">
                 <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="supplierName">名称：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                    <input type="text" class="form-control " propName="提供商名称" id="supplierName" data-toggle="tooltip" data-placement="top"  v-model="supplierName" placeholder="请输入供应商名称...">
-                </div>
-            <!-- </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="adtitude" class="">资质：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                    <input type="text" class="form-control" id="adtitude" propName="提供商资质" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAdtitudeError" v-model="adtitude" placeholder="请输入供应商资质...">
-                </div>
-            <!-- </div>
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="supplierName">名称：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" class="form-control " propName="提供商名称" id="supplierName" data-toggle="tooltip" data-placement="top"  v-model="supplierName" placeholder="请输入供应商名称...">
         </div>
-        <div class="content-line customTitle">
-            <div class="item-left content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="address">地址：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4" >
-                    <input type="text" class="form-control" v-model="address" id="address" propName="提供商地址" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAddressError" placeholder="请输入供应商地址...">
-                </div>
-            <!-- </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="contactPerson">联系人：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                    <input type="text" v-model="contact" class="form-control" id="contactPerson" propName="提供商联系人" data-toggle="tooltip" data-placement="top" :title="errorType.supplierContactNameError" placeholder="请输入供应商联系人...">
-                </div>
-           <!--  </div>
+        <!-- </div>
+        <div class="item-right content-item">
+            <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="adtitude" class="">资质：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" id="adtitude" propName="提供商资质" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAdtitudeError" v-model="adtitude" placeholder="请输入供应商资质...">
         </div>
-        <div class="content-line customTitle">
-            <div class="item-left content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="tel">联系电话：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4" >
-                    <input type="number" checked class="form-control" v-model="tel" id="tel" propName="提供商联系电话" data-toggle="tooltip" data-placement="top" :title="errorType.supplierTelError" placeholder="请输入供应商联系电话...">
-                </div>
-            <!-- </div>
-            <div class="item-right content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="business">主营业务：</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4">
-                    <input type="text" class="form-control" v-model="business" id="business" propName="提供商主营业务" data-toggle="tooltip" data-placement="top" :title="errorType.supplierBusinessError" placeholder="请输入供应商主营业务...">
-                </div>
-           <!--  </div>
+        <!-- </div>
+    </div>
+    <div class="content-line customTitle">
+        <div class="item-left content-item">
+            <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="address">地址：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4" >
+            <input type="text" class="form-control" v-model="address" id="address" propName="提供商地址" data-toggle="tooltip" data-placement="top" :title="errorType.supplierAddressError" placeholder="请输入供应商地址...">
         </div>
-        <div class="content-line">
-            <div class="item-left content-item">
-                <div class="item-left item-name"> -->
-                    <label class="control-label col-md-1 col-sm-2 col-xs-2" for="tel">签约时间:</label>
-                <!-- </div> -->
-                <div class="form-group col-md-3 col-sm-4 col-xs-4" >
-                    <input class="form-control" propName="提供商签约时间" id="calender" name="contractTime" placeholder="签约时间" type="text">
-                </div>
-            <!-- </div> -->
+        <!-- </div>
+        <div class="item-right content-item">
+            <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="contactPerson">联系人：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" v-model="contact" class="form-control" id="contactPerson" propName="提供商联系人" data-toggle="tooltip" data-placement="top" :title="errorType.supplierContactNameError" placeholder="请输入供应商联系人...">
         </div>
-        <div class="title">供应商自定义信息添加</div>
-        <hr class="hr">
-        <input type="hidden" name="customKey">
-        <input type="hidden" name="customValue">
-        <div class="form-group form-inline row" v-for="(item,index) in customFields">
-            <div class="col-md-2 col-sm-2 col-xs-2"></div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <input type="text" class="form-control" style="width: 100%;" v-model="customFields[index].key" placeholder="自定义属性">
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <input type="text" class="form-control" style="width: 100%;" v-model="customFields[index].value" placeholder="属性值">
-            </div>
-            <div class="col-md-2 col-sm-2 col-xs-2">
-                <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
-                <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
-            </div>
+        <!--  </div>
+     </div>
+     <div class="content-line customTitle">
+         <div class="item-left content-item">
+             <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="tel">联系电话：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4" >
+            <input type="number" checked class="form-control" v-model="tel" id="tel" propName="提供商联系电话" data-toggle="tooltip" data-placement="top" :title="errorType.supplierTelError" placeholder="请输入供应商联系电话...">
         </div>
-        <div class="col-sm-12 col-xs-12" style="text-align: center;margin-top: 50px;">
-            <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
-            <a href="downloadSuccessFile" class="btn btn-success" v-if="hasSuccessFile">下载插入成功供应商列表</a>
+        <!-- </div>
+        <div class="item-right content-item">
+            <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="business">主营业务：</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" v-model="business" id="business" propName="提供商主营业务" data-toggle="tooltip" data-placement="top" :title="errorType.supplierBusinessError" placeholder="请输入供应商主营业务...">
         </div>
-        <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
+        <!--  </div>
+     </div>
+     <div class="content-line">
+         <div class="item-left content-item">
+             <div class="item-left item-name"> -->
+        <label class="control-label col-md-1 col-sm-2 col-xs-2" for="tel">签约时间:</label>
+        <!-- </div> -->
+        <div class="form-group col-md-3 col-sm-4 col-xs-4" >
+            <input class="form-control" propName="提供商签约时间" id="calender" name="contractTime" placeholder="签约时间" type="text">
+        </div>
+        <!-- </div> -->
+    </div>
+    <div class="title">供应商自定义信息添加</div>
+    <hr class="hr">
+    <input type="hidden" name="customKey">
+    <input type="hidden" name="customValue">
+    <div class="form-group form-inline row" v-for="(item,index) in customFields">
+        <div class="col-md-2 col-sm-2 col-xs-2"></div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" style="width: 100%;" v-model="customFields[index].key" placeholder="自定义属性">
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-4">
+            <input type="text" class="form-control" style="width: 100%;" v-model="customFields[index].value" placeholder="属性值">
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+            <span class="btn btn-sm btn-danger glyphicon glyphicon-minus" @click="delField(index)"></span>
+            <span class="btn btn-sm btn-primary glyphicon glyphicon-plus" v-if="index==(customFields.length-1)" @click="addField(index,customFields[index])"></span>
+        </div>
+    </div>
+    <div class="col-sm-12 col-xs-12" style="text-align: center;margin-top: 50px;">
+        <input type="button" data-loading-text="提交中..." id="submitBtn" class="btn btn-primary btn-submit" @click="submitData()" value="提交">
+        <a href="downloadSuccessFile" class="btn btn-success" v-if="hasSuccessFile">下载插入成功供应商列表</a>
+    </div>
+    <button id="modalButton" type="button" hidden data-toggle="modal" data-target="#myModal"></button>
 
-        <div class="modal fade" id="pibudialog" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">批量导入</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form name="fileUpload">
-                            <input type="file" id="fileSource" hidden style="display: none">
-                        </form>
-                        <div class="input-group">
-                            <input type="text" class="form-control file-up-in" id="fileSource-show" readonly placeholder="请选择文件..." @click="choseFile()">
-                            <span class="input-group-btn">
+    <div class="modal fade" id="pibudialog" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">批量导入</h4>
+                </div>
+                <div class="modal-body">
+                    <form name="fileUpload">
+                        <input type="file" id="fileSource" hidden style="display: none">
+                    </form>
+                    <div class="input-group">
+                        <input type="text" class="form-control file-up-in" id="fileSource-show" readonly placeholder="请选择文件..." @click="choseFile()">
+                        <span class="input-group-btn">
                                 <button class="btn btn-primary" type="button" @click="uploadFileAction()">上传并导入</button>
                         </span>
-                        </div>
                     </div>
-                    <div class="modal-footer" >
-                        <a href="downloadErrorFile" class="btn btn-warning" v-if="hasErrorFile">下载未导入供应商信息</a>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+                </div>
+                <div class="modal-footer" >
+                    <a href="downloadErrorFile" class="btn btn-warning" v-if="hasErrorFile">下载未导入供应商信息</a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">提示</h4>
-                    </div>
-                    <div class="modal-body">
-                        {{modalStatus}}
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">提示</h4>
+                </div>
+                <div class="modal-body">
+                    {{modalStatus}}
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script>
     var data = {
@@ -293,10 +304,10 @@
             if(inputObj[i].value==""){
                 vm.isError[i]=true;
                 flag = true;
-               var propName = inputObj[i].getAttribute('propName');
-               var id = inputObj[i].getAttribute('id');
-               $(inputObj[i]).parent().addClass('has-error');
-               var errorMessage = propName+"不能有特殊字符也不能为空！";
+                var propName = inputObj[i].getAttribute('propName');
+                var id = inputObj[i].getAttribute('id');
+                $(inputObj[i]).parent().addClass('has-error');
+                var errorMessage = propName+"不能有特殊字符也不能为空！";
                 $('#'+id).tooltip({
                     title:errorMessage
                 });
@@ -347,7 +358,7 @@
         form_data.append("eqXsl", file_data);
         $.ajax({
             type: "POST",
-            url: "upload?time="+new Date().getTime(),
+            url: "upload",
             processData: false,  // 注意：让jQuery不要处理数据
             contentType: false,  // 注意：让jQuery不要设置contentType
             data: form_data,

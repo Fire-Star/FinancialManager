@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +68,10 @@
     </div>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">供应商信息</p></strong>
+                <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
+                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -82,19 +93,34 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
+<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/supplier/supplierdetail.html
+                        </div>
+                        <div class="row custom">
+                            <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="(value,key) in custom">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-4" :title="key">{{key + "："}}</label>
+                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" class="form-control" v-model="custom[key]" readonly="enable">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+=======
                             <div class="col-md-1 col-sm-2 col-xs-2"></div>
                             <div class="col-md-2 col-sm-4 col-xs-4">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                                 <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                                </security:authorize>
                             </div>
-                    </div>
+                        </div>
+>>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/supplier/supplierdetail.jsp
                 </form>
             </div>
         </div>
     </div>
     <div style="height: 3%">
         <p>
-            <h4>设备采购记录</h4>
+        <h4>设备采购记录</h4>
         </p>
     </div>
     <div id="toolbar" class="btn-group">
@@ -116,46 +142,52 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myModalLabel">供应商信息修改</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 385px;overflow-y: auto;">
                     <form id="formSubmit" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;">供应商ID：</label>
-                            <div class="col-sm-4">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">供应商ID：</label>
+                            <div class="col-sm-7 col-xs-7">
                                 <input type="text" id="submitSupId" class="form-control form-control-x" name="phone"
                                        value="" disabled="true">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="submitSupName">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="submitSupName">
                                 供应商：</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="供应商" id="submitSupName"
                                        name="entryTime" placeholder="供应商..." type="text" v-model="supName">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;"
+                            <label class="control-label item-left col-sm-4 col-xs-4 con"
                                    for="supSubmitCont">联系人：
                             </label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="联系人" id="supSubmitCont"
                                        name="entryTime" placeholder="联系人..." type="text" v-model="supCont">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="supSubmitTel">电话：
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="supSubmitTel">电话：
                             </label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="电话" id="supSubmitTel"
                                        name="entryTime" placeholder="电话..." type="text" v-model="supTel">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-6 con" style="padding-left: 20px;" for="supSubmitDate">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="supSubmitDate">
                                 签约时间：</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="签约时间" id="supSubmitDate"
                                        name="entryTime" placeholder="选择签约时间..." type="text" v-model="supDate">
+                            </div>
+                        </div>
+                        <div class="form-group row" v-for="(value,key) in custom">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">{{key + "："}}</label>
+                            <div class="col-sm-7 col-xs-7">
+                                <input class="form-control form-control-x" v-model="custom[key]" type="text">  
                             </div>
                         </div>
                     </form>
@@ -174,7 +206,8 @@
         supName:"",
         supCont:"",
         supTel:"",
-        supDate:""
+        supDate:"",
+        custom:{}
     };
     var vm = new Vue({
         el:'.app',
@@ -291,6 +324,11 @@
         vm.supTel = preSupTel;
         vm.supDate = preSupDate;
     }
+    $('#supSubmitDate').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
     $(document).ready(function(){
         var suppId = $.getUrlParam('suppId');
         var param = {"suppId":suppId};
@@ -301,6 +339,10 @@
             timeout: 1000,
             data:param,
             success: function (data, status) {
+                debugger
+                if(data.customMessage !== ''){
+                    vm.custom = Object.assign({},vm.custom,JSON.parse(data.customMessage));
+                }
                 $('#suppliername').val(data.name);
                 $('#suppliercontactname').val(data.contactName);
                 $('#contacttel').val(data.tel);
@@ -326,7 +368,7 @@
     })(jQuery);
     function checkToEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-       // alert(equipId);
+        // alert(equipId);
     }
     function submitEditSup() {
         var supIdValue = $('#submitSupId').val();
@@ -334,6 +376,14 @@
         var supContValue = vm.supCont;
         var suptelValue = vm.supTel;
         var supDateValue = vm.supDate;
+        var customMessage = "";
+        for(var key in vm.custom){
+            if(vm.custom[key] == ""){
+                alert("编辑设备信息时，字段不能为空！！");
+                return;
+            }
+            customMessage += key+"="+vm.custom[key]+";";
+        }
         if(supIdValue==""||supNameValue==""||supContValue==""||suptelValue==""||supDateValue==""){
             alert("编辑设备信息时，字段不能为空！！");
         }else {
@@ -343,7 +393,8 @@
                     supName : supNameValue,
                     supCont : supContValue,
                     supTel : suptelValue,
-                    supDate : supDateValue
+                    supDate : supDateValue,
+                    customMessage : customMessage
                 },
                 function(data,status) {
                     var _data = data;

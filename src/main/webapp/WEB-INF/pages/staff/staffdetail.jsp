@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:54
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,8 +68,10 @@
     </div>
     <div class="panel-body" style="padding-bottom:0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">
+            <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">员工信息</p></strong>
+                <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
+                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -82,16 +93,32 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="tel" placeholder="联系电话..." readonly="enable">
                             </div>
-                        <!-- </div>
-                        <div class="row"> -->
+<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/staff/staffdetail.html
+=======
+                            <!-- </div>
+                            <div class="row"> -->
+>>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/staff/staffdetail.jsp
                             <label class="control-label col-md-1 col-sm-2 col-xs-2" for="entrytime">入职时间:</label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="entrytime" placeholder="入职时间..." readonly="enable">
                             </div>
+<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/staff/staffdetail.html
+                        </div>
+                        <div class="row custom">
+                            <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="(value,key) in custom">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-4" :title="key">{{key + "："}}</label>
+                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                    <input type="text" class="form-control" v-model="custom[key]" readonly="enable">
+                                </div>
+=======
                             <div class="col-md-1 col-sm-2 col-xs-2"></div>
+
                             <div class="col-md-2 col-sm-4 col-xs-4">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                                 <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                                </security:authorize>
+>>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/staff/staffdetail.jsp
                             </div>
                         </div>
                     </div>
@@ -100,9 +127,9 @@
         </div>
     </div>
     <div id="toolbar" class="btn-group">
-            <div class="col-sm-12">
-                <p><h4>设备借调记录</h4></p>
-            </div>
+        <div class="col-sm-12">
+            <p><h4>设备借调记录</h4></p>
+        </div>
     </div>
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_staff_eq"></table>
@@ -115,38 +142,38 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <h4 class="modal-title" id="myModalLabel">员工信息修改</h4>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height: 385px;overflow-y: auto;">
                     <form id="formSubmit" class="form-horizontal">
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 col-xs-4 con">员工ID：</label>
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">员工ID：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input type="text" id="staffSubmitId" class="form-control" name="phone" value=""
-                                   disabled="true">
+                                       disabled="true">
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 col-xs-4 con">归属部门：</label>
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">归属部门：</label>
                             <div class="col-sm-7 col-xs-7" >
                                 <!-- <div class="form-group form-inline from-line item-right" role="group"> -->
-                                    <div class="btn-group" style="width: 100%;margin: 0;">
-                                        <select style="width: 50%" class="btn btn-default form-control select-left" id="staffSubmitCity"
-                                                data-toggle="tooltip" data-placement="top" v-model="city" @change="loadBelongDep">
-                                            <option selected value="" id="d">-城市-</option>
-                                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                                        </select>
-                                        <select style="width: 50%" class="btn btn-default form-control select-right"
-                                                id="staffSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
-                                                data-placement="top" >
-                                            <option selected value="" id="dsf">--部门--</option>
-                                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
-                                        </select>
-                                    </div>
+                                <div class="btn-group" style="width: 100%;margin: 0;">
+                                    <select style="width: 50%" class="btn btn-default form-control select-left" id="staffSubmitCity"
+                                            data-toggle="tooltip" data-placement="top" v-model="city" @change="loadBelongDep">
+                                        <option selected value="" id="d">-城市-</option>
+                                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                    </select>
+                                    <select style="width: 50%" class="btn btn-default form-control select-right"
+                                            id="staffSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
+                                            data-placement="top" >
+                                        <option selected value="" id="dsf">--部门--</option>
+                                        <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                                    </select>
+                                </div>
                                 <!-- </div> -->
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 col-xs-4 con" for="staffSubmitPosition">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="staffSubmitPosition">
                                 岗位：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="岗位" id="staffSubmitPosition"
@@ -154,17 +181,23 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 col-xs-4 con" for="staffSubmitTel">电话：</label>
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="staffSubmitTel">电话：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="电话" id="staffSubmitTel"
                                        name="entryTime" placeholder="电话..." type="text" v-model="preTel">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="item-left col-sm-4 col-xs-4 con" for="staffSubmitDate">签约时间：</label>
+                            <label class="control-label item-left col-sm-4 col-xs-4 con" for="staffSubmitDate">签约时间：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input class="form-control form-control-x" propName="签约时间" id="staffSubmitDate"
                                        name="entryTime" placeholder="选择签约时间..." type="text" v-model="preDate">
+                            </div>
+                        </div>
+                        <div class="form-group row" v-for="(value,key) in custom">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">{{key + "："}}</label>
+                            <div class="col-sm-7 col-xs-7">
+                                <input class="form-control form-control-x" v-model="custom[key]" type="text">
                             </div>
                         </div>
                     </form>
@@ -186,7 +219,8 @@
         beDepValue:"",
         prePosition:"",
         preTel:"",
-        preDate:""
+        preDate:"",
+        custom:{}
     };
     var vm = new Vue({
         el:'.app',
@@ -299,16 +333,20 @@
     };
     function preLoadBelongDep() {
         $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
-        console.log(data);
-        if (status == "success") {
-            var _departmentData = eval(data);
-            console.log(_departmentData);
-            vm.belongDepartment = _departmentData;
-        }
-    });
-    // $('#depIDOp').attr('selected', true);
+            console.log(data);
+            if (status == "success") {
+                var _departmentData = eval(data);
+                console.log(_departmentData);
+                vm.belongDepartment = _departmentData;
+            }
+        });
+        // $('#depIDOp').attr('selected', true);
     };
-
+    $('#staffSubmitDate').datepicker({
+        language: 'zh-CN',
+        autoclose: true,
+        todayHighlight: true
+    });
     $(document).ready(function(){
         //alert("员工详情界面数据预加载");
         var staffId = $.getUrlParam('staffId');
@@ -320,6 +358,9 @@
             timeout: 1000,
             data:param,
             success: function (data, status) {
+                if(data.customMessages !== ''){
+                    vm.custom = Object.assign({},vm.custom,JSON.parse(data.customMessages));
+                }
                 $('#name').val(data.name);
                 $('#department').val(data.dep);
                 $('#position').val(data.position);

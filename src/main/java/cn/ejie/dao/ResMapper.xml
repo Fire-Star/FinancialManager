@@ -6,4 +6,13 @@
     <select id="findAllRes" resultType="cn.ejie.po.Res">
         SELECT * FROM `res`
     </select>
+    <insert id="addRes">
+        <selectKey keyProperty="res_id" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+        INSERT INTO `res` VALUES(#{res_id},#{res_url},#{res_description})
+    </insert>
+    <select id="findResByResName" resultType="String">
+        SELECT res_id FROM `res` WHERE res_url = #{resUrl}
+    </select>
 </mapper>

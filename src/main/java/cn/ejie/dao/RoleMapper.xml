@@ -6,4 +6,13 @@
     <select id="findAllRoles" resultType="cn.ejie.po.Role">
         SELECT * FROM `role`
     </select>
+    <insert id="addRole">
+        <selectKey keyProperty="rid" order="BEFORE" resultType="java.lang.String">
+            SELECT uuid()
+        </selectKey>
+      INSERT INTO `role` VALUES(#{rid},#{rname},#{rdescription})
+    </insert>
+    <select id="findRoleIDByRname" resultType="String">
+        SELECT rid FROM `role` WHERE rname = #{rname}
+    </select>
 </mapper>

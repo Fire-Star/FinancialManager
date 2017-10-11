@@ -27,7 +27,9 @@
                     </div>
                     <ul>
                         <li class="level2 select" onclick=changeIframe("equipment/query")>设备查询</li>
+                        <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                         <li class="level2" onclick=changeIframe("../equipment/addPage")>新增设备信息</li>
+                        </security:authorize>
                         <li class="level2" onclick=changeIframe("equipment/statis")>设备统计</li>
                     </ul>
                 </li>
@@ -37,7 +39,9 @@
                     </div>
                     <ul style="display: none;">
                         <li class="level2" onclick=changeIframe("staff/query")>员工查询</li>
+                        <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                         <li class="level2" onclick=changeIframe("../staff/addPage")>新增员工信息</li>
+                        </security:authorize>
                     </ul>
                 </li>
                 <li class="level1">
@@ -46,7 +50,9 @@
                     </div>
                     <ul style="display: none;">
                         <li class="level2" onclick=changeIframe("supplier/query")>供应商查询</li>
+                        <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                         <li class="level2" onclick=changeIframe("../supplier/addPage")>新增供应商信息</li>
+                        </security:authorize>
                     </ul>
                 </li>
                 <security:authorize access="hasAnyRole('ROLE_ADMIN')">
@@ -80,7 +86,6 @@
                 <div class="person-info" style="display: none;">
                     <div class="person-line">
                         <p class="name userName"></p>
-                        <p class="department">易捷金融成都渠道一部</p>
                     </div>
                     <!-- <div class="person-line change-pwd">
                         <span class="change-pwd-icon"></span>

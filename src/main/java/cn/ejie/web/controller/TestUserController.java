@@ -92,7 +92,7 @@ public class TestUserController {
     }
 
     @RequestMapping("/test/showAllRes")
-    public void showAllRes(HttpServletResponse response){
+    public void showAllRes(HttpServletResponse response) throws Exception {
         //设置响应的编码以及响应内容编码。
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
