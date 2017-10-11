@@ -262,11 +262,7 @@
                         <div class="form-group row" v-for="(value,key) in custom">
                             <label class="control-label item-left col-sm-4 col-xs-4 con">{{key + "："}}</label>
                             <div class="col-sm-7 col-xs-7">
-<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/equipment/equipdetail.html
                                 <input class="form-control form-control-x" v-model="custom[key]" type="text">  
-=======
-                                <input class="form-control form-control-x" :value="item.value" type="text">
->>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/equipment/equipdetail.jsp
                             </div>
                         </div>
                     </form>

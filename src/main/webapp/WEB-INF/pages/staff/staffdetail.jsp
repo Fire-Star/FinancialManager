@@ -70,8 +70,10 @@
         <div class="panel panel-default">
             <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">员工信息</p></strong>
+                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                 <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                </security:authorize>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -93,16 +95,10 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="tel" placeholder="联系电话..." readonly="enable">
                             </div>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/staff/staffdetail.html
-=======
-                            <!-- </div>
-                            <div class="row"> -->
->>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/staff/staffdetail.jsp
                             <label class="control-label col-md-1 col-sm-2 col-xs-2" for="entrytime">入职时间:</label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="entrytime" placeholder="入职时间..." readonly="enable">
                             </div>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/staff/staffdetail.html
                         </div>
                         <div class="row custom">
                             <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="(value,key) in custom">
@@ -110,15 +106,6 @@
                                 <div class="col-md-8 col-sm-8 col-xs-8">
                                     <input type="text" class="form-control" v-model="custom[key]" readonly="enable">
                                 </div>
-=======
-                            <div class="col-md-1 col-sm-2 col-xs-2"></div>
-
-                            <div class="col-md-2 col-sm-4 col-xs-4">
-                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
-                                <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
-                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
-                                </security:authorize>
->>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/staff/staffdetail.jsp
                             </div>
                         </div>
                     </div>

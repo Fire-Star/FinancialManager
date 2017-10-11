@@ -70,8 +70,10 @@
         <div class="panel panel-default">
             <div class="panel-heading" style="position: relative;">
                 <strong><p class="lead">供应商信息</p></strong>
+                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                 <button type="button" style="width: 160px;position: absolute;top: 8px;right: 20px;" id="btn_clear" class="btn btn-primary"
                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                </security:authorize>
             </div>
             <div class="panel-body">
                 <form id="formSearch" class="form-horizontal">
@@ -93,7 +95,6 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="time" placeholder="签约时间..." readonly="enable">
                             </div>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/pages/supplier/supplierdetail.html
                         </div>
                         <div class="row custom">
                             <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="(value,key) in custom">
@@ -104,16 +105,6 @@
                             </div>
                         </div>
                     </div>
-=======
-                            <div class="col-md-1 col-sm-2 col-xs-2"></div>
-                            <div class="col-md-2 col-sm-4 col-xs-4">
-                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
-                                <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
-                                        data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
-                                </security:authorize>
-                            </div>
-                        </div>
->>>>>>> b0054700ccc6167a281f642243e0c20b16f68434:src/main/webapp/WEB-INF/pages/supplier/supplierdetail.jsp
                 </form>
             </div>
         </div>
