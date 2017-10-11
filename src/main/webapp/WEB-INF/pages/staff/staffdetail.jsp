@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:54
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,16 +91,19 @@
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="tel" placeholder="联系电话..." readonly="enable">
                             </div>
-                        <!-- </div>
-                        <div class="row"> -->
+                            <!-- </div>
+                            <div class="row"> -->
                             <label class="control-label col-md-1 col-sm-2 col-xs-2" for="entrytime">入职时间:</label>
                             <div class="col-md-2 col-sm-4 col-xs-4">
                                 <input type="text" class="form-control" id="entrytime" placeholder="入职时间..." readonly="enable">
                             </div>
                             <div class="col-md-1 col-sm-2 col-xs-2"></div>
+
                             <div class="col-md-2 col-sm-4 col-xs-4">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                                 <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                                </security:authorize>
                             </div>
                         </div>
                     </div>
@@ -100,9 +112,9 @@
         </div>
     </div>
     <div id="toolbar" class="btn-group">
-            <div class="col-sm-12">
-                <p><h4>设备借调记录</h4></p>
-            </div>
+        <div class="col-sm-12">
+            <p><h4>设备借调记录</h4></p>
+        </div>
     </div>
     <div class="tablecontent">
         <table class="bootstrap-table fixed-table-container" id="tb_staff_eq"></table>
@@ -121,27 +133,27 @@
                             <label class="item-left col-sm-4 col-xs-4 con">员工ID：</label>
                             <div class="col-sm-7 col-xs-7">
                                 <input type="text" id="staffSubmitId" class="form-control" name="phone" value=""
-                                   disabled="true">
+                                       disabled="true">
                             </div>
-                            
+
                         </div>
                         <div class="form-group row">
                             <label class="item-left col-sm-4 col-xs-4 con">归属部门：</label>
                             <div class="col-sm-7 col-xs-7" >
                                 <!-- <div class="form-group form-inline from-line item-right" role="group"> -->
-                                    <div class="btn-group" style="width: 100%;margin: 0;">
-                                        <select style="width: 50%" class="btn btn-default form-control select-left" id="staffSubmitCity"
-                                                data-toggle="tooltip" data-placement="top" v-model="city" @change="loadBelongDep">
-                                            <option selected value="" id="d">-城市-</option>
-                                            <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
-                                        </select>
-                                        <select style="width: 50%" class="btn btn-default form-control select-right"
-                                                id="staffSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
-                                                data-placement="top" >
-                                            <option selected value="" id="dsf">--部门--</option>
-                                            <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
-                                        </select>
-                                    </div>
+                                <div class="btn-group" style="width: 100%;margin: 0;">
+                                    <select style="width: 50%" class="btn btn-default form-control select-left" id="staffSubmitCity"
+                                            data-toggle="tooltip" data-placement="top" v-model="city" @change="loadBelongDep">
+                                        <option selected value="" id="d">-城市-</option>
+                                        <option v-for="(item , index) in citys" :value="item.city">{{item.city}}</option>
+                                    </select>
+                                    <select style="width: 50%" class="btn btn-default form-control select-right"
+                                            id="staffSubmitBelongDepart" data-toggle="tooltip" v-model="beDepValue"
+                                            data-placement="top" >
+                                        <option selected value="" id="dsf">--部门--</option>
+                                        <option v-for="(item , index) in belongDepartment" :value="item.department">{{item.department}}</option>
+                                    </select>
+                                </div>
                                 <!-- </div> -->
                             </div>
                         </div>
@@ -299,14 +311,14 @@
     };
     function preLoadBelongDep() {
         $.get("../../department/findDepartment?city=" + vm.city, function (data, status) {
-        console.log(data);
-        if (status == "success") {
-            var _departmentData = eval(data);
-            console.log(_departmentData);
-            vm.belongDepartment = _departmentData;
-        }
-    });
-    // $('#depIDOp').attr('selected', true);
+            console.log(data);
+            if (status == "success") {
+                var _departmentData = eval(data);
+                console.log(_departmentData);
+                vm.belongDepartment = _departmentData;
+            }
+        });
+        // $('#depIDOp').attr('selected', true);
     };
 
     $(document).ready(function(){

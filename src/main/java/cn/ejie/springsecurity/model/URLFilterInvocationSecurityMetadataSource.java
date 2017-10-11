@@ -51,7 +51,7 @@ public class URLFilterInvocationSecurityMetadataSource implements FilterInvocati
      * 该方法目的是查询数据库里面的 String(代表URL),和该 URL 所需要的权限 Collection<ConfigAttribute>
      * @return
      */
-    private Map<String,Collection<ConfigAttribute>> loadAllResource(){
+    private Map<String,Collection<ConfigAttribute>> loadAllResource() throws Exception {
         //声明一个缓存容器，缓存所有关于资源和权限的信息。
         Map<String , Collection<ConfigAttribute>> result = new HashMap<>();
 

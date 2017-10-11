@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: MoonFollow
+  Date: 2017/10/11
+  Time: 14:56
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,17 +93,19 @@
                             </div>
                             <div class="col-md-1 col-sm-2 col-xs-2"></div>
                             <div class="col-md-2 col-sm-4 col-xs-4">
+                                <security:authorize access="hasAnyRole('ROLE_ADMIN,ROLE_USER')">
                                 <button type="button" style="width: 100%" id="btn_clear" class="btn btn-primary"
                                         data-toggle="modal" data-target="#myModal" onclick = "editData()">编辑</button>
+                                </security:authorize>
                             </div>
-                    </div>
+                        </div>
                 </form>
             </div>
         </div>
     </div>
     <div style="height: 3%">
         <p>
-            <h4>设备采购记录</h4>
+        <h4>设备采购记录</h4>
         </p>
     </div>
     <div id="toolbar" class="btn-group">
@@ -326,7 +337,7 @@
     })(jQuery);
     function checkToEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
-       // alert(equipId);
+        // alert(equipId);
     }
     function submitEditSup() {
         var supIdValue = $('#submitSupId').val();

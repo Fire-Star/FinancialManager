@@ -271,7 +271,7 @@ public class EquipmentController {
      */
     @RequestMapping("/user/equip/detail")
     public String findEquipDetailById(){
-        return "/WEB-INF/pages/equipment/equipdetail.html";
+        return "/WEB-INF/pages/equipment/equipdetail.jsp";
     }
 
     @RequestMapping("/equipment/addPage")
