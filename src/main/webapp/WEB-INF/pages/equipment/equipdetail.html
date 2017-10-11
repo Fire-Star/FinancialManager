@@ -17,6 +17,7 @@
 
     <!-- 引入Vue.js -->
     <script src="../../res/js/vue.min.js"></script>
+    <script src="../../res/js/loadash.js"></script>
     <style>
         body,html{
             height: 100%;
@@ -121,10 +122,10 @@
                             </div>
                         </div>
                         <div class="row custom">
-                            <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="item in custom">
-                                <label class="control-label col-md-4 col-sm-4 col-xs-4" :title="item.key">{{item.key + "："}}</label>
+                            <div class="col-md-3 col-sm-6 col-xs-6" style="padding: 0;" v-for="(value,key) in custom">
+                                <label class="control-label col-md-4 col-sm-4 col-xs-4" :title="key">{{key + "："}}</label>
                                 <div class="col-md-8 col-sm-8 col-xs-8">
-                                    <input type="text" class="form-control" :value="item.value">
+                                    <input type="text" class="form-control" v-model="custom[key]" readonly="enable">
                                 </div>
                             </div>
                         </div>
@@ -243,10 +244,10 @@
                                 <input class="form-control form-control-x" propName="采购时间" id="eqSubmitDate" name="entryTime" placeholder="选择采购时间..." type="text">  
                             </div>
                         </div>
-                        <div class="form-group row" v-for="item in custom">
-                            <label class="control-label item-left col-sm-4 col-xs-4 con">{{item.key + "："}}</label>
+                        <div class="form-group row" v-for="(value,key) in custom">
+                            <label class="control-label item-left col-sm-4 col-xs-4 con">{{key + "："}}</label>
                             <div class="col-sm-7 col-xs-7">
-                                <input class="form-control form-control-x" :value="item.value" type="text">  
+                                <input class="form-control form-control-x" v-model="custom[key]" type="text">  
                             </div>
                         </div>
                     </form>
@@ -445,7 +446,7 @@
         eqBorNoDetailValue:"",
         //
         eqBorUnDetailValue:"",
-        custom:[]
+        custom:{}
     };
     var vm = new Vue({
         el:'.app',
@@ -669,6 +670,10 @@
             timeout: 1000,
             data:param,
             success: function (data, status) {
+                if(data.customMessage !== ''){
+                    vm.custom = Object.assign({},vm.custom,JSON.parse(data.customMessage));
+                }
+                
                 $('#eqID').val(data.eqOtherId);
                 $('#eqType').val(data.eqType);
                 $('#eqName').val(data.eqName);
@@ -814,6 +819,15 @@
     function submitEditEq() {
         var eqId = $('#eqSubmitId').val();
         var time = $('#eqSubmitDate').val();
+        var customMessage = "";
+        for(var key in vm.custom){
+            if(vm.custom[key] == ""){
+                alert("编辑设备信息时，字段不能为空！！");
+                return;
+            }
+            customMessage += key+"="+vm.custom[key]+";";
+        }
+        console.log(customMessage,'++++++++++++++++')
         if(vm.eqTypeValue==""||vm.eqNameValue==""||vm.supplier==""||vm.city==""||vm.beDepValue==""||vm.eqState==""||time==""){
             alert("编辑设备信息时，字段不能为空！！");
         }else {
@@ -826,7 +840,8 @@
                     belongDepart : vm.beDepValue,
                     eqState : vm.eqState,
                     time : time,
-                    userCity  : vm.city
+                    userCity  : vm.city,
+                    customMessage: customMessage
                 },
                 function(data,status) {
                     var _data = data;

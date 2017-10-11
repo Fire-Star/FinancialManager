@@ -323,19 +323,23 @@ public class EquipmentController {
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
         }
         String customMessage = "";
-        List<Object> messageObject = new ArrayList<Object>();
+        String messageObject = "";
+        System.out.println("custom:"+equipmentCustom.getCustomMessage());
         if(!"".equals(equipmentCustom.getCustomMessage())&&equipmentCustom.getCustomMessage()!=null){
+            System.out.println("自定义信息!!!!!!!");
             customMessage = equipmentCustom.getCustomMessage();
             String[] message = customMessage.split(";");
+            String bufferMessage = "";
             for (int i = 0; i < message.length; i++) {
-                Map map = new HashMap();
                 String[] detail = message[i].split("=");
-                map.put(detail[0],detail[1]);
-                messageObject.add(map);
+                bufferMessage = bufferMessage + detail[0] + ":'" + detail[1] + "',";
             }
-            JSONArray jsonMessage = new JSONArray();
-            jsonMessage = JSONArray.fromObject(messageObject);
+            System.out.print(bufferMessage + "--------------------------------");
+            messageObject = "{" + bufferMessage.substring(0,bufferMessage.length()-1) + "}";
+            JSONObject jsonMessage = new JSONObject();
+            jsonMessage = JSONObject.fromObject(messageObject);
             equipmentCustom.setCustomMessage(jsonMessage.toString());
+
             System.out.println("自定义信息："+jsonMessage.toString());
         }
         JSONObject jsonObject = new JSONObject();

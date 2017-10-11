@@ -507,7 +507,8 @@
                     $('#modalButton').click();
                 }
                 refreshSuccessFileEqInsert();
-            },error:function(){//请求失败方法
+            },
+            error:function(){//请求失败方法
                 alert("系统繁忙,请稍后再试！");
             }
         });
