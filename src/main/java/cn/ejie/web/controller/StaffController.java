@@ -319,4 +319,63 @@ public class StaffController {
 
         return DownloadUtils.getResponseEntity(fileName,file);
     }
+
+    @RequestMapping("/user/staffDetail/editStaffDetail")
+    public void updateStaffDetail(HttpServletRequest request,HttpServletResponse response){
+        System.out.println("用户详情界面，用户信息编辑......");
+        String staffID = "";
+        String city = "";
+        String depart = "";
+        String position = "";
+        String tel = "";
+        String date = "";
+        if( null != request.getParameter("staffID")){
+            staffID = request.getParameter("staffID");
+        }
+        if(null != request.getParameter("city")){
+            city = request.getParameter("city");
+        }
+        if(null != request.getParameter("depart")){
+            depart = request.getParameter("depart");
+        }
+        if(null != request.getParameter("position")){
+            position = request.getParameter("position");
+        }
+        if(null != request.getParameter("tel")){
+            tel = request.getParameter("tel");
+        }
+        if(request.getParameter("date").contains("年")){
+            date = StringUtils.zhDateStrToENDateStr(request.getParameter("date"));
+        }else{
+            date = request.getParameter("date");
+        }
+        if(!"".equals(city)){
+            try{
+                depart = departmentService.findDepartIDByCityStrAndDepartStr(city,depart);
+                city = cityService.findCityIDByCity(city);
+            }catch (Exception e){
+                e.printStackTrace();
+                String message = "数据库发生错误，修改信息失败！";
+                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+                return;
+            }
+        }
+        StaffCustom staffCustom = new StaffCustom();
+        try {
+            staffCustom = staffService.findStaffById(staffID);
+            staffCustom.setCity(city);
+            staffCustom.setDep(depart);
+            staffCustom.setPosition(position);
+            staffCustom.setTel(tel);
+            staffCustom.setEntryTime(date);
+            staffService.updateStaff(staffCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+            String message = "数据库发生错误，修改信息失败！";
+            SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
+            return;
+        }
+        System.out.println(JSONObject.fromObject(staffCustom).toString());
+        SimpleException.sendSuccessMessage(response,objectMapper);
+    }
 }

@@ -191,7 +191,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">提交</button>
+                    <button type="button" class="btn btn-primary" @click="submitEditStaff()">提交</button>
                 </div>
             </div>
         </div>
@@ -384,5 +384,35 @@
             if (r != null) return decodeURI(r[2]); return null;
         }
     })(jQuery);
+    function submitEditStaff() {
+        var staffID = $('#staffSubmitId').val();
+        var date = $('#staffSubmitDate').val();
+        if(vm.city==""||vm.beDepValue==null||vm.prePosition==""||vm.preTel==""||date==""){
+            alert("编辑设备信息时，字段不能为空！！");
+        }else {
+            $.post("../staffDetail/editStaffDetail",
+                {
+                    staffID : staffID,
+                    city : vm.city,
+                    depart : vm.beDepValue,
+                    position : vm.prePosition,
+                    tel : vm.preTel,
+                    date : date
+                },
+                function(data,status) {
+                    var _data = data;
+                    checkDetailStaffDetail(staffID);
+                    if(eval(_data)){
+                        alert(eval(_data).success);
+                    }else{
+                        alert(_data);
+                    }
+                });
+        }
+        $("#myModal").modal('hide');
+    }
+    function checkDetailStaffDetail(staffID) {
+        window.parent.document.getElementById('iframeContent').src="staff/detail?staffId="+staffID;
+    }
 </script>
 </html>

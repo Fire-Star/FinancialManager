@@ -429,4 +429,12 @@ public class StaffService {
         wb.close();
         return allStaff;
     }
+
+    public void updateStaff(StaffCustom staffCustom) throws Exception{
+        try {
+            staffMapper.updateByPrimaryKey(staffCustom);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
