@@ -126,7 +126,7 @@ public class UserController {
     }
 
     @RequestMapping("/user/user/query")
-    public String userCkeck(){
+    public String userCheck(){
         return "/WEB-INF/pages/user/userquery.html";
     }
 

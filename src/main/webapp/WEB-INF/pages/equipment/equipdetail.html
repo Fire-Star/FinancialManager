@@ -455,11 +455,12 @@
                 /**
                  * 加载设备名称选项
                  */
+                alert("加载设备名称");
                 $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
                     if (status == "success") {
                         var _equipmentName = eval(data);
                         console.log(_equipmentName);
-                        vm.equipmentName = _equipmentName;
+                        vm.equipmentName = _equipmentName.data;
                     }
                 });
             },

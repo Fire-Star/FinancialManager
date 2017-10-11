@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.DepartmentCustom;
 import cn.ejie.pocustom.EquipmentCustom;
@@ -341,6 +342,7 @@ public class EquipmentController {
     }
 
     @RequestMapping("/user/equipDetail/editEqDetail")
+    @SystemLogAOP(module = "设备查询",methods = "更新设备详细信息")
     public void editEqDetail(HttpServletRequest request,HttpServletResponse response){
         System.out.println("设备详情界面，设备信息编辑......");
         String eqID = "";
