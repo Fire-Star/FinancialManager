@@ -282,6 +282,7 @@
                                 $('#modalButton').click();
                             }
                         }
+                        refreshDownloadExcelState();
                     });
                 $btn.button('reset');
                 refreshDownloadExcelState();

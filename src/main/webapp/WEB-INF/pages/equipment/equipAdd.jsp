@@ -341,6 +341,7 @@
                             }
                             $('#modalButton').click();
                         }
+                        refreshSuccessFileEqInsert();
                     });
                 refreshSuccessFileEqInsert();
                 $btn.button('reset');

@@ -504,7 +504,7 @@
                 if( vm.eqBorBelongValue!=""&&vm.eqBorCityValue!=""){
                     $.get("../../staff/findStaffByCity?department=" + vm.eqBorBelongValue + "&city="
                         + vm.eqBorCityValue,function (data, status) {
-                        alert(JSON.stringify(data));
+                        //alert(JSON.stringify(data));
                         console.log(data);
                         if (status == "success") {
                             var _userData = eval(data);

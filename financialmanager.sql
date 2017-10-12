@@ -286,6 +286,21 @@ CREATE TABLE `user` (
 /*Data for the table `user` */
 
 insert  into `user`(`username`,`password`,`city`) values ('Admin','123456','');
+-- ----------------------------
+-- Table structure for `system_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `system_log`;
+CREATE TABLE `system_log` (
+  `logID` char(36) NOT NULL,
+  `userID` char(64) NOT NULL,
+  `module` char(128) NOT NULL,
+  `method` char(128) NOT NULL,
+  `userIP` char(128) NOT NULL,
+  `date` char(128) NOT NULL,
+  `parament` varchar(512) DEFAULT NULL,
+  `commit` char(64) DEFAULT NULL,
+  PRIMARY KEY (`logID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user_role` */
 
