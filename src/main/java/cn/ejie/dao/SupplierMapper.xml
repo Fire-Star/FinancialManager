@@ -22,7 +22,8 @@
         #{customMessage})
     </insert>
     <select id="findSupplierById" resultType="cn.ejie.pocustom.SupplierCustom">
-        SELECT id,`name`,adtitude,address,contact_name as contactName,tel,business,contract_time as contractTime,custom_message FROM supplier WHERE id =#{id}
+        SELECT id,`name`,adtitude,address,contact_name as contactName,tel,business,contract_time as
+        contractTime,custom_message as customMessage FROM supplier WHERE id =#{id}
     </select>
     <select id="findSupIdBySupName" resultType="String">
         SELECT id FROM supplier WHERE name =#{name}
