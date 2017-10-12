@@ -73,6 +73,7 @@ public class EquipmentController {
     private SupplierService supplierService;
 
     @RequestMapping("/equipment/add")
+    @SystemLogAOP(module = "设备添加",methods = "设备信息添加")
     public void insertSingleEquipment(EquipmentCustom equipmentCustom, HttpServletResponse response){
 
         try {
@@ -566,6 +567,7 @@ public class EquipmentController {
     }
 
     @RequestMapping("/equipment/upload")
+    @SystemLogAOP(module = "设备添加",methods = "批量添加设备信息")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
             equipmentService.uploadFile(file);

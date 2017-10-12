@@ -1,10 +1,8 @@
 package cn.ejie.LogByAop;
 
 import cn.ejie.annotations.SystemLogAOP;
-import cn.ejie.po.SystemLog;
 import cn.ejie.pocustom.*;
 import cn.ejie.service.SystemLogService;
-import net.sf.json.JSONObject;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -29,7 +27,28 @@ public class LogAopAction {
     @Autowired
     private SystemLogService systemLogService;
 
-    @Pointcut("execution(* cn.ejie.web.controller.EquipmentController.editEqDetail(..))")
+    @Pointcut("execution(* cn.ejie.web.controller.EquipmentController.editEqDetail(..))"
+            + "||execution(* cn.ejie.web.controller.StaffController.updateStaffDetail(..))"
+            + "||execution(* cn.ejie.web.controller.SupplierController.editSupDetail(..))"
+            + "||execution(* cn.ejie.web.controller.UserController.editUser(..))"
+            + "||execution(* cn.ejie.web.controller.UserController.insertUser(..))"
+            + "||execution(* cn.ejie.web.controller.UserController.delUser(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentBorrowController.addEqBorLog(..))"
+            + "||execution(* cn.ejie.web.controller.FixedLogController.addEqFixLog(..))"
+            + "||execution(* cn.ejie.web.controller.DepartmentController.addDepartment(..))"
+            + "||execution(* cn.ejie.web.controller.DepartmentController.delDepartByDepartmentID(..))"
+            + "||execution(* cn.ejie.web.controller.CityController.addCity(..))"
+            + "||execution(* cn.ejie.web.controller.CityController.delCity(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentTypeController.addEquipmentType(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentTypeController.delEquipmentType(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentNameController.insertSingleEquipmentName(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentNameController.delEquipmentName(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentController.insertSingleEquipment(..))"
+            + "||execution(* cn.ejie.web.controller.EquipmentController.uploadFileAndInsert(..))"
+            + "||execution(* cn.ejie.web.controller.StaffController.staffAdd(..))"
+            + "||execution(* cn.ejie.web.controller.StaffController.uploadFileAndInsert(..))"
+            + "||execution(* cn.ejie.web.controller.SupplierController.addSingleSupplier(..))"
+            + "||execution(* cn.ejie.web.controller.SupplierController.uploadFileAndInsert(..))")
     /*@Pointcut("execution(* cn.ejie.service.*.login(..))"
             + "||execution(* cn.ejie.service.*.save*(..))"
             + "||execution(* cn.ejie.service.*.add*(..))"
@@ -101,8 +120,6 @@ public class LogAopAction {
         }else {
             object = pjp.proceed();//执行该方法
         }
-
-
         //通过分析aop监听参数分析出request等信息
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof HttpServletRequest) {
@@ -111,7 +128,7 @@ public class LogAopAction {
                 EquipmentCustom equipmentCustom = (EquipmentCustom) args[i];
                 parament = equipmentCustom.toString();
                 System.out.println(1111);
-            }else if(args[i] instanceof StaffCustom){
+            }/*else if(args[i] instanceof StaffCustom){
                 StaffCustom staffCustom = (StaffCustom) args[i];
                 parament = staffCustom.toString();
                 System.out.println(2222);
@@ -127,7 +144,7 @@ public class LogAopAction {
                 FixedLogCustom fixedLogCustom = (FixedLogCustom) args[i];
                 parament = fixedLogCustom.toString();
                 System.out.println(5555);
-            }
+            }*/
         }
         if (request != null) {
             userIP = request.getHeader( " x-forwarded-for " );
@@ -143,7 +160,7 @@ public class LogAopAction {
             Enumeration enu=request.getParameterNames();
             while(enu.hasMoreElements()){
                 String paraName=(String)enu.nextElement();
-                parament = parament + paraName + ":" + request.getParameter(paraName);
+                parament = parament + paraName + ":" + request.getParameter(paraName) + ";";
             }
 
         }

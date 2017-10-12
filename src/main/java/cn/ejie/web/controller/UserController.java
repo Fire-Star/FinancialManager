@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.VerifyMessage;
 import cn.ejie.pocustom.UserCustom;
@@ -222,6 +223,7 @@ public class UserController {
     }
 
     @RequestMapping("/user/add")
+    @SystemLogAOP(module = "帐号查询",methods = "添加帐号")
     public void insertUser(HttpServletResponse response,HttpServletRequest request){
         System.out.println("添加用户...");
         String username = "";
@@ -275,6 +277,7 @@ public class UserController {
 
     }
     @RequestMapping("/user/edit")
+    @SystemLogAOP(module = "帐号查询",methods = "账号密码修改")
     public void editUser(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("重置用户密码...");
         String username = "";
@@ -307,6 +310,7 @@ public class UserController {
     }
 
     @RequestMapping("/user/del")
+    @SystemLogAOP(module = "帐号查询",methods = "删除帐号")
     public void delUser(HttpServletResponse response,HttpServletRequest request){
         System.out.println("删除用户...");
         String username = "";

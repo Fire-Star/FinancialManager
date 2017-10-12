@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.StaffCustom;
 import cn.ejie.pocustom.UserCustom;
@@ -64,6 +65,7 @@ public class StaffController {
     private UserRoleService userRoleService;
 
     @RequestMapping("/staff/add")
+    @SystemLogAOP(module = "员工添加",methods = "员工信息添加")
     public void staffAdd(HttpServletRequest request, HttpServletResponse response) throws Exception{
         StaffCustom staffCustom = SimpleBeanUtils.setMapPropertyToBean(StaffCustom.class,request.getParameterMap());
         staffService.addSingleStaff(staffCustom);
@@ -300,6 +302,7 @@ public class StaffController {
     }
 
     @RequestMapping("/staff/upload")
+    @SystemLogAOP(module = "员工添加",methods = "批量添加员工信息")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file, HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
             staffService.uploadFile(file);
@@ -338,6 +341,7 @@ public class StaffController {
     }
 
     @RequestMapping("/user/staffDetail/editStaffDetail")
+    @SystemLogAOP(module = "员工查询",methods = "更新员工详细信息")
     public void updateStaffDetail(HttpServletRequest request,HttpServletResponse response){
         System.out.println("用户详情界面，用户信息编辑......");
         String staffID = "";

@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.dao.EquipmentBorrowMapper;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.Department;
@@ -146,6 +147,7 @@ public class EquipmentBorrowController {
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
     @RequestMapping("equipBor/addEqBorLog")
+    @SystemLogAOP(module = "设备详情",methods = "添加设备借调记录")
     public void addEqBorLog(HttpServletRequest request,HttpServletResponse response){
         System.out.println("添加借调记录......");
         String eqState = "";

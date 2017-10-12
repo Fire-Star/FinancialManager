@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.EquipmentNameCustom;
 import cn.ejie.service.EquipmentNameService;
@@ -45,6 +46,7 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/addSingleEquipmentName")
+    @SystemLogAOP(module = "设备字段管理",methods = "设备名称添加")
     public void insertSingleEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
         Map<String,String> responseJsonMessage = new HashMap<>();
 
@@ -70,6 +72,7 @@ public class EquipmentNameController {
     }
 
     @RequestMapping("/equipmentName/delName")
+    @SystemLogAOP(module = "设备字段管理",methods = "设备名称删除")
     public void delEquipmentName(HttpServletRequest request,HttpServletResponse response) throws Exception{
         EquipmentNameCustom equipmentNameCustom = SimpleBeanUtils.setMapPropertyToBean(EquipmentNameCustom.class,request.getParameterMap());
         equipmentNameService.delEquipmentName(equipmentNameCustom);

@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.User;
 import cn.ejie.pocustom.CityCustom;
@@ -66,6 +67,7 @@ public class SupplierController {
     }
 
     @RequestMapping("/supplier/add")
+    @SystemLogAOP(module = "供应商添加",methods = "供应商信息添加")
     public void addSingleSupplier(HttpServletRequest request, HttpServletResponse response){
         SupplierCustom supplierCustom = SimpleBeanUtils.setMapPropertyToBean(SupplierCustom.class,request.getParameterMap());
         try {
@@ -300,6 +302,7 @@ public class SupplierController {
     }
 
     @RequestMapping("/supplier/editSupDetail")
+    @SystemLogAOP(module = "供应商查询",methods = "更新供应商信息")
     public void editSupDetail(HttpServletRequest request,HttpServletResponse response){
         System.out.println("编辑运营商详细信息......");
         String supId = "";
@@ -350,6 +353,7 @@ public class SupplierController {
     }
 
     @RequestMapping("/supplier/upload")
+    @SystemLogAOP(module = "供应商添加",methods = "批量添加供应商信息")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file, HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
             supplierService.uploadFile(file);

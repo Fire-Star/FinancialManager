@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.pocustom.FixedLogCustom;
 import cn.ejie.service.FixedLogService;
@@ -53,6 +54,7 @@ public class FixedLogController {
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
     @RequestMapping("/equipFix/addEqFixLog")
+    @SystemLogAOP(module = "设备详情",methods = "添加设备维修记录")
     public void addEqFixLog(HttpServletResponse response,HttpServletRequest request){
         System.out.println("添加设备维修信息...");
         String eqId = "";

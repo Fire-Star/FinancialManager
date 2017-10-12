@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.User;
 import cn.ejie.pocustom.CityCustom;
@@ -37,6 +38,7 @@ public class CityController {
     private UserService userService;
 
     @RequestMapping("/city/add")
+    @SystemLogAOP(module = "部门字段管理",methods = "添加城市字段")
     public void addCity(HttpServletRequest request, HttpServletResponse response) throws Exception{
         CityCustom cityCustom = SimpleBeanUtils.setMapPropertyToBean(CityCustom.class,request.getParameterMap());
         Map<String,String> message = new HashMap<>();
@@ -70,6 +72,7 @@ public class CityController {
     }
 
     @RequestMapping("/city/del")
+    @SystemLogAOP(module = "部门字段管理",methods = "删除城市字段")
     public void delCity(HttpServletRequest request,HttpServletResponse response)throws Exception{
         CityCustom cityCustom = SimpleBeanUtils.setMapPropertyToBean(CityCustom.class,request.getParameterMap());
         System.out.println(cityCustom);

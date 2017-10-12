@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.dao.EquipmentTypeMapper;
 import cn.ejie.exception.EquipmentException;
 import cn.ejie.exception.SimpleException;
@@ -50,6 +51,7 @@ public class EquipmentTypeController {
         }
     }
     @RequestMapping("/addEquipmentType")
+    @SystemLogAOP(module = "设备字段管理",methods = "添加设备类型")
     public void addEquipmentType(HttpServletResponse response, HttpServletRequest request) throws Exception {
 
         //通过参数绑定会乱码，所以通过 BeanUtils 来参数绑定。
@@ -73,6 +75,7 @@ public class EquipmentTypeController {
     }
 
     @RequestMapping("/equipmentType/del")
+    @SystemLogAOP(module = "设备字段管理",methods = "删除设备类型")
     public void delEquipmentType(HttpServletRequest request,HttpServletResponse response) throws Exception{
         EquipmentTypeCustom equipmentTypeCustom = SimpleBeanUtils.
                 setMapPropertyToBean(EquipmentTypeCustom.class,request.getParameterMap());

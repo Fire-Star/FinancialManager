@@ -1,5 +1,6 @@
 package cn.ejie.web.controller;
 
+import cn.ejie.annotations.SystemLogAOP;
 import cn.ejie.exception.SimpleException;
 import cn.ejie.po.Department;
 import cn.ejie.pocustom.DepartmentCustom;
@@ -31,6 +32,7 @@ public class DepartmentController {
     private ObjectMapper objectMapper;
 
     @RequestMapping("/department/add")
+    @SystemLogAOP(module = "部门字段管理",methods = "添加部门字段")
     public void addDepartment(HttpServletRequest request, HttpServletResponse response) throws Exception{
         DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
 
@@ -75,6 +77,7 @@ public class DepartmentController {
     }
 
     @RequestMapping("/department/del")
+    @SystemLogAOP(module = "部门字段管理",methods = "删除部门字段")
     public void delDepartByDepartmentID(HttpServletRequest request,HttpServletResponse response) throws Exception{
          DepartmentCustom departmentCustom =  SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
          System.out.println(departmentCustom);
