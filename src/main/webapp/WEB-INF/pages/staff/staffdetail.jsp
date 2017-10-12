@@ -387,6 +387,15 @@
     function submitEditStaff() {
         var staffID = $('#staffSubmitId').val();
         var date = $('#staffSubmitDate').val();
+        var customMessage = "";
+        for(var key in vm.custom){
+            if(vm.custom[key] == ""){
+                alert("编辑设备信息时，字段不能为空！！");
+                return;
+            }
+            customMessage += key+"="+vm.custom[key]+";";
+        }
+        console.log(customMessage,'++++++++++++++++')
         if(vm.city==""||vm.beDepValue==null||vm.prePosition==""||vm.preTel==""||date==""){
             alert("编辑设备信息时，字段不能为空！！");
         }else {
@@ -397,7 +406,8 @@
                     depart : vm.beDepValue,
                     position : vm.prePosition,
                     tel : vm.preTel,
-                    date : date
+                    date : date,
+                    customMessage: customMessage
                 },
                 function(data,status) {
                     var _data = data;

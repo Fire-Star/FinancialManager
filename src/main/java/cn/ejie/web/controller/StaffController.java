@@ -346,6 +346,7 @@ public class StaffController {
         String position = "";
         String tel = "";
         String date = "";
+        String customMessage = "";
         if( null != request.getParameter("staffID")){
             staffID = request.getParameter("staffID");
         }
@@ -377,6 +378,9 @@ public class StaffController {
                 return;
             }
         }
+        if(!"".equals(request.getParameter("customMessage"))&&null!=request.getParameter("customMessage")){
+            customMessage = request.getParameter("customMessage");
+        }
         StaffCustom staffCustom = new StaffCustom();
         try {
             staffCustom = staffService.findStaffById(staffID);
@@ -385,6 +389,7 @@ public class StaffController {
             staffCustom.setPosition(position);
             staffCustom.setTel(tel);
             staffCustom.setEntryTime(date);
+            staffCustom.setCustomMessages(customMessage);
             staffService.updateStaff(staffCustom);
         }catch (Exception e){
             e.printStackTrace();
