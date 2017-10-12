@@ -130,12 +130,10 @@
         insertType:"",
         tempType:""
     };
-
     var vm = new Vue({
         el: '.app',
         data: data,
         updated:function () {
-            init();
             init();
         },
         methods:{
@@ -205,7 +203,6 @@
     });
 
     function init() {
-
         $('.addTypeBoss').unbind("click").click(function (e) {
             $(this).toggleClass('glyphicon-minus btn-danger','glyphicon-plus btn-primary');
             var target = $('.bottom').children('div');
@@ -285,6 +282,6 @@
             }
         });
     }
-
+    init();
 </script>
 </html>
