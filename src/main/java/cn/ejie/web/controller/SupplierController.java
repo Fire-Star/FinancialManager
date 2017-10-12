@@ -107,6 +107,23 @@ public class SupplierController {
             e.printStackTrace();
             throw new SimpleException();
         }
+        String customMessage = "";
+        String messageObject = "";
+        if(!"".equals(supplierCustom.getCustomMessage())&&null!=supplierCustom.getCustomMessage()){
+            customMessage = supplierCustom.getCustomMessage();
+            String[] message = customMessage.split(";");
+            String bufferMessage = "";
+            for (int i = 0; i < message.length; i++) {
+                String[] detail = message[i].split("=");
+                bufferMessage = bufferMessage + detail[0] + ":'" + detail[1] + "',";
+            }
+            System.out.print(bufferMessage + "--------------------------------");
+            messageObject = "{" + bufferMessage.substring(0,bufferMessage.length()-1) + "}";
+            JSONObject jsonMessage = new JSONObject();
+            jsonMessage = JSONObject.fromObject(messageObject);
+            supplierCustom.setCustomMessage(jsonMessage.toString());
+            System.out.println("自定义信息："+jsonMessage.toString());
+        }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(supplierCustom);
         String detail = JSONObject.fromObject(supplierCustom).toString();
@@ -290,6 +307,7 @@ public class SupplierController {
         String supCont = "";
         String supTel = "";
         String supDate = "";
+        String customMessage = "";
         if(!"".equals(request.getParameter("supId"))&&request.getParameter("supId")!=null){
             supId = request.getParameter("supId");
         }
@@ -309,6 +327,9 @@ public class SupplierController {
                 supDate = request.getParameter("supDate");
             }
         }
+        if(!"".equals(request.getParameter("customMessage"))&&null!=request.getParameter("customMessage")){
+            customMessage = request.getParameter("customMessage");
+        }
         System.out.println("supId:"+supId+" supName:"+supName+" supCont:"+supCont+" supTel:"+supTel+" supDate:"+supDate);
         SupplierCustom supplierCustom = new SupplierCustom();
         try {
@@ -317,6 +338,7 @@ public class SupplierController {
             supplierCustom.setContactName(supCont);
             supplierCustom.setTel(supTel);
             supplierCustom.setContractTime(supDate);
+            supplierCustom.setCustomMessage(customMessage);
             supplierService.updateSup(supplierCustom);
         }catch (Exception e){
             e.printStackTrace();

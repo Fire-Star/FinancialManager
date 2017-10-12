@@ -358,6 +358,7 @@ public class EquipmentController {
         String time = "";
         String userCity = "";//cityname
         String city = "";//cityID
+        String customMessage = "";
         if(request.getParameter("eqID") != null){
             eqID = request.getParameter("eqID");
         }
@@ -386,19 +387,11 @@ public class EquipmentController {
         if (request.getParameter("userCity") != null && !"".equals(request.getParameter("userCity"))){
             userCity = request.getParameter("userCity");
         }
+        if(request.getParameter("customMessage")!=null && !"".equals(request.getParameter("customMessage"))){
+            customMessage = request.getParameter("customMessage");
+        }
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
-                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
-        //获取设备的所属部门的ID和采购部门的ID
-       /* if(!"".equals(supplier)){
-            try {
-                supplier = supplierService.findSupIdBySupName(supplier);
-            }catch (Exception e){
-                e.printStackTrace();
-                String message = "查找供应商时，数据库发生错误，修改信息失败！";
-                SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
-                return;
-            }
-        }*/
+                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time+" customMessage:"+customMessage);
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
@@ -430,7 +423,7 @@ public class EquipmentController {
             }
         }
         System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ city +
-                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
+                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time+" customMessage:"+customMessage);
 
         EquipmentCustom equipmentCustom = new EquipmentCustom();
         try {
@@ -448,6 +441,7 @@ public class EquipmentController {
         equipmentCustom.setBelongDepart(belongDepart);
         equipmentCustom.setEqStateId(eqState);
         equipmentCustom.setPurchasTime(time);
+        equipmentCustom.setCustomMessage(customMessage);
         try {
             equipmentService.updateEquipment(equipmentCustom);
         }catch (Exception e){
