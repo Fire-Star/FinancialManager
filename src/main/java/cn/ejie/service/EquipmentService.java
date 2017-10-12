@@ -293,6 +293,20 @@ public class EquipmentService {
 
     public void updateEquipment(EquipmentCustom equipmentCustom) throws Exception{
         try {
+            String cityOtherID = cityService.findCityOtherIDByCityID(equipmentCustom.getCity());//查找出城市ID
+            String eqTypeOtherId = equipmentTypeService.findEquipmentTypeOtherIDByTypeName(equipmentCustom.getEqType());//查找出设备类型ID
+            String eqMaxValue = null;
+            try {
+                eqMaxValue = String.valueOf((Integer.parseInt(maxValueService.findValueByKey("EqMaxValue"))+1));
+            }catch (Exception e){
+                if(eqMaxValue == null){
+                    maxValueService.updateState("EqMaxValue","1");
+                    eqMaxValue = "1";
+                }
+            }
+            String eqOtherIdAfter = StringUtils.fillPreString(eqMaxValue,'0',4);//计算出设备ID
+            equipmentCustom.setEqOtherId(cityOtherID+eqTypeOtherId+eqOtherIdAfter);
+            maxValueService.updateState("EqMaxValue",eqMaxValue);
             equipmentMapper.updateEquipment(equipmentCustom);
         }catch (Exception e){
             e.printStackTrace();
