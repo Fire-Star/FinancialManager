@@ -131,6 +131,16 @@
                                        v-model="addPass">
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label class="item-left col-sm-4 col-xs-4 con">角色：</label>
+                            <div class="col-sm-7 col-xs-7 userAddRole">
+                                <select class="form-control" id="userAddRole"  propName="---请选择角色---" data-toggle="tooltip" data-placement="top" v-model="addRole" style="width:100%">
+                                    <option selected value="" id="role">---请选择角色---</option>
+                                    <option value="ROLE_USER">ROLE_USER</option>
+                                    <option value="ROLE_ONLY_SHOW">	ROLE_ONLY_SHOW</option>
+                                </select>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -198,6 +208,7 @@
         addCity:"",
         addUser:"",
         addPass:"",
+        addRole:"",
         editUser:"",
         editPass:"",
         delUser:"",
@@ -216,7 +227,8 @@
                         {
                             city:vm.addCity,
                             userName:vm.addUser,
-                            userPass:vm.addPass
+                            userPass:vm.addPass,
+                            userRole:vm.addRole
                         },
                         function(data,status){
                             var _data = data;
@@ -323,6 +335,9 @@
                 }, {
                     field: 'city',
                     title: '城市'
+                }, {
+                    field: 'role',
+                    title: '角色'
                 }, {
                     field: 'option',
                     title: '操作',

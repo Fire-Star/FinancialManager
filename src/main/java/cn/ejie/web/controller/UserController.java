@@ -230,6 +230,7 @@ public class UserController {
         String cityTemp = "";
         String password = "";
         String city = "";
+        String role = "";
         if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
             username = request.getParameter("userName");
         }
@@ -239,6 +240,9 @@ public class UserController {
         if(!"".equals(request.getParameter("city"))&&request.getParameter("city")!=null){
             cityTemp = request.getParameter("city");
         }
+        if(!"".equals(request.getParameter("userRole"))&&request.getParameter("userRole")!=null){
+            role = request.getParameter("userRole");
+        }
         UserCustom userCustom = new UserCustom();
         UserRoleCustom userRoleCustom = new UserRoleCustom();
         try {
@@ -247,7 +251,7 @@ public class UserController {
             e.printStackTrace();
         }
         userRoleCustom.setUserName(username);
-        userRoleCustom.setRoleId("ROLE_USER");
+        userRoleCustom.setRoleId(role);
         userCustom.setUsername(username);
         userCustom.setPassword(password);
         userCustom.setCity(city);
