@@ -85,8 +85,12 @@ public class URLFilterInvocationSecurityMetadataSource implements FilterInvocati
      */
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        String url = ((FilterInvocation)object).getRequestUrl();
-
+        String tempUrl = ((FilterInvocation)object).getRequestUrl();
+        int endIndex = tempUrl.indexOf("?");
+        String url = null;
+        if(endIndex != -1){
+            url = tempUrl.substring(0,endIndex);
+        }
         return requestMap.get(url);
     }
 

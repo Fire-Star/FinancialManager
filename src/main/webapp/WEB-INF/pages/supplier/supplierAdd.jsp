@@ -358,7 +358,7 @@
         form_data.append("eqXsl", file_data);
         $.ajax({
             type: "POST",
-            url: "upload",
+            url: "upload?time="+new Date().getTime(),
             processData: false,  // 注意：让jQuery不要处理数据
             contentType: false,  // 注意：让jQuery不要设置contentType
             data: form_data,
