@@ -285,7 +285,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`username`,`password`,`city`) values ('Admin','123456',''),('FireLang','123456','2d709c68-87da-11e7-b0f8-708bcd7b61ba'),('MoonFollow','123456','2d709c68-87da-11e7-b0f8-708bcd7b61ba');
+insert  into `user`(`username`,`password`,`city`) values ('Admin','123456','');
 
 /*Table structure for table `user_role` */
 
@@ -304,7 +304,7 @@ CREATE TABLE `user_role` (
 
 /*Data for the table `user_role` */
 
-insert  into `user_role`(`urid`,`username`,`rid`) values ('09d079b7-7ce3-11e7-9bb7-708bcd7b61ba','Admin','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba'),('3417eeaf-7ce2-11e7-9bb7-708bcd7b61ba','MoonFollow','967bafbc-7cda-11e7-9bb7-708bcd7b61ba'),('515ea6aa-ae32-11e7-a820-1cb72c2f3c53','FireLang','aa66ea09-ae2f-11e7-a820-1cb72c2f3c53');
+insert  into `user_role`(`urid`,`username`,`rid`) values ('09d079b7-7ce3-11e7-9bb7-708bcd7b61ba','Admin','d0a93949-7ce2-11e7-9bb7-708bcd7b61ba');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
