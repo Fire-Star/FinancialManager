@@ -158,7 +158,6 @@ public class EquipmentService {
             equipmentCustom.setEqOtherId(cityOtherID+eqTypeOtherId+eqOtherIdAfter);
             equipmentMapper.insertSingleEquipment(equipmentCustom);
             maxValueService.updateState("EqMaxValue",eqMaxValue);
-            System.out.println("插入1");
         }
         String buyCityID = equipmentCustom.getBuyCity();
         String buyDepID = equipmentCustom.getPurchasDepart();
@@ -375,26 +374,21 @@ public class EquipmentService {
         //获取文件类型
         String contentType = file.getContentType();
 
-        System.out.println("contentType="+contentType);
 
         if(!contentType.equals("")) {
             //可以对文件类型进行检查
         }
         //获取input域的name属性
         String name = file.getName();
-        System.out.println("name="+name);
         //获取文件名，带扩展名
         String originFileName = file.getOriginalFilename();
-        System.out.println("originFileName"+originFileName);
         //获取文件扩展名
         String extension = originFileName.substring(originFileName.lastIndexOf("."));
-        System.out.println(extension);
         if(!".xlsx".equals(extension)){
             throw new SimpleException(errorType,"上传文件类型错误，必须为xlsx格式！");
         }
         //获取文件大小，单位字节
         long site = file.getSize();
-        System.out.println("size="+site);
         if(site > MAX_FILE_SISE) {
             //可以对文件大小进行检查
         }
@@ -431,7 +425,6 @@ public class EquipmentService {
         updateParam.setValue(fileSimpleName);
         maxValueService.updataMaxValue(updateParam);
 
-        System.out.println("fileName--------->"+fileName);
         insertXslEquipment(fileName);
     }
 
@@ -558,9 +551,6 @@ public class EquipmentService {
 
             for (int i = 0; i < len; i++) {
                 EquipmentCustom equipmentCustom = allEquipments.get(i);
-                if(i==0){
-                    System.out.println(equipmentCustom);
-                }
 
                 String errorMessage = equipmentCustom.getMessage();
                 if(errorMessage != null && !errorMessage.equals("")){

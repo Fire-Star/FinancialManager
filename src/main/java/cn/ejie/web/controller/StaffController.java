@@ -84,7 +84,6 @@ public class StaffController {
 
     @RequestMapping("/user/staff/search")
     public void queryStaff(HttpServletRequest request, HttpServletResponse response) throws Exception{
-        System.out.println("员工查询界面，员工信息table模块的数据加载......");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -100,7 +99,6 @@ public class StaffController {
             e.printStackTrace();
             city = "";
         }
-        System.out.println("userDetail::::"+role+"&&&&&&&&&&"+city);
         String sql = "";
         String name = "";
         String dep = "";
@@ -126,7 +124,6 @@ public class StaffController {
                 e.printStackTrace();
             }
         }
-        System.out.println("depName:"+depName);
         if(request.getParameter("position")!= null){
             position = request.getParameter("position");
         }
@@ -166,7 +163,6 @@ public class StaffController {
         }else{
             sql = sqltemp;
         }
-        System.out.println("sql:"+sql);
 
         List<StaffCustom> staffCustomList = new ArrayList<StaffCustom>();
         try {
@@ -175,7 +171,6 @@ public class StaffController {
             e.printStackTrace();
             throw new SimpleException(errorType,"数据库发生错误！");
         }
-        System.out.println(JSONArray.fromObject(staffCustomList).toString());
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < staffCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String,String>();
@@ -211,7 +206,6 @@ public class StaffController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
     @RequestMapping("/user/staff/detail")
@@ -220,13 +214,11 @@ public class StaffController {
     }
     @RequestMapping("/user/staff/findStaffByStaffID")
     public void findStaffByStaffID (HttpServletRequest request,HttpServletResponse response) throws Exception{
-        System.out.println("员工详情界面，员工详细信息panel模块的数据加载......");
         String staffId = "";
         StaffCustom staffCustom = new StaffCustom();
         if(request.getParameter("staffId")!=null){
             staffId = request.getParameter("staffId");
         }
-        System.out.println("staffId:"+staffId);
         try {
             staffCustom = staffService.findStaffById(staffId);
         }catch (Exception e){
@@ -258,21 +250,17 @@ public class StaffController {
                 String[] detail = message[i].split("=");
                 bufferMessage = bufferMessage + detail[0] + ":'" + detail[1] + "',";
             }
-            System.out.print(bufferMessage + "--------------------------------");
             messageObject = "{" + bufferMessage.substring(0,bufferMessage.length()-1) + "}";
             JSONObject jsonMessage = new JSONObject();
             jsonMessage = JSONObject.fromObject(messageObject);
             staffCustom.setCustomMessages(jsonMessage.toString());
-            System.out.println("自定义信息："+jsonMessage.toString());
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(staffCustom);
-        System.out.println("jsonObject:"+jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
     @RequestMapping("/staff/findStaffByCity")
     public @ResponseBody List<StaffCustom> findDepartmentByCity(HttpServletRequest request) throws Exception{
-        System.out.println("借调记录界面加载可选择的使用人...");
         String city = "";
         String department = "";
         String departmentId = "";
@@ -297,7 +285,6 @@ public class StaffController {
                 throw new SimpleException(errorType,"查询员工时数据库错误!");
             }
         }
-        System.out.println(JSONArray.fromObject(list).toString());
         return list;
     }
 
@@ -343,7 +330,6 @@ public class StaffController {
     @RequestMapping("/user/staffDetail/editStaffDetail")
     @SystemLogAOP(module = "员工查询",methods = "更新员工详细信息")
     public void updateStaffDetail(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("用户详情界面，用户信息编辑......");
         String staffID = "";
         String city = "";
         String depart = "";
@@ -401,7 +387,6 @@ public class StaffController {
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
             return;
         }
-        System.out.println(JSONObject.fromObject(staffCustom).toString());
         SimpleException.sendSuccessMessage(response,objectMapper);
     }
 }

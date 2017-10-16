@@ -71,13 +71,6 @@ public class UserController {
 
         Map<String,String> message = new HashMap<>();
         UserCustom user = SimpleBeanUtils.setMapPropertyToBean(UserCustom.class,request.getParameterMap());
-        System.out.println("#########################################");
-        System.out.println("提交POST时，IP地址为："+request.getRemoteAddr());
-        System.out.println(userCustom.getUsername());
-        System.out.println(userCustom.getPassword());
-        System.out.println(session.getId()+"验证码："+userCustom.getVerifyCode());
-        System.out.println(session.getId()+"正确验证码："+(String)session.getAttribute("verifyCode"));
-        System.out.println("#########################################\n");
         if(userCustom.getVerifyCode()==null || !userCustom.getVerifyCode().equalsIgnoreCase(((String)session.getAttribute("verifyCode")))) {
 
             message.clear();
@@ -88,7 +81,6 @@ public class UserController {
 
             return;
         }
-        System.out.println(session.getAttribute("verifyCode"));
         UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userCustom.getUsername(), userCustom.getPassword());
         try {
             Authentication authentication = myAuthenticationManager.authenticate(authRequest); //调用loadUserByUsername
@@ -116,11 +108,8 @@ public class UserController {
         try {
             response.setHeader("Content-Type","image/gif");
             VerifyMessage verifyMessage = vertifyCodeService.getVerifyMessage();
-            System.out.println(session.getId()+"调用了验证码图片方法，请求了图片："+verifyMessage.getVerifyCode());
             ImageIO.write(verifyMessage.getVerifyImage(),"gif",response.getOutputStream());
             session.setAttribute("verifyCode",verifyMessage.getVerifyCode());
-            System.out.println(session.getId()+"调用了验证码图片方法="+session.getAttribute("verifyCode"));
-            System.out.println("调用了验证码图片方法=IP为："+request.getRemoteAddr());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,7 +122,6 @@ public class UserController {
 
     @RequestMapping("/user/user/search")
     public void userQuery(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("账号权限界面table数据加载......");
         List<UserCustom> userList = new ArrayList<UserCustom>();
         String name = "";
         String cityName = "";
@@ -147,7 +135,6 @@ public class UserController {
         if(!request.getParameter("city").equals("") && request.getParameter("city")!=null){
             cityName = request.getParameter("city");
         }
-        System.out.println("user:"+name+" city:"+cityName);
         if (!name.equals("")||!cityName.equals("")){
             sqltemp = sqltemp + " WHERE";
             if (!name.equals("")){
@@ -167,7 +154,6 @@ public class UserController {
                 sql = sqltemp;
             }
         }
-        System.out.println("sql:"+sql);
         try {
             if(!sql.equals("")){
                 userList = userService.findBySql(sql);
@@ -212,20 +198,17 @@ public class UserController {
 
     @RequestMapping("/user/getUsername")
     public void getUserName(HttpServletResponse response){
-        System.out.println("主界面获取登录名......");
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         String userName = userDetails.getUsername();
         Map<String,String> map = new HashMap<String, String>();
         map.put("userName",userName);
         JSONObject jsonObject = JSONObject.fromObject(map);
-        System.out.println(jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
 
     @RequestMapping("/user/add")
     @SystemLogAOP(module = "帐号查询",methods = "添加帐号")
     public void insertUser(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("添加用户...");
         String username = "";
         String cityTemp = "";
         String password = "";
@@ -283,7 +266,6 @@ public class UserController {
     @RequestMapping("/user/edit")
     @SystemLogAOP(module = "帐号查询",methods = "账号密码修改")
     public void editUser(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("重置用户密码...");
         String username = "";
         String password = "";
         if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
@@ -316,12 +298,10 @@ public class UserController {
     @RequestMapping("/user/del")
     @SystemLogAOP(module = "帐号查询",methods = "删除帐号")
     public void delUser(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("删除用户...");
         String username = "";
         if(!"".equals(request.getParameter("userName"))&&request.getParameter("userName")!=null){
             username = request.getParameter("userName");
         }
-        System.out.println("username:"+username);
         try {
             userRoleService.deluserRoleByUserName(username);
             userService.delUser(username);

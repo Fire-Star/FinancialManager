@@ -102,7 +102,6 @@ public class EquipmentController {
      */
     @RequestMapping("/user/equipment/search")
     public void searchEquipment(HttpServletResponse respose, HttpServletRequest request){
-        System.out.println("设备查询界面，设备信息table模块的数据加载......");
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -119,7 +118,6 @@ public class EquipmentController {
             city = "";
         }
 
-        System.out.println("userDetail::::"+role+"&&&&&&&&&&"+city);
 
         //EquipmentCustom equipmentCustomTest = SimpleBeanUtils.setMapPropertyToBean(EquipmentCustom.class,request.getParameterMap());
         String eqID = "";
@@ -154,8 +152,6 @@ public class EquipmentController {
         if (request.getParameter("city") != null && !"".equals(request.getParameter("city"))){
             userCity = request.getParameter("city");
         }
-        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
-                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time);
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
@@ -209,7 +205,6 @@ public class EquipmentController {
         }else {
             sql = sqltemp + " order by eq_other_id desc";
         }
-        System.out.println("sql:"+sql);
         List<EquipmentCustom> listequip = new ArrayList<EquipmentCustom>();
         try {
             listequip = equipmentService.findAllBySql(sql);
@@ -218,7 +213,6 @@ public class EquipmentController {
             SimpleException.sendMessage(respose,message,objectMapper);//报告错误信息到前台！
             return;
         }
-        System.out.println(JSONArray.fromObject(listequip).toString());
 
         List<Object> list = new ArrayList<Object>();
         for (int i = 0;i<listequip.size();i++){
@@ -263,7 +257,6 @@ public class EquipmentController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println(jsonArray.toString());
         SimpleException.sendMessage(respose,jsonArray.toString(), objectMapper);
     }
 
@@ -283,7 +276,6 @@ public class EquipmentController {
 
     @RequestMapping("/user/equip/findEquipByEquipID")
     public void findEquipByEquipID(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("设备详情界面，设备信息panel模块的数据加载......");
         String eqId = "";
         if(request.getParameter("equipId") != null){
             eqId = request.getParameter("equipId");
@@ -318,9 +310,7 @@ public class EquipmentController {
         }
         String customMessage = "";
         String messageObject = "";
-        System.out.println("custom:"+equipmentCustom.getCustomMessage());
         if(!"".equals(equipmentCustom.getCustomMessage())&&equipmentCustom.getCustomMessage()!=null){
-            System.out.println("自定义信息!!!!!!!");
             customMessage = equipmentCustom.getCustomMessage();
             String[] message = customMessage.split(";");
             String bufferMessage = "";
@@ -328,17 +318,14 @@ public class EquipmentController {
                 String[] detail = message[i].split("=");
                 bufferMessage = bufferMessage + detail[0] + ":'" + detail[1] + "',";
             }
-            System.out.print(bufferMessage + "--------------------------------");
             messageObject = "{" + bufferMessage.substring(0,bufferMessage.length()-1) + "}";
             JSONObject jsonMessage = new JSONObject();
             jsonMessage = JSONObject.fromObject(messageObject);
             equipmentCustom.setCustomMessage(jsonMessage.toString());
 
-            System.out.println("自定义信息："+jsonMessage.toString());
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(equipmentCustom);
-        System.out.println(jsonObject.toString());
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
     @RequestMapping("/user/equipment/statis")
@@ -349,7 +336,6 @@ public class EquipmentController {
     @RequestMapping("/user/equipDetail/editEqDetail")
     @SystemLogAOP(module = "设备查询",methods = "更新设备详细信息")
     public void editEqDetail(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("设备详情界面，设备信息编辑......");
         String eqID = "";
         String eqType = "";
         String eqName = "";
@@ -391,8 +377,6 @@ public class EquipmentController {
         if(request.getParameter("customMessage")!=null && !"".equals(request.getParameter("customMessage"))){
             customMessage = request.getParameter("customMessage");
         }
-        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ userCity +
-                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time+" customMessage:"+customMessage);
         if(!"".equals(belongDepart)&&!"".equals(userCity)){
             try {
                 belongDepart = departmentService.findDepartIDByCityStrAndDepartStr(userCity,belongDepart);
@@ -423,8 +407,6 @@ public class EquipmentController {
                 return;
             }
         }
-        System.out.println("eqID:"+eqID+" eqType:"+eqType+" eqName:"+eqName+" supplier:"+supplier+" city:"+ city +
-                " belongDepart:"+belongDepart+" eqState:"+eqState+" time:"+time+" customMessage:"+customMessage);
 
         EquipmentCustom equipmentCustom = new EquipmentCustom();
         try {
@@ -456,7 +438,6 @@ public class EquipmentController {
 
     @RequestMapping("/user/equipment/statisTable")
     public void statisTable(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("设备统计界面，table数据加载...");
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -494,25 +475,20 @@ public class EquipmentController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("cityId:"+cityId+" requestCity:"+requestCity+"reQuestCityId:"+reQuestCityId);
         try{
             if(!"ROLE_ADMIN".equals(role) && !"".equals(cityId)){
                 equipmentCustomList = equipmentService.findAllKindsEqByCityId(cityId);
-                System.out.println("普通用户");
             }else if("ROLE_ADMIN".equals(role)){
                 //Admin
                 if(!"".equals(reQuestCityId)&&reQuestCityId!=null){
                     equipmentCustomList = equipmentService.findAllKindsEqByCityId(reQuestCityId);
-                    System.out.println("查询的城市："+requestCity);
                 }else if("".equals(requestCity)){
                     equipmentCustomList = equipmentService.findAllKindsEq();
-                    System.out.println("查询全部");
                 }else {
                     String message = "统计设备时，数据库发生错误！";
                     SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
                     return;
                 }
-                System.out.println("管理员");
             }else{
                 String message = "统计设备时，数据库发生错误！";
                 SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
@@ -562,7 +538,6 @@ public class EquipmentController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println("查询统计数据："+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 

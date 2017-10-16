@@ -63,7 +63,6 @@ public class EquipmentTypeService {
         }
         String eqTypeOherId = StringUtils.fillPreString(eqTypeCount.toString(),'0',2);
 
-        System.out.println(eqTypeOherId);
 
         equipmentTypeCustom.setEqTypeOtherId(eqTypeOherId);
         equipmentTypeMapper.insertSingleEquipmentType(equipmentTypeCustom);

@@ -75,7 +75,6 @@ public class CityController {
     @SystemLogAOP(module = "部门字段管理",methods = "删除城市字段")
     public void delCity(HttpServletRequest request,HttpServletResponse response)throws Exception{
         CityCustom cityCustom = SimpleBeanUtils.setMapPropertyToBean(CityCustom.class,request.getParameterMap());
-        System.out.println(cityCustom);
         cityService.delCity(cityCustom.getCity());
         SimpleException.sendMessage(response,objectMapper,"success","删除该城市成功！");
     }

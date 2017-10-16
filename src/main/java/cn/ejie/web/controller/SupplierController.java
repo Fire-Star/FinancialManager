@@ -95,13 +95,10 @@ public class SupplierController {
     }
     @RequestMapping("/user/supplier/findSuppBySuppID")
     public  void findSuppBySuppID(HttpServletResponse response,HttpServletRequest request) throws Exception{
-        System.out.println
-                ("供应商详情界面，该供应商详情panel模块的数据加载......");
         String detailId = "";
         if(request.getParameter("suppId") != null){
             detailId = request.getParameter("suppId");
         }
-        System.out.println("suppId:"+detailId);
         SupplierCustom supplierCustom = new SupplierCustom();
         try {
             supplierCustom = supplierService.findSupplierById(detailId);
@@ -119,22 +116,18 @@ public class SupplierController {
                 String[] detail = message[i].split("=");
                 bufferMessage = bufferMessage + detail[0] + ":'" + detail[1] + "',";
             }
-            System.out.print(bufferMessage + "--------------------------------");
             messageObject = "{" + bufferMessage.substring(0,bufferMessage.length()-1) + "}";
             JSONObject jsonMessage = new JSONObject();
             jsonMessage = JSONObject.fromObject(messageObject);
             supplierCustom.setCustomMessage(jsonMessage.toString());
-            System.out.println("自定义信息："+jsonMessage.toString());
         }
         JSONObject jsonObject = new JSONObject();
         jsonObject = JSONObject.fromObject(supplierCustom);
         String detail = JSONObject.fromObject(supplierCustom).toString();
-        System.out.println("suppdetail:"+detail);
         SimpleException.sendMessage(response,jsonObject.toString(),objectMapper);
     }
     @RequestMapping("/user/supplier/search")
     public void searchSupplier(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("供应商查询界面，供应商信息Table模块的加载......");
         String limit = "";
         String offset = "";
         String suppliername = "";
@@ -159,7 +152,6 @@ public class SupplierController {
         if(request.getParameter("time") != null && !"".equals(request.getParameter("time"))){
             time = StringUtils.zhDateStrToENDateStr(request.getParameter("time"));
         }
-        System.out.println("limit:"+limit+"   "+"offset:"+offset+"   "+"suppliername:"+suppliername+"   "+"suppliercontactname:"+suppliercontactname+"   "+"contacttel:"+contacttel+"   "+"time:"+time+"   ");
         String sql = "";
         //String sqltemp = "SELECT id,`name`,adtitude,address,contact_name,tel,business,contract_time,custom_message FROM supplier";
         String sqltemp = "SELECT id,`name`, adtitude, address, contact_name contactName, tel, business, contract_time" +
@@ -184,7 +176,6 @@ public class SupplierController {
         }else {
             sql = sqltemp;
         }
-        System.out.println("sql:"+sql);
         List<SupplierCustom> listSupplier = null;
         try {
             if(!sql.equals("")&&sql!=null){
@@ -197,7 +188,6 @@ public class SupplierController {
             SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
             return;
         }
-        System.out.println("listSupplier:"+JSONArray.fromObject(listSupplier).toString());
         List<Object> list = new ArrayList<Object>();
         for(int i=0;i<listSupplier.size();i++){
             Map<String, Object> mapp = new HashMap<String, Object>();
@@ -225,12 +215,10 @@ public class SupplierController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
     @RequestMapping("/user/supplier/findEquipBySuppId")
     public void findEquipBySuppId(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("供应商详情界面，该供应商采购设备table模块的数据加载......");
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();  //通过spring security获得登录的用户名
         UserCustom userCustom = new UserCustom();
         try {
@@ -250,7 +238,6 @@ public class SupplierController {
         if(!"".equals(request.getParameter("suppId"))&&request.getParameter("suppId")!=null){
             suppId = request.getParameter("suppId");
         }
-        System.out.println("suppId:"+suppId);
         String sql ="";
         String sqltemp = "SELECT eq_id as eqId,eq_type as eqType,eq_name as eqName,brand_name as brandName,department.department as purchasDepart,department.department as belongDepart,purchas_date as purchasTime,supplier as supplier,eq_state.state as eqStateId,purchas_price as purchasPrice,equipment.custom_message as customMessage,eq_other_id as eqOtherId,equipment.city as city FROM equipment,eq_state,department,supplier WHERE eq_state.eq_state_id=equipment.eq_state AND equipment.purchas_depart=department.id AND equipment.belong_depart=department.id AND supplier.name = equipment.supplier AND supplier.id = '" + suppId +"'";
         if(!"ROLE_ADMIN".equals(role)&&!"".equals(city)){
@@ -258,7 +245,6 @@ public class SupplierController {
         }else{
             sql = sqltemp;
         }
-        System.out.println("sql:"+sql);
         List<Object> list = new ArrayList<Object>();
         List<EquipmentCustom> equipmentCustomList = new ArrayList<EquipmentCustom>();
         try {
@@ -297,14 +283,12 @@ public class SupplierController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println(jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 
     @RequestMapping("/supplier/editSupDetail")
     @SystemLogAOP(module = "供应商查询",methods = "更新供应商信息")
     public void editSupDetail(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("编辑运营商详细信息......");
         String supId = "";
         String supName = "";
         String supCont = "";
@@ -333,7 +317,6 @@ public class SupplierController {
         if(!"".equals(request.getParameter("customMessage"))&&null!=request.getParameter("customMessage")){
             customMessage = request.getParameter("customMessage");
         }
-        System.out.println("supId:"+supId+" supName:"+supName+" supCont:"+supCont+" supTel:"+supTel+" supDate:"+supDate);
         SupplierCustom supplierCustom = new SupplierCustom();
         try {
             supplierCustom = supplierService.findSupplierById(supId);

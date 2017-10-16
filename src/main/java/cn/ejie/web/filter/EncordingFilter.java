@@ -1,6 +1,7 @@
 package cn.ejie.web.filter;
 
 import cn.ejie.po.RequestWrapper;
+import cn.ejie.service.EquipmentService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,12 @@ public class EncordingFilter implements Filter {
      * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
      */
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        {
+            //修改文件上传路径和文件生成路径
+            HttpServletRequest req = (HttpServletRequest)request;
+            String rootPath = req.getSession().getServletContext().getRealPath("/");
+            EquipmentService.BASE_PATH = rootPath +"UploadSource\\";
+        }
         RequestWrapper requestWrapper=new RequestWrapper((HttpServletRequest)request, "UTF-8");
         chain.doFilter(requestWrapper, response);
     }

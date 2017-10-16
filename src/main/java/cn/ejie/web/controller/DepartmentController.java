@@ -45,8 +45,6 @@ public class DepartmentController {
     @RequestMapping("/department/findDepartment")
     public @ResponseBody List<DepartmentCustom> findDepartmentByCity(HttpServletRequest request) throws Exception{
         DepartmentCustom departmentCustom = SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
-        System.out.println(departmentCustom);
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!"+departmentCustom.getCity());
         return departmentService.findDepartmentByCity(departmentCustom.getCity());
     }
 
@@ -80,7 +78,6 @@ public class DepartmentController {
     @SystemLogAOP(module = "部门字段管理",methods = "删除部门字段")
     public void delDepartByDepartmentID(HttpServletRequest request,HttpServletResponse response) throws Exception{
          DepartmentCustom departmentCustom =  SimpleBeanUtils.setMapPropertyToBean(DepartmentCustom.class,request.getParameterMap());
-         System.out.println(departmentCustom);
          departmentService.delDepartByDepartment(departmentCustom);
          SimpleException.sendMessage(response,objectMapper,"success","删除成功！");
     }

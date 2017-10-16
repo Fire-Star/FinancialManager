@@ -73,7 +73,6 @@ public class StaffService {
             throw new StaffException(errorType,"该城市下部门 "+staffCustom.getDep()+" 不存在，请联系管理员维护系统字段！");
         }
         staffCustom.setDep(depId);
-        System.out.println(staffCustom);
         Integer staffCount = staffMapper.findStaffCountByDepAndNameAndTel(staffCustom);
         if(staffCount>0){
             throw new StaffException(errorType,"该员工已经存在，你可以通过 员工所属部门、姓名、电话号码 判断该员工是否存在！");
@@ -167,23 +166,18 @@ public class StaffService {
         //获取文件类型
         String contentType = file.getContentType();
 
-        System.out.println("contentType="+contentType);
 
         if(!contentType.equals("")) {
             //可以对文件类型进行检查
         }
         //获取input域的name属性
         String name = file.getName();
-        System.out.println("name="+name);
         //获取文件名，带扩展名
         String originFileName = file.getOriginalFilename();
-        System.out.println("originFileName"+originFileName);
         //获取文件扩展名
         String extension = originFileName.substring(originFileName.lastIndexOf("."));
-        System.out.println(extension);
         //获取文件大小，单位字节
         long site = file.getSize();
-        System.out.println("size="+site);
         if(site > EquipmentService.MAX_FILE_SISE) {
             //可以对文件大小进行检查
         }
@@ -227,7 +221,6 @@ public class StaffService {
     String [] titleSuccessNameStr = {"序列号","姓名","城市","部门","岗位","联系电话","入职时间"};
     private void insertStaff(String fileAbsPath) throws Exception {
         String fileName = fileAbsPath.substring(fileAbsPath.lastIndexOf("\\")+1);
-        System.out.println(fileName);
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         String findValueFileName = null;
         try {

@@ -46,7 +46,6 @@ public class EquipmentBorrowController {
 
     @RequestMapping("/borrow/serch")
     public void borrowLogSerch(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("维修记录查询......");
         String eqId = "";
         if(request.getParameter("equipId") != null){
             eqId = request.getParameter("equipId");
@@ -97,7 +96,6 @@ public class EquipmentBorrowController {
         }
         JSONArray jsonArray = new JSONArray();
         jsonArray = JSONArray.fromObject(list);
-        System.out.println("jsonArray:"+jsonArray.toString());
         SimpleException.sendMessage(response,jsonArray.toString(),objectMapper);
     }
 
@@ -108,7 +106,6 @@ public class EquipmentBorrowController {
      */
     @RequestMapping("/user/staff/findEqByStaffId")
     public void findEqByStaffId(HttpServletResponse response,HttpServletRequest request){
-        System.out.println("用户详情界面，table的数据加载......");
         String staffId = "";
         if(!"".equals(request.getParameter("staffId"))&&request.getParameter("staffId")!=null){
             staffId = request.getParameter("staffId");
@@ -124,7 +121,6 @@ public class EquipmentBorrowController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println(JSONArray.fromObject(equipmentCustomList).toString());
         List<Object> list = new ArrayList<Object>();
         for (int i = 0; i < equipmentCustomList.size(); i++) {
             Map<String,String> map = new HashMap<String, String>();
@@ -149,7 +145,6 @@ public class EquipmentBorrowController {
     @RequestMapping("equipBor/addEqBorLog")
     @SystemLogAOP(module = "设备详情",methods = "添加设备借调记录")
     public void addEqBorLog(HttpServletRequest request,HttpServletResponse response){
-        System.out.println("添加借调记录......");
         String eqState = "";
         String eqId = "";
         String doTime = "";
@@ -177,7 +172,6 @@ public class EquipmentBorrowController {
             String borDetail = "";
             String depId = "";
             if(eqState.equals("使用")){
-                System.out.println("使用......");
                 String eqBorCity = "";
                 if(request.getParameter("eqBorCity")!=null&&!"".equals(request.getParameter("eqBorCity"))){
                     eqBorCity = request.getParameter("eqBorCity");
@@ -193,8 +187,6 @@ public class EquipmentBorrowController {
                 }
                 if(!"".equals(eqId)&&!"".equals(eqState)&&!"".equals(eqBorCity)&&!"".equals(useByDepart)&&!"".equals
                         (useId)&&!"".equals(borDetail)){
-                    System.out.println("eqId:"+eqId+" eqState:"+eqState+" eqBorCity:"+eqBorCity+" " +
-                            "useByDep:"+useByDepart+" useId:"+useId+" borDetail:"+borDetail+" doTime:"+doTime);
                     try {
                         depId = departmentService.findDepartIDByCityStrAndDepartStr(eqBorCity,useByDepart);
                     }catch (Exception e){
@@ -209,7 +201,6 @@ public class EquipmentBorrowController {
                     return;
                 }
             }else if(eqState.equals("闲置")){
-                System.out.println("闲置......");
                 String eqBorNoCity = "";
                 if(request.getParameter("eqBorNoCity")!=null&&!"".equals(request.getParameter("eqBorNoCity"))){
                     eqBorNoCity = request.getParameter("eqBorNoCity");
@@ -220,8 +211,6 @@ public class EquipmentBorrowController {
                 if(request.getParameter("eqBorNoDetail")!=null&&!"".equals(request.getParameter("eqBorNoDetail"))){
                     borDetail = request.getParameter("eqBorNoDetail");
                 }
-                System.out.println("eqId:"+eqId+" eqState:"+eqState+" eqBorCity:"+eqBorNoCity+" " +
-                        "useByDep:"+useByDepart+" borDetail:"+borDetail+" doTime:"+doTime);
                 try {
                     depId = departmentService.findDepartIDByCityStrAndDepartStr(eqBorNoCity,useByDepart);
                 }catch (Exception e){
@@ -231,12 +220,9 @@ public class EquipmentBorrowController {
                     return;
                 }
             }else if(eqState.equals("报废")){
-                System.out.println("报废......");
                 if(request.getParameter("eqBorUnDetail")!=null&&!"".equals(request.getParameter("eqBorUnDetail"))){
                     borDetail = request.getParameter("eqBorUnDetail");
                 }
-                System.out.println("eqId:"+eqId+" eqState:"+eqState+" eqBorCity:"+" " +
-                        "useByDep:"+useByDepart+" borDetail:"+borDetail+" doTime:"+doTime);
             }else{
                 String message = "在删除用户时，数据库发生错误，删除用户失败！";
                 SimpleException.sendMessage(response,message,objectMapper);//报告错误信息到前台！
@@ -248,7 +234,6 @@ public class EquipmentBorrowController {
             equipmentBorrowCustom.setDoTime(doTime);
             equipmentBorrowCustom.setState(stateId);
             equipmentBorrowCustom.setBorDetail(borDetail);
-            System.out.println("equipmentBorrowCustom:"+ JSONObject.fromObject(equipmentBorrowCustom));
             try {
                 equipmentBorrowService.insertEqBorrowLog(equipmentBorrowCustom);
                 SimpleException.sendMessage(response,"添加借调记录成功！",objectMapper);//报告错误信息到前台！
