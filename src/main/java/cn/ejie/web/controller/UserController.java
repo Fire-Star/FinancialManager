@@ -58,6 +58,8 @@ public class UserController {
     @Autowired
     private UserRoleService userRoleService;
 
+    private Map<String,HttpSession> hasLoginUser = new HashMap<>();//所有已登录用户
+
     @RequestMapping("/user/loginPage")
     public String loginPage(HttpServletRequest request,HttpServletResponse response) throws IOException {
         Map<String,String> message = new HashMap<>();
@@ -66,6 +68,7 @@ public class UserController {
         }
         return "/WEB-INF/pages/log.html";
     }
+
     @RequestMapping(value = "/user/login")
     public void login(HttpServletRequest request,HttpSession session,HttpServletResponse response,UserCustom userCustom){
 
@@ -92,6 +95,20 @@ public class UserController {
             message.put("location",request.getContextPath()+"/user/index");
 
             SimpleException.sendMessage(response,message,objectMapper);
+
+            {
+                //保证一个用户只能有一个Session，保障用户安全，不被入侵。
+                String userName = userCustom.getUsername();
+                HttpSession tempSession = hasLoginUser.get(userName);
+                if(tempSession != null){
+                    try {
+                        tempSession.invalidate();
+                    }catch (Exception e){
+                        //Session已经过期，不需要让其失效。
+                    }
+                }
+                hasLoginUser.put(userName,session);
+            }
 
         } catch (AuthenticationException ex) {
             message.clear();
