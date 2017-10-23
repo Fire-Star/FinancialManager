@@ -246,7 +246,13 @@ public class StaffService {
             File proFile = new File(EquipmentService.BASE_PATH+findValueFileName);
             proFile.delete();
         }
-        List<StaffCustom> staffCustomList = analisTargetFile(fileName);
+        List<StaffCustom> staffCustomList = null;
+        try {
+            staffCustomList = analisTargetFile(fileName);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
 
         List<StaffCustom> insertSuccessList = new LinkedList<>();
         List<StaffCustom> insertErrorList = new LinkedList<>();
@@ -284,10 +290,12 @@ public class StaffService {
         if(!hasSuccess){
             fileSuccessName = "1";
         }
+        System.out.println("执行到这里...hasError="+hasError);
         changeState(userName+"-staffSuccessExcel",fileSuccessName);
         changeState(userName+"-staffErrorExcel",fileErrorName);
 
         if(hasError){
+            System.out.println("抛出异常...");
             throw new SimpleException(errorType,"还有一些或者很多员工没有导入，请下载未导入员工信息，更正后重新导入！");
         }
     }

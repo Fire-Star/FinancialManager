@@ -21,7 +21,6 @@ public class AllCustomExceptionResolver implements HandlerExceptionResolver {
 
         String errorType = "defaultError";
         String errorMessage = "发生了意想不到的错误，请通知管理人员！";
-
         //处理用户的所有异常，包括登录注册等。
         if(ex instanceof SimpleException){
             SimpleException simpleException = (SimpleException)ex;

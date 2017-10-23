@@ -42,8 +42,8 @@ import java.util.List;
 public class EquipmentService {
     private static final String inserState = "闲置";
     public static String BASE_PATH = "C:\\";
-    public static final String UPLOAD_DIR = BASE_PATH;
-    private static final String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
+    public static String UPLOAD_DIR = BASE_PATH;
+    public static String EQ_MODEL_FILE = BASE_PATH+"设备模板.xlsx";
     public static final long MAX_FILE_SISE = 61440; //为 60 MB
     private String basePathLocation;//
 

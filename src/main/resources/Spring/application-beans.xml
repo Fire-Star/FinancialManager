@@ -15,7 +15,5 @@
             <bean class="java.util.Random"></bean>
         </property>
     </bean>
-    <bean id="equipmentService" class="cn.ejie.service.EquipmentService">
-        <property name="basePath" value="C:\Users\Administrator\Desktop\文件\"/>
-    </bean>
+    <bean id="equipmentService" class="cn.ejie.service.EquipmentService"/>
 </beans>

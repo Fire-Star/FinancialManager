@@ -35,6 +35,8 @@ public class EncordingFilter implements Filter {
             HttpServletRequest req = (HttpServletRequest)request;
             String rootPath = req.getSession().getServletContext().getRealPath("/");
             EquipmentService.BASE_PATH = rootPath +"UploadSource\\";
+            EquipmentService.UPLOAD_DIR = EquipmentService.BASE_PATH;
+            EquipmentService.EQ_MODEL_FILE = EquipmentService.BASE_PATH+"设备模板.xlsx";
         }
         RequestWrapper requestWrapper=new RequestWrapper((HttpServletRequest)request, "UTF-8");
         chain.doFilter(requestWrapper, response);

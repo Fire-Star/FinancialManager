@@ -400,6 +400,7 @@
             data: form_data,
             success: function(data){//成功方法
                 var _data = eval(data);
+                console.log("----------->"+_data);
                 if(!_data){
                     vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();
@@ -417,6 +418,9 @@
                     vm.modalStatus = _data.success;
                     $('#modalButton').click();
                     vm.showDownloadError = false;
+                } else if(_data.defaultError){
+                    vm.modalStatus = _data.defaultError;
+                    $('#modalButton').click();
                 }else{
                     vm.modalStatus = '发生未知错误，请联系管理员！';
                     $('#modalButton').click();

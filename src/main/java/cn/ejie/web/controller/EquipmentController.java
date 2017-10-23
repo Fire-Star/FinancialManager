@@ -545,7 +545,14 @@ public class EquipmentController {
     @SystemLogAOP(module = "设备添加",methods = "批量添加设备信息")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file,HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
-            equipmentService.uploadFile(file);
+            try {
+                equipmentService.uploadFile(file);
+            }catch (Exception e){
+                if(e instanceof SimpleException){
+                    SimpleException.sendMessage(response,objectMapper,((SimpleException) e).getErrorType(),((SimpleException) e).getErrorMessage());
+                    return;
+                }
+            }
             SimpleException.sendSuccessMessage(response,objectMapper);
         }
     }
@@ -575,7 +582,10 @@ public class EquipmentController {
 
     @RequestMapping("/equipment/hasEqSuccessFile")
     public void hasEqInsertSuccessExcelFile(HttpServletResponse response) throws Exception{
-        boolean state = equipmentService.hasEqInsertSuccessExcelFile();
+        boolean state = false;
+        try {
+            state = equipmentService.hasEqInsertSuccessExcelFile();
+        }catch (Exception e){}
         SimpleException.sendMessage(response,objectMapper,"hasInsertEqSuccessFile",state? "1":"0");
     }
 

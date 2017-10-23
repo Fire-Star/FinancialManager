@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -21,7 +22,6 @@ import java.util.Date;
 import java.util.Enumeration;
 
 @Aspect
-@Component
 public class LogAopAction {
 
     @Autowired
