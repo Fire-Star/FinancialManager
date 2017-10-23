@@ -205,6 +205,13 @@
       <artifactId>aspectjweaver</artifactId>
       <version>1.8.10</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>4.3.10.RELEASE</version>
+    </dependency>
+
     <!-- 依赖servlet包 -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -259,6 +266,21 @@
       <artifactId>commons-collections4</artifactId>
       <version>4.1</version>
     </dependency>
+
+    <!-- 添加Cglib -->
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>3.2.4</version>
+    </dependency>
+
+    <!-- 添加AspectJ其它依赖包 -->
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.8.11</version>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>FinancialManager</finalName>
