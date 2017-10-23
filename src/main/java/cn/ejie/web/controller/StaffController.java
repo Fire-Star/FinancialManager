@@ -292,6 +292,7 @@ public class StaffController {
     @SystemLogAOP(module = "员工添加",methods = "批量添加员工信息")
     public void uploadFileAndInsert(@RequestParam("eqXsl") MultipartFile file, HttpServletResponse response) throws Exception{
         if(!file.isEmpty()) {
+            System.out.println("file:"+file.getName());
             staffService.uploadFile(file);
             SimpleException.sendSuccessMessage(response,objectMapper);
         }

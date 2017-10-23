@@ -257,6 +257,7 @@
                     _customFields+=(this.customFields[index].key+"="+(this.customFields[index].value==undefined? "":this.customFields[index].value)+";");
                 }
                 _customFields=_customFields;
+
                 $.post("add",
                     {
                         "name":this.name,
@@ -345,6 +346,17 @@
             $('#tel').parent().addClass('has-error');
             $('#tel').tooltip({
                 title:"电话号码长度为11位！"
+            });
+            return true;
+        }
+        var purchaseTime = $('#calender')[0].value;
+        var purchaseTimeValue = new   Date(Date.parse(purchaseTime.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= purchaseTimeValue) {
+            $('#calender').parent().addClass('has-error');
+            $('#calender').tooltip({
+                title:"购买时间不能小于当前时间！请重新填写！"
             });
             return true;
         }

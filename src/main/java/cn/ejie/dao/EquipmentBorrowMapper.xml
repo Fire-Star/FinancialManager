@@ -11,7 +11,8 @@
     </select>-->
     <select id="findBorrowByEqId" resultType="cn.ejie.pocustom.EquipmentBorrowCustom">
         SELECT borrow_id as borrowId,eq_id as eqId,state,use_by as useBy,do_time as
-        doTime,use_by_depart as useByDepart,detail as borDetail FROM eq_borrow_log WHERE eq_id = #{id}
+        doTime,use_by_depart as useByDepart,detail as borDetail FROM eq_borrow_log WHERE eq_id = #{id} ORDER BY
+        do_time DESC 
     </select>
     <select id="countAllByUser" resultType="java.lang.Integer">
         select count(*) from eq_borrow_log WHERE use_by = #{userId}

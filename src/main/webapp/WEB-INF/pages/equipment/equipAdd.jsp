@@ -310,7 +310,6 @@
                 var belongDepart = $('#belongDep')[0].value;
                 var purchaseTime = $('#calender')[0].value;
                 var purchaseDep = $('#buyDep')[0].value;
-
                 $.post("add",
                     {
                         "eqType":this.eqTypeValue,
@@ -342,7 +341,8 @@
                             $('#modalButton').click();
                         }
                         refreshSuccessFileEqInsert();
-                    });
+                    }
+                );
                 refreshSuccessFileEqInsert();
                 $btn.button('reset');
             },
@@ -434,6 +434,7 @@
         var i;
         var len = 11;
         var flag = false;
+        //电话号码长度验证
         for(i=0 ;i < len; i++){
             if(inputObj[i].value==""){
                 vm.isError[i]=true;
@@ -451,6 +452,27 @@
                 $('#'+id).tooltip('destroy');
             }
         }
+        //购买日期验证
+        var purchaseTime = $('#calender')[0].value;
+        var purchaseTimeValue = new   Date(Date.parse(purchaseTime.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= purchaseTimeValue) {
+            $('#calender').parent().addClass('has-error');
+            $('#calender').tooltip({
+                title:"购买时间不能小于当前时间！请重新填写！"
+            });
+            return true;
+        }
+        if(vm.buyCount <= 0){
+            $('#buyCount').parent().addClass('has-error');
+            $('#buyCount').tooltip({
+                title:"购买数量不正确！请重新填写！"
+            });
+            return true;
+        }
+        //购买数量验证
+
         console.log(flag);
         return flag;
     }

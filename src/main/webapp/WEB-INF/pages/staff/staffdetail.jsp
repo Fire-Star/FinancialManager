@@ -396,6 +396,17 @@
             customMessage += key+"="+vm.custom[key]+";";
         }
         console.log(customMessage,'++++++++++++++++')
+        //修改日期检查
+        var dateValue = new   Date(Date.parse(date.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= dateValue) {
+            $('#staffSubmitDate').parent().addClass('has-error');
+            $('#staffSubmitDate').tooltip({
+                title: "购买时间不能小于当前时间！请重新填写！"
+            });
+            return ;
+        }
         if(vm.city==""||vm.beDepValue==null||vm.prePosition==""||vm.preTel==""||date==""){
             alert("编辑设备信息时，字段不能为空！！");
         }else {

@@ -471,7 +471,7 @@
                 /**
                  * 加载设备名称选项
                  */
-                alert("加载设备名称");
+                //alert("加载设备名称");
                 $.get("../../findAllEquipmentNameByEqTypeName?eqTypeId=" + vm.eqTypeValue, function (data, status) {
                     if (status == "success") {
                         var _equipmentName = eval(data);
@@ -843,7 +843,18 @@
             }
             customMessage += key+"="+vm.custom[key]+";";
         }
-        console.log(customMessage,'++++++++++++++++')
+        console.log(customMessage,'++++++++++++++++');
+        //修改日期检查
+        var eqSubmitDateValue = new   Date(Date.parse(time.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= eqSubmitDateValue) {
+            $('#eqSubmitDate').parent().addClass('has-error');
+            $('#eqSubmitDate').tooltip({
+                title: "购买时间不能小于当前时间！请重新填写！"
+            });
+            return ;
+        }
         if(vm.eqTypeValue==""||vm.eqNameValue==""||vm.supplier==""||vm.city==""||vm.beDepValue==""||vm.eqState==""||time==""){
             alert("编辑设备信息时，字段不能为空！！");
         }else {
@@ -861,9 +872,9 @@
                 },
                 function(data,status) {
                     var _data = data;
-                    checkDetailEqDetail(eqId);
                     if(eval(_data)){
                         alert(eval(_data).success);
+                        checkDetailEqDetail(eqId);
                     }else{
                         alert(_data);
                     }
@@ -876,6 +887,17 @@
         var eqAddFixDate = $('#eqAddFixDate').val();
         var eqAddFixType = $('#eqAddFixType').val();
         var eqAddFixDetail = $('#eqAddFixDetail').val();
+        //修改日期检查
+        var eqAddFixDateValue = new   Date(Date.parse(eqAddFixDate.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= eqAddFixDateValue) {
+            $('#eqAddFixDate').parent().addClass('has-error');
+            $('#eqAddFixDate').tooltip({
+                title: "购买时间不能小于当前时间！请重新填写！"
+            });
+            return ;
+        }
         if(eqID==""||eqAddFixDate==""||eqAddFixType==""||eqAddFixDetail==""){
             alert("字段不能为空！！");
         }else {
@@ -904,7 +926,7 @@
             //alert(val);
             var eqID = $('#eqSubmitId').val();
             if(val=="使用"){
-                if(eqID==""||vm.eqBorCityValue==""||vm.eqBorBelongValue==""||vm.eqBorNameValue==""||vm.eqBorDetailValue=="") {
+                if(eqID==""||vm.eqBorCityValue==""||vm.eqBorBelongValue==""||vm.eqBorNameValue=="") {
                     alert("字段不能为空！！");
                     return;
                 }else{
@@ -926,7 +948,7 @@
                         });
                 }
             }else if(val=="闲置"){
-                if(eqID==""||vm.eqBorNoCityValue==""||vm.eqBorNoBelongValue==""||vm.eqBorNoNameValue==""||vm.eqBorNoDetailValue=="") {
+                if(eqID==""||vm.eqBorNoCityValue==""||vm.eqBorNoBelongValue==""||vm.eqBorNoNameValue=="") {
                     alert("字段不能为空！！");
                 }else{
                     $.post("../../equipBor/addEqBorLog",
@@ -946,7 +968,7 @@
                         });
                 }
             }else if(val=="报废"){
-                if(eqID==""||vm.eqBorUnDetailValue=="") {
+                if(eqID=="") {
                     alert("字段不能为空！！");
                 }else{
                     $.post("../../equipBor/addEqBorLog",
@@ -971,6 +993,10 @@
     }
     function checkDetailEqDetail(equipId) {
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
+    }
+    //格式检查
+    function tableCheck(){
+
     }
 </script>
 </html>

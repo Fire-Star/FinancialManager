@@ -185,8 +185,7 @@ public class EquipmentBorrowController {
                 if(request.getParameter("eqBorDetail")!=null&&!"".equals(request.getParameter("eqBorDetail"))){
                     borDetail = request.getParameter("eqBorDetail");
                 }
-                if(!"".equals(eqId)&&!"".equals(eqState)&&!"".equals(eqBorCity)&&!"".equals(useByDepart)&&!"".equals
-                        (useId)&&!"".equals(borDetail)){
+                if(!"".equals(eqId)&&!"".equals(eqState)&&!"".equals(eqBorCity)&&!"".equals(useByDepart)&&!"".equals(useId)){
                     try {
                         depId = departmentService.findDepartIDByCityStrAndDepartStr(eqBorCity,useByDepart);
                     }catch (Exception e){

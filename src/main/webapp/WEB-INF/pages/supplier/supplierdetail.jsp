@@ -330,7 +330,6 @@
             timeout: 1000,
             data:param,
             success: function (data, status) {
-                debugger
                 if(data.customMessage !== ''){
                     vm.custom = Object.assign({},vm.custom,JSON.parse(data.customMessage));
                 }
@@ -361,12 +360,15 @@
         window.parent.document.getElementById('iframeContent').src="equip/detail?equipId="+equipId;
         // alert(equipId);
     }
+    function checkDetail(suppId) {
+        window.parent.document.getElementById('iframeContent').src="supplier/detail?suppId="+suppId;
+    }
     function submitEditSup() {
         var supIdValue = $('#submitSupId').val();
         var supNameValue = vm.supName;
         var supContValue = vm.supCont;
         var suptelValue = vm.supTel;
-        var supDateValue = vm.supDate;
+        var supDateValue = $('#supSubmitDate').val();
         var customMessage = "";
         for(var key in vm.custom){
             if(vm.custom[key] == ""){
@@ -374,6 +376,17 @@
                 return;
             }
             customMessage += key+"="+vm.custom[key]+";";
+        }
+        //修改日期检查
+        var supDateFormatValue = new   Date(Date.parse(supDateValue.replace(/(\d{4}).(\d{1,2}).(\d{1,2}).+/mg,
+            '$1-$2-$3')));
+        var curDate = new Date();
+        if(curDate <= supDateFormatValue) {
+            $('#supSubmitDate').parent().addClass('has-error');
+            $('#supSubmitDate').tooltip({
+                title: "购买时间不能小于当前时间！请重新填写！"
+            });
+            return ;
         }
         if(supIdValue==""||supNameValue==""||supContValue==""||suptelValue==""||supDateValue==""){
             alert("编辑设备信息时，字段不能为空！！");
@@ -391,15 +404,12 @@
                     var _data = data;
                     if(eval(_data)){
                         alert(eval(_data).success);
+                        checkDetail(supIdValue);
                     }else{
                         alert(_data);
                     }
                 });
         }
-        $("#suppliername").val(vm.supName);
-        $("#suppliercontactname").val(vm.supCont);
-        $("#contacttel").val(vm.supTel);
-        $("#time").val(vm.supDate);
         $("#myModal").modal('hide');
     }
 </script>

@@ -192,6 +192,7 @@
                         vm.equipmentName = _equipmentName.data;
                     }
                 });
+                vm.eqNameValue = "";
             },
             loadDep() {
                 $.get("../department/findDepartment", function (data, status) {
@@ -208,6 +209,7 @@
                         vm.belongDepartment = _departmentData;
                     }
                 });
+                vm.belongDepartValue = "";
                // $('#depIDOp').attr('selected', true);
             },
         }

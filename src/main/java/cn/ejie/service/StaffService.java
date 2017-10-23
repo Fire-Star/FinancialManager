@@ -10,6 +10,8 @@ import cn.ejie.utils.BeanPropertyValidateUtils;
 import cn.ejie.utils.ExcelUtils;
 import cn.ejie.utils.SimpleBeanUtils;
 import cn.ejie.utils.StringUtils;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -238,6 +240,7 @@ public class StaffService {
         updateParam.setValue(fileName);
         maxValueService.updataMaxValue(updateParam);
 
+
         //删除之前的文件，保留现在的文件！
         if(!findValueFileName.equals("1")){
             File proFile = new File(EquipmentService.BASE_PATH+findValueFileName);
@@ -372,6 +375,7 @@ public class StaffService {
         int startIndexRow = 2;
         int lastIndexRow = sheet.getLastRowNum()+1;//通常获取不准确会少一行，所以 +1
         String tempPosition = "";
+
         for (int rowCount = startIndexRow; rowCount < lastIndexRow; rowCount++) {
             XSSFRow tempRow = sheet.getRow(rowCount);
             if(tempRow == null){
